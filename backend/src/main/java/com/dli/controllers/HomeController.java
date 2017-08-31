@@ -11,6 +11,8 @@ import java.util.Map;
 @RequestMapping("/")
 public class HomeController {
 
+    String abc="123";
+
     @RequestMapping("")
     public String index() {
         return "smile backend service is running...";
