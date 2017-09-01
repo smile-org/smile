@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.DemoRepo">
+
+    <resultMap type="com.dli.entities.Demo" id="demoMap">
+        <id column="id" property="id"/>
+        <result column="full_name" property="fullName"/>
+    </resultMap>
+
+    <select id="getDemoList" resultMap="demoMap">
+        SELECT * FROM demo;
+    </select>
+
+    <select id="getDemoById" resultMap="demoMap">
+        SELECT * FROM demo WHERE id=#{id};
+    </select>
+
+    <insert id="insertDemo" parameterType="com.dli.entities.Demo">
+        INSERT INTO demo (full_name) values (#{fullName});
+    </insert>
+
+    <update id="updateDemo" parameterType="com.dli.entities.Demo">
+        UPDATE demo SET full_name = #{fullName}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteDemo">
+        DELETE FROM demo WHERE id=#{id};
+    </delete>
+
+</mapper>
