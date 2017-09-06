@@ -1,13 +1,25 @@
 <template>
+
   <div id="app">
+
     <img src="./assets/logo.png">
+    <bar>
+      <bar-item path="home" label="首页"></bar-item>
+      <bar-item path="me" label="我的"></bar-item>
+    </bar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Bar from './components/basis/Bar'
+import BarItem from './components/basis/BarItem'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Bar,
+    BarItem
+  }
 }
 </script>
 

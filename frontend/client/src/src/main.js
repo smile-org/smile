@@ -6,6 +6,12 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+// router.beforeEach((to, from, next) => {
+//   console.log('to: ', to)
+//   console.log('from: ', from)
+//   next()
+// })
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -13,3 +19,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
