@@ -1,11 +1,13 @@
 import axios from 'axios'
 
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+// axios.defaults.withCredentials = true
+
 /**
  * 拦截器， 对所有的请求。
  * 作用： 可以为每个请求加上额外参数
  */
 axios.interceptors.request.use(config => {
-  // config.params['p1'] = 'p1'
   return config
 }, error => {
   return Promise.reject(error)
@@ -43,6 +45,11 @@ export default {
    */
   post (url, params = {}) {
     return axios.post(url, params)
+  },
+
+  uri: {
+    login: '/users/login',
+    changePWD: '/users/changePWD'
   }
 
 }
