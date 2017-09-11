@@ -54,7 +54,8 @@ export default {
       var uri = api.uri.login
       api.post(uri, {username: this.username, password: this.password}).then(data => {
         if (data.status) {
-          router.push('home')
+          sessionStorage.setItem('smile', 'lalalal')
+          router.push({name: 'home'})
         }
       }).catch(error => {
         alert(error.message)

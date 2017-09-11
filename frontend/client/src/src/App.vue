@@ -2,7 +2,7 @@
   <div id="app">
     <!--<img src="./assets/logo.png">-->
     <bar>
-      <bar-item path="home" label="首页"></bar-item>
+      <bar-item path="/" label="首页"></bar-item>
       <bar-item path="me" label="我的"></bar-item>
       <bar-item path="validation" label="验证"></bar-item>
       <bar-item path="list" label="列表"></bar-item>
