@@ -1,11 +1,21 @@
 import axios from 'axios'
+import conf from '../config/index.js'
+
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+// axios.defaults.withCredentials = true
+
+axios.defaults.baseURL = 'http://localhost:3000'
 
 /**
  * 拦截器， 对所有的请求。
  * 作用： 可以为每个请求加上额外参数
  */
 axios.interceptors.request.use(config => {
-  // config.params['p1'] = 'p1'
+  var token = sessionStorage.getItem(conf.cookie.key)
+  if (token) {
+    // token放到header中
+    config.headers.Authorization = token
+  }
   return config
 }, error => {
   return Promise.reject(error)
@@ -20,8 +30,6 @@ axios.interceptors.response.use(response => {
 }, error => {
   return Promise.reject(error)
 })
-
-axios.defaults.baseURL = 'http://localhost:3000'
 
 export default {
 
@@ -43,6 +51,11 @@ export default {
    */
   post (url, params = {}) {
     return axios.post(url, params)
+  },
+
+  uri: {
+    login: '/users/login',
+    changePWD: '/users/changePWD'
   }
 
 }
