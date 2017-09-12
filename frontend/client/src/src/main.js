@@ -4,10 +4,10 @@ import Vue from 'vue'
 import Vuelidate from 'vuelidate'
 import App from './App'
 import router from './router'
-// import Element from 'element-ui'
-// import 'element-ui/lib/theme-default/index.css'
-import MintUI from 'mint-ui'
-import 'mint-ui/lib/style.css'
+import Element from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+// import MintUI from 'mint-ui'
+// import 'mint-ui/lib/style.css'
 import vueInfiniteScroll from 'vue-infinite-scroll'
 import VueCookie from 'vue-cookie'
 
@@ -17,8 +17,8 @@ Vue.config.productionTip = false
 
 Vue.use(VueCookie)
 Vue.use(Vuelidate)
-// Vue.use(Element)
-Vue.use(MintUI)
+Vue.use(Element)
+// Vue.use(MintUI)
 Vue.use(vueInfiniteScroll)
 
 router.beforeEach((to, from, next) => {

@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <!--<img src="./assets/logo.png">-->
-    <bar>
+    <!--<bar>
       <bar-item path="/" label="首页"></bar-item>
       <bar-item path="me" label="我的"></bar-item>
       <bar-item path="validation" label="验证"></bar-item>
       <bar-item path="list" label="列表"></bar-item>
-    </bar>
+    </bar>-->
     <router-view></router-view>
   </div>
 </template>
@@ -23,12 +23,6 @@ export default {
 </script>
 
 <style>
-#app {
-  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;*/
-}
+@import './assets/css/common.css';
+@import './assets/css/style.css';
 </style>

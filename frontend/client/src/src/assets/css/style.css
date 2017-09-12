@@ -1,0 +1,176 @@
+body{
+  background-color: #f8f8f8;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+/*header start*/
+header{
+  height:1.2rem;
+  background:#00b553 ;
+  text-align: center;
+  border-bottom: 1px solid #d4d4d4;
+  position:relative;
+
+}
+header .logo_c{
+  height:1.2rem;
+  line-height:0.2rem;
+  display:flex;/*设为伸缩容器*/
+  flex-flow:row;/*伸缩项目单行排列*/
+  align-items: center;
+  justify-content: center;
+}
+header .logo_c a{
+  float: left;
+  flex:1;/*这里设置为占比1，填充满剩余空间*/
+}
+header .logo_c a:nth-child(2){
+  flex: 6;
+}
+header .logo_c a{
+  padding:0.15rem 0.3rem;
+  position: relative;
+  float: left;
+  z-index: 2;}
+header .logo_c a img{
+  width:0.48rem;
+}
+header .logo_c a .logo1{
+  width:1.1rem;
+}
+/*header end*/
+section{
+  padding:0.3rem;
+}
+section .form_list input{
+  width:100%;
+  height:1rem;
+  line-height:normal;
+  border:1px solid #ededed;
+  border-radius: 0.1rem;
+  font-size:0.3rem;
+  padding:0.2rem 0.2rem 0.2rem 0.9rem;
+  color: #666;
+  outline: 0;
+  background: #fff;
+  -webkit-appearance:none;
+  position: relative;
+  margin-top:0.2rem;
+}
+.form_num .form_num_s{  /*获取验证码的样式*/
+  width:100%;
+  height:1rem;
+  line-height: 1rem;
+  text-align: center;
+  border:1px solid #00b553;
+  border-radius: 0.1rem;
+  font-size:0.3rem;
+  color: #00b553;
+  outline: 0;
+  position: relative;
+  margin-top:0.45rem;
+}
+
+.form_num .form_num_s:active,.form_num .active{/*此处active 为获取验证码后点击样式*/
+  border:1px solid #dcdcdc;
+  color:#999
+}
+.login_btn{
+  width:100%;
+  height:1rem;
+  background: #00b553;
+  outline: 0;
+  border-radius: 0.1rem;
+  font-size:0.34rem;
+  color: #fff;
+  letter-spacing: 0.1rem;
+  display: block;
+  margin-top:.5rem;
+}
+.login_btn:hover{
+  opacity: .7;
+}
+.login_btn:active{
+  opacity: .7;
+}
+/*此处为各种引用图片路径*/
+.login_icon1{
+  background: url('../img/logo_img1.png')no-repeat center center;
+}
+.login_icon2{
+  background: url('../img/logo_img2.png')no-repeat center center;
+}
+
+.login_icon3{
+  background: url('../img/logo_img3.png')no-repeat center center;
+}
+
+.sologan1{
+  background: url('../img/sologan1.png')no-repeat center center;
+  background-size: 100% 100%;
+  width:2.2rem;
+  height:1.7rem;
+  margin:0.36rem auto;
+}
+.sologan2{
+  background: url('../img/sologan2.png')no-repeat center center;
+  background-size: 100% 100%;
+  width:1.53rem;
+  height:1.7rem;
+  margin:0.36rem auto;
+}
+.sologan3{
+  background: url('../img/sologan3.png')no-repeat center center;
+  background-size: 100% 100%;
+  width:1.5rem;
+  height:1.7rem;
+  margin:0.36rem auto;
+}
+/*成功失败图片位置*/
+.face_img1{
+  background: url('../img/face_img1.png')no-repeat center center;
+  background-size: 100% 100%;
+  width:1.5rem;
+  height:1.7rem;
+  margin:0.36rem auto;
+}
+.face_font{
+  font-size:0.32rem;
+  color: #999;
+  text-align: center;
+  margin:0.2rem auto 2rem;
+}
+.form_list{
+  position: relative;
+}
+.form_list span{
+  width:0.9rem;
+  height:1rem;
+  position: absolute;
+  left:0px;
+  bottom:0px;
+  display: inline-block;
+  z-index: 1;
+
+}
+/*此处为login 警告样式*/
+.form_warning{
+  font-size:0.26rem;
+  color: #ff6e5b;
+  vertical-align: middle;
+  margin-top: .3rem;
+}
+.form_warning .warnning_img{
+  width: 0.28rem;
+  margin-right: 0.1rem;
+  vertical-align: middle;
+  margin-top: -0.02rem;
+}
+.unable_login{
+  font-size:0.26rem;
+  color:#666;
+  display: block;
+  float: right;
+  margin:.4rem 0;
+  
+}
