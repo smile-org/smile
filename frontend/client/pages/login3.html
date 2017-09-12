@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--<meta id=”viewport” name=”viewport” content=”width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”>-->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name=”MobileOptimized” content=”320″>
+  <meta name=”format-detection” content=”telephone=no”>
+  <title>smile</title>
+  <link href="./css/common.css" type="text/css" rel="stylesheet"/>
+  <link href="./css/style.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+ <script>
+(function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth>=640){
+                    docEl.style.fontSize = '100px';
+                }else{
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
+</head>
+<body>
+<div id="app">
+<header>
+    <div class="logo_c">
+      <a class="tl" href="##"><img src="img/back.png" alt="返回"/></a>
+      <a class="tc" href="##"><img src="img/logo.png" alt="smile"  class="logo1"/></a>
+      <a class="tr" href="##"><img src="img/home.png" alt="更多" /></a>
+    </div>
+  </header>
+  <section>
+    <form>
+      <div class="login_a sologan1"></div>
+      <div class="form_list">
+        <span class=" login_icon3"></span>
+        <el-input type="password"  placeholder="输入新密码" errormsg="密码长度为6-16位" ></el-input>
+      </div>
+      <div class="form_list">
+        <span class="login_icon3"></span>
+        <el-input type="password"  placeholder="确认新密码" errormsg="密码长度为6-16位" ></el-input>
+      </div>
+      <p class="form_warning">
+        <img class="warnning_img" src="img/warnning.png"/>密码输入不一致
+      </p>
+      <button class="login_btn" type="button">下一步</button>
+    </form>
+  </section>
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return { visible: false }
+        }
+    })
+</script>
+</body>
+</html>

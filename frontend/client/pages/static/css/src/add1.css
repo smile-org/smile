@@ -1,0 +1,117 @@
+.personal-course{width:100%;height:4.5rem;background: #fff;border-top:#eee 1px solid;border-bottom:#eee 1px solid;margin-top:1.7rem;position: relative;}
+.personal-course img:first-child{  
+   width: 1.6rem;
+  vertical-align: middle;
+  margin-left: 7%;
+  margin-top: 1.2rem;
+}
+.personal-course span{
+  font-size: 1.6rem;
+  color: #353535;
+  left: 16%;
+  top: 1.3rem;
+  position: absolute;
+}
+
+.personal-course img:last-child{
+     
+     width:0.9rem;  
+     float: right;
+     margin-top: 1.3rem;
+     margin-right: 1rem;
+}
+
+.yuanjia{color: 1rem;color:#999;text-decoration:line-through; margin-left:3%;}
+.vip-level{width:100%;height: 4.3rem;background: #fff;border-bottom:1px solid #e6e6e6;}
+.vip-level img{width:7.8rem;margin-top:1rem;margin-left: 6%;}
+
+.today{width:100%;height:13.6rem;background: #fff;margin-top: 1.6rem;border-top:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;}
+.today p{height: 3rem;}
+.today p:nth-child(1){font-size: 1rem;color:#000;width:88%;margin:0 auto;line-height: 3rem;}
+.today p:nth-child(2),.today p:nth-child(3),.today p:nth-child(4){font-size: 1rem;color:#000;width:88%;margin:0 auto;line-height: 3rem;}
+.course-btn2{padding:.9rem 1rem;border-radius: 1.3rem;border: 1px solid #1dbd67;color:  #1dbd67;display: block;float:right;}
+.today p span:nth-child(1){display: block;float: left;}
+.today p span:nth-child(2){display: block;float: right;text-align: center;line-height: 0; margin-top: 0.8rem;}
+.label2{
+  height: 3rem;
+  line-height: 1.5rem;
+}
+
+.next p{ height: 3.6rem;}
+.next{ height:16rem;}
+
+.huilv{border:1px solid #9fe3be;color:#9fe3be;}
+.con-com{background:#fff;}
+.vip-title{/*height: 3rem;*/padding: 0.6rem 0rem;}
+.vip-title span:first-child{margin-left:1rem;}
+.vip-title span:last-child{float: right;margin-right: 1rem;font-size:1.2rem;/*line-height:2.2rem;*/}
+.vip-time{  
+  width: 100%;
+  padding: 0rem 6rem 1rem 1rem;
+  overflow: hidden;
+}  
+
+
+
+.vip-tag{width:79%;float: left;  margin-top: -0.2rem;}
+.vip-tag li{
+  min-width: 5rem;
+    height: 2rem;
+  padding: 0.2rem 0.6rem;
+  background: #eeeeee;
+  display: block;
+  float: left;
+  border-radius: 1.3rem;
+  text-align: center;
+  line-height: 2.2rem;
+  color: #bcbaba;
+  font-size: 1.3rem;
+  margin-right: 2%;
+  margin-bottom: 0.5rem;
+}
+
+
+.vip-tag2  li{
+    width:4.6rem;
+    height:1.9rem;
+    background:#eeeeee;
+    display: block;float:left;
+    border-radius:1.3rem;
+    text-align: center;
+    line-height:1.9rem;
+    color:#bcbaba;
+    font-size: 1rem;
+    margin-right:2%;
+    margin-bottom:0.3rem;
+}
+
+
+.vip-cur{background: #00b551!important; color: #fff!important;}
+.tuwen{border-top:1px solid  #eee;background: #fff;width: 100%;border-bottom:1px solid  #eee;}     
+.tuwen p{  
+  font-size: 1.3rem;
+  color:#999;  
+  height: 2.5rem;
+  line-height: 2.5rem;
+  margin-left: 4%;
+}
+
+
+
+
+
+.vip-time span:first-child{font-size:1rem;color:#767676;display: block;float: left;   margin-top: 0.5rem;} 
+.vip-time label{margin-right:2rem;float:right; font-size:1.5rem;}
+.vip-title span{font-size: 1.5rem;color: #353535;}
+.detail-numb{font-size:1rem;color: #232323;}
+.vip-input{border-top:none;border-left:none;border-right:none;width:8rem;height:2.4rem;border-bottom:1px solid  #9e9e9e;text-align:center}
+
+.tag3 li {
+  width: 5rem;
+  height: 2rem;
+}
+
+.tag4 li {
+  width: 5.6rem;
+  height: 2rem;
+}

@@ -1,0 +1,348 @@
+
+/*index1*/
+.liuxue-title{position: relative;}
+.i14{width:1.5rem;float: right;display:inline-block;position: absolute;right:1rem;top:1rem;}
+.mycourse-tab1{height: 3.4rem;border-bottom:1px solid #d5d5d5;} 
+.mycourse-tab1 li{width:16.5%;float: left;display: block;text-align:center;}
+.mycourse-tab1 li span{font-size: 1.2rem;color:#666;line-height: 3.2rem;padding: 1rem 0.5rem;}
+.mycourse-tab1 li span.mycur{border-bottom: 2px solid #00b553;color:#00b553;}
+
+.mycourse-li1{/*height:14.1rem;*/margin-top:.4rem;margin-bottom: 0.7rem;border: 1px solid #eee; margin-top: 1.5rem;}
+.time-status{height: 3.3rem;border-bottom:1px solid #eee;overflow: hidden;	}
+.time-status span{display: block;} 
+.time-status span:nth-child(1){float: left;color:#666666;font-size: 1.2rem;line-height: 3.2rem;margin-left: 1rem;}
+.time-status span:nth-child(2){float: right;color:#00b551;font-size:1.4rem;line-height:   3.2rem;margin-right: 1rem;}
+.course-con{height:7.4rem;border-bottom:1px solid #d5d5d5;overflow: hidden;	}
+
+.course-pic{width:30%;height:7.35rem;float: left;overflow: hidden;}
+.course-pic img{width:100%;height:7.35rem;float: left;}
+.course-inf{float:left;;width:67%}
+.course-inf li{height:2.3rem}
+.course-inf li:nth-child(1){font-size:1.4rem;color:#333333;margin-left:1rem;margin-top: 0.5rem;}
+.course-inf li:nth-child(2){font-size:1.5rem;color:#666666;}
+.course-inf li:nth-child(2) span,.course-inf li:nth-child(3) span{float: right;}
+.course-inf li:nth-child(3){font-size:1.2rem;color:#cccccc;}
+
+.price{height: 3.3rem;border-bottom:1px solid #d5d5d5;overflow:hidden;}
+.price li{float: left;display: block;text-align:center;line-height: 3rem;}
+.price li{font-size:1.2rem;color:#cccccc;}
+.price li:nth-child(1){width:30%;}
+.price li:nth-child(2){width:30%;}
+.price li:nth-child(3){width:40%;color:#666666!important;font-size: 1.5rem; }
+.price li:nth-child(3) span:nth-child(2){color:#00b551;}
+
+.li2{height:17.5rem;}
+.status-btn{/*height:3.3rem;*/overflow:hidden;  margin-right: 2%;}
+.cancel-btn{width:6rem;height:2.1rem;color:#d5d5d5;border:#d5d5d5 1px solid;float: left;margin-left:57%;margin-top:0.6rem;}
+.pay-btn{
+   width:6rem;
+   height:2.1rem; 
+   width: 6rem;
+   height: 2.1rem;
+   float: right;
+   margin-right: 2%;
+   margin-top: 0.6rem;
+   margin-top:0.6rem;
+}
+.li2 .time-status span:nth-child(2){color:#ff3c00;}
+
+/*index2*/
+.course-time{width:6.5rem!important;}
+.course-info{color:#00b551;font-size: 1.2rem;float: right;margin-right:3%;}
+.course-red{color:#ff3c00!important;}
+
+
+/*index6*/
+.bgall{background:#f7f8fa;}
+.font24{font-size: 1.2rem;}
+.inf1{  
+  font-size: 1.3rem;
+  width: 59%;
+  display: block;
+  float: left;
+}
+.inf2{width:35%;margin-top: 0rem!important;margin-left:3%;}
+/*.li3{height:21.5rem;}
+*/
+.course-order li{border-bottom:1px solid #d5d5d5;height:5.3rem;}
+.course-order li p{font-size:1.2rem;margin-left:3%; padding-top: 0.6rem;}
+.course-order li p:nth-child(2){font-size:1.2rem;margin-left:7%;color: #b2b2b2; padding-top: 0.6rem;}
+.i15{width:0.6rem;margin-right: 0.8rem;}
+.xingqi{float: right;display: block;margin-right: 3%;color: #999;}
+.course-order li p:nth-child(2) span{float: left;display: block;width: 33%;}
+.course-btn{width: 60%;display: block;float: right;margin-top:-0.6rem;}
+.course-btn div{width:30%!important;}
+
+.queren{color: #999;font-size:1.2rem;float: left!important;margin-left:1rem;}
+
+
+/*index7*/
+.tuikuan{height:8.8rem!important;background: #fff;}
+.tuikuan p:nth-child(3){  
+	color: #666;
+  font-size: 1rem;
+  float: right;
+  margin-right: 3%;
+}
+.tuikuan p:nth-child(4){
+	margin-right: 3%;
+  color: #666;
+  font-size: 1rem;
+  float: right;
+  line-height: 1rem;
+}
+/*index8*/
+
+.bohui{
+  display: block;
+  float: right;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-right: 2%;
+
+
+}
+.bohuizhong{
+
+  margin-left: 10%;
+  display: block;
+  float: left;
+  font-size: 1rem;
+  margin-top:1rem;
+}
+.location1{overflow: hidden;margin-top:0.6rem;}
+.location1 span{
+  width: 31%;
+  float: left;
+  display: block;
+  margin-left: 8%;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  margin-left: 7%;
+  color: #b2b2b2;
+}
+
+.font20{font-size: 1rem;}
+
+.jine{border: none!important;float: right;display: block; margin-top: 0.6rem}
+
+
+
+/*index9*/
+.estimate{height:12.7rem;margin-top:0.8rem;} 
+.estimate p{line-height: 2.6rem;margin-left:5%;} 
+.esti-tit{height:2.6rem;border-bottom:1px solid #d5d5d5;}
+.esti-name{font-size:1.4rem;color:#333;}
+.esti-loc{font-size:1.2rem;color: #999999;margin-left:5%;}
+.esti-pic{
+  width: 7rem;
+  height: 7rem;
+  line-height: 7rem;
+  text-align: center;
+  border-radius: 7rem;
+  background: #d5d5d5;
+  margin:1.3rem 3rem;
+  overflow: hidden;
+  max-width: 7rem;
+  max-height: 7rem;
+  display: block;
+  float: left;
+}
+
+
+
+.esti-right{display: block;float:left;  margin-top: 2rem}
+.esti-right li{font-size:1.4rem;color:#666;}
+.esti-right li span{border:none!important;}
+.esti-icon{height:7.2rem;margin-top:1rem;border:1px solid #dfdfdf;}
+.esti-icon li{width:33.2%;float:left; display: block;background:#eeeeee;height:7.2rem;text-align: center;}
+.esti-icon img{width:4.4rem;margin-top:0.6rem;}
+.esti-icon p{color:#666;font-size:1.2rem;}
+.esti-cur{background:#fff!important; }     
+.esti-cur p{color:#00b553;}
+
+
+
+
+/*index10*/
+.show{margin-top:0rem!important;background: #fafbfd!important;}
+.big-pic{height:35.8rem;text-align:center}
+.big-pic img{width:20rem;margin-top: 3rem;}
+.big-pic p{color:#00b553;font-size: 1.5rem;margin-top:3rem;}
+
+/*index13*/
+
+.d_tit {
+  height: 3.5rem;
+  line-height: 3.5rem;
+  background: #ffffff;
+  text-align: center;
+  font-size: 1.4rem;
+  color: #666666;
+  border-bottom: 1px solid #d4d4d4;
+  position: relative;
+}
+
+.supplement_war {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 1rem 1rem 1.2rem;
+} 
+
+.supplement_part {
+  background: #fff;
+  padding: 1rem 1rem 0;
+  font-size: 1.1rem;
+  margin-bottom: 1.1rem;
+  color: #666;
+  position: relative;
+}        
+
+.liuxue-title{
+	
+	width:100%;
+	height: 3.5rem;
+	background: #fff; 
+	border-bottom:1px solid  #e7e8e9;text-align: center;
+}
+.liuxue-title span{color: #8c8c8c;font-size: 1.5rem;line-height: 3.6rem;}
+
+/*index16*/
+
+.course-pic-wrap{height:14.3rem;width:100%;background: url(../../i/bk2.png) no-repeat;text-align: center;}
+.one-pic{  
+  width: 7rem;
+  height: 7rem;
+  line-height: 7rem;
+  text-align: center;
+  border-radius: 7rem;
+  background: #d5d5d5;
+  margin-top: 1.3rem;
+  overflow: hidden;
+  max-width: 7rem;
+  max-height: 7rem;
+
+}
+
+.course-pic-wrap p{color:#49666e;font-size:1.5rem;margin-top: 0.3em}
+.one-loc{color:#49666e!important;}
+.one-phone{font-size: 1.4rem!important;color: #01b554!important;float: right;  margin-top: 0.2rem!important;margin-right: 5%;}
+.one-phone img{width:1.6rem; margin-left: 0.5rem;vertical-align: middle;margin-bottom: 0.4rem;}
+
+.one-int{color:#999;line-height:1.5rem;}
+
+
+/*index17*/
+.i17{    
+    margin-left: 4%;
+    vertical-align: middle;
+    margin-top: -1rem;
+    width: 1.1rem;
+  }
+
+
+.one-li{
+    width: 7rem;
+    height: 7rem;
+    line-height: 7rem;
+    text-align: center;
+    border-radius: 7rem;
+    background: #d5d5d5;
+    margin-top: 1rem;
+    overflow: hidden;
+    max-width: 7rem;
+    max-height: 7rem;
+    }
+.one-right{
+  display: block;
+  float: left;
+  width: 68%;
+}
+
+.call-num{
+    font-size: 1.4rem!important;
+    color: #01b554!important;
+    margin-top: 1rem!important;
+}
+
+.tag1{
+     display: block;
+     float: left;
+     text-align: center;
+     font-size: 1.2rem;
+  
+}
+
+.tag1 span,.tag2 span{
+     color:#fff;
+     padding-left:0.5rem;
+     padding-right:0.5rem;
+     margin-left: -0.1rem;
+     background:#6bce98;
+   }
+
+.tag2{
+     width:4.6rem; 
+     height:2rem;
+     display: block;
+     float: left;
+     text-align: center;
+     font-size: 1.2rem;
+     color:#fff;
+     margin-left:1rem;
+}
+.one-right li{
+              margin-top:0.5rem;
+               overflow: hidden;
+             }
+.one-right li:nth-child(3){color:#999;font-size: 1rem;}
+.one-li-wrap{
+    width:30%;
+    overflow: hidden;
+    display: block;
+    float: left;} 
+
+.trangle1{vertical-align: middle;margin-top: -0.35rem;height: 1.5rem}
+.dialog-p{margin-top:4rem;margin-left: 17%;width: 69%;}
+
+.temp{height:3.3rem;border-bottom:1px solid #d5d5d5;}
+.status{
+  font-size: 1.4rem;
+  float: right;
+  margin-right: 3%;
+  margin-top: 0.6rem;
+}
+ .xieyi{
+  
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  display: block;
+  float: left;
+  margin-left: 3%;
+}
+.one-price{font-size: 1.5rem;color:#666;}
+.yituikuan span{float:right;display: block;font-size: 1.5rem;color:#666;margin-right:3%;}
+.yituikuan{line-height: 3rem;}
+/*qr5*/
+.qr-tab{width:100%;background: #fff; height:3.65rem;border-bottom:1px solid #d5d5d5;}
+.qr-tab li{width:49.5%;height:3.65rem;border-right:1px solid #d5d5d5;float: left;display: block;text-align:center;}
+.qr-tab li:last-child{border-right:none;}
+.qr-tab li span{
+  
+  font-size: 1.4rem;
+  width: 53%;
+  height: 3.65rem;
+  display: block;
+  margin-left: 23%;
+  line-height:3.5rem 
+}
+
+.qr-cur{
+
+  color:#00b551 ;
+  border-bottom:#00b551  1px solid;
+}
+
+
+.submit-pingjia{width:100%;max-width:640px;height:4.5rem;background:#00b553;text-align:center;position:fixed ; bottom: 0}
+.submit-pingjia span{color:#fff;font-size:1.5rem;line-height:4.5rem;}
