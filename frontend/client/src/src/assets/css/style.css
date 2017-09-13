@@ -38,8 +38,63 @@ header .logo_c a img{
 header .logo_c a .logo1{
   width:1.1rem;
 }
-/*header end*/
-section{
+header .search_c{
+  height:1.2rem;
+  line-height:0.2rem;
+  display:flex;/*设为伸缩容器*/
+  flex-flow:row;/*伸缩项目单行排列*/
+  align-items: center;
+  justify-content: center;
+}
+header .search_c a{
+  float: left;
+  flex:1;
+  padding:0.15rem 0.3rem;
+
+}
+header .search_c .search_input{
+  float: left;
+  flex: 6 ;
+  position: relative;
+  box-sizing: border-box;
+  margin-left: -.2rem;
+}
+header .search_c .search_input input{
+  width: 100%;
+  border-radius: 1rem;
+  height: .55rem;
+  border:1px solid #ededed;
+  font-size: .2rem;
+  color: #666;
+  padding:0.1rem 0.6rem;
+  outline: 0;
+  background-color: #fff;
+  -webkit-appearance: none;
+}
+.search_c .seach_tit{
+  position: relative;
+  float: left;
+  z-index: 2;
+  flex:1;/*这里设置为占比1，填充满剩余空间*/
+}
+
+.search_c .seach_tit img{
+  width:0.48rem;
+}
+.search_input img{
+  width: 0.29rem;
+  position: absolute;
+  top: .27rem;
+  right:.2rem;
+
+}
+.search_input img:first-child{
+  left: .2rem;
+
+}
+
+  /*header end*/
+section form{
   padding:0.3rem;
 }
 section .form_list input{
@@ -153,6 +208,37 @@ section .form_list input{
   z-index: 1;
 
 }
+/*此处为学课内容图片引用*/
+.course_img{
+  background: url('../img/course.png')no-repeat center center;
+  /*background-size: 100% 100%;*/
+  display: inline-block;
+
+}
+.course_img1{
+  background-position: 0px  0px ;
+  width: 80px;
+  height: 80px;
+}
+.course_img2{
+  background-position:-.8rem 0;
+  width: 80px;
+  height: 80px;
+}
+.course_img3{
+  background-position:-160px 0;
+  width: 80px;
+  height: 80px;
+}
+.course_img4{
+  background-position:-240px 0;
+  width: 80px;
+  height: 80px;
+}
+
+
+
+/*此处为学课内容图片引用end*/
 /*此处为login 警告样式*/
 .form_warning{
   font-size:0.26rem;
@@ -172,5 +258,31 @@ section .form_list input{
   display: block;
   float: right;
   margin:.4rem 0;
-  
+
 }
+
+.list_border{
+  width:100%;
+  height:100%;
+  border-top:1px solid #ededed;
+  border-bottom:1px solid #ededed;
+  padding-left: .3rem;
+}
+.course_bg{
+  background: #fff;
+  mmargin-top: .3rem;
+}
+.course_bg li{
+   border-bottom:1px solid #ededed;
+   height: 1.4rem;
+   line-height: 1.4rem;
+ }
+.course_bg li:hover,.list_border li:active{
+  background: #ededed;
+  padding-left:-.3rem;
+}
+.course_bg li:last-child{
+  border-bottom:0px solid #ededed;
+}
+
+
