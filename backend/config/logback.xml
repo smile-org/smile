@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/smile_backend.log</file>
+        <!--maxHistory或者maxFileSize或者系统重启都会触发归档-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/%d{yyyy-MM-dd}_%i.log.zip</fileNamePattern><!--归档文件名,%i是索引,从0开始递增-->
+            <maxHistory>30</maxHistory><!--保留5天的日志-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20971520</maxFileSize><!--单个文件最大20m,超过此大小就归档,然后重新开一个文件-->
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%level] %logger\(line:%line\) - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%level] %logger\(line:%line\) - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--<logger name="com" level="INFO" additivity="false">&lt;!&ndash;此处指定com包下的log级别,additivity="false"指定自己的appender&ndash;&gt;-->
+        <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
+
+    <root level="INFO">  <!--root的level:代码中log的级别大于此处的level时,才触发appender(全局设置)-->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="all"/>
+    </root>
+</configuration>

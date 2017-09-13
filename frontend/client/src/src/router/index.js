@@ -9,6 +9,8 @@ import list from '@/views/list'
 
 Vue.use(Router)
 
+var requiresAuth = false
+
 export default new Router({
   mode: 'history',
   routes: [
@@ -21,31 +23,31 @@ export default new Router({
       path: '/',
       name: 'home',
       component: home,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: requiresAuth }
     },
     {
       path: '/me',
       name: 'me',
       component: me,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: requiresAuth }
     },
     {
       path: '/validation',
       name: 'validation',
       component: validation,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: requiresAuth }
     },
     {
       path: '/element',
       name: 'element',
       component: element,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: requiresAuth }
     },
     {
       path: '/list',
       name: 'list',
       component: list,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: requiresAuth }
     }
   ]
 })
