@@ -6,6 +6,7 @@ import login from '@/views/login'
 import validation from '@/views/validation'
 import element from '@/views/element'
 import list from '@/views/list'
+import verification from '@/views/verification'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: login
+    },
+    {
+      path: '/verification',
+      name: 'CodeVerification',
+      component: verification
     },
     {
       path: '/',
