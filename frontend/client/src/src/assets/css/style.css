@@ -213,27 +213,28 @@ section .form_list input{
   background: url('../img/course.png')no-repeat center center;
   /*background-size: 100% 100%;*/
   display: inline-block;
+  background-size: 3.2rem 0.81rem;
 
 }
 .course_img1{
   background-position: 0px  0px ;
-  width: 80px;
-  height: 80px;
+  width: .81rem;
+  height: 0.81rem;
 }
 .course_img2{
-  background-position:-.8rem 0;
-  width: 80px;
-  height: 80px;
+  background-position:-0.80rem 0;
+  width: .81rem;
+  height: 0.81rem;
 }
 .course_img3{
-  background-position:-160px 0;
-  width: 80px;
-  height: 80px;
+  background-position:-1.60rem 0;
+  width: .81rem;
+  height: .81rem;
 }
 .course_img4{
-  background-position:-240px 0;
-  width: 80px;
-  height: 80px;
+  background-position:-2.40rem 0;
+  width: .81rem;
+  height: 0.81rem;
 }
 
 
@@ -270,12 +271,12 @@ section .form_list input{
 }
 .course_bg{
   background: #fff;
-  mmargin-top: .3rem;
+  margin-top: .3rem;
 }
 .course_bg li{
    border-bottom:1px solid #ededed;
    height: 1.4rem;
-   line-height: 1.4rem;
+   line-height: 0.4rem;
  }
 .course_bg li:hover,.list_border li:active{
   background: #ededed;
@@ -284,5 +285,77 @@ section .form_list input{
 .course_bg li:last-child{
   border-bottom:0px solid #ededed;
 }
+.course_bg li span{
+   vertical-align: middle;
+  margin:.3rem 0;
+}
+.c_list_font{
+  vertical-align: middle;
+  font-size: .3rem;
+  color: #333;
+  margin-left: .3rem;
+}
+.course_bg li  .course_go{
+  background: url('../img/go.png')no-repeat center center;
+  background-size: 0.45rem 0.38rem;
+  display: inline-block;
+  margin:.5rem  .3rem;
+  width:0.45rem;
+  height:0.38rem;
+  top:.6rem;
+}
+/*课程详情页*/
+.course_banner img{
+  width:100%;
+  height: 2.4rem;
+}
+.course_tit{
+  width:100%;
+  padding-left: .3rem;
+  font-size: 0.28rem;
+  color: #333;
+  padding: .3rem;
+  boerder:1px solid #ededed;
+}
+.course_tit ul{
+  overflow:hidden;
+  margin-top: 0.15rem;
+}
+.course_tit li{
+  margin-right: .2rem;
+  font-size: .2rem;
+}
+.course_tit li:nth-child(3){
+  margin-right: 0;
+}
+.course_tit li span{
+  margin-right:.08rem;
+  vertical-align: middle;
+}
 
+.icon{
+  background: url('../img/icon.png')no-repeat center center;
+  background-size:1.19rem 0.25rem ;
+  display: inline-block;
+  width:0.24rem;
+  height:0.25rem;
+  vertical-align: middle;
+
+}
+.icon1{
+  background-position: 0 0;
+
+}
+.icon2{
+  background-position: -0.24rem 0;
+}
+.icon3{
+  background-position: -0.49rem 0;
+}
+.icon4{
+  background-position: -0.72rem 0;
+}
+.icon5{
+  background-position: -0.95rem 0;
+}
 
