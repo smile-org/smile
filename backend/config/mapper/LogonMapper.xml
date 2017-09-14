@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.LogonRepo">
+
+    <resultMap  id="UserMap" type="com.dli.entities.User">
+        <id column="user_id" property="user_id"/>
+        <result column="cell_phone" property="cell_phone"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="job_number" property="job_number"/>
+        <result column="avatar" property="avatar"/>
+        <result column="full_name" property="full_name"/>
+        <result column="company_id" property="company_id"/>
+        <result column="indicator" property="indicator"/>
+        <result column="created_at" property="created_at"/>
+        <result column="updated_at" property="updated_at"/>
+    </resultMap>
+
+    <select id="getUserByPhoneNumber"   resultMap="UserMap">
+        select * from user where cell_phone= #{0} and indicator=1
+    </select>
+
+    <select id="addSMS" >
+
+        INSERT INTO sms  VALUES (null, #{userid}, #{cellphone},  #{vcode},#{smstype},#{now});
+    </select>
+
+
+    <select id="checkSMS" resultType="int" >
+        select count(*)  from  sms where  cell_phone =#{cellphone} and code=#{vcode} and TIMESTAMPDIFF(SECOND  , created_at,now()) &lt;=300;
+    </select>
+
+    <select id="updatePwdByCellphone">
+        update user set password=#{pwd} where cell_phone=#{cellphone}
+    </select>
+
+    <select id="logon"  resultType="int">
+
+        select count(*) from user where cell_phone=#{cellphone} and password=#{pwd}
+
+    </select>
+
+</mapper>
