@@ -57,7 +57,7 @@ export default {
     login: '/users/login',
     changePWD: '/users/changePWD',
     getCode: '/users/getCode',
-    verifyCode: '/users/verifyCode'
+    verifyCode: '/users/verifyCode',
+    resetPassword: '/users/resetPassword'
   }
-
 }
