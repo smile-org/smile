@@ -55,7 +55,9 @@ export default {
 
   uri: {
     login: '/users/login',
-    changePWD: '/users/changePWD'
+    changePWD: '/users/changePWD',
+    getCode: '/users/getCode',
+    verifyCode: '/users/verifyCode'
   }
 
 }
