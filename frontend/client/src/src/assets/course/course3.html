@@ -44,7 +44,7 @@
   </header>
   <section>
      <div class="course_banner">
-       <img src="../img/banner_02.png"/>
+       <img src="../img/banner_03.png"/>
      </div>
     <div class="course_tit">
        <h3>销售经理十大必杀技</h3>
@@ -64,39 +64,38 @@
            <span class="icon icon3"></span>
          </li>
        </ul>
+
     </div>
     <ul class="course_nav " id="nav">
-      <li class="cur"><a href="">课程信息</a></li>
-      <li class=""><a href="">课程目录</a></li>
+      <li class=""><a href="">课程信息</a></li>
+      <li class="cur"><a href="">课程目录</a></li>
       <li class=""><a href="">课程评价</a></li>
     </ul>
-    <ul class="list_border course_con">
-      <li class="">
-          <span>责任人 :</span>  王小明
+
+    <ul class="list_border course_con a_v">
+      <li class="con_list a">
+        <a>
+          <span class="media_img media_img1"></span>
+          <span class="c_list_font">1.1 视频名称.mp4</span>
+        </a>
       </li>
-      <li>
-        <span>部门 :</span>  销售部
+      <li class="con_list">
+        <a>
+          <span class="media_img media_img2"></span>
+          <span class="c_list_font">1.2 Powerpoint.ppt</span>
+        </a>
       </li>
-      <li>
-        <span>有效期 :</span>  2017-10-16
+      <li class="con_list">
+        <a>
+          <span class="media_img media_img3"></span>
+          <span class="c_list_font">1.3 word.doc</span>
+        </a>
       </li>
-      <li>
-        <span>课程简介 :</span>
-        <p>
-          We all know that environment is so important to ourselves and our future generations.
-          Natural resources have been depleted in an unprecedented scale. The environment has been polluted in a way that never happened before.
-          It is certain that the world and all the living organism on it are going straight to hell.
-          But why those in power, no matter how loud they speak out environmental protection, very few of them really care. The reason is simple.
-          Human beings are greedy in nature. In ancient times, technology is lacking,
-          human beings did not have the right tool to exploit the nature on large scale.
-          With industrial revolution and the development of science and technology,
-          these things can be achieved with relative ease. It can be said that the development of science can be a gospel and a curse on human race at the same time.
-          It is more than certain that the world is going straight to hell. Climate change comes at an unprecedented rate. We can see all the polar ice sheet melt in our own lifetime.
-          Cities by the sea will be flooded. Summer will get unbearably hot. Almost all the natural resources will be depleted. It is not that world leaders are unaware of this ,
-          but because of their greed no one is able to put the interest of the general public and future generations over their own pride. Development sounds an untouchable truth.
-          Anything that comes in its way will be neglected. One thing that we never ponder is that the space and resources on this planet is limited which means that the raw material and space for development is also limited.
-          Now matter how great and intelligent human beings might be, we have our own weakness. The more intelligent a creature is, the more physically vulnerable it is. With the worsening of the living environment, one can
-        </p>
+      <li class="con_list">
+        <a>
+          <span class="media_img media_img4"></span>
+          <span class="c_list_font">1.4 Img.jpg</span>
+        </a>
       </li>
     </ul>
   </section>
@@ -105,20 +104,20 @@
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-  new Vue({
-    el: '#app',
-    data: function() {
-      return {
-        visible: false,
-        heartActive:true,
-      }
-    },
-    methods : {
+    new Vue({
+        el: '#app',
+        data: function() {
+          return {
+            visible: false,
+            heartActive:true,
+          }
+        },
+      methods : {
       heartClick : function() {
         this.heartActive = this.heartActive ? false : true;
       }
     }
-  })
+    })
 </script>
 </body>
 </html>
