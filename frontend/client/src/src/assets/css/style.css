@@ -144,10 +144,34 @@ section .form_list input{
   margin-top:.5rem;
 }
 .login_btn:hover{
-  opacity: .7;
+  background: #04df68;
 }
 .login_btn:active{
-  opacity: .7;
+  background: #04df68;
+}
+.exam_btn{
+  font-size: .32rem;
+  border-radius: 2rem;
+  background: #fff;
+  padding:.12rem .3rem;
+  border: 1px solid;
+  outline: none;
+  margin:0 .1rem
+
+}
+.orange_b{
+  color: #fc7a06;
+  border-color: #fc7a06;
+}
+.green_b{
+  color: #00b553;
+  border-color: #00b553;
+}
+.exam_btn:hover{
+  opacity: .5;
+}
+.exam_btn:active{
+  opacity: .5;
 }
 /*此处为各种引用图片路径*/
 .login_icon1{
@@ -190,6 +214,13 @@ section .form_list input{
   height:1.7rem;
   margin:0.36rem auto;
 }
+.face_img2{
+  background: url('../img/face_img2.png')no-repeat center center;
+  background-size: 100% 100%;
+  width:1.5rem;
+  height:1.7rem;
+  margin:0.36rem auto;
+}
 .face_font{
   font-size:0.32rem;
   color: #999;
@@ -211,30 +242,13 @@ section .form_list input{
 }
 /*此处为学课内容图片引用*/
 .course_img{
-  background: url('../img/course.png')no-repeat center center;
-  display: inline-block;
-  background-size: 3.2rem 0.81rem;
-
-}
-.course_img1{
-  background-position: 0px  0px ;
   width: .81rem;
   height: 0.81rem;
-}
-.course_img2{
-  background-position:-0.80rem 0;
-  width: .81rem;
-  height: 0.81rem;
-}
-.course_img3{
-  background-position:-1.60rem 0;
-  width: .81rem;
-  height: .81rem;
-}
-.course_img4{
-  background-position:-2.40rem 0;
-  width: .81rem;
-  height: 0.81rem;
+  max-width:.81rem;
+  max-height:.81rem;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-bottom: .1rem;
 }
 /*此处为各种小的icon*/
 .icon{
@@ -341,16 +355,16 @@ section .form_list input{
   position: absolute;
   content: "";
   display: block;
-  border-top: 2px solid #e5e5e5;;
-  border-left: 2px solid #e5e5e5;;
+  border-top: 0.02rem solid #e5e5e5;;
+  border-left: 0.02rem solid #e5e5e5;;
   -webkit-transform-origin: 50%;
   transform-origin: 50%;
   -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
   right: .3rem;
-  width: 0.3rem;
-  height: 0.3rem;
-  top: .5rem;
+  width: 0.2rem;
+  height: 0.2rem;
+  top: .45rem;
 }
 .course_bg li:after,.course_con li:before{
   content: "";
@@ -409,6 +423,7 @@ section .form_list input{
   padding:.2rem .3rem;
   border:1px solid #ededed;
   background: #ffffff;
+  position: relative;
 }
 .course_tit ul{
   overflow:hidden;
@@ -514,3 +529,58 @@ section .form_list input{
   color: #00b553;
   border: 1px solid #00b553;
 }
+/*我要考试系列样式*/
+.repeat_pic{
+  width:0.68rem;
+  position: absolute;
+  top: -.1rem;
+}
+.exam_peo{
+  position:absolute;
+  right: .3rem;
+  top:.3rem;
+  font-size: .2rem;
+}
+.exam_hight{
+  min-height: .5rem;
+  line-height: .5rem;
+}
+
+.btn_position{
+  position: fixed;
+  bottom:0;
+  right: 0;
+  border-radius: 0;
+  z-index: 999;
+}
+.tab_con{
+  padding-bottom:1.1rem;
+}
+.exam_inf{
+  font-size:.3rem;
+  color: #666666;
+
+}
+.course_con li .exam_inf p span{
+  font-size:.2rem;
+  vertical-align: bottom;
+}
+.course_con li  .exam_inf p .o_s{
+  font-size:.36rem;
+  font-weight: bold;
+  color: #fc7a06;
+  margin-right:.05rem;
+}
+.exam_inf .exam_time{
+  width:0.25rem;
+  margin-right: .05rem;
+  vertical-align: middle;
+  margin-top: -0.03rem;
+}
+.exam_inf div{
+  font-size: .28rem;
+  color: #666;
+  margin-top: .02rem;
+  padding-bottom:.1rem;
+}
+
