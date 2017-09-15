@@ -17,8 +17,6 @@ public class HomeController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    String abc = "123123";
-
     @Autowired
     private DemoService demoService;
 

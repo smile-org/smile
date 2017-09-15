@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.CourseRepo">
+
+    <resultMap type="com.dli.entities.Course" id="CourseMap">
+        <id column="course_id" property="course_id"/>
+        <result column="category_id" property="category_id"/>
+        <result column="title" property="title"/>
+        <result column="principal_user_id" property="principal_user_id"/>
+        <result column="department" property="department"/>
+        <result column="expiration_date" property="expiration_date"/>
+        <result column="intro" property="intro"/>
+        <result column="icon" property="icon"/>
+        <result column="pic" property="pic"/>
+        <result column="type_id" property="type_id"/>
+        <result column="company_id" property="company_id"/>
+        <result column="indicator" property="indicator"/>
+        <result column="created_at" property="created_at"/>
+        <result column="updated_at" property="updated_at"/>
+    </resultMap>
+
+
+    <resultMap type="com.dli.entities.CourseCategory" id="CategoryMap">
+        <id column="category_id" property="category_id"/>
+        <result column="category_name" property="category_name"/>
+        <result column="company_id" property="company_id"/>
+        <result column="indicator" property="indicator"/>
+        <result column="created_at" property="created_at"/>
+        <result column="updated_at" property="updated_at"/>
+    </resultMap>
+
+
+    <resultMap type="com.dli.entities.CourseComment" id="CommentMap">
+        <id column="comment_id" property="comment_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="course_id" property="course_id"/>
+        <result column="star" property="star"/>
+        <result column="comments" property="comments"/>
+        <result column="created_at" property="created_at"/>
+
+    </resultMap>
+
+
+
+    <resultMap type="com.dli.entities.CourseContent" id="ContentMap">
+        <id column="content_id" property="content_id"/>
+        <result column="sequnce_num" property="sequnce_num"/>
+        <result column="sequnce_title" property="sequnce_title"/>
+        <result column="content" property="content"/>
+        <result column="orignal_path" property="orignal_path"/>
+        <result column="content_link" property="content_link"/>
+        <result column="content_type" property="content_type"/>
+        <result column="course_id" property="course_id"/>
+        <result column="indicator" property="indicator"/>
+        <result column="created_at" property="created_at"/>
+        <result column="updated_at" property="updated_at"/>
+    </resultMap>
+
+
+</mapper>

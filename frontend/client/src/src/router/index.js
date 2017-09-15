@@ -7,23 +7,35 @@ import validation from '@/views/validation'
 import element from '@/views/element'
 import list from '@/views/list'
 import verification from '@/views/verification'
+import resetPassword from '@/views/resetPassword'
+import resetDonePassword from '@/views/resetDonePassword'
 
 Vue.use(Router)
 
-var requiresAuth = false
+var requiresAuth = true
 
 export default new Router({
   mode: 'history',
   routes: [
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: login
     },
     {
       path: '/verification',
-      name: 'CodeVerification',
+      name: 'codeVerification',
       component: verification
+    },
+    {
+      path: '/resetPassword',
+      name: 'passwordReset',
+      component: resetPassword
+    },
+    {
+      path: '/resetPassword/done',
+      name: 'passwordResetDone',
+      component: resetDonePassword
     },
     {
       path: '/',

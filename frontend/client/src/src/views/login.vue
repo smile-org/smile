@@ -21,7 +21,7 @@
         <img class="warnning_img" src="../assets/img/warnning.png" />{{errorMessage}}
       </p>
       <!--<a href="#" class="unable_login">无法登陆，点击找回密码</a>-->
-      <router-link :to="{name: 'CodeVerification'}" class="unable_login">无法登陆，点击找回密码</router-link>
+      <router-link :to="{name: 'codeVerification'}" class="unable_login">无法登陆，点击找回密码</router-link>
       <button class="login_btn" :disabled="$v.username.$invalid || $v.password.$invalid" v-on:click='login'>登 录</button>
     </section>
   </div>

@@ -58,6 +58,10 @@ export default {
       timer: null
     }
   },
+  created () {
+    sessionStorage.removeItem('smile_username')
+    sessionStorage.removeItem('smile_code')
+  },
   validations: {
     username: {
       required
@@ -67,10 +71,8 @@ export default {
     }
   },
   methods: {
-
-    // history.back()
     goBack: function () {
-      router.go(-1)
+      router.push({ name: 'login' })
     },
 
     // 通过手机号获取验证码
@@ -82,24 +84,24 @@ export default {
         return
       }
       const TIME_COUNT = 10
-      if (!this.timer) {
-        this.countDown = TIME_COUNT
-        this.showCode = false
-        this.timer = setInterval(() => {
-          if (this.countDown > 0 && this.countDown <= TIME_COUNT) {
-            this.countDown--
-          } else {
-            this.showCode = true
-            clearInterval(this.timer)
-            this.timer = null
-          }
-        }, 1000)
-      }
       var uri = api.uri.getCode
-      api.post(uri, {cellphone: this.username}).then(data => {
+      api.post(uri, { cellphone: this.username }).then(data => {
         if (data.status === 1) {
           this.showError = false
           this.errorMessage = ''
+          if (!this.timer) {
+            this.countDown = TIME_COUNT
+            this.showCode = false
+            this.timer = setInterval(() => {
+              if (this.countDown > 0 && this.countDown <= TIME_COUNT) {
+                this.countDown--
+              } else {
+                this.showCode = true
+                clearInterval(this.timer)
+                this.timer = null
+              }
+            }, 1000)
+          }
         } else {
           this.showError = true
           this.errorMessage = data.result
@@ -113,9 +115,11 @@ export default {
     // 提交验证码
     verifyCode: function () {
       var uri = api.uri.verifyCode
-      api.post(uri, {cellphone: this.username, code: this.code}).then(data => {
+      api.post(uri, { cellphone: this.username, code: this.code }).then(data => {
         if (data.status === 1) {
-          router.push({name: 'resetPassword'})
+          sessionStorage.setItem('smile_username', this.username)
+          sessionStorage.setItem('smile_code', this.code)
+          router.push({ name: 'passwordReset' })
         } else {
           this.showError = true
           this.errorMessage = data.result
