@@ -772,14 +772,69 @@ footer .exam_b .btn span{
 }
 /*此处为弹出框*/
 .popup_box{
-  margin:.3rem;
-  min-height:2rem;
-  width:100%;
-  background: #fff;
-  position: absolute;
-  left: .3rem;
-  right:.3rem;
-  top:1rem;
-  z-index: 5;
-
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%,-50%,0);
+  transform: translate3d(-50%,-50%,0);
+  background-color: #fff;
+  width: 85%;
+  min-height: 2rem;
+  border-radius: .1rem;
+  font-size: .32rem;
+  padding:.3rem;
+  -webkit-user-select: none;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: .2s;
+  transition: .2s;
+  z-index: 111;
+  box-sizing: border-box;
+}
+.c-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom:0;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  background: #000;
+  z-index: 2;
+  pointer-events:none
+}
+.q_num{
+  max-height:3rem;
+  margin-top:.3rem;
+  overflow-y: scroll ;
+}
+.q_num li{
+  width: .78rem;
+  height:.78rem;
+  color: #666;
+  line-height: 0.78rem;
+  text-align: center;
+  border-radius: .78rem;
+  vertical-align: middle;
+  display: inline-block;
+  border: 1px solid #ededed;
+  margin:0 .15rem .3rem;
+  background: #dedede;
+}
+.popup_box  .c_g{
+  background: #00b553;
+  color: #fff;
+}
+.popup_box  .c_o{
+  background: #fc7a06;
+  color: #fff;
+}
+.dio_btn .btn{
+  font-size: .28rem;
+  border-radius: .08rem;
+  padding: .15rem .5rem;
+  border: 1px solid;
+  outline: none;
+  margin: 0 .1rem;
 }

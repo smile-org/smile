@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--<meta id=”viewport” name=”viewport” content=”width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”>-->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name=”MobileOptimized” content=”320″>
+  <meta name=”format-detection” content=”telephone=no”>
+  <title>smile</title>
+  <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+ <script>
+
+(function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth>=640){
+                    docEl.style.fontSize = '100px';
+                }else{
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+
+</script>
+  <style>
+    .el-pager li.active {
+      border-color: #20a0ff;
+      background-color: #20a0ff;
+      color: #fff;
+      cursor: default;
+    }
+    .el-pager li.c_g{
+      background: #00b553;
+      color: #fff;
+    }
+    .el-pager li.c_o{
+      background: #fc7a06;
+      color: #fff;
+    }
+    .el-pager li .c_grey{
+      background: #dedede;
+      color: #666;
+    }
+    .el-pagination {
+      padding: .02rem .05rem;
+    }
+    .el-pagination .btn-prev {
+      border-radius: 0.02rem 0 0 0.02rem;
+    }
+    .el-pagination button {
+      padding: 0 6px;
+    }
+    .el-pagination button, .el-pagination span {
+      font-size: .24rem;
+      min-width: 0.55rem;
+      height: 0.55rem;
+      line-height:0.55rem;
+
+    }
+    .el-pager li {
+      padding: 0 0.02rem;
+      font-size:0.24rem;
+      min-width: 0.55rem;
+      height: 0.55rem;
+      line-height: 0.55rem;
+    }
+    .el-pager li.btn-quicknext, .el-pager li.btn-quickprev {
+      line-height: 0.55rem;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+<header>
+  <div class="logo_c">
+    <a class="tl" href="../course/course.html"><img src="../img/back.png" alt="返回"/></a>
+    <a class="tc" href="../course/course3.html"><img src="../img/logo.png" alt="smile"  class="logo1"/></a>
+    <a class="tr" href="../course/course5.html"><img src="../img/home.png" alt="更多" /></a>
+  </div>
+  </header>
+  <section>
+     <div class="course_banner">
+       <a href=""><img src="../img/banner_05.png"/></a>
+     </div>
+    <el-row class="course_tit">
+      <el-col :span="16"><h3>销售经理十大必杀技</h3></el-col>
+      <el-col :span="4" class="tc"><a class="exam_green">答题卡</a></el-col>
+      <el-col :span="4" class="tr" id=""  @click="dialogVisible = true"><a class="exam_green">交卷</a></el-col>
+    </el-row>
+    <div class="course_tit mt3">
+        <ul class="exam_circle">
+            <li>
+               <span class="c_g c_style"></span>
+               <span>已答</span>
+            </li>
+          <li>
+            <span class="c_o c_style"></span>
+            <span>存疑</span>
+          </li>
+          <li>
+            <span class="c_grey c_style"></span>
+            <span>未答</span>
+          </li>
+          <li>
+            剩余时间<span class="big_g">60</span>分钟
+          </li>
+        </ul>
+      <div class="block mt3">
+        <el-pagination
+          layout="prev, pager, next"
+          :total="80">
+        </el-pagination>
+      </div>
+    </div>
+    <div class="course_tit mt3 subject_list mb3hafe">
+      <h4>1/5 单选题</h4>
+      <dl class="">
+        <dt class="mt1">这里是第一个问题，请选择你想选出的答案。</dt>
+        <dd><span class="choose_a c_g">A</span>用来计算的仪器</dd>
+        <dd><span class="choose_a">B</span>用来计算的仪器 </dd>
+        <dd><span class="choose_a c_o">C</span>用来计算的仪器.</dd>
+        <dd><span class="choose_a">D</span>用来计算的仪器</dd>
+      </dl>
+    </div>
+  </section>
+  <footer>
+    <el-row class="exam_b">
+      <el-col class="btn active" :span="8">下一题</el-col>
+      <el-col class="btn" :span="8"><span>标记存疑</span></el-col>
+      <el-col class="btn" :span="8">上一题</el-col>
+    </el-row>
+  </footer>
+  <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
+  <el-dialog
+    title="提示"
+    :visible.sync="dialogVisible"
+    size="tiny"
+    :before-close="handleClose">
+    <span>这是一段信息</span>
+    <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+  </el-dialog>
+  <!--<div class="popup_box">-->
+    <!--<p>考试题尚未答完，确定交卷么？</p>-->
+    <!--<p class="font22 mt1">提示：如中途退出，将按当前的答题情况交卷，并扣除一次考试机会</p>-->
+    <!--<ul class="q_num">-->
+      <!--<li class="c_o">1</li>-->
+      <!--<li class="c_o">1</li>-->
+      <!--<li>1</li>-->
+      <!--<li class="c_g">1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li> <li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li> <li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li> <li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li> <li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li> <li>1</li>-->
+
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+      <!--<li>1</li>-->
+
+
+    <!--</ul>-->
+    <!--<div class="el-row dio_btn mt3">-->
+      <!--<div class="el-col el-col-12">-->
+        <!--<button type="button" class="c_o btn fr ">确定</button>-->
+      <!--</div>-->
+      <!--<div class="el-col el-col-12">-->
+        <!--<button type="button" class="c_g  btn fl">取消</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="c-modal">-->
+  </div>
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data:{
+
+                visible: false,
+                heartActive:true,
+                value5: 3,
+                dialogVisible: false
+
+
+        },
+        methods : {
+          heartClick : function() {
+            this.heartActive = this.heartActive ? false : true;
+          },
+          handleClose(done) {
+            this.$confirm('确认关闭？')
+              .then(_ => {
+              done();
+          })
+          .catch(_ => {});
+          }
+        }
+    })
+</script>
+</body>
+</html>

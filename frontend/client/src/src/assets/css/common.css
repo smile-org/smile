@@ -51,13 +51,24 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .mt3{
   margin-top:.3rem;
 }
+.mt2{
+  margin-top:.2rem;
+}
 .mt1{
   margin-top:.1rem;
 }
 .mb3hafe{
   margin-bottom:1.5rem;
 }
-
+.font22{
+   font-size:.22rem;
+ }
+.font26{
+  font-size:.26rem;
+}
+.font28{
+  font-size:.28rem;
+}
 ::-webkit-input-placeholder{
   color:#999!important;}
 /*字体颜色*/
