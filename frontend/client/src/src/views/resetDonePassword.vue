@@ -8,9 +8,11 @@
       </div>
     </header>
     <section>
-      <div class=" face_img1"></div>
-      <p class="face_font">恭喜您，密码修改成功</p>
-      <button class="login_btn" type="button" v-on:click="login" >立即登录</button>
+      <div class="p3">
+        <div class=" face_img1"></div>
+        <p class="face_font">恭喜您，密码修改成功</p>
+        <button class="login_btn" type="button" v-on:click="login" >立即登录</button>
+      </div>
     </section>
   </div>
 </template>

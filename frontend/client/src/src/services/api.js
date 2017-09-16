@@ -4,7 +4,7 @@ import conf from '../config/index.js'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
 
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = 'http://192.168.0.108:3000'
 
 /**
  * 拦截器， 对所有的请求。
@@ -54,10 +54,28 @@ export default {
   },
 
   uri: {
-    login: '/users/login',
+    login: '/login',
     changePWD: '/users/changePWD',
-    getCode: '/users/getCode',
-    verifyCode: '/users/verifyCode',
-    resetPassword: '/users/resetPassword'
+    getCode: '/getVerificationCode',
+    verifyCode: '/checkVerificationCode',
+    resetPassword: '/updatePassword',
+    // 获取课程分类
+    getCourseCategories: '/getCategoryList',
+    // 根据课程分类获取课程列表
+    getCourseByCategoryId: '/users/getCourseByCategoryId',
+    // 获取特定课程
+    getCourse: '/getCourseByID',
+    // 获取特定课程目录
+    getCourseContent: '/getCourseContentListByID',
+    // 获取特定课程评论
+    getCourseComment: '/getCourseCommentList',
+    // 提交课程评论
+    submitCourseComments: '/addCourseComment',
+    // 点开具体课程目录开始学习
+    startCourse: '/clickCourseContent',
+    // 收藏课程
+    favoriteCourse: '/addCourseCollection',
+    // 取消收藏课程
+    cancelFavoriteCourse: '/cancelCourseCollection'
   }
 }

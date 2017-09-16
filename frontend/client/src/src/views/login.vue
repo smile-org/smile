@@ -8,21 +8,23 @@
       </div>
     </header>
     <section>
-      <div class="login_a sologan1"></div>
-      <div class="form_list">
-        <span class=" login_icon1"></span>
-        <el-input type="text" placeholder="请输入用户名" v-model.trim="username" @input="$v.username.$touch()"></el-input>
+      <div class="p3">
+        <div class="login_a sologan1"></div>
+        <div class="form_list">
+          <span class=" login_icon1"></span>
+          <el-input type="text" placeholder="请输入用户名" v-model.trim="username" @input="$v.username.$touch()"></el-input>
+        </div>
+        <div class="form_list">
+          <span class="login_icon2"></span>
+          <el-input type="password" placeholder="请输入密码" errormsg="密码长度为6-16位" v-model.trim="password" @input="$v.password.$touch()"></el-input>
+        </div>
+        <p class="form_warning" v-show="showError">
+          <img class="warnning_img" src="../assets/img/warnning.png" />{{errorMessage}}
+        </p>
+        <!--<a href="#" class="unable_login">无法登陆，点击找回密码</a>-->
+        <router-link :to="{name: 'codeVerification'}" class="unable_login">无法登陆，点击找回密码</router-link>
+        <button class="login_btn" :disabled="$v.username.$invalid || $v.password.$invalid" v-on:click='login'>登 录</button>
       </div>
-      <div class="form_list">
-        <span class="login_icon2"></span>
-        <el-input type="password" placeholder="请输入密码" errormsg="密码长度为6-16位" v-model.trim="password" @input="$v.password.$touch()"></el-input>
-      </div>
-      <p class="form_warning" v-show="showError">
-        <img class="warnning_img" src="../assets/img/warnning.png" />{{errorMessage}}
-      </p>
-      <!--<a href="#" class="unable_login">无法登陆，点击找回密码</a>-->
-      <router-link :to="{name: 'codeVerification'}" class="unable_login">无法登陆，点击找回密码</router-link>
-      <button class="login_btn" :disabled="$v.username.$invalid || $v.password.$invalid" v-on:click='login'>登 录</button>
     </section>
   </div>
 </template>
@@ -61,17 +63,12 @@ export default {
       var uri = api.uri.login
       api.post(uri, { cellphone: this.username, pwd: this.password }).then(data => {
         if (data.status === 1) {
-          if (!data.token) {
-            this.showError = true
-            this.errorMessage = '未知错误，请重新登录'
-          } else {
-            this.showError = false
-            this.errorMessage = ''
-            // 存储token到sessionStorage
-            sessionStorage.setItem('smile', data.token)
-            // 跳转到首页
-            router.push({ name: 'home' })
-          }
+          this.showError = false
+          this.errorMessage = ''
+          // 存储token到sessionStorage
+          sessionStorage.setItem('smile', data.result)
+          // 跳转到首页
+          router.push({ name: 'homepage' })
         } else {
           this.showError = true
           this.errorMessage = '手机号码或密码错误，请重新输入'

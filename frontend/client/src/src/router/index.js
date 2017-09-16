@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/views/home/home'
+import homepage from '@/views/homepage/index'
 import me from '@/views/home/me'
 import login from '@/views/login'
-import validation from '@/views/validation'
-import element from '@/views/element'
 import list from '@/views/list'
 import verification from '@/views/verification'
 import resetPassword from '@/views/resetPassword'
 import resetDonePassword from '@/views/resetDonePassword'
+import getCourseCategories from '@/views/course/list'
+import getCourses from '@/views/course/courseList'
+import getCourseDetails from '@/views/course/detail'
+import commentCourse from '@/views/course/comment'
 
 Vue.use(Router)
 
@@ -38,27 +40,35 @@ export default new Router({
       component: resetDonePassword
     },
     {
+      path: '/getCourseCategories',
+      name: 'courseCategories',
+      component: getCourseCategories
+    },
+    {
+      path: '/getCourses',
+      name: 'courses',
+      component: getCourses
+    },
+    {
+      path: '/getCourseDetails',
+      name: 'courseDetails',
+      component: getCourseDetails
+    },
+    {
+      path: '/commentCourse',
+      name: 'courseComment',
+      component: commentCourse
+    },
+    {
       path: '/',
-      name: 'home',
-      component: home,
+      name: 'homepage',
+      component: homepage,
       meta: { requiresAuth: requiresAuth }
     },
     {
       path: '/me',
       name: 'me',
       component: me,
-      meta: { requiresAuth: requiresAuth }
-    },
-    {
-      path: '/validation',
-      name: 'validation',
-      component: validation,
-      meta: { requiresAuth: requiresAuth }
-    },
-    {
-      path: '/element',
-      name: 'element',
-      component: element,
       meta: { requiresAuth: requiresAuth }
     },
     {
