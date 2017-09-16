@@ -24,4 +24,6 @@ public interface LogonRepo {
     int logon(@Param("pwd") String  pwd,@Param("cellphone") String  cellphone);
 
     User getUserByID(@Param("id")  int id);
+
+    User getUserByToken(String token);
 }

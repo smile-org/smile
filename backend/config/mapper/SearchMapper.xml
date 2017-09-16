@@ -22,4 +22,5 @@
         select keyword  from (
 select  keyword ,count(search_id)  as count from  search_history    where item_type=#{type}  group by keyword  order by count desc  limit  0,4)t;
     </select>
+
 </mapper>

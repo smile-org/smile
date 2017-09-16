@@ -29,14 +29,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourseByID(int id) {
-        return courseRepo.getCourseByID(id);
+    public Course getCourseByID(int id,int userid ) {
+        return courseRepo.getCourseByID(id, userid);
     }
 
-    @Override
-    public void addCourseCollection(int userid, int courseid, Date now) {
-        courseRepo.addCourseCollection(userid, courseid, now);
-    }
+
 
     @Override
     public boolean courseCollected(int courseid, int userid) {
@@ -52,8 +49,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseComment> getCourseCommentList() {
-        return courseRepo.getCourseCommentList();
+    public List<CourseComment> getCourseCommentList(int courseid ) {
+        return courseRepo.getCourseCommentList(courseid);
     }
 
     @Override
@@ -91,6 +88,11 @@ public class CourseServiceImpl implements CourseService {
            return "该课程所有目录初始化完成";
        }
 
+    }
+
+    @Override
+    public List<Course> searchCourse(String keyword) {
+        return   courseRepo.searchCourse(keyword);
     }
 
 

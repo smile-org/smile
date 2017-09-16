@@ -43,4 +43,9 @@
     <select id="getUserByID" resultMap="UserMap">
         select * from user where user_id=#{id};
     </select>
+
+    <select id="getUserByToken" resultMap="UserMap">
+        select * from user where token=#{token}
+    </select>
+
 </mapper>

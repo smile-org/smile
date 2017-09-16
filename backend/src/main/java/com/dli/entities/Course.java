@@ -23,6 +23,15 @@ public class Course {
     private  int study_count;
     private  int collect_count;
     private   String  principal_user_idName;
+    private   int courseCollected;
+
+    public int getCourseCollected() {
+        return courseCollected;
+    }
+
+    public void setCourseCollected(int courseCollected) {
+        this.courseCollected = courseCollected;
+    }
 
     public String getPrincipal_user_idName() {
         return principal_user_idName;

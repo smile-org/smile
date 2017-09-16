@@ -13,6 +13,7 @@ public class User {
     private String avatar;
     private String full_name;
     private int company_id;
+    private String token;
     private Boolean indicator;
     private Date created_at;
     private Date updated_at;
@@ -81,6 +82,15 @@ public class User {
     public void setCompany_id(int company_id) {
         this.company_id = company_id;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
 
     public Boolean getIndicator() {
         return indicator;

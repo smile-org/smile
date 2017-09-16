@@ -32,9 +32,10 @@ public class LogonController {
         *
         * */
 
+        Map<String, Object> result = new HashMap<String, Object>();
         try {
 
-            Map<String, Object> result = new HashMap<String, Object>();
+
             User u = logonService.getUserByPhoneNumber(cellphone);
 
             if (u == null) {
@@ -49,21 +50,27 @@ public class LogonController {
                 result.put(Constant.result, "验证码已发送");
 
             }
-            return result;
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            throw ex;
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
         }
+        return result;
     }
 
 
-    @RequestMapping(value = "/checkVerificationCode", method = RequestMethod.GET)
-    public Map checkVerificationCode(String cellphone, String vcode) {
+    @RequestMapping(value = "/checkVerificationCode", method = RequestMethod.POST)
+    public Map checkVerificationCode(@RequestBody Map body) {
 
         //  check phone number  and vcode ,crated in  5minutes
+
+        Map<String, Object> result = new HashMap<String, Object>();
         try {
-            Map<String, Object> result = new HashMap<String, Object>();
+
+
+            String  cellphone =(String)body.get("cellphone");
+            String  vcode =(String)body.get("vcode");
 
             if (logonService.checkSMS(cellphone, vcode)) {
 
@@ -75,21 +82,28 @@ public class LogonController {
                 result.put(Constant.result, "验证码输入错误");
             }
 
-            return result;
+
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            throw ex;
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
         }
-
+        return result;
 
     }
 
 
     @RequestMapping(value = "/logon", method = RequestMethod.POST)
-    public Map logon(String cellphone, String pwd) {
+    public Map logon(@RequestBody Map body) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
 
         try {
-            Map<String, Object> result = new HashMap<String, Object>();
+
+
+
+            String  pwd =(String)  body.get("pwd");
+            String   cellphone=(String)  body.get("cellphone");
 
             if (logonService.logon(pwd, cellphone)) {
 
@@ -101,21 +115,26 @@ public class LogonController {
                 result.put(Constant.status, 0);
                 result.put(Constant.result, "用户名或密码错误");
             }
-
-            return result;
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            throw ex;
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
         }
+        return result;
     }
 
 
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
-    public Map updatePassword(String cellphone, String pwd, String vcode) {
+    public Map updatePassword(@RequestBody Map body) {
 
         // 先检查验证码 然后再改密码
+        Map<String, Object> result = new HashMap<String, Object>();
         try {
-            Map<String, Object> result = new HashMap<String, Object>();
+
+
+            String  pwd =(String)  body.get("pwd");
+            String   cellphone=(String)  body.get("cellphone");
+            String   vcode=(String)  body.get("vcode");
 
             if (logonService.checkSMS(cellphone, vcode)) {
                 logonService.updatePwdByCellphone(pwd, cellphone);
@@ -128,30 +147,32 @@ public class LogonController {
                 result.put(Constant.result, "验证码输入错误");
             }
 
-            return result;
+
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            throw ex;
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
         }
+        return result;
     }
 
   //暂时没用到
     @RequestMapping(value = "/getUserByID", method = RequestMethod.GET)
     public Map getUserByID(int id) {
-
+        Map<String, Object> result = new HashMap<String, Object>();
         try {
-            Map<String, Object> result = new HashMap<String, Object>();
 
             User u = logonService.getUserByID(id);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, u);
 
-
-            return result;
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            throw ex;
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());;
         }
+        return result;
     }
+
 }
