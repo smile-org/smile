@@ -91,9 +91,7 @@ header .search_c .search_input input{
 }
 .search_input img:first-child{
   left: .2rem;
-
 }
-
   /*header end*/
 section form{
   padding:0.3rem;
@@ -255,8 +253,6 @@ section .form_list input{
   display: inline-block;
   width:0.24rem;
   height:0.25rem;
-
-
 }
 .icon1{
   background: url('../img/icon1.png')no-repeat ;
@@ -286,6 +282,21 @@ section .form_list input{
   -webkit-transition:all 1s;
   -moz-transition:all 1s;
   -o-transition:all 1s;
+}
+.small_icon{
+  overflow: hidden;
+}
+.small_icon li{
+  float: left;
+  margin-right: .1rem;
+  font-size: .2rem;
+}
+.small_icon li:last-child{
+  margin-right: 0;
+}
+.small_icon li span{
+  /*margin-right: .05rem;*/
+  vertical-align: middle
 }
 .media_img{
   display: inline-block;
@@ -335,6 +346,35 @@ section .form_list input{
   height:100%;
   border-top:1px solid #ededed;
   border-bottom:1px solid #ededed;
+  /*margin:.3rem 0;*/
+}
+.course_line .line_only{
+  position: relative;
+  padding:.3rem 0;
+  background: #ffffff;
+}
+.course_line .line_only:hover{
+  background: #ededed;
+}
+.course_line .line_only:active{
+  background: #ededed;
+}
+.course_line .line_only a{
+  padding-left: .3rem;
+  display: block;
+}
+.course_line .line_only:after{
+  content: "";
+  height: 0;
+  display: block;
+  border-bottom: 1px solid #e5e5e5;
+  position: absolute;
+  left:.3rem;
+  right: 0;
+  bottom:0rem;
+}
+.course_line .line_only:last-of-type:after{
+  border:none;
 }
 .course_bg{
   background: #fff;
@@ -351,7 +391,6 @@ section .form_list input{
   display: block;
 }
 .course_bg li a:before{
-
   position: absolute;
   content: "";
   display: block;
@@ -425,7 +464,7 @@ section .form_list input{
   background: #ffffff;
   position: relative;
 }
-.course_tit ul{
+.course_tit .c_icon{
   overflow:hidden;
   margin-top: 0.15rem;
 }
@@ -445,11 +484,8 @@ section .form_list input{
   flex-flow:row;/*伸缩项目单行排列*/
   align-items: center;
   justify-content: center;
-
-
 }
 .course_nav li{
-
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
@@ -458,9 +494,6 @@ section .form_list input{
   color: #333;
   padding:.3rem 0 .2rem 0;
   position: relative;
-
-}
-.course_nav li a{
 
 }
 .course_nav  .cur a:before{
@@ -581,6 +614,172 @@ section .form_list input{
   font-size: .28rem;
   color: #666;
   margin-top: .02rem;
-  padding-bottom:.1rem;
+  padding-bottom:.1rem
+
+}
+.course_list{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  clear: both;
+}
+.course_list .course_cen{
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: justify;
+  margin-left: 1.4rem;
+  padding-right: .3rem;
+}
+.course_cen h3{
+  font-size: .28rem;
+  color: #333;
+  width:100%;
+  overflow: hidden;/*超出部分隐藏*/
+  white-space: nowrap;/*不换行*/
+  text-overflow:ellipsis;/*超出部分文字以...显示*/
+  margin-top: -.05rem;
+  max-width:3.2rem;
+}
+.course_cen ul{
+  position: absolute;
+  right: .3rem;
+}
+.img_bg{
+  width:1.19rem;
+  height:.9rem;
+  max-width:1.19rem;
+  max-height:.9rem;
+}
+.exam_explain{
+  font-size: .22rem;
+  color: #666;
+  margin-top:.07rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+course_tit .exam_green{
+  display: inline-block;
+  margin-top: .01rem;
+  color: #00b553;
+}
+.exam_circle{
+  overflow: hidden;
+}
+.exam_circle li{
+  float: left;
+  font-size:.28rem;
+  margin-right:.1rem;
+}
+.exam_circle li span{
+  margin-right:0;
 }
 
+.exam_circle li:last-child{
+  float: right;
+  margin-right: 0px;
+}
+.exam_circle .c_style{
+  width: .35rem;
+  height:.35rem;
+  border-radius: .35rem;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.exam_circle .c_g{
+  background: #00b553;
+}
+.exam_circle .c_o{
+  background: #fc7a06;
+}
+.exam_circle .c_grey{
+  background: #dedede;
+}
+.big_g{
+  color: #00b553;
+  font-size:.3rem;
+  margin:0 .02rem;
+}
+footer .exam_b{
+  width:100%;
+  font-size:.32rem;
+  color: #333;
+  text-align: center;
+  height: 1rem;
+  line-height: 1rem;
+  position: fixed;
+  bottom:0px;
+  left:0px;
+  background: #fff;
+}
+footer .exam_b .active{
+  color:#999
+}
+footer .exam_b .btn span{
+  color: #fc7a06;
+  border-right: 1px solid #dcdcdc;
+  border-left: 1px solid #dcdcdc;
+  display: inline-block;
+  height: .32rem;
+  line-height: .32rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.subject_list h4{
+  font-size: .26rem;
+  color: #666;
+}
+.subject_list dt{
+  font-size: .26rem;
+  color: #666;
+}
+.subject_list dl dd{
+  margin-top:.1rem;
+  font-size: .26rem;
+  color: #666;
+}
+.subject_list .choose_a{
+  width: .38rem;
+  height:.38rem;
+  color: #666;
+  line-height: 0.38rem;
+  text-align: center;
+  border-radius: .38rem;
+  vertical-align: middle;
+  display: inline-block;
+  border: 1px solid #ededed;
+  margin-right:.1rem;
+}
+
+.subject_list .c_g{
+  background: #00b553;
+  border:0px;
+  color: #fff;
+}
+.subject_list .c_o{
+  background: #fc7a06;
+  border:0px;
+  color: #fff;
+}
+/*此处为弹出框*/
+.popup_box{
+  margin:.3rem;
+  min-height:2rem;
+  width:100%;
+  background: #fff;
+  position: absolute;
+  left: .3rem;
+  right:.3rem;
+  top:1rem;
+  z-index: 5;
+
+}

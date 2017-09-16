@@ -24,6 +24,10 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .tc{
   text-align: center;
 }
+
+.tr{
+  text-align: right;
+}
 .hide{
   display: none;
 }
@@ -44,6 +48,16 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .p3{
   padding:.3rem;
 }
+.mt3{
+  margin-top:.3rem;
+}
+.mt1{
+  margin-top:.1rem;
+}
+.mb3hafe{
+  margin-bottom:1.5rem;
+}
+
 ::-webkit-input-placeholder{
   color:#999!important;}
 /*字体颜色*/
