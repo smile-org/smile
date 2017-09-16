@@ -16,4 +16,5 @@ public interface SearchRepo {
      List<SearchHistory>  getsearchHistoryList( @Param("userid") int userid,@Param("type")   String type  );
 
      List<String>   getRecommanedKeyWords( @Param("type") String type );
+
 }

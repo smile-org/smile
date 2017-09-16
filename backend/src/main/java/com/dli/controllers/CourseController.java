@@ -3,6 +3,7 @@ package com.dli.controllers;
 import com.dli.entities.*;
 import com.dli.helper.Constant;
 import com.dli.helper.Helper;
+import com.dli.services.CollectService;
 import com.dli.services.CourseService;
 import com.dli.services.DemoService;
 import org.slf4j.Logger;
@@ -23,6 +24,10 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+
+    @Autowired
+    private CollectService collectService;
 
 
     @RequestMapping(value = "/getCategoryList", method = RequestMethod.GET)
@@ -63,7 +68,7 @@ public class CourseController {
     public Map getCourseByID(int courseid) {
         try {
             Map<String, Object> result = new HashMap<String, Object>();
-            Course c = courseService.getCourseByID(courseid);
+            Course c = courseService.getCourseByID(courseid, Helper.GetCurrentUser().getUser_id());
 
             result.put(Constant.status, 1);
             result.put(Constant.result, c);
@@ -97,7 +102,7 @@ public class CourseController {
         try {
             Map<String, Object> result = new HashMap<String, Object>();
 
-            String message=  courseService.ClickCourseContent(courseid,contentid, Helper.GetCurrentUser().getUser_id());
+            String message = courseService.ClickCourseContent(courseid, contentid, Helper.GetCurrentUser().getUser_id());
             result.put(Constant.status, 1);
             result.put(Constant.result, message);
             return result;
@@ -108,7 +113,7 @@ public class CourseController {
         }
     }
 
-
+    //用不到了
     @RequestMapping(value = "/courseCollected", method = RequestMethod.GET)
     public Map courseCollected(int courseid) {
         try {
@@ -140,7 +145,7 @@ public class CourseController {
                 result.put(Constant.result, "不能重复收藏");
 
             } else {
-                courseService.addCourseCollection(Helper.GetCurrentUser().getUser_id(), courseid, new Date());
+                collectService.addCollection(Helper.GetCurrentUser().getUser_id(), Helper.GetItemType(1), courseid);
 
                 result.put(Constant.status, 1);
                 result.put(Constant.result, "收藏成功");
@@ -148,6 +153,21 @@ public class CourseController {
             }
             return result;
 
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw ex;
+        }
+    }
+
+
+    @RequestMapping(value = "/cancelCourseCollection", method = RequestMethod.GET)
+    public Map cancelCourseCollection(int courseid) {
+        try {
+            Map<String, Object> result = new HashMap<String, Object>();
+            collectService.cancelCollection(Helper.GetCurrentUser().getUser_id(), Helper.GetItemType(1), courseid);
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "取消收藏成功");
+            return result;
         } catch (Exception ex) {
             logger.error(ex.getMessage());
             throw ex;
@@ -183,12 +203,12 @@ public class CourseController {
 
 
     @RequestMapping(value = "/getCourseCommentList", method = RequestMethod.GET)
-    public Map getCourseCommentList() {
+    public Map getCourseCommentList(int courseid) {
 
         try {
             Map<String, Object> result = new HashMap<String, Object>();
 
-            List<CourseComment> lst = courseService.getCourseCommentList();
+            List<CourseComment> lst = courseService.getCourseCommentList(courseid);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
@@ -220,5 +240,4 @@ public class CourseController {
             throw ex;
         }
     }
-
 }

@@ -13,19 +13,21 @@ public interface CourseService {
 
     List<Course>  getCourseList(int userid, int cateid, int skip, int take);
 
-    Course  getCourseByID(int id);
+    Course  getCourseByID(int id  , int userid );
 
-    void   addCourseCollection(  int userid, int courseid,  Date now);
+
 
     boolean courseCollected( int courseid,  int userid);
 
     void  addCourseComment(int userid ,int courseid,int star,String comment,Date now );
 
-    List<CourseComment> getCourseCommentList();
+    List<CourseComment> getCourseCommentList(int courseid );
 
     void  deleteCommentById( int id );
 
     List<CourseContent>   getCourseContentListByID(int id);
 
     String ClickCourseContent( int courseid, int contentid ,int userid);
+
+    List<Course>  searchCourse(String keyword);
 }

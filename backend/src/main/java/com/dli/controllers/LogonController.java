@@ -58,7 +58,7 @@ public class LogonController {
     }
 
 
-    @RequestMapping(value = "/checkVerificationCode", method = RequestMethod.GET)
+    @RequestMapping(value = "/checkVerificationCode", method = RequestMethod.POST)
     public Map checkVerificationCode(String cellphone, String vcode) {
 
         //  check phone number  and vcode ,crated in  5minutes

@@ -15,15 +15,13 @@ public interface CourseRepo {
 
     List<Course>  getCourseList(  @Param("userid") int userid,  @Param("cateid")int cateid,   @Param("skip")int skip,  @Param("take")int take);
 
-    Course  getCourseByID(@Param("id") int id);
-
-    void   addCourseCollection( @Param("userid") int userid,  @Param("courseid")int courseid,  @Param("now")Date now);
+    Course  getCourseByID(@Param("id") int id  ,@Param("userid") int userid  ) ;
 
     int countCourseCollection(@Param("courseid") int courseid,  @Param("userid")int userid);
 
     void  addCourseComment( @Param("userid")int userid ,@Param("courseid")int courseid,@Param("star")int star,@Param("comment")String comment,@Param("now")Date now );
 
-    List<CourseComment> getCourseCommentList();
+    List<CourseComment> getCourseCommentList(  @Param("courseid" ) int courseid  );
 
     void  deleteCommentById( @Param("id")int id );
 
@@ -34,4 +32,6 @@ public interface CourseRepo {
     void addLearnProgress( @Param("courseid")  int  courseid,  @Param("contentid")  int   contentid   ,  @Param("userid")    int  userid);
 
     void  updateLearnProgress(  @Param("userid")  int userid,  @Param("contentid")  int contentid);
+
+    List<Course>  searchCourse( @Param("keyword") String keyword);
 }

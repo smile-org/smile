@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.CollectRepo">
+
+    <insert id="addCollection">
+        insert  user_favor  values(null, #{userid},  #{item_type} ,#{item_id} , now());
+    </insert>
+
+
+    <delete id="cancelCollection">
+        delete from  user_favor  where user_id  =#{userid} and item_type= #{item_type}  and item_id = #{item_id};
+    </delete>
+
+</mapper>
