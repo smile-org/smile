@@ -60,6 +60,12 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .mb3hafe{
   margin-bottom:1.5rem;
 }
+.mb1{
+  margin-bottom:.1rem;
+}
+.mb15{
+  margin-bottom:.15rem;
+}
 .font22{
    font-size:.22rem;
  }
@@ -79,6 +85,9 @@ footer .disabled:hover{
 }
 footer .disabled:active{
   opicaty:1;
+}
+.position_r{
+  position: relative;
 }
 /*字体颜色*/
 .green00b{color:#00b553}

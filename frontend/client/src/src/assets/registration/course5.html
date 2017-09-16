@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--<meta id=”viewport” name=”viewport” content=”width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”>-->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name=”MobileOptimized” content=”320″>
+  <meta name=”format-detection” content=”telephone=no”>
+  <title>smile</title>
+  <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+ <script>
+
+(function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth>=640){
+                    docEl.style.fontSize = '100px';
+                }else{
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+
+</script>
+  <style>
+    .el-rate {
+      height: .4rem;
+      line-height: 0.4rem;
+    }
+    .el-textarea textarea{
+      min-height:4rem;
+      outline: 0;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .el-rate__icon {
+      font-size: .18rem;
+      margin-right:.08rem;
+    }
+  </style>
+
+</head>
+<body>
+<div id="app">
+<header>
+  <div class="logo_c">
+    <a class="tl" href="../course/"><img src="../img/back.png" alt="返回"/></a>
+    <a class="tc" href="##"><img src="../img/logo.png" alt="smile"  class="logo1"/></a>
+    <a class="tr" href="##"><img src="../img/home.png" alt="更多" /></a>
+  </div>
+  </header>
+  <section>
+       <div class="appraise_w">
+         <div class="hidden">
+           <h3 class="fl">销售经理必杀技</h3>
+           <el-rate class="fr" v-model="value2" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
+         </div>
+
+         <ul class="a_case">
+           <li class="active">
+             内容实用
+           </li>
+           <li>
+             内容实用
+           </li>
+           <li>
+             内容实用
+           </li>
+         </ul>
+         <el-input
+           type="textarea"
+           :autosize="{ minRows: 2, maxRows: 4}"
+           placeholder="请输入内容"
+           v-model="textarea3">
+         </el-input>
+         <button class="login_btn" type="button">提交</button>
+       </div>
+  </section>
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                visible: false,
+                value2: null,
+                textarea3: ''
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

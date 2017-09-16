@@ -838,3 +838,80 @@ footer .exam_b .btn span{
   outline: none;
   margin: 0 .1rem;
 }
+.bm_con{
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: justify;
+  margin-left: .75rem;
+  padding-right: .3rem;
+}
+.bm_font{
+  margin-left:.2rem;
+}
+.bm_font h3 {
+  font-size: .28rem;
+  color: #333;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-top: -.05rem;
+  max-width: 3.5rem;
+}
+.bm_font p{
+  font-size: .22rem;
+  color: #999;
+  margin-top:.15rem;
+
+}
+
+.surplus_num{
+
+  /*padding:.05rem .25rem;*/
+  width:1.5rem;
+  height:.42rem;
+  line-height: .45rem;
+  text-align: center;
+  border-radius: 1rem;
+  position: absolute;
+  right: .3rem;
+  bottom:.3rem;
+  color: #fff;
+  font-size:.22rem;
+  font-style: normal;
+}
+.s_num{
+  background: #ffc000;
+}
+.g_remind{
+  background: #00b553;
+  outline: none;
+}
+.red_full{
+  background: #ff7866;
+}
+.end_grey{
+  background: #dcdcdc;
+}
+.bm_font .small_icon{
+  position: absolute;
+  right:.3rem;
+  top:.3rem;
+}
+.end_png{
+  position: absolute;
+  top: .4rem;
+  right:1.8rem;
+  opacity: .2;
+  z-index: 1;
+  width:1.2rem;
+}
+.reg_nohover .line_only:hover{
+  background: #ffffff;
+}
+.reg_nohover .line_only:active{
+  background: #ffffff;
+}
