@@ -108,7 +108,8 @@ public class LogonController {
             if (logonService.logon(pwd, cellphone)) {
 
                 result.put(Constant.status, 1);
-                result.put(Constant.result, Helper.GenerateToken());
+                User user = logonService.getUserByPhoneNumber(cellphone);
+                result.put(Constant.result, user.getToken());
 
             } else {
 
