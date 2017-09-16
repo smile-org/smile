@@ -59,11 +59,14 @@ public class LogonController {
 
 
     @RequestMapping(value = "/checkVerificationCode", method = RequestMethod.POST)
-    public Map checkVerificationCode(String cellphone, String vcode) {
+    public Map checkVerificationCode(@RequestBody Map body) {
 
         //  check phone number  and vcode ,crated in  5minutes
         try {
             Map<String, Object> result = new HashMap<String, Object>();
+
+            String  cellphone =(String)body.get("cellphone");
+            String  vcode =(String)body.get("vcode");
 
             if (logonService.checkSMS(cellphone, vcode)) {
 
@@ -86,10 +89,14 @@ public class LogonController {
 
 
     @RequestMapping(value = "/logon", method = RequestMethod.POST)
-    public Map logon(String cellphone, String pwd) {
+    public Map logon(@RequestBody Map body) {
 
         try {
             Map<String, Object> result = new HashMap<String, Object>();
+
+
+            String  pwd =(String)  body.get("pwd");
+            String   cellphone=(String)  body.get("cellphone");
 
             if (logonService.logon(pwd, cellphone)) {
 
@@ -111,11 +118,15 @@ public class LogonController {
 
 
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
-    public Map updatePassword(String cellphone, String pwd, String vcode) {
+    public Map updatePassword(@RequestBody Map body) {
 
         // 先检查验证码 然后再改密码
         try {
             Map<String, Object> result = new HashMap<String, Object>();
+
+            String  pwd =(String)  body.get("pwd");
+            String   cellphone=(String)  body.get("cellphone");
+            String   vcode=(String)  body.get("vcode");
 
             if (logonService.checkSMS(cellphone, vcode)) {
                 logonService.updatePwdByCellphone(pwd, cellphone);
@@ -154,4 +165,5 @@ public class LogonController {
             throw ex;
         }
     }
+
 }
