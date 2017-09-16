@@ -71,6 +71,15 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 }
 ::-webkit-input-placeholder{
   color:#999!important;}
+footer .disabled{
+  background: #dcdcdc;
+}
+footer .disabled:hover{
+  opacity: 1;
+}
+footer .disabled:active{
+  opicaty:1;
+}
 /*字体颜色*/
 .green00b{color:#00b553}
 .redff7{color: #ff7866  }
