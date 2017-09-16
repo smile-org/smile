@@ -18,4 +18,6 @@ public interface LogonService {
     void  updatePwdByCellphone( String  pwd, String  cellphone);
 
     boolean logon( String  pwd, String  cellphone);
+
+    User getUserByID(int id);
 }

@@ -91,13 +91,12 @@ public class LogonController {
         try {
             Map<String, Object> result = new HashMap<String, Object>();
 
-            if( logonService.logon(pwd,cellphone)){
+            if (logonService.logon(pwd, cellphone)) {
 
                 result.put(Constant.status, 1);
-                result.put(Constant.result,   Helper.GenerateToken()  );
+                result.put(Constant.result, Helper.GenerateToken());
 
-            }
-            else {
+            } else {
 
                 result.put(Constant.status, 0);
                 result.put(Constant.result, "用户名或密码错误");
@@ -128,6 +127,26 @@ public class LogonController {
                 result.put(Constant.status, 0);
                 result.put(Constant.result, "验证码输入错误");
             }
+
+            return result;
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw ex;
+        }
+    }
+
+  //暂时没用到
+    @RequestMapping(value = "/getUserByID", method = RequestMethod.GET)
+    public Map getUserByID(int id) {
+
+        try {
+            Map<String, Object> result = new HashMap<String, Object>();
+
+            User u = logonService.getUserByID(id);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, u);
+
 
             return result;
         } catch (Exception ex) {

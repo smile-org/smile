@@ -8,19 +8,21 @@
       </div>
     </header>
     <section>
-      <div class="login_a sologan1"></div>
-      <div class="form_list">
-        <span class=" login_icon3"></span>
-        <el-input type="password" placeholder="输入新密码" errormsg="密码长度为6-16位" v-model="password" @input="$v.password.$touch()"></el-input>
+      <div class="p3">
+        <div class="login_a sologan1"></div>
+        <div class="form_list">
+          <span class=" login_icon3"></span>
+          <el-input type="password" placeholder="输入新密码" errormsg="密码长度为6-16位" v-model="password" @input="$v.password.$touch()"></el-input>
+        </div>
+        <div class="form_list">
+          <span class="login_icon3"></span>
+          <el-input type="password" placeholder="确认新密码" errormsg="密码长度为6-16位" v-model="repeatPassword" @input="$v.repeatPassword.$touch()"></el-input>
+        </div>
+        <p class="form_warning" v-show="showError">
+          <img class="warnning_img" src="../assets/img/warnning.png" />{{errorMessage}}
+        </p>
+        <button class="login_btn" type="button" :disabled="$v.password.$invalid || $v.repeatPassword.$invalid" v-on:click="resetPassword" >下一步</button>
       </div>
-      <div class="form_list">
-        <span class="login_icon3"></span>
-        <el-input type="password" placeholder="确认新密码" errormsg="密码长度为6-16位" v-model="repeatPassword" @input="$v.repeatPassword.$touch()"></el-input>
-      </div>
-      <p class="form_warning" v-show="showError">
-        <img class="warnning_img" src="../assets/img/warnning.png" />{{errorMessage}}
-      </p>
-      <button class="login_btn" type="button" :disabled="$v.password.$invalid || $v.repeatPassword.$invalid" v-on:click="resetPassword" >下一步</button>
 
     </section>
   </div>
@@ -73,7 +75,7 @@ export default {
         return
       }
 
-      api.post(api.uri.resetPassword, {cellphone: usernameInSS, code: codeInSS}).then(data => {
+      api.post(api.uri.resetPassword, {cellphone: usernameInSS, vcode: codeInSS, pwd: this.password}).then(data => {
         if (data.status === 1) {
           // 设置成功后清楚 SS
           sessionStorage.removeItem('smile_username')

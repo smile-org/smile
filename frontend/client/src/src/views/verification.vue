@@ -85,7 +85,7 @@ export default {
       }
       const TIME_COUNT = 10
       var uri = api.uri.getCode
-      api.post(uri, { cellphone: this.username }).then(data => {
+      api.fetch(uri, { cellphone: this.username }).then(data => {
         if (data.status === 1) {
           this.showError = false
           this.errorMessage = ''
@@ -115,7 +115,7 @@ export default {
     // 提交验证码
     verifyCode: function () {
       var uri = api.uri.verifyCode
-      api.post(uri, { cellphone: this.username, code: this.code }).then(data => {
+      api.post(uri, { cellphone: this.username, vcode: this.code }).then(data => {
         if (data.status === 1) {
           sessionStorage.setItem('smile_username', this.username)
           sessionStorage.setItem('smile_code', this.code)

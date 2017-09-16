@@ -17,6 +17,10 @@
         <result column="indicator" property="indicator"/>
         <result column="created_at" property="created_at"/>
         <result column="updated_at" property="updated_at"/>
+
+        <result column="study_count" property="study_count"/>
+        <result column="collect_count" property="collect_count"/>
+        <result column="principal_user_idName" property="principal_user_idName"/>
     </resultMap>
 
 
@@ -37,7 +41,10 @@
         <result column="star" property="star"/>
         <result column="comments" property="comments"/>
         <result column="created_at" property="created_at"/>
+        <result column="indicator" property="indicator"/>
 
+        <result column="user_idName" property="user_idName"/>
+        <result column="user_idAvatar" property="user_idAvatar"/>
     </resultMap>
 
 
@@ -57,4 +64,95 @@
     </resultMap>
 
 
+    <resultMap type="com.dli.entities.CourseLearnProgress" id="ProgressMap">
+        <id column="course_id" property="course_id"/>
+        <id column="content_id" property="content_id"/>
+        <id column="user_id" property="user_id"/>
+
+        <result column="status" property="status"/>
+        <result column="created_at" property="created_at"/>
+        <result column="learn_at" property="learn_at"/>
+    </resultMap>
+
+    <select id="getCourseCategoryList"  resultMap="CategoryMap">
+        SELECT * FROM course_category where indicator=1 and company_id=#{companyid} LIMIT #{skip},#{take};
+    </select>
+
+
+    <select id="getCourseList" resultMap="CourseMap">
+        select result.* ,
+  case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
+  case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+         from (
+select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
+  where indicator=1 and category_id=#{cateid} and
+( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
+
+left join (
+select course_id, count(*)  as  renshu from (
+select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+on result.course_id =o1.course_id
+left join
+(
+select  course_id,    total/ct as pingfen from (
+select course_id, sum(star) as total , count(comment_id) as ct from course_comment  group by course_id)t)o2
+on result.course_id= o2.course_id
+left join
+(
+select item_id as course_id,  count(user_id) as userct from  user_favor where item_type='course' group by item_id)o3
+on   result.course_id= o3.course_id
+order by  renshu desc, pingfen desc  limit #{skip},#{take};
+    </select>
+
+
+    <select id="getCourseByID" resultMap="CourseMap">
+        select result.*, c1.study_count,c2.collect_count from (
+select c.* ,  u.full_name as principal_user_idName from course  c  left join  user u on c.principal_user_id=u.user_id  where u.indicator=1 and c.indicator=1 and course_id=#{id}) result join
+(
+
+select count(  distinct user_id) as study_count from learn_progress where  course_id=#{id})c1 on 1=1
+join (
+select count( user_id) as collect_count from user_favor where item_type='course' and item_id=#{id} )c2 on 1=1;
+
+    </select>
+
+    <insert id="addCourseCollection">
+        insert  user_favor  values(null, #{userid},'course',#{courseid} ,  #{now});
+    </insert>
+
+    <select id="countCourseCollection" resultType="int">
+        select count(*)  from user_favor where item_type='course'  and  item_id=#{courseid} and user_id=#{userid};
+    </select>
+
+
+    <insert id="addCourseComment" >
+        insert  course_comment values(null, #{userid},#{courseid}, #{star},#{comment},#{now} ,1 );
+    </insert>
+
+    <select id="getCourseCommentList" resultMap="CommentMap">
+        select  c.*  , u.full_name as user_idName, u.avatar as   user_idAvatar from   course_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1  order by  c.created_at desc;
+    </select>
+
+    <update id="deleteCommentById"  >
+       update   course_comment  set indicator =0    where comment_id = #{id};
+    </update>
+
+
+    <select id="getCourseContentListByID"  resultMap="ContentMap">
+          select *  from   course_content where indicator =1 and  course_id= #{id};
+    </select>
+
+
+    <select id="getLearnProgress" resultMap="ProgressMap">
+          select  *  from   learn_progress  where user_id=#{userid} and  content_id=#{contentid};
+    </select>
+    
+    <insert id="addLearnProgress"   >
+        insert learn_progress values( #{courseid}, #{contentid} ,#{userid} , 'NotStarted', NULL , now());
+    </insert>
+
+
+    <update id="updateLearnProgress">
+        update   learn_progress  set status='Finished' ,learn_at =now() where user_id=#{userid} and content_id=#{contentid};
+    </update>
 </mapper>

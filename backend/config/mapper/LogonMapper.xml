@@ -20,19 +20,18 @@
         select * from user where cell_phone= #{0} and indicator=1
     </select>
 
-    <select id="addSMS" >
-
+    <insert id="addSMS" >
         INSERT INTO sms  VALUES (null, #{userid}, #{cellphone},  #{vcode},#{smstype},#{now});
-    </select>
+    </insert>
 
 
     <select id="checkSMS" resultType="int" >
         select count(*)  from  sms where  cell_phone =#{cellphone} and code=#{vcode} and TIMESTAMPDIFF(SECOND  , created_at,now()) &lt;=300;
     </select>
 
-    <select id="updatePwdByCellphone">
+    <update id="updatePwdByCellphone">
         update user set password=#{pwd} where cell_phone=#{cellphone}
-    </select>
+    </update>
 
     <select id="logon"  resultType="int">
 
@@ -40,4 +39,8 @@
 
     </select>
 
+
+    <select id="getUserByID" resultMap="UserMap">
+        select * from user where user_id=#{id};
+    </select>
 </mapper>

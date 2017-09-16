@@ -3,6 +3,21 @@ package com.dli.entities;
 import java.util.Date;
 
 public class CourseComment {
+    public String getUser_idAvatar() {
+        return user_idAvatar;
+    }
+
+    public void setUser_idAvatar(String user_idAvatar) {
+        this.user_idAvatar = user_idAvatar;
+    }
+
+    public String getUser_idName() {
+        return user_idName;
+    }
+
+    public void setUser_idName(String user_idName) {
+        this.user_idName = user_idName;
+    }
 
     private int comment_id;
     private int user_id;
@@ -10,6 +25,17 @@ public class CourseComment {
     private int star;
     private String comments;
     private Date created_at;
+    private  String user_idAvatar;
+     private String  user_idName;
+    private  boolean indicator;
+
+    public boolean isIndicator() {
+        return indicator;
+    }
+
+    public void setIndicator(boolean indicator) {
+        this.indicator = indicator;
+    }
 
     public int getComment_id() {
         return comment_id;

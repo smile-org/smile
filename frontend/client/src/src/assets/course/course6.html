@@ -226,7 +226,13 @@
           heartClick : function() {
             this.heartActive = this.heartActive ? false : true;
             console.log(tab, event);
-          }
+          },
+
+		  handleClick(tab, event) {
+				console.log(tab, event);
+				console.log(tab.name)
+			  }
+
         }
     })
 </script>
