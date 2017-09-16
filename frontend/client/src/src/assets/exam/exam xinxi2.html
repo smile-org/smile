@@ -64,88 +64,63 @@
     </div>
     <div class="tab_con">
       <ul class="course_nav " id="nav">
-        <li class=""><a href="">考试信息</a></li>
-        <li class="cur"><a href="">学习资料</a></li>
+        <li class="cur"><a href="">考试信息</a></li>
+        <li class=""><a href="">学习资料</a></li>
         <li class=""><a href="">考试记录</a></li>
       </ul>
-      <!--<ul class="list_border course_con a_v">-->
-        <!--<li class="con_list a">-->
-          <!--<a>-->
-            <!--<span class="media_img media_img1"></span>-->
-            <!--<span class="c_list_font">1.1 视频名称.mp4</span>-->
-          <!--</a>-->
-        <!--</li>-->
-        <!--<li class="con_list">-->
-          <!--<a>-->
-            <!--<span class="media_img media_img2"></span>-->
-            <!--<span class="c_list_font">1.2 Powerpoint.ppt</span>-->
-          <!--</a>-->
-        <!--</li>-->
-        <!--<li class="con_list">-->
-          <!--<a>-->
-            <!--<span class="media_img media_img3"></span>-->
-            <!--<span class="c_list_font">1.3 word.doc</span>-->
-          <!--</a>-->
-        <!--</li>-->
-        <!--<li class="con_list">-->
-          <!--<a>-->
-            <!--<span class="media_img media_img4"></span>-->
-            <!--<span class="c_list_font">1.4 Img.jpg</span>-->
-          <!--</a>-->
-        <!--</li>-->
-      <!--</ul>-->
-      <ul class=" list_border course_line">
-        <li class="course_list  line_only">
-          <a>
-            <img src="../img/img1.png" class="fl img_bg">
-            <div class="course_cen">
-              <div class="hidden">
-                <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                <ul class="small_icon fr">
-                  <li class="fl">
-                    <span class="icon icon1"></span>
-                    <span class="green00b">80</span>
-                  </li>
-                  <li class="fl">
-                    <span class="icon icon2"></span>
-                    <span class="redff7">80</span>
-                  </li>
-                </ul>
-              </div>
-              <p class="exam_explain">
-                考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么
+      <ul class="list_border course_con">
+        <li  class="tc">
+          <el-row>
+            <el-col :span="8" class="exam_inf" >
+              <p>
+                <span class="o_s">10</span><span>次</span>
               </p>
-            </div>
-          </a>
+              <div>
+                <img class="exam_time" src="../img/icon6.png"/>
+                <span>次数限制</span>
+              </div>
+            </el-col>
+            <el-col :span="8" class="exam_inf">
+              <p>
+                <span class="o_s">80</span><span>分</span>
+              </p>
+              <div>
+                <img class="exam_time" src="../img/icon7.png"/>
+                <span>通过分数</span>
+              </div>
+            </el-col>
+            <el-col :span="8" class="exam_inf">
+              <p>
+                <span class="o_s">90</span><span>秒</span>
+              </p>
+              <div>
+                <img class="exam_time" src="../img/icon8.png"/>
+                <span>时间限制</span>
+              </div>
+            </el-col>
+          </el-row>
         </li>
-        <li class="course_list  line_only">
-          <a>
-            <img src="../img/img1.png" class="fl img_bg">
-            <div class="course_cen">
-              <div class="hidden">
-                <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                <ul class="small_icon fr">
-                  <li class="fl">
-                    <span class="icon icon1"></span>
-                    <span class="green00b">80</span>
-                  </li>
-                  <li class="fl">
-                    <span class="icon icon2"></span>
-                    <span class="redff7">80</span>
-                  </li>
-                </ul>
-              </div>
-              <p class="exam_explain">
-                考试说明：这里是考试说明考试靠什么
-              </p>
-            </div>
-          </a>
+        <li>
+          <span>考试编码 :</span>  2017-10-14
+        </li>
+        <li>
+          <span>有效期 :</span>  2017-10-16
+        </li>
+        <li>
+          <span>考试日期 :</span> 2016-10-5 10:00-2016-10-5 10:00
+        </li>
+        <li>
+          <span>管理员 :</span> 王小明
+        </li>
+        <li>
+          <span>考试简介 :</span>
+          <p>销售经理的是大必杀技能</p>
         </li>
       </ul>
     </div>
   </section>
   <footer>
-    <button class="login_btn btn_position" type="button">开始考试</button>
+    <button class="login_btn btn_position disabled" disabled="disabled" type="button">考试暂未开始</button>
   </footer>
 </div>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
