@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.SearchRepo">
+
+    <resultMap type="com.dli.entities.SearchHistory" id="SearchMap">
+        <id column="search_id" property="search_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="keyword" property="keyword"/>
+        <result column="item_type" property="item_type"/>
+        <result column="created_at" property="created_at"/>
+    </resultMap>
+
+    <insert id="addSearchHistory">
+        insert  search_history values( null, #{userid}, #{keyword} ,#{type}, now());
+    </insert>
+
+    <select id="getsearchHistoryList" resultMap="SearchMap">
+        select * from  search_history where user_id=#{userid}  and item_type=#{type} order by created_at desc  limit 0,4;
+    </select>
+
+    <select id="getRecommanedKeyWords"  resultType="java.lang.String">
+        select keyword  from (
+select  keyword ,count(search_id)  as count from  search_history    where item_type=#{type}  group by keyword  order by count desc  limit  0,4)t;
+    </select>
+</mapper>

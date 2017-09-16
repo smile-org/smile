@@ -22,4 +22,6 @@ public interface LogonRepo {
     void  updatePwdByCellphone(@Param("pwd") String  pwd,@Param("cellphone") String  cellphone);
 
     int logon(@Param("pwd") String  pwd,@Param("cellphone") String  cellphone);
+
+    User getUserByID(@Param("id")  int id);
 }

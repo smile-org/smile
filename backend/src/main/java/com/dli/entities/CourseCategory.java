@@ -7,6 +7,16 @@ public class CourseCategory {
 
     private int category_id;
     private String category_name;
+    private  String icon;
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     private int company_id;
     private boolean indicator;
     private Date created_at;

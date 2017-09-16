@@ -19,6 +19,35 @@ public class Course {
     private Date created_at;
     private Date updated_at;
 
+    //append property
+    private  int study_count;
+    private  int collect_count;
+    private   String  principal_user_idName;
+
+    public String getPrincipal_user_idName() {
+        return principal_user_idName;
+    }
+
+    public void setPrincipal_user_idName(String principal_user_idName) {
+        this.principal_user_idName = principal_user_idName;
+    }
+
+    public int getStudy_count() {
+        return study_count;
+    }
+
+    public void setStudy_count(int study_count) {
+        this.study_count = study_count;
+    }
+
+    public int getCollect_count() {
+        return collect_count;
+    }
+
+    public void setCollect_count(int collect_count) {
+        this.collect_count = collect_count;
+    }
+
     public int getCourse_id() {
         return course_id;
     }

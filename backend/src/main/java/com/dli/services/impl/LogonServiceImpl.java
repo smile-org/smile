@@ -57,5 +57,10 @@ public class LogonServiceImpl implements LogonService {
             return false;
     }
 
+    @Override
+    public User getUserByID(int id) {
+        return   logonRepo.getUserByID(id);
+    }
+
 
 }
