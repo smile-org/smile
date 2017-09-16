@@ -20,4 +20,6 @@ public interface LogonService {
     boolean logon( String  pwd, String  cellphone);
 
     User getUserByID(int id);
+
+    User getUserByToken(String token);
 }

@@ -62,5 +62,10 @@ public class LogonServiceImpl implements LogonService {
         return   logonRepo.getUserByID(id);
     }
 
+    @Override
+    public User getUserByToken(String token) {
+        return logonRepo.getUserByToken(token);
+    }
+
 
 }
