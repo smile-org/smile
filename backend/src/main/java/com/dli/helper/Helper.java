@@ -53,7 +53,7 @@ public class Helper {
 
     public  static  String GenerateToken()
     {
-        return "";
+        return "123123";
     }
 
     /*
