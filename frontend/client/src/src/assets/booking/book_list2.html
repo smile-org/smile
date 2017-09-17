@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--<meta id=”viewport” name=”viewport” content=”width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”>-->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name=”MobileOptimized” content=”320″>
+  <meta name=”format-detection” content=”telephone=no”>
+  <title>smile</title>
+  <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+ <script>
+(function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth>=640){
+                    docEl.style.fontSize = '100px';
+                }else{
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
+  <style>
+    .el-tabs__active-bar{
+      width: 0!important;
+      transform: translateX(0rem)!important;
+    }
+    .el-tabs__item.is-active:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: .7rem;
+      right: .7rem;
+      height: 3px;
+      background: #00b553;
+      z-index: 2;
+    }
+    .el-tabs__item {
+      padding: 0 .5rem;
+      height: .7rem;
+      box-sizing: border-box;
+      line-height: .5rem;
+      display: inline-block;
+      list-style: none;
+      font-size: .28rem;
+      color: #666;
+      position: relative;
+      width:50%;
+    }
+    .el-tabs__item.is-active {
+      color: #00b553;
+    }
+    .el-tabs__nav{
+      width:100%;
+      text-align: center;
+      margin-top: -.3rem;
+    }
+    .el-tabs__header {
+      border-bottom:0;
+      margin: 0;
+    }
+    .el-tabs__nav .el-tabs__item:first-child{
+      border-right:1px solid #ededed;
+    }
+    .bm_font p {
+      margin-top: .45rem;
+    }
+    .course_bg li:after, .course_con li:before {
+      content: "";
+      height: 0;
+      display: block;
+      border-bottom:0;
+      position: absolute;
+      left: 0rem;
+      right: 0;
+      bottom: 0rem;
+    }
+
+  </style>
+</head>
+<body>
+<div id="app">
+<header>
+  <div class="logo_c">
+    <a class="tl" href="../course/course.html"><img src="../img/back.png" alt="返回"/></a>
+    <a class="tc" href="../course/course3.html"><img src="../img/logo.png" alt="smile"  class="logo1"/></a>
+    <a class="tr" href="../course/course5.html"><img src="../img/home.png" alt="更多" /></a>
+  </div>
+  </header>
+  <section>
+    <ul class=" list_border course_line reg_nohover">
+      <li class="course_list  line_only">
+        <a>
+          <div class="hidden">
+            <img class="person_header fl" src="../img/img01.jpg">
+            <div class="bm_con">
+              <div class="hidden bm_font">
+                  <h3 class="fl ">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
+                  <p>主讲：王小明<span  class="ml2">2017-08-31</span></p>
+
+                <ul class="small_icon fr">
+                  <li class="fl">
+                    <span class="icon icon1"></span>
+                    <span class="green00b">80</span>
+                  </li>
+                </ul>
+                <span class="see_student" >
+                    查看同学
+                  </span>
+              </div>
+            </div>
+          </div>
+          <ul class="keword_num">
+            <li>关键字一个</li>
+            <li>关键字一个</li>
+            <li>关键字一个</li>
+            <li>关键字一个</li>
+            <li>关键字一个</li>
+            <li>关键字一个</li>
+          </ul>
+        </a>
+      </li>
+    </ul>
+    <div class="demand_list">
+      <h3 class="list_need">需求列表</h3>
+      <ul class="list_border course_con mb3hafe">
+        <li class="course_list  line_only">
+          <div class="demand_font">
+            <p>1.关于这一条需求可能会很长也可能会很短看你怎们办怎么解决</p>
+            <el-row class="demand_emo">
+              <el-col :span="12" class="fl">
+                <p class="small_f">王小明<span  class="ml2">2017-08-31</span></p>
+              </el-col>
+              <el-col :span="12" class="fr">
+                <ul class="small_icon fr">
+                  <li class="fl">
+                    <span class="icon icon1"></span>
+                    <span class="green00b">80</span>
+                  </li>
+                  <li class="fl">
+                    <span id="c_save" @click="heartClick()" :class="{icon:true,icon6:!fingerActive,icon7:fingerActive}"></span>
+                  </li>
+                </ul>
+              </el-col>
+            </el-row>
+          </div>
+        </li>
+        <li class="course_list  line_only">
+          <div class="demand_font">
+            <p>2.关于这一条需求可能会很长也可能会很短看你怎们办怎么解决</p>
+            <el-row class="demand_emo">
+              <el-col :span="12" class="fl">
+                <p class="small_f">王小明<span  class="ml2">2017-08-31</span></p>
+              </el-col>
+              <el-col :span="12" class="fr">
+                <ul class="small_icon fr">
+                  <li class="fl">
+                    <span class="icon icon1"></span>
+                    <span class="green00b">80</span>
+                  </li>
+                  <li class="fl">
+                    <span id="c_save" @click="heartClick()" :class="{icon:true,icon6:!fingerActive,icon7:fingerActive}"></span>
+                  </li>
+                </ul>
+              </el-col>
+            </el-row>
+          </div>
+        </li>
+        <li class="course_list  line_only">
+          <div class="demand_font">
+            <p>2.关于这一条需求可能会很长也可能会很短看你怎们办怎么解决</p>
+            <el-row class="demand_emo">
+              <el-col :span="12" class="fl">
+                <p class="small_f">王小明<span  class="ml2">2017-08-31</span></p>
+              </el-col>
+              <el-col :span="12" class="fr">
+                <ul class="small_icon fr">
+                  <li class="fl">
+                    <span class="icon icon1"></span>
+                    <span class="green00b">80</span>
+                  </li>
+                  <li class="fl">
+                    <span id="c_save" @click="heartClick()" :class="{icon:true,icon6:!fingerActive,icon7:fingerActive}"></span>
+                  </li>
+                </ul>
+              </el-col>
+            </el-row>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <footer>
+    <button class="login_btn btn_position" @click="open3" type="button">添加需求</button>
+  </footer>
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            visible: false,
+            activeName: 'first',
+            fingerActive:true
+
+        },
+      methods: {
+        handleClick(tab, event) {console.log(tab, event);},
+        heartClick : function() {
+          this.fingerActive = this.fingerActive ? false : true;
+        }
+      }
+
+    })
+</script>
+</body>
+</html>

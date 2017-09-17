@@ -279,6 +279,20 @@ section .form_list input{
 .icon5{
   background: url('../img/icon5.png')no-repeat center center;
   background-size: 100% 100%;
+  -webkit-transition:all .5s;
+  -moz-transition:all .5s;
+  -o-transition:all .5s;
+}
+.icon6{
+  background: url('../img/icon6.png')no-repeat center center;
+  background-size: 100% 100%;
+  -webkit-transition:all .5s;
+  -moz-transition:all .5s;
+  -o-transition:all .5s;
+}
+.icon7{
+  background: url('../img/icon7.png')no-repeat center center;
+  background-size: 100% 100%;
   -webkit-transition:all 1s;
   -moz-transition:all 1s;
   -o-transition:all 1s;
@@ -896,6 +910,12 @@ footer .exam_b .btn span{
 .end_grey{
   background: #dcdcdc;
 }
+.g_f{
+  color: #00b553;
+}
+.o_f{
+  color: #ff7800;
+}
 .bm_font .small_icon{
   position: absolute;
   right:.3rem;
@@ -914,4 +934,149 @@ footer .exam_b .btn span{
 }
 .reg_nohover .line_only:active{
   background: #ffffff;
+}
+.keword_num{
+  margin-top:.15rem;
+}
+.keword_num li{
+  float: left;
+  padding:.02rem .3rem;
+  border:1px solid #ededed;
+  color: #dcdcdc;
+  font-size:.2rem;
+  border-radius: .1rem;
+  margin:.1rem .1rem 0rem 0;
+ }
+.see_student{
+  font-size: .28rem;
+  color: #00b553;
+  position: absolute;
+  right:.3rem;
+  top:.7rem;
+
+}
+/*约课页面*/
+.list_need{
+  font-size:.3rem;
+  color: #333;
+  margin:0rem .5rem;
+  position: relative;
+}
+.list_need:before{
+  height: .3rem;
+  width: .04rem;
+  background: #00b553;
+  content: " ";
+  display: block;
+  position: absolute;
+  bottom: .03rem;
+  margin-left: -.2rem;
+}
+.demand_font{
+  font-size: .26rem;
+  color: #666;
+}
+
+.demand_emo .small_f{
+  font-size:.22rem;
+  color: #999;
+  margin-top: .2rem;
+}
+.bm_font .course_con li {
+  font-size: .28rem;
+  padding: .2rem .3rem 0 .2rem;
+  color: #333;
+  position: relative;
+}
+.demand_emo .small_icon li{
+  font-size:.22rem;
+  padding: .2rem 0 0 .2rem;
+}
+.b_header{
+  padding:.3rem;
+}
+.b_header li{
+  width:33.333333%;
+  text-align: center;
+  font-size:.28rem;
+  color: #333;
+  float: left;
+  margin-bottom: .15rem;
+}
+.b_header li p{
+  margin:.1rem 0 0;
+}
+.b_header li span{
+  font-size: .24rem;
+  color: #666;
+}
+.add_list hr{
+  border: 1px dashed #ededed;
+  margin: .2rem;
+}
+.w_yueke{
+  width:100%;
+  height:.5rem;
+  border:none;
+  border-bottom:1px solid #00b553;
+  outline: none;
+  font-size: .28rem;
+  line-height: .5rem;
+  color: #666;
+  background: none;
+  padding: .1rem .3rem .15rem .55rem;
+}
+.w_p3{
+  padding:0 .3rem;
+  height: auto;
+  line-height: .3rem;
+  margin-bottom:.3rem;
+  position: relative;
+}
+.w_p4{
+  padding:0 .3rem;
+  height: auto;
+  line-height: .3rem;
+
+}
+.add_bg{
+  padding:.3rem 0;
+  background: #fff;
+  margin:.3rem 0;
+}
+.w_p3 p{
+  font-size:.22rem;
+  color: #666;
+  margin-top:.2rem;
+  line-height: .38rem;
+  padding-bottom: .1rem;
+  border-bottom: 1px solid #ededed;
+}
+.add_input{
+  position: absolute;
+  top: .21rem;
+  left:.4rem;
+  width:.3rem;
+}
+.add_input2{
+  position: absolute;
+  top: .23rem;
+  right:.3rem;
+  width:.3rem;
+}
+.delate_add{
+  width: .28rem;
+  float: right;
+}
+.line_add{
+  position: relative;
+}
+.line_add:after {
+  content: '';
+  position: absolute;
+  top: .3rem;
+  background: #ededed;
+  width: 1px;
+  height: .5rem;
+  right: 0;
 }
