@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.AppointmentRepo">
+    <resultMap type="com.dli.entities.Appointment" id="app">
+        <id column="appointment_id" property="appointmentId"/>
+        <result column="appointment_title" property="appointmentTitle"/>
+        <result column="sponsor_id" property="sponsorId"/>
+        <result column="sponsor_name" property="sponsorName"/>
+        <result column="sponsor_date" property="sponsorDate"/>
+        <result column="avatar" property="avatar"/>
+        <result column="key_word" property="keyword"/>
+        <result column="follow_count" property="followerCount"/>
+    </resultMap>
+
+
+    <select id="getAppointmentList" resultMap="app">
+        select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
+from appointment a join user u on a.sponsor_id = u.user_id
+join (select appointment_id, group_concat(word) key_word from appointment_keyword) ak on a.appointment_id = ak.appointment_id
+left join (select appointment_id, count(*) follow_count from appointment_follower ) af on a.appointment_id = af.appointment_id
+where a.company_id = #{companyId}
+order by af.follow_count desc
+limit #{skip},#{take};
+    </select>
+
+    <select id="getAppointmentById" resultMap="app">
+        select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
+from appointment a join user u on a.sponsor_id = u.user_id
+join (select appointment_id, group_concat(word) key_word from appointment_keyword) ak on a.appointment_id = ak.appointment_id
+left join (select appointment_id, count(*) follow_count from appointment_follower ) af on a.appointment_id = af.appointment_id
+where a.appointment_id = #{appointmentId}
+    </select>
+
+    <resultMap id="appItem" type="com.dli.entities.AppointmentItem">
+        <id column="item_id" property="itemId"/>
+        <result column="content" property="content"/>
+        <result column="sponsor_id" property="sponsorId"/>
+        <result column="sponsor_name" property="sponsorName"/>
+        <result column="sponsor_date" property="sponsorDate"/>
+        <result column="follow_count" property="followCount"/>
+        <result column="is_follow" property="isFollow"/>
+    </resultMap>
+
+    <select id="getAppointmentItemList" resultMap="appItem">
+        select ai.item_id,ai.content,ai.sponsor_id,u.full_name sponsor_name, ai.sponsor_date,
+case when af.follow_count is null then 0 else af.follow_count end follow_count,
+case when af1.is_follow > 0 then 1 else 0 end is_follow
+from appointment_item ai
+join user u on ai.sponsor_id = u.user_id
+left join (select item_id, count(*) follow_count from appointment_follower) af on ai.item_id = af.item_id
+left join (select item_id, count(*) is_follow from appointment_follower where follower_id = #{userId}) af1 on ai.item_id = af1.item_id
+where ai.appointment_id = #{appointmentId}
+    </select>
+
+    <resultMap id="appFollower" type="com.dli.entities.AppointmentFollower">
+        <id column="appointment_id" property="appointmentId"/>
+        <result column="follower_id" property="followerId"/>
+        <result column="follower_name" property="followerName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="follow_type" property="followType"/>
+    </resultMap>
+
+    <select id="getAppointmentFollowList" resultMap="appFollower">
+        select af.appointment_id,af.follower_id,u.full_name followerName, u.avatar,
+af.follower_type follow_type
+from appointment_follower af
+join user u on af.follower_id = u.user_id
+where  af.appointment_id = #{appointmnetId}
+    </select>
+
+    <insert id="follow">
+        insert into appointment_follower (appointment_id,item_id,follower_id,follower_type)
+        values (#{appointmentId},#{itemId},#{followerId},#{followerType})
+    </insert>
+
+    <insert id="addItem">
+        insert into  appointment_item(appointment_id,content,sponsor_id,sponsor_date)
+        values (#{appointmentId}, #{content}, #{sponsorId}, #{sponsorDate});
+    </insert>
+
+    <select id="getMaxItemId" resultType="int">
+        select max(item_id) item_id from appointment_item;
+    </select>
+
+    <insert id="addAppointment">
+        insert into appointment(appointment_title,sponsor_id,sponsor_date,company_id,indicator)
+        values(#{appointmentTitle},#{sponsorId},#{sponsorDate},#{companyId},1)
+    </insert>
+
+    <select id="getMaxAppointmentId" resultType="int">
+        select max(appointment_id) item_id from appointment;
+    </select>
+
+    <insert id="addKeyword">
+        insert into appointment_keyword(appointment_id,word)
+        values (#{appointmentId},#{word})
+    </insert>
+
+</mapper>
