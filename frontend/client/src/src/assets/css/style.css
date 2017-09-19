@@ -692,7 +692,7 @@ section .form_list input{
   max-width: calc(100% - (2.1rem ))
 
 }
-course_tit .exam_green{
+.course_tit .exam_green{
   display: inline-block;
   margin-top: .01rem;
   color: #00b553;
@@ -730,6 +730,7 @@ course_tit .exam_green{
 .exam_circle .c_grey{
   background: #dedede;
 }
+
 .big_g{
   color: #00b553;
   font-size:.3rem;
@@ -1096,6 +1097,66 @@ footer .exam_b .btn span{
   width: 1px;
   height: .5rem;
   right: 0;
+}
+.booking_add{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%,-50%,0);
+  transform: translate3d(-50%,-50%,0);
+  background-color: #fff;
+  width: 85%;
+  min-height: 3.2rem;
+  border-radius: .1rem;
+  font-size: .32rem;
+  padding:.3rem;
+  -webkit-user-select: none;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: .2s;
+  transition: .2s;
+  z-index: 111;
+  box-sizing: border-box;
+}
+.booking_add h3{
+  font-size: .34rem;
+  margin-bottom: .2rem;
+
+}
+.booking_input{
+  position: relative;
+}
+.booking_input input{
+  width:100%;
+  height: .6rem;
+  border: 1px solid #ededed;
+  background: #ededed;
+  border-radius: .1rem;
+  outline: none;
+}
+.add_img{
+  background: url('../img/add.png')no-repeat center center;
+  background-size:.21rem .21rem ;
+  width: .58rem;
+  height: .58rem;
+  position: absolute;
+  top: .01rem;
+  background-color: #00b553;
+  right: .01rem;
+}
+.yk{
+  margin-top: .6rem;
+}
+.yk .c_g{
+  background: #00b553;
+  border: none;
+  color: #ffffff;
+}
+.yk .c_o{
+  background: #fc7a06;
+  border: none;
+  color: #ffffff;
 }
 /*此处为个人中心*/
 .personal_bg{
