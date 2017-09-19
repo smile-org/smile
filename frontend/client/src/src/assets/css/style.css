@@ -377,6 +377,10 @@ section .form_list input{
   padding-left: .3rem;
   display: block;
 }
+.line_only .p3_line{
+  padding-left: .3rem;
+  display: block;
+}
 .course_line .line_only:after{
   content: "";
   height: 0;
@@ -660,6 +664,9 @@ section .form_list input{
   text-overflow:ellipsis;/*超出部分文字以...显示*/
   margin-top: -.05rem;
   max-width:3.2rem;
+  max-width:-moz-calc(100% - (3.5rem ));
+  max-width:-webkit-calc(100% - (3.5rem ));
+  max-width: calc(100% - (3.5rem ))
 }
 .course_cen ul{
   position: absolute;
@@ -674,11 +681,16 @@ section .form_list input{
 .exam_explain{
   font-size: .22rem;
   color: #666;
-  margin-top:.07rem;
+  margin-top: .03rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  max-width: 70%;
+  max-width:-moz-calc(100% - (2.1rem ));
+  max-width:-webkit-calc(100% - (2.1rem ));
+  max-width: calc(100% - (2.1rem ))
+
 }
 course_tit .exam_green{
   display: inline-block;
@@ -891,8 +903,9 @@ footer .exam_b .btn span{
   text-align: center;
   border-radius: 1rem;
   position: absolute;
-  right: .3rem;
-  bottom:.3rem;
+  right: .25rem;
+  /*bottom:.3rem;*/
+  top:.25rem;
   color: #fff;
   font-size:.22rem;
   font-style: normal;
@@ -919,7 +932,7 @@ footer .exam_b .btn span{
 .bm_font .small_icon{
   position: absolute;
   right:.3rem;
-  top:.3rem;
+  bottom:.3rem;
 }
 .end_png{
   position: absolute;
@@ -959,7 +972,7 @@ footer .exam_b .btn span{
 .list_need{
   font-size:.3rem;
   color: #333;
-  margin:0rem .5rem;
+  margin:.3rem .5rem .2rem;
   position: relative;
 }
 .list_need:before{
@@ -969,12 +982,16 @@ footer .exam_b .btn span{
   content: " ";
   display: block;
   position: absolute;
-  bottom: .03rem;
+  bottom: .04rem;
   margin-left: -.2rem;
+}
+.add_bg h3{
+  margin:0 .5rem;
 }
 .demand_font{
   font-size: .26rem;
   color: #666;
+  width:100%;
 }
 
 .demand_emo .small_f{
@@ -1162,3 +1179,48 @@ footer .exam_b .btn span{
 .v_active li:active{
   background: #ededed;
 }
+/*此处为首页*/
+.banner_bg{
+  width:100%;
+  height:3rem;
+  display: block;
+}
+.home_sec{
+  padding:.5rem .3rem;
+  background: #fff;
+  border-bottom:1px solid #ededed;
+
+}
+
+.home_icon img{
+  width:.86rem;
+  height:.86rem;
+}
+.home_icon p{
+  font-size:.3rem;
+  color: #333;
+  margin-top:.02rem;
+}
+.home_third{
+  position: relative;
+}
+.home_more{
+  font-size:.24rem;
+  color: #999;
+  float: right;
+  padding-right:.3rem;
+  padding-top:.4rem;
+}
+.home_person{
+  position: absolute;
+  right: .3rem;
+  top: .3rem;
+  font-size: .2rem;
+  color: #00b553;
+}
+.home_four .f_con{
+  background: #fff;
+  border-top:1px solid #ededed;
+}
+
+

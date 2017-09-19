@@ -78,29 +78,22 @@
 <body>
 <div id="app">
 <header>
-    <div class="search_c">
-      <a class="seach_tit tl" href="##"><img src="../img/back.png" alt="返回"/></a>
-      <div class="search_input">
-        <!--<el-input icon="el-icon-search" />-->
-        <img src="../img/seach_icon.png" />
-        <img src="../img/delate.png" />
-        <input  placeholder="输入关键词搜索相关培训报名">
-      </div>
-      <a class="seach_tit tr" href="##"><img src="../img/home.png" alt="更多" /></a>
-    </div>
+  <div class="logo_c">
+    <a class="tl" href="../course/course.html"><img src="../img/back.png" alt="返回"/></a>
+    <a class="tc" href="../course/course3.html"><img src="../img/logo.png" alt="smile"  class="logo1"/></a>
+    <a class="tr" href="../course/course5.html"><img src="../img/home.png" alt="更多" /></a>
+  </div>
   </header>
   <section>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="正在报名"  name="first">
-        <ul class=" list_border course_line reg_nohover">
+      <el-tab-pane label="进行中"  name="first">
+        <ul class="list_border course_line">
           <li class="course_list  line_only">
             <a>
-              <img class="person_header fl" src="../img/img01.jpg">
-              <div class="bm_con">
-                <div class="hidden bm_font">
-                  <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                  <p class="">主讲：王小明</p>
-                  <p>2017-10-11--2017-10-12</p>
+              <img src="../img/img1.png" class="fl img_bg">
+              <div class="course_cen">
+                <div class="hidden">
+                  <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -111,21 +104,19 @@
                       <span class="redff7">80</span>
                     </li>
                   </ul>
-                  <span class="surplus_num s_num">
-                    剩余21人
-                  </span>
                 </div>
+                <p class="exam_explain">
+                  考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么
+                </p>
               </div>
             </a>
           </li>
           <li class="course_list  line_only">
             <a>
-              <img class="person_header fl" src="../img/img01.jpg">
-              <div class="bm_con">
-                <div class="hidden bm_font">
-                  <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                  <p class="">主讲：王小明</p>
-                  <p>2017-10-11--2017-10-12</p>
+              <img src="../img/img1.png" class="fl img_bg">
+              <div class="course_cen">
+                <div class="hidden">
+                  <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -136,25 +127,23 @@
                       <span class="redff7">80</span>
                     </li>
                   </ul>
-                  <span class="surplus_num s_num">
-                    剩余21人
-                  </span>
                 </div>
+                <p class="exam_explain">
+                  考试说明：这里是考试说明考试靠什么
+                </p>
               </div>
             </a>
           </li>
         </ul>
       </el-tab-pane>
-      <el-tab-pane label="结束报名" name="second">
-        <ul class=" list_border course_line reg_nohover">
+      <el-tab-pane label="未进行" name="second">
+        <ul class="list_border course_line">
           <li class="course_list  line_only">
             <a>
-              <img class="person_header fl" src="../img/img01.jpg">
-              <div class="bm_con">
-                <div class="hidden bm_font">
-                  <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                    <p class="">主讲：王小明</p>
-                    <p>2017-10-11--2017-10-12</p>
+              <img src="../img/img1.png" class="fl img_bg">
+              <div class="course_cen">
+                <div class="hidden">
+                  <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -165,22 +154,19 @@
                       <span class="redff7">80</span>
                     </li>
                   </ul>
-                  <span class="surplus_num s_num">
-                    剩余21人
-                  </span>
-                  <img class="end_png" src="../img/end.png"/>
                 </div>
+                <p class="exam_explain">
+                  考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么
+                </p>
               </div>
             </a>
           </li>
           <li class="course_list  line_only">
             <a>
-              <img class="person_header fl" src="../img/img01.jpg">
-              <div class="bm_con">
-                <div class="hidden bm_font">
-                  <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                  <p class="">主讲：王小明</p>
-                  <p>2017-10-11--2017-10-12</p>
+              <img src="../img/img1.png" class="fl img_bg">
+              <div class="course_cen">
+                <div class="hidden">
+                  <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -191,69 +177,18 @@
                       <span class="redff7">80</span>
                     </li>
                   </ul>
-                  <button class="surplus_num g_remind">
-                    开班提醒我
-                  </button>
-                  <img class="end_png" src="../img/end.png"/>
                 </div>
-              </div>
-            </a>
-          </li>
-          <li class="course_list  line_only">
-            <a>
-              <img class="person_header fl" src="../img/img01.jpg">
-              <div class="bm_con">
-                <div class="hidden bm_font">
-                  <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                  <p class="">主讲：王小明</p>
-                  <p>2017-10-11--2017-10-12</p>
-                  <ul class="small_icon fr">
-                    <li class="fl">
-                      <span class="icon icon1"></span>
-                      <span class="green00b">80</span>
-                    </li>
-                    <li class="fl">
-                      <span class="icon icon2"></span>
-                      <span class="redff7">80</span>
-                    </li>
-                  </ul>
-                  <span class="surplus_num red_full">
-                    已  满
-                  </span>
-                  <img class="end_png" src="../img/end.png"/>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li class="course_list  line_only">
-            <a>
-              <img class="person_header fl" src="../img/img01.jpg">
-              <div class="bm_con">
-                <div class="hidden bm_font">
-                  <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                  <p class="">主讲：王小明</p>
-                  <p>2017-10-11--2017-10-12</p>
-                  <ul class="small_icon fr">
-                    <li class="fl">
-                      <span class="icon icon1"></span>
-                      <span class="green00b">80</span>
-                    </li>
-                    <li class="fl">
-                      <span class="icon icon2"></span>
-                      <span class="redff7">80</span>
-                    </li>
-                  </ul>
-                  <span class="surplus_num end_grey">
-                    已结束
-                  </span>
-                  <img class="end_png" src="../img/end.png"/>
-                </div>
+                <p class="exam_explain">
+                  考试说明：这里是考试说明考试靠什么
+                </p>
               </div>
             </a>
           </li>
         </ul>
       </el-tab-pane>
     </el-tabs>
+
+
   </section>
 </div>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -262,15 +197,13 @@
 <script>
     new Vue({
         el: '#app',
-        data: {
-            visible: false,
-            activeName: 'first',
+        data: function() {
+            return {
+                visible: false,
+              activeName: 'first'
+            }
 
-        },
-      methods: {
-        handleClick(tab, event) {console.log(tab, event);}
-      }
-
+        }
     })
 </script>
 </body>
