@@ -37,7 +37,7 @@
 </template>
 
 <script>
-
+import md5 from 'js-md5'
 import api from '../services/api'
 // var counter = 0
 export default {
@@ -54,6 +54,9 @@ export default {
 
       link: 'http://www.baidu.com'
     }
+  },
+  created () {
+    console.log(md5('123456'))
   },
   methods: {
     handleClose (done) {

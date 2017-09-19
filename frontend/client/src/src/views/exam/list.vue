@@ -4,22 +4,21 @@
       <div class="search_c">
         <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
         <div class="search_input">
-          <!--<el-input icon="el-icon-search" />-->
           <img src="../../assets/img/seach_icon.png" />
           <img src="../../assets/img/delate.png" />
-          <input placeholder="输入关键词搜索相关课程" >
+          <input placeholder="输入关键词搜索相关考试">
         </div>
         <a class="seach_tit tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
       </div>
     </header>
     <section>
-      <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-        <li class="course_list  line_only" v-for="item in data" :key="item.course_id">
-          <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
-            <img :src="item.icon" class="fl img_bg">
+      <ul class="mt3 list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <li class="course_list  line_only" v-for="item in data" :key="item.exam_id">
+          <router-link v-bind:to="{path: '/getExamInfo', query: {id: item.exam_id}}"><a>
+            <img :src="item.icon|formatImage" class="fl img_bg">
             <div class="course_cen">
               <div class="hidden">
-                <h3 class="fl">{{item.title}}</h3>
+                <h3 class="fl">{{item.exam_title}}</h3>
                 <ul class="small_icon fr">
                   <li class="fl">
                     <span class="icon icon1"></span>
@@ -38,12 +37,13 @@
           </router-link>
         </li>
       </ul>
+
     </section>
   </div>
 </template>
 
 <script>
-import api from '../../services/api'
+import axios from 'axios'
 export default {
   data: function () {
     return {
@@ -53,29 +53,32 @@ export default {
       busy: false
     }
   },
-
+  filters: {
+    formatImage: function (uri) {
+      return axios.defaults.baseURL + uri
+    }
+  },
   methods: {
     loadMore: function () {
       this.busy = true
-      var id = this.$route.query.id
-
       this.currentPage = this.currentPage + 1
       var params = {
         skip: this.currentPage * this.take,
-        take: this.take,
-        cateid: id
+        take: this.take
       }
-      api.fetch(api.uri.getCourseByCategoryId, params).then(data => {
-        this.busy = false
+      api.fetch(api.uri.getExamList, params).then(data => {
         if (data.status === 1) {
           this.data = this.data.concat(data.result)
+          if (data.result.length === this.take) {
+            this.busy = false
+          }
         } else {
-          // TODO:统一处理弹框
+          this.open(data.result)
         }
+      }).catch(error => {
+        //this.openMessageBox(error.message)
       })
     }
   }
 }
 </script>
-
-

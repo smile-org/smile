@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import api from '../../services/api'
+
 import Bar from '../../components/Bar'
 import BarItem from '../../components/BarItem'
 
@@ -28,11 +28,16 @@ export default {
   },
   methods: {
     fetchData () {
-      api.fetch('users/getUser').then(data => {
-        this.user = data
-      }).catch(error => {
-        alert(error.message)
-      })
+      this.user = {
+        firstName: 'cui',
+        lastName: 'lin',
+        age: 18
+      }
+      // api.fetch('users/getUser').then(data => {
+      //   this.user = data
+      // }).catch(error => {
+      //   alert(error.message)
+      // })
     }
   }
 }

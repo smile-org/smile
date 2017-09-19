@@ -83,7 +83,7 @@ export default {
         this.errorMessage = '请输入正确格式的手机号码'
         return
       }
-      const TIME_COUNT = 10
+      const TIME_COUNT = 59
       var uri = api.uri.getCode
       api.fetch(uri, { cellphone: this.username }).then(data => {
         if (data.status === 1) {

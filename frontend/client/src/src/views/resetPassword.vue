@@ -31,6 +31,7 @@
 <script>
 import router from '../router/index'
 import api from '../services/api'
+import md5 from 'js-md5'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -75,7 +76,9 @@ export default {
         return
       }
 
-      api.post(api.uri.resetPassword, {cellphone: usernameInSS, vcode: codeInSS, pwd: this.password}).then(data => {
+      var md5PWD = md5(this.password)
+      md5PWD = this.password
+      api.post(api.uri.resetPassword, {cellphone: usernameInSS, vcode: codeInSS, pwd: md5PWD}).then(data => {
         if (data.status === 1) {
           // 设置成功后清楚 SS
           sessionStorage.removeItem('smile_username')

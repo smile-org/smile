@@ -23,7 +23,7 @@
             <span class="redff7">{{data.collect_count}}</span>
           </li>
           <li class="fr">
-            <span id="c_save" v-on:click="favorite" :class="{icon:true,icon4:!data.courseCollected,icon5:data.courseCollected}"></span>
+            <span id="c_save" v-on:click="favorite" :class="{icon:true,icon4:data.courseCollected,icon5:!data.courseCollected}"></span>
           </li>
           <li class="fr">
             <span class="icon icon3" v-on:click="comment"></span>
@@ -41,7 +41,7 @@
               <span>部门 :</span> {{data.department}}
             </li>
             <li>
-              <span>有效期 :</span> {{data.expiration_date}}
+              <span>有效期 :</span> {{data.expiration_date | formatDate}}
             </li>
             <li>
               <span>课程简介 :</span>
@@ -84,6 +84,7 @@
 <script>
 import api from '../../services/api'
 import router from '../../router'
+import { formatDate } from '../../common/date'
 export default {
   data: function () {
     return {
@@ -93,6 +94,12 @@ export default {
       courseContent: [],
       courseComment: [],
       id: 0
+    }
+  },
+  filters: {
+    formatDate (time) {
+      var date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
     }
   },
   created () {
@@ -146,7 +153,7 @@ export default {
     favorite: function () {
       if (this.data.courseCollected === 1) {
         this.data.courseCollected = 0
-        api.fetch(api.uri.cancelFavoriteCourse, { courseid: this.id})
+        api.fetch(api.uri.cancelFavoriteCourse, { courseid: this.id })
       } else {
         this.data.courseCollected = 1
         api.fetch(api.uri.favoriteCourse, { courseid: this.id })
@@ -154,18 +161,18 @@ export default {
     },
     comment: function () {
       sessionStorage.setItem('courseTitle', this.data.title)
-      router.push({ name: 'courseComment', params: { id: this.id } })
+      router.push({ name: 'courseComment', query: { id: this.id } })
     },
     start: function (contentId, contentLink) {
       api.fetch(api.uri.startCourse, {
-        courseid: contentId
+        courseid: this.id,
+        contentid: contentId
       }).then(data => {
         if (data.status === 1) {
           window.open(contentLink, '_blank')
         }
       })
     }
-
   }
 }
 </script>

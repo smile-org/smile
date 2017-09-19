@@ -4,7 +4,7 @@ import conf from '../config/index.js'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
 
-axios.defaults.baseURL = 'http://192.168.0.108:3000'
+axios.defaults.baseURL = 'http://123.207.154.226:8888' // 'http://192.168.0.108:3000'
 
 /**
  * 拦截器， 对所有的请求。
@@ -14,7 +14,7 @@ axios.interceptors.request.use(config => {
   var token = sessionStorage.getItem(conf.cookie.key)
   if (token) {
     // token放到header中
-    config.headers.Authorization = token
+    config.headers.common.token = token
   }
   return config
 }, error => {
@@ -54,15 +54,21 @@ export default {
   },
 
   uri: {
-    login: '/login',
-    changePWD: '/users/changePWD',
+    // *** 登录 ***
+    // 登录
+    login: '/logon',
+    // 获取验证码
     getCode: '/getVerificationCode',
+    // 验证验证码
     verifyCode: '/checkVerificationCode',
+    // 重设密码
     resetPassword: '/updatePassword',
+
+    // *** 课程 ***
     // 获取课程分类
     getCourseCategories: '/getCategoryList',
     // 根据课程分类获取课程列表
-    getCourseByCategoryId: '/users/getCourseByCategoryId',
+    getCourseByCategoryId: '/getCoursesList',
     // 获取特定课程
     getCourse: '/getCourseByID',
     // 获取特定课程目录
@@ -76,6 +82,22 @@ export default {
     // 收藏课程
     favoriteCourse: '/addCourseCollection',
     // 取消收藏课程
-    cancelFavoriteCourse: '/cancelCourseCollection'
+    cancelFavoriteCourse: '/cancelCourseCollection',
+
+    // *** 考试 ***
+    // 获取所有考试
+    getExamList: '',
+    // 获取考试
+    getExamInfo: '',
+    // 取消收藏考试
+    cancelFavoriteExam: '',
+    // 收藏考试
+    favoriteExam: '',
+    // 获取考试相关学习资料（课程）
+    getExamCourses: '',
+    // 获取考试记录
+    getExamRecords: '',
+    // 获取考试信息与试题列表
+    getExamQuestions: ''
   }
 }

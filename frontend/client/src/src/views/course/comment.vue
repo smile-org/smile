@@ -15,13 +15,13 @@
         </div>
 
         <ul class="a_case">
-          <li v-on:click="quickComments">
+          <li v-on:click="quickComments('干货满满')">
             干货满满
-          </li>
-          <li>
+          </li >
+          <li v-on:click="quickComments('课程生动')">
             课程生动
           </li>
-          <li>
+          <li v-on:click="quickComments('受益匪浅')">
             受益匪浅
           </li>
         </ul>
@@ -52,6 +52,7 @@ export default {
     }
   },
   created () {
+    this.id = this.$route.query.id
     this.courseTitle = sessionStorage.getItem('courseTitle')
     sessionStorage.removeItem('courseTitle')
   },
@@ -72,10 +73,10 @@ export default {
         this.showError = true
         this.errorMessage = '请评分并评论后再提交'
       }
-      api.post(api.uri.submitCourseComments, {courseid: this.$route.query.id, star: this.star, comment: this.comments}).then(data => {
+      api.post(api.uri.submitCourseComments, {courseid: this.id, star: this.star, comment: this.comments}).then(data => {
         if (data.status === 1) {
           // TODO: element ui 弹出框后再跳转
-          router.push({name: 'courseDetails'})
+          router.push({name: 'courseDetails', query: { id: this.id }})
         } else {
           this.showError = true
           this.errorMessage = data.result

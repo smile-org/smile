@@ -37,6 +37,7 @@ import api from '../services/api'
 
 // 路由管理对象
 import router from '../router/index'
+import md5 from 'js-md5'
 
 export default {
   data: function () {
@@ -61,13 +62,13 @@ export default {
   methods: {
     login: function () {
       var uri = api.uri.login
-      api.post(uri, { cellphone: this.username, pwd: this.password }).then(data => {
+      var md5PWD = md5(this.password)
+      md5PWD = this.password
+      api.post(uri, { cellphone: this.username, pwd: md5PWD }).then(data => {
         if (data.status === 1) {
           this.showError = false
           this.errorMessage = ''
-          // 存储token到sessionStorage
           sessionStorage.setItem('smile', data.result)
-          // 跳转到首页
           router.push({ name: 'homepage' })
         } else {
           this.showError = true
