@@ -159,32 +159,6 @@ public class CourseController {
         return result;
     }
 
-    //用不到了
-    @RequestMapping(value = "/courseCollected", method = RequestMethod.GET)
-    public Map courseCollected(int courseid, @RequestHeader Map header) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        String token = header.get("token").toString();
-        User user = logonService.getUserByToken(token);
-        if (user == null) {
-            result.put(Constant.status, 0);
-            result.put(Constant.result, "无效的登录用户");
-            return result;
-        }
-
-        try {
-            boolean r = courseService.courseCollected(courseid, user.getUser_id());
-
-            result.put(Constant.status, 1);
-            result.put(Constant.result, r);
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            result.put(Constant.status, 0);
-            result.put(Constant.result, ex.getMessage());
-        }
-        return result;
-    }
-
 
     @RequestMapping(value = "/addCourseCollection", method = RequestMethod.GET)
     public Map addCourseCollection(int courseid, @RequestHeader Map header) {
@@ -199,7 +173,7 @@ public class CourseController {
 
         try {
 
-            boolean r = courseService.courseCollected(courseid, user.getUser_id());
+            boolean r = collectService.itemCollected( "course"  , courseid, user.getUser_id());
 
             if (r) {
                 result.put(Constant.status, 0);

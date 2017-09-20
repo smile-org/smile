@@ -34,15 +34,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
 
-
-    @Override
-    public boolean courseCollected(int courseid, int userid) {
-        if (courseRepo.countCourseCollection(courseid, userid) > 0)
-            return true;
-        else
-            return false;
-    }
-
     @Override
     public void addCourseComment(int userid, int courseid, int star, String comment, Date now) {
         courseRepo.addCourseComment(userid, courseid, star, comment, now);
@@ -93,6 +84,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> searchCourse(String keyword) {
         return   courseRepo.searchCourse(keyword);
+    }
+
+    @Override
+    public List<Course> getCourseListByExamid(int examid) {
+        return  courseRepo.getCourseListByExamid(examid);
     }
 
 

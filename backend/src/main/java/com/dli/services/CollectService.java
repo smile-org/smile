@@ -12,4 +12,5 @@ public interface CollectService {
 
     void   cancelCollection( int userid, String item_type, int item_id);
 
+    boolean  itemCollected(  String itemtype , int itemid,  int userid);
 }

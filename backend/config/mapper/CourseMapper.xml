@@ -120,11 +120,6 @@ join (
 
     </select>
 
-    <select id="countCourseCollection" resultType="int">
-        select count(*)  from user_favor where item_type='course'  and  item_id=#{courseid} and user_id=#{userid};
-    </select>
-
-
     <insert id="addCourseComment" >
         insert  course_comment values(null, #{userid},#{courseid}, #{star},#{comment},#{now} ,1 );
     </insert>
@@ -158,5 +153,11 @@ join (
 
     <select id="searchCourse" resultMap="CourseMap">
         select * from  course where title like '%${keyword}%';
+    </select>
+
+    <select id="getCourseListByExamid" resultMap="CourseMap">
+select * from course where course_id in (
+select  course_id from  exam_course where exam_id= #{examid});
+
     </select>
 </mapper>

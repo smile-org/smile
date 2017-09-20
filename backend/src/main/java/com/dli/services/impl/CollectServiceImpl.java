@@ -28,4 +28,13 @@ public class CollectServiceImpl implements CollectService {
     public void cancelCollection(int userid, String item_type, int item_id) {
         collectRepo.cancelCollection(userid, item_type, item_id);
     }
+
+    @Override
+    public boolean itemCollected(String itemtype, int itemid, int userid) {
+        int count=  collectRepo.countCollection(itemtype, itemid, userid);
+        if(count >0)
+            return  true;
+        else
+            return   false;
+    }
 }

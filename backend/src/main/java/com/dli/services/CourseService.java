@@ -16,9 +16,6 @@ public interface CourseService {
     Course  getCourseByID(int id  , int userid );
 
 
-
-    boolean courseCollected( int courseid,  int userid);
-
     void  addCourseComment(int userid ,int courseid,int star,String comment,Date now );
 
     List<CourseComment> getCourseCommentList(int courseid );
@@ -30,4 +27,7 @@ public interface CourseService {
     String ClickCourseContent( int courseid, int contentid ,int userid);
 
     List<Course>  searchCourse(String keyword);
+
+
+    List<Course>  getCourseListByExamid( int  examid);
 }

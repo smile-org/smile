@@ -6,9 +6,15 @@
         insert  user_favor  values(null, #{userid},  #{item_type} ,#{item_id} , now());
     </insert>
 
-
     <delete id="cancelCollection">
         delete from  user_favor  where user_id  =#{userid} and item_type= #{item_type}  and item_id = #{item_id};
     </delete>
 
+    <select id="countCollection" resultType="int">
+        select count(*)  from user_favor where item_type=#{itemtype}  and  item_id=#{itemid} and user_id=#{userid};
+    </select>
+
+    <select id="countAllCollection"  resultType="int">
+        select count(*)  from user_favor where item_type=#{itemtype}  and  item_id=#{itemid}
+    </select>
 </mapper>

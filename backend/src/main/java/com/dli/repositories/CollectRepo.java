@@ -14,4 +14,10 @@ public interface CollectRepo {
     void   addCollection(@Param("userid") int userid, @Param("item_type")String item_type, @Param("item_id")int item_id);
 
     void   cancelCollection(@Param("userid") int userid, @Param("item_type")String item_type, @Param("item_id")int item_id);
+
+    int countCollection( @Param("itemtype")   String itemtype ,@Param("itemid") int itemid,  @Param("userid")int userid);
+
+
+
+    int  countAllCollection(@Param("itemtype")   String itemtype ,@Param("itemid") int itemid );
 }
