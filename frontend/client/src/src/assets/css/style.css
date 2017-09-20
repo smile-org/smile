@@ -92,6 +92,55 @@ header .search_c .search_input input{
 .search_input img:first-child{
   left: .2rem;
 }
+
+.search_tit{
+  padding:.3rem;
+}
+.b_search_input{
+  position: relative;
+  line-height: 0;
+  box-sizing: border-box;
+}
+.b_search_input input{
+  width: 100%;
+  border-radius: 1rem;
+  height: .55rem;
+  line-height: 0.55rem;
+  border:1px solid #dcdcdc;
+  font-size: .2rem;
+  color: #666;
+  padding:0.1rem 0.6rem;
+  outline: 0;
+  background-color: #fff;
+  -webkit-appearance: none;
+
+}
+.b_search_input img {
+  width: 0.29rem;
+  position: absolute;
+  top: .15rem;
+  right: .2rem;
+}
+.b_search_input .s_seach{
+  left: .2rem;
+}
+.fl_tab{
+  font-size:.24rem ;
+  color: #999;
+  overflow: hidden;
+  margin-left:.3rem;
+  margin-bottom:.1rem;
+}
+.fl_tab li{
+  float: left;
+  margin-right: .3rem;
+}
+.fl_tab  .active{
+  color: #00b553;
+}
+.s_div img{
+  width:.24rem;
+}
   /*header end*/
 section form{
   padding:0.3rem;
