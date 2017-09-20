@@ -47,8 +47,8 @@ case when af.follow_count is null then 0 else af.follow_count end follow_count,
 case when af1.is_follow > 0 then 1 else 0 end is_follow
 from appointment_item ai
 join user u on ai.sponsor_id = u.user_id
-left join (select item_id, count(*) follow_count from appointment_follower) af on ai.item_id = af.item_id
-left join (select item_id, count(*) is_follow from appointment_follower where follower_id = #{userId}) af1 on ai.item_id = af1.item_id
+left join (select item_id, count(*) follow_count from appointment_follower where follower_type='follower') af on ai.item_id = af.item_id
+left join (select item_id, count(*) is_follow from appointment_follower where follower_id = #{userId} and follower_type='follower') af1 on ai.item_id = af1.item_id
 where ai.appointment_id = #{appointmentId}
     </select>
 

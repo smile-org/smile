@@ -136,7 +136,7 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/addItem", method = RequestMethod.POST)
-    public Map addItem(@RequestBody Map body, @RequestHeader Map header){
+    public Map addItem(@RequestBody Map body, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -151,10 +151,16 @@ public class AppointmentController {
             int appointmentId = (int) body.get("appointmentId");
             String content = (String) body.get("content");
 
-            int itemId = appointmentService.addItem(appointmentId, content, user.getUser_id(), new Date());
-            appointmentService.follow(appointmentId,itemId,user.getUser_id(),"item_sponsor");
+            Date date = new Date();
+
+            int itemId = appointmentService.addItem(appointmentId, content, user.getUser_id(), date);
+            appointmentService.follow(appointmentId, itemId, user.getUser_id(), "item_sponsor");
+            Map map = new HashMap<String, Object>();
+            map.put("itemId", itemId);
+            map.put("sponsorName", user.getFull_name());
+            map.put("sponsorDate", date);
+            result.put(Constant.result, map);
             result.put(Constant.status, 1);
-            result.put(Constant.result, itemId);
 
 
         } catch (Exception ex) {
@@ -168,7 +174,7 @@ public class AppointmentController {
 
 
     @RequestMapping(value = "/addAppointment", method = RequestMethod.POST)
-    public Map addAppointment(@RequestBody Map body, @RequestHeader Map header){
+    public Map addAppointment(@RequestBody Map body, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -185,7 +191,7 @@ public class AppointmentController {
             String appointmentTitle = (String) body.get("appointmentTitle");
             List<String> keywords = (List<String>) body.get("keywords");
             List<String> items = (List<String>) body.get("items");
-            int appointmentId = appointmentService.addAppointment(appointmentTitle,userId,companyId,keywords,items);
+            int appointmentId = appointmentService.addAppointment(appointmentTitle, userId, companyId, keywords, items);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, appointmentId);
