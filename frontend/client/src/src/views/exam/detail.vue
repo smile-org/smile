@@ -177,7 +177,7 @@ export default {
   },
   created () {
     this.id = this.$route.query.id
-    api.fetch(api.uri.getExamInfo, { examid: this.id}).then(data => {
+    api.fetch(api.uri.getExamInfo, { examid: this.id }).then(data => {
       if (data.status === 1) {
         this.data = data.result
       }

@@ -98,6 +98,20 @@ export default {
     // 获取考试记录
     getExamRecords: '',
     // 获取考试信息与试题列表
-    getExamQuestions: ''
+    getExamQuestions: '',
+
+    // *** 约课 ***
+    // 获取约课列表
+    getBookingList: '/appointment/appointmentList',
+    // 查看约课同学
+    getBookingFollowers: '/appointment/followers',
+    // 约课详细页面
+    getBooking: '/appointment/appointment',
+    // 提交约课
+    submitBooking: '/appointment/addAppointment',
+    // 点赞
+    likeBooking: '/appointment/follow',
+    // 添加新需求
+    submitNewRequirement: '/appointment/addItem'
   }
 }

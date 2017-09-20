@@ -21,6 +21,12 @@ import getExamList from '@/views/exam/list'
 import getExamInfo from '@/views/exam/detail'
 import startExam from '@/views/exam/exam'
 
+// 约课
+import getBookingList from '@/views/booking/list'
+import getBookingFollowers from '@/views/booking/followers'
+import getBooking from '@/views/booking/detail'
+import newBooking from '@/views/booking/new'
+
 Vue.use(Router)
 
 var requiresAuth = true
@@ -93,6 +99,33 @@ export default new Router({
       component: startExam,
       meta: {requiresAuth: requiresAuth}
     },
+
+    // 约课
+    {
+      path: '/getBookingList',
+      name: 'getBookingList',
+      component: getBookingList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/getBookingFollowers',
+      name: 'getBookingFollowers',
+      component: getBookingFollowers,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/getBooking',
+      name: 'getBooking',
+      component: getBooking,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/newBooking',
+      name: 'newBooking',
+      component: newBooking,
+      meta: {requiresAuth: requiresAuth}
+    },
+
     // 其他
     {
       path: '/',
