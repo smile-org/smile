@@ -59,7 +59,10 @@ public class Helper {
     /*
     * todo
     * 1. job to delete sms that create 5minitues ago , perhaps hourly
-    *2. job to disable course while over due expiration date
+    *  prevent from invoke  send sms too frequently
+    *2. job to disable course , exam, enroll  while over due expiration date
+    *3.  exam  job to  finish the exam
+    *    job 去更新  非正常关闭  ， 超时的 考试状态， 计算结果
     *
     * */
 }

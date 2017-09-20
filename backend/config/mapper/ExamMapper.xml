@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.ExamRepo">
+
+    <resultMap type="com.dli.entities.Exam" id="ExamMap">
+        <id column="exam_id" property="exam_id"/>
+        <result column="exam_num" property="exam_num"/>
+        <result column="exam_title" property="exam_title"/>
+        <result column="manager_id" property="manager_id"/>
+        <result column="start_date" property="start_date"/>
+        <result column="end_date" property="end_date"/>
+
+        <result column="tries_limit" property="tries_limit"/>
+        <result column="pass_score" property="pass_score"/>
+        <result column="time_limit" property="time_limit"/>
+        <result column="intro" property="intro"/>
+        <result column="icon" property="icon"/>
+        <result column="pic" property="pic"/>
+
+        <result column="company_id" property="company_id"/>
+        <result column="indicator" property="indicator"/>
+        <result column="created_at" property="created_at"/>
+        <result column="updated_at" property="updated_at"/>
+
+
+        <result column="study_count" property="study_count"/>
+        <result column="collect_count" property="collect_count"/>
+        <result column="manager_idName" property="manager_idName"/>
+        <result column="examCollected" property="examCollected"/>
+    </resultMap>
+
+
+
+    <resultMap type="com.dli.entities.ExamHistory" id="HistoryMap">
+        <id column="history_id" property="history_id"/>
+        <result column="exam_id" property="exam_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="score" property="score"/>
+        <result column="status" property="status"/>
+        <result column="start_date" property="start_date"/>
+        <result column="end_date" property="end_date"/>
+
+    </resultMap>
+
+
+    <resultMap type="com.dli.entities.Answer" id="AnswerMap">
+        <id column="answer_id" property="answer_id"/>
+        <result column="question_id" property="question_id"/>
+        <result column="answer_num" property="answer_num"/>
+        <result column="answer_option" property="answer_option"/>
+        <result column="answer_content" property="answer_content"/>
+        <result column="is_right" property="is_right"/>
+        <result column="indicator" property="indicator"/>
+        <result column="created_at" property="created_at"/>
+        <result column="updated_at" property="updated_at"/>
+
+        <result column="isSelected" property="isSelected"/>
+
+    </resultMap>
+
+
+
+    <resultMap type="com.dli.entities.Question" id="QuestionMap">
+        <id column="question_id" property="question_id"/>
+        <result column="type_id" property="type_id"/>
+        <result column="title" property="title"/>
+        <result column="company_id" property="company_id"/>
+        <result column="indicator" property="indicator"/>
+        <result column="created_at" property="created_at"/>
+        <result column="updated_at" property="updated_at"/>
+        <result column="lastStatus" property="lastStatus"/>
+    </resultMap>
+
+
+    <resultMap type="com.dli.entities.ExamRecord" id="RecordMap">
+        <id column="record_id" property="record_id"/>
+        <result column="history_id" property="history_id"/>
+        <result column="question_id" property="question_id"/>
+        <result column="status" property="status"/>
+        <result column="is_right" property="is_right"/>
+
+
+    </resultMap>
+
+
+      <select id="getExamList"  resultMap="ExamMap">
+
+        select * from (
+  select result.*,
+          case when o1.renshu  is not null then o1.renshu else 0 end  as study_count,
+          case when  o2.userct is not null then  o2.userct else 0  end   as collect_count
+          from (
+          select * from exam  where indicator =1   and company_id=#{companyid}   and   now() &lt; end_date
+          )result
+
+          left join (
+          select exam_id, count(*)  as  renshu from (
+          select  exam_id, user_id from exam_history  group by exam_id, user_id)t group by exam_id)o1
+          on result.exam_id=o1.exam_id
+
+          left join
+          (
+          select item_id as exam_id,  count(user_id) as userct from  user_favor where item_type='exam' group by item_id)o2
+          on result.exam_id=o2.exam_id)t   order by   start_date limit #{skip} ,#{take}
+      </select>
+
+
+    <select id="getExambyID" resultMap="ExamMap">
+        select *   from  exam  where  exam_id=#{examid};
+    </select>
+
+    <select id="getExamHistoryList"  resultMap="HistoryMap">
+        select * from    exam_history  where  exam_id =#{examid} and   user_id=#{userid}  order by history_id;
+
+    </select>
+
+
+    <select id="getQuestionListByUseridExamid"  resultMap="QuestionMap"  >
+        select q.* ,r.status as lastStatus from (  select qu.*  ,m.question_num  from question qu join exam_question  m
+ on qu.question_id  =m.question_id where    m.exam_id=#{examid} and  qu.indicator =1  )  q
+left join ( select * from exam_record  where history_id in
+(select max(history_id) from  exam_history where exam_id=#{examid} and user_id=#{userid}  and status ='in-process' group  by history_id)
+ )r on q.question_id= r.question_id  order by q.question_num;
+    </select>
+
+    <select id="getAnswerListByUseridExamidQuestionid"  resultMap="AnswerMap">
+             select a.* , case when  r.answer_id  is not null then 1 else 0 end as isSelected
+ from (select * from answer where question_id=#{questionid} and indicator =1)a left join
+ ( select answer_id from exam_record_answerchoice where record_id in(
+ select record_id from exam_record  where  question_id=#{questionid} and history_id =
+(select max(history_id) from  exam_history where exam_id= #{examid} and user_id=#{userid}
+ and status ='in-process')))r on  a.answer_id =r.answer_id;
+    </select>
+
+
+    <insert id="addExamHistroy"   parameterType="com.dli.entities.ExamHistory"   useGeneratedKeys="true"   keyProperty="history_id"  >
+        insert exam_history values( 0, #{exam_id},#{user_id}, null,'in-process', now(), null );
+    </insert>
+
+    <insert id="addExamRecord"    parameterType="com.dli.entities.ExamRecord"   useGeneratedKeys="true"   keyProperty="record_id" >
+        insert   exam_record values( 0, #{history_id} , #{question_id}, #{status} ,null);
+    </insert>
+
+    <insert id="addExamRecordAnserchoice">
+        insert exam_record_answerchoice values(#{record_id}, #{answer_id});
+    </insert>
+
+    <select id="getQuestionListByExamid"  resultMap="QuestionMap"  >
+        select * from question  where  indicator =1 and  question_id in (
+        select question_id from exam_question where  exam_id = #{examid} )
+    </select>
+
+    <select id="getCorrectAnswerListByQuestionid"  resultType="java.lang.String">
+      select  answer_id from answer where question_id=#{questionid} and indicator =1   and is_right=1  order by  answer_id;
+    </select>
+
+    <select id="getExamHistoryRecord"    resultMap="RecordMap" >
+        select * from exam_record where history_id= #{historyid} and question_id=#{questionid}
+    </select>
+
+    <select id="getRecordAnswer" resultType="java.lang.String">
+        select answer_id from  exam_record_answerchoice where record_id=#{recordid}  order by  answer_id;
+    </select>
+
+    <delete id="deleteRecordAnswer">
+        delete from  exam_record_answerchoice where record_id =#{recordid};
+    </delete>
+
+
+    <update id="updateExamHistoryRecord">
+        update exam_record set  status= #{status}, is_right=#{isright} where record_id=#{recordid};
+    </update>
+
+    <select id="getExamHistoryCorrectRecrdCount"  resultType="int">
+        select count(*) from  exam_record  where history_id=#{historyid} and is_right=1;
+    </select>
+
+    <update id="updateExamHistory">
+        update exam_history  set score= #{score},  status= #{status},  end_date= now() where history_id= #{historyid};
+    </update>
+
+    <select id="getExamHistoryByID"  resultMap="HistoryMap">
+        select * from exam_history where history_id=#{history_id};
+    </select>
+    
+    <select id="getAllInProcessHistoryForJob"  resultMap="HistoryMap" >
+         select * from  exam_history where    status='in-process';
+    </select>
+
+    <select id="getStudyCountByExamid" resultType="int">
+        select  count(  distinct user_id)   as   renshu from   exam_history  where exam_id = #{examid}  ;
+    </select>
+
+</mapper>

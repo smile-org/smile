@@ -14,6 +14,7 @@
         <result column="indicator" property="indicator"/>
         <result column="created_at" property="created_at"/>
         <result column="updated_at" property="updated_at"/>
+        <result column="token" property="token"/>
     </resultMap>
 
     <select id="getUserByPhoneNumber"   resultMap="UserMap">

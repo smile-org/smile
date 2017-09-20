@@ -17,7 +17,6 @@ public interface CourseRepo {
 
     Course  getCourseByID(@Param("id") int id  ,@Param("userid") int userid  ) ;
 
-    int countCourseCollection(@Param("courseid") int courseid,  @Param("userid")int userid);
 
     void  addCourseComment( @Param("userid")int userid ,@Param("courseid")int courseid,@Param("star")int star,@Param("comment")String comment,@Param("now")Date now );
 
@@ -34,4 +33,6 @@ public interface CourseRepo {
     void  updateLearnProgress(  @Param("userid")  int userid,  @Param("contentid")  int contentid);
 
     List<Course>  searchCourse( @Param("keyword") String keyword);
+
+    List<Course>  getCourseListByExamid( int  examid);
 }
