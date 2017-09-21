@@ -115,7 +115,7 @@ export default {
     formatImage: function (uri) {
       return axios.defaults.baseURL + uri
     },
-    formatDate(time) {
+    formatDate (time) {
       var date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd hh:mm')
     }
@@ -145,7 +145,7 @@ export default {
       }
     },
     enroll: function () {
-      api.fetch(api.uri.enroll, { periodid: this.id}).then(data => {
+      api.fetch(api.uri.enroll, { periodid: this.id }).then(data => {
         if (data.status === 1) {
           alert('报名成功')
         } else {
