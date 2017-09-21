@@ -1393,7 +1393,6 @@ footer .exam_b .btn span{
   position: relative;
   overflow-x: hidden;
 }
-
 #slide_menu .nav li>a:after {
   transition: all .3s 0s ease-in-out;
   position: absolute;

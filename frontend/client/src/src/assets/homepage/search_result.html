@@ -74,250 +74,75 @@
     </div>
   </header>
   <section>
-    <div class=" position_r">
-      <div class="b_search_input s_absolute">
+    <div class="search_tit">
+      <ul class="fl_tab">
+        <li class="active">
+          课程
+        </li>
+        <li>
+          考试
+        </li>
+        <li>
+          报名
+        </li>
+        <li>
+          约课
+        </li>
+      </ul>
+      <div class="b_search_input">
         <img class="s_seach" src="../img/seach_icon.png" />
         <img class="s_delate" src="../img/delate.png" />
-        <input  placeholder="输入关键词搜索相关考试">
+        <input  placeholder="选择资源类型搜索更精准">
       </div>
-      <el-tabs class=" " v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane  label="课程" name="first">
-          <ul class="list_border course_line">
-            <li class="course_list  line_only">
-              <a>
-                <img src="../img/img1.png" class="fl img_bg">
-                <div class="course_cen">
-                  <div class="hidden">
-                    <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                    <ul class="small_icon fr">
-                      <li class="fl">
-                        <span class="icon icon1"></span>
-                        <span class="green00b">80</span>
-                      </li>
-                      <li class="fl">
-                        <span class="icon icon2"></span>
-                        <span class="redff7">80</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <p class="exam_explain">
-                    考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么
-                  </p>
-                </div>
-              </a>
-            </li>
-            <li class="course_list  line_only">
-              <a>
-                <img src="../img/img1.png" class="fl img_bg">
-                <div class="course_cen">
-                  <div class="hidden">
-                    <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                    <ul class="small_icon fr">
-                      <li class="fl">
-                        <span class="icon icon1"></span>
-                        <span class="green00b">80</span>
-                      </li>
-                      <li class="fl">
-                        <span class="icon icon2"></span>
-                        <span class="redff7">80</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <p class="exam_explain">
-                    考试说明：这里是考试说明考试靠什么
-                  </p>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </el-tab-pane>
-        <el-tab-pane label="考试" name="second">
-          <ul class="list_border course_line">
-            <li class="course_list  line_only">
-              <a>
-                <img src="../img/img1.png" class="fl img_bg">
-                <div class="course_cen">
-                  <div class="hidden">
-                    <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                    <ul class="small_icon fr">
-                      <li class="fl">
-                        <span class="icon icon1"></span>
-                        <span class="green00b">80</span>
-                      </li>
-                      <li class="fl">
-                        <span class="icon icon2"></span>
-                        <span class="redff7">80</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <p class="exam_explain">
-                    考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么
-                  </p>
-                </div>
-              </a>
-            </li>
-            <li class="course_list  line_only">
-              <a>
-                <img src="../img/img1.png" class="fl img_bg">
-                <div class="course_cen">
-                  <div class="hidden">
-                    <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                    <ul class="small_icon fr">
-                      <li class="fl">
-                        <span class="icon icon1"></span>
-                        <span class="green00b">80</span>
-                      </li>
-                      <li class="fl">
-                        <span class="icon icon2"></span>
-                        <span class="redff7">80</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <p class="exam_explain">
-                    考试说明：这里是考试说明考试靠什么
-                  </p>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </el-tab-pane>
-        <el-tab-pane label="报名" name="third">
-          <ul class=" list_border course_line reg_nohover">
-            <li class="course_list  line_only">
-              <a>
-                <img class="person_header fl" src="../img/img01.jpg">
-                <div class="bm_con">
-                  <div class="hidden bm_font">
-                    <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                    <p class="">主讲：王小明</p>
-                    <p>2017-10-11--2017-10-12</p>
-                    <ul class="small_icon fr">
-                      <li class="fl">
-                        <span class="icon icon1"></span>
-                        <span class="green00b">80</span>
-                      </li>
-                      <li class="fl">
-                        <span class="icon icon2"></span>
-                        <span class="redff7">80</span>
-                      </li>
-                    </ul>
-                    <span class="surplus_num s_num">
-                    剩余21人
-                  </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li class="course_list  line_only">
-              <a>
-                <img class="person_header fl" src="../img/img01.jpg">
-                <div class="bm_con">
-                  <div class="hidden bm_font">
-                    <h3 class="fl mb15">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                    <p class="">主讲：王小明</p>
-                    <p>2017-10-11--2017-10-12</p>
-                    <ul class="small_icon fr">
-                      <li class="fl">
-                        <span class="icon icon1"></span>
-                        <span class="green00b">80</span>
-                      </li>
-                      <li class="fl">
-                        <span class="icon icon2"></span>
-                        <span class="redff7">80</span>
-                      </li>
-                    </ul>
-                    <span class="surplus_num s_num">
-                    剩余21人
-                  </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </el-tab-pane>
-        <el-tab-pane label="约课" name="four">
-          <ul class=" list_border course_line reg_nohover">
-            <li class="course_list  line_only">
-              <a>
-                <div class="hidden">
-                  <img class="person_header fl" src="../img/img01.jpg">
-                  <div class="bm_con">
-                    <div class="hidden bm_font">
-                      <h3 class="fl ">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                      <p>主讲：王小明<span  class="ml2">2017-08-31</span></p>
-
-                      <ul class="small_icon fr">
-                        <li class="fl">
-                          <span class="icon icon1"></span>
-                          <span class="green00b">80</span>
-                        </li>
-                        <li class="fl">
-                          <span class="icon icon2"></span>
-                          <span class="redff7">80</span>
-                        </li>
-                      </ul>
-                      <span class="see_student" >
-                    查看同学
-                  </span>
-                    </div>
-                  </div>
-                </div>
-                <ul class="keword_num">
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                </ul>
-
-              </a>
-            </li>
-            <li class="course_list  line_only">
-              <a>
-                <div class="hidden">
-                  <img class="person_header fl" src="../img/img01.jpg">
-                  <div class="bm_con">
-                    <div class="hidden bm_font">
-                      <h3 class="fl ">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
-                      <p>主讲：王小明<span  class="ml2">2017-08-31</span></p>
-
-                      <ul class="small_icon fr">
-                        <li class="fl">
-                          <span class="icon icon1"></span>
-                          <span class="green00b">80</span>
-                        </li>
-                        <li class="fl">
-                          <span class="icon icon2"></span>
-                          <span class="redff7">80</span>
-                        </li>
-                      </ul>
-                      <span class="see_student" >
-                    查看同学
-                  </span>
-                    </div>
-                  </div>
-                </div>
-                <ul class="keword_num">
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                  <li>关键字一个</li>
-                </ul>
-
-              </a>
-            </li>
-          </ul>
-        </el-tab-pane>
-      </el-tabs>
-
-
-
     </div>
-
-
+    <ul class="list_border course_line">
+      <li class="course_list  line_only">
+        <a>
+          <img src="../img/img1.png" class="fl img_bg">
+          <div class="course_cen">
+            <div class="hidden">
+              <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
+              <ul class="small_icon fr">
+                <li class="fl">
+                  <span class="icon icon1"></span>
+                  <span class="green00b">80</span>
+                </li>
+                <li class="fl">
+                  <span class="icon icon2"></span>
+                  <span class="redff7">80</span>
+                </li>
+              </ul>
+            </div>
+            <p class="exam_explain">
+              考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么
+            </p>
+          </div>
+        </a>
+      </li>
+      <li class="course_list  line_only">
+        <a>
+          <img src="../img/img1.png" class="fl img_bg">
+          <div class="course_cen">
+            <div class="hidden">
+              <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
+              <ul class="small_icon fr">
+                <li class="fl">
+                  <span class="icon icon1"></span>
+                  <span class="green00b">80</span>
+                </li>
+                <li class="fl">
+                  <span class="icon icon2"></span>
+                  <span class="redff7">80</span>
+                </li>
+              </ul>
+            </div>
+            <p class="exam_explain">
+              考试说明：这里是考试说明考试靠什么
+            </p>
+          </div>
+        </a>
+      </li>
+    </ul>
   </section>
 </div>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
