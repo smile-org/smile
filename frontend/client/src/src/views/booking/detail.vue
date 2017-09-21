@@ -96,7 +96,9 @@
 
 <script>
 import api from '../../services/api'
-import router from '../../router'
+// import router from '../../router'
+import axios from 'axios'
+import { formatDate } from '../../common/date'
 export default {
   data: function () {
     return {
@@ -108,7 +110,7 @@ export default {
     }
   },
   filters: {
-    tImage: function (uri) {
+    formatImage: function (uri) {
       return axios.defaults.baseURL + uri
     },
     formatDate (time) {
@@ -127,6 +129,7 @@ export default {
       }
     }).catch(error => {
       // TODO: 统一处理
+      console.log(error.message)
     })
   },
   methods: {
@@ -162,6 +165,7 @@ export default {
         }
       }).catch(error => {
         // TODO:
+        console.log(error.message)
       })
     },
     cancel: function () {

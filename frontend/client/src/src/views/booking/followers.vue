@@ -48,6 +48,7 @@ export default {
       }
     }).catch(error => {
       // TODO: 统一处理
+      console.log(error.message)
     })
   },
   methods: {

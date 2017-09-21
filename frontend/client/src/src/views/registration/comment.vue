@@ -10,7 +10,7 @@
     <section>
       <div class="appraise_w">
         <div class="hidden">
-          <h3 class="fl">{{courseTitle}}</h3>
+          <h3 class="fl">{{title}}</h3>
           <el-rate class="fr" v-model="star" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
         </div>
 
@@ -30,7 +30,7 @@
         <p class="form_warning" v-show="showError">
           {{errorMessage}}
         </p>
-        <button class="login_btn" type="button" :disabled="$v.comments.$invalid || $v.star.$invalid" v-on:click='submit'>提交</button>
+        <button class="login_btn" type="button" v-on:click="comment">提交</button>
       </div>
     </section>
   </div>
@@ -41,9 +41,9 @@ import { required, between } from 'vuelidate/lib/validators'
 import api from '../../services/api'
 import router from '../../router'
 export default {
-  data () {
+  data: function () {
     return {
-      courseTitle: '',
+      title: '',
       comments: '',
       star: 0,
       showError: false,
@@ -53,7 +53,7 @@ export default {
   },
   created () {
     this.id = this.$route.query.id
-    this.courseTitle = sessionStorage.getItem('courseTitle')
+    this.title = sessionStorage.getItem('enrollCourseTitle')
   },
   validations: {
     comments: {
@@ -67,15 +67,15 @@ export default {
     quickComments: function (comments) {
       this.comments = comments
     },
-    submit: function () {
+    comment: function () {
       if (this.$v.invalid) {
         this.showError = true
         this.errorMessage = '请评分并评论后再提交'
       }
-      api.post(api.uri.submitCourseComments, {courseid: this.id, star: this.star, comment: this.comments}).then(data => {
+      api.post(api.uri.addEnrollmentComment, {enrollmentid: this.id, star: this.star, comment: this.comments}).then(data => {
         if (data.status === 1) {
           // TODO: element ui 弹出框后再跳转
-          router.push({name: 'courseDetails', query: { id: this.id }})
+          router.push({name: 'getEnroll', query: { id: this.id }})
         } else {
           this.showError = true
           this.errorMessage = data.result
@@ -85,7 +85,26 @@ export default {
         this.errorMessage = error.message
       })
     }
+
   }
 }
 </script>
 
+<style>
+.el-rate {
+  height: .4rem;
+  line-height: 0.4rem;
+}
+
+.el-textarea textarea {
+  min-height: 4rem;
+  outline: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.el-rate__icon {
+  font-size: .18rem;
+  margin-right: .08rem;
+}
+</style>

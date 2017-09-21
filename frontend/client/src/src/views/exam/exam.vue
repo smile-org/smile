@@ -120,19 +120,21 @@ export default {
   created () {
     this.id = this.$route.query.id
     api.fetch(api.uri.getExamQuestions, {examid: this.id}).then(data => {
-      if (data.status === 1){
+      if (data.status === 1) {
         this.data = data.exam
         this.questionCount = this.data.questions.length
-        this.currentQuestion = this.questions[currentQuestionNo]
+        this.currentQuestion = this.questions[this.currentQuestionNo]
 
         // 开始计时 http://jsfiddle.net/wr1ua0db/17/
-        var timer = this.data.time_left * 60, minutes, seconds
+        var timer = this.data.time_left * 60
+        var minutes
+        var seconds
         this.timerTask = setInterval(function () {
           minutes = parseInt(timer / 60, 10)
           seconds = parseInt(timer % 60, 10)
-          minutes = minutes < 10 ? "0" + minutes : minutes
-          seconds = seconds < 10 ? "0" + seconds : seconds
-          this.countDown = minutes + ":" + seconds
+          minutes = minutes < 10 ? '0' + minutes : minutes
+          seconds = seconds < 10 ? '0' + seconds : seconds
+          this.countDown = minutes + ':' + seconds
 
           if (--timer <= 0) {
             this.showModal = true
@@ -143,15 +145,15 @@ export default {
               if (this.autoSubmitCountDown <= 0) {
                 clearInterval(this.timerTask)
                 // TODO: 自动交卷API
-
               }
             }, 1000)
-            //timer = this.data.time_limit
+            // timer = this.data.time_limit
           }
         }, 1000)
       }
     }).catch(error => {
-      //TODO:
+      // TODO:
+      console.log(error.message)
     })
   },
   methods: {
@@ -164,7 +166,7 @@ export default {
         return
       } else {
         // 把当前提交， 更新currentquestion
-        this.currentQuestion = this.data.questions[currentQuestionNo]
+        this.currentQuestion = this.data.questions[this.currentQuestionNo]
       }
     },
     goNext: function () {
@@ -172,7 +174,7 @@ export default {
         return
       } else {
         // 把当前提交， 更新currentquestion
-        this.currentQuestion = this.data.questions[currentQuestionNo]
+        this.currentQuestion = this.data.questions[this.currentQuestionNo]
       }
     },
     gotoQuestion: function (index) {

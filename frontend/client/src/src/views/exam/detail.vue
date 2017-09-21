@@ -132,7 +132,7 @@
 
 <script>
 import api from '../../services/api'
-import router from '../../router'
+// import router from '../../router'
 import { formatDate } from '../../common/date'
 import axios from 'axios'
 export default {
@@ -156,21 +156,23 @@ export default {
       }
     },
     handleClick: function () {
-      if (tab.name === 'second') {
+      if (this.activeName.name === 'second') {
         api.fetch(api.uri.getExamCourses, { examid: this.id }).then(data => {
           if (data.status === 1) {
             this.examCourses = data.result
           }
         }).catch(error => {
           // TODO:
+          console.log(error.message)
         })
-      } else if (tab.name === 'third') {
+      } else if (this.activeName.name === 'third') {
         api.fetch(api.uri.getExamRecords, {examid: this.id}).then(data => {
           if (data.status === 1) {
             this.examRecords = data.result
           }
         }).catch(error => {
           // TODO:
+          console.log(error.message)
         })
       }
     }
@@ -183,6 +185,7 @@ export default {
       }
     }).catch(error => {
       // TODO
+      console.log(error.message)
     })
   },
   filters: {

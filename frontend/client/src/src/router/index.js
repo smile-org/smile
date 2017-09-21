@@ -27,6 +27,11 @@ import getBookingFollowers from '@/views/booking/followers'
 import getBooking from '@/views/booking/detail'
 import newBooking from '@/views/booking/new'
 
+// 报名
+import getEnrollList from '@/views/registration/list'
+import getEnroll from '@/views/registration/detail'
+import getEnrollComment from '@/views/registration/comment'
+
 Vue.use(Router)
 
 var requiresAuth = true
@@ -125,7 +130,25 @@ export default new Router({
       component: newBooking,
       meta: {requiresAuth: requiresAuth}
     },
-
+    // 报名
+    {
+      path: '/getEnrollList',
+      name: 'getEnrollList',
+      component: getEnrollList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/getEnroll',
+      name: 'getEnroll',
+      component: getEnroll,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/getEnrollComment',
+      name: 'getEnrollComment',
+      component: getEnrollComment,
+      meta: {requiresAuth: requiresAuth}
+    },
     // 其他
     {
       path: '/',

@@ -9,7 +9,7 @@
     </header>
     <section>
       <div class="course_banner">
-        <img :src="data.pic" />
+        <img :src="data.pic | formatImage" />
       </div>
       <div class="course_tit">
         <h3>{{data.title}}</h3>
@@ -85,6 +85,7 @@
 import api from '../../services/api'
 import router from '../../router'
 import { formatDate } from '../../common/date'
+import axios from 'axios'
 export default {
   data: function () {
     return {
@@ -100,6 +101,9 @@ export default {
     formatDate (time) {
       var date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd')
+    },
+    formatImage (uri) {
+      return axios.defaults.baseURL + uri
     }
   },
   created () {

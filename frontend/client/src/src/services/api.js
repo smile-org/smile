@@ -112,6 +112,26 @@ export default {
     // 点赞
     likeBooking: '/appointment/follow',
     // 添加新需求
-    submitNewRequirement: '/appointment/addItem'
+    submitNewRequirement: '/appointment/addItem',
+
+    // *** 报名 ***
+    // 获取报名列表
+    getEnrollList: '/getEnrollmentPeriodListInprocess',
+    // 获取结束报名列表
+    getEnrollListFinish: '/getEnrollmentPeriodListFinished',
+    // 获取课程信息
+    getEnrollCourse: '',
+    // 获取课程目录
+    getEnrollCourseCategory: '/getEnrollmentContentListByID',
+    // 获取课程评价
+    getEnrollCourseComment: '',
+    // 报名
+    enroll: '/addEnrollmentMapping',
+    // 收藏报名
+    favoriteEnrollment: '/addEnrollmentCollection',
+    // 取消报名
+    cancelFavoriteEnrollment: '/cancelEnrollmentCollection',
+    // 添加评论
+    addEnrollmentComment: '/addEnrollmentComment'
   }
 }

@@ -14,7 +14,7 @@
     <section>
       <ul class="mt3 list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.exam_id">
-          <router-link v-bind:to="{path: '/getExamInfo', query: {id: item.exam_id}}"><a>
+          <router-link v-bind:to="{path: '/getExamInfo', query: {id: item.exam_id}}">
             <img :src="item.icon|formatImage" class="fl img_bg">
             <div class="course_cen">
               <div class="hidden">
@@ -77,7 +77,8 @@ export default {
           this.open(data.result)
         }
       }).catch(error => {
-        //this.openMessageBox(error.message)
+        // this.openMessageBox(error.message)
+        console.log(error.message)
       })
     }
   }

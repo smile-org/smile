@@ -43,6 +43,7 @@
             </p>
           </div>
         </div>
+      </div>
     </section>
     <footer>
       <el-row class="exam_b">
@@ -50,18 +51,18 @@
         <el-col class="btn o_f" :span="12" v-on:click="cancel">取消</el-col>
       </el-row>
     </footer>
-    </div>
+  </div>
 </template>
 
 <script>
 import api from '../../services/api'
 import router from '../../router'
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+// import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
-  data: function() {
+  data: function () {
     return {
-      title,
+      title: '',
       keywords: [],
       requirements: [],
       keyword: '',
@@ -87,24 +88,29 @@ export default {
   //   }
   // },
   methods: {
-    submit: function() {
-      api.post(api.uri.submitBooking, { appointmentTitle: this.title, keywords: keywords, items: requirements }).then(data => {
+    submit: function () {
+      api.post(api.uri.submitBooking, {
+        appointmentTitle: this.title,
+        keywords: this.keywords,
+        items: this.requirements
+      }).then(data => {
         if (data.status === 1) {
-          router.push({ name: getBookingList })
+          router.push({ name: 'getBookingList' })
         } else {
           // TODO:
         }
       }).catch(error => {
         // TODO:
+        console.log(error.message)
       })
     },
     cancel: function () {
       // TODO: 弹出是否确认， 确认回到列表页面
-      router.push({ name: getBookingList })
+      router.push({ name: 'getBookingList' })
     },
 
     handleClose (item) {
-      this.keywords.splice(this.keywords.indexOf(item), 1);
+      this.keywords.splice(this.keywords.indexOf(item), 1)
     },
 
     removeRequirement (item) {
@@ -116,54 +122,57 @@ export default {
     },
 
     showInput () {
-      this.inputVisible = true;
+      this.inputVisible = true
       this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
     },
 
     handleInputConfirm () {
-      let keyword = this.keyword.trim();
+      let keyword = this.keyword.trim()
       if (keyword) {
-        this.keywords.push(keyword);
+        this.keywords.push(keyword)
       }
-      this.inputVisible = false;
-      this.keyword = '';
+      this.inputVisible = false
+      this.keyword = ''
     }
   }
 }
 </script>
 <style>
-    .input-new-tag{
-      /*width:1rem;*/
-      max-width: 3rem;
-      min-width: 1rem;
-      height:1rem;
-      line-height:.7rem;
-      margin-top:-.8rem!important;
-    }
-    .el-button--small {
-      padding: .07rem .09rem;
-      font-size:.22rem;
-      border-radius: .1rem;
-    }
-    .el-tag {
-      background-color: #dcdcdc;
-      padding: 0.05rem .05rem;
-      height: .5rem;
-      line-height: .4rem;
-      font-size: .22rem;
-      border-radius: .1rem;
-      margin-right:.15rem;
-    }
-    .el-tag .el-icon-close{
-      color: #999;
-    }
-    .el-button--small {
-      padding: 0.05rem .1rem;
-      height: .5rem;
-      line-height: .35rem;
-      font-size:.22rem;
-    }
+.input-new-tag {
+  /*width:1rem;*/
+  max-width: 3rem;
+  min-width: 1rem;
+  height: 1rem;
+  line-height: .7rem;
+  margin-top: -.8rem!important;
+}
 
+.el-button--small {
+  padding: .07rem .09rem;
+  font-size: .22rem;
+  border-radius: .1rem;
+}
+
+.el-tag {
+  background-color: #dcdcdc;
+  padding: 0.05rem .05rem;
+  height: .5rem;
+  line-height: .4rem;
+  font-size: .22rem;
+  border-radius: .1rem;
+  margin-right: .15rem;
+}
+
+.el-tag .el-icon-close {
+  color: #999;
+}
+
+.el-button--small {
+  padding: 0.05rem .1rem;
+  height: .5rem;
+  line-height: .35rem;
+  font-size: .22rem;
+}
 </style>

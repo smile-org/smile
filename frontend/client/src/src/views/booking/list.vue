@@ -57,6 +57,7 @@
 import api from '../../services/api'
 import axios from 'axios'
 import router from '../../router'
+import { formatDate } from '../../common/date'
 export default {
   data: function () {
     return {
@@ -94,7 +95,7 @@ export default {
           }
           // 只有实际拿到数据后， 才附加到data属性上
           if (data.result.length > 0) {
-            for(var i = 0; i < data.result.length; i++) {
+            for (var i = 0; i < data.result.length; i++) {
               data.result[i].keywordArray = data.result[i].keyword.split(',')
             }
             this.data = this.data.concat(data.result)
@@ -104,6 +105,7 @@ export default {
         }
       }).catch(error => {
         // TODO:
+        console.log(error.message)
       })
     }
   }
