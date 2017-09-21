@@ -25,7 +25,6 @@
                     docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
                 }
             };
-
         if (!doc.addEventListener) return;
         win.addEventListener(resizeEvt, recalc, false);
         doc.addEventListener('DOMContentLoaded', recalc, false);
@@ -34,54 +33,25 @@
 </head>
 <body>
 <div id="app">
-  <header>
+<header>
     <div class="logo_c">
-      <a class="tl" href="../course/course.html"><img src="../img/back.png" alt="返回"/></a>
-      <a class="tc" href="../course/course3.html"><img src="../img/logo.png" alt="smile"  class="logo1"/></a>
-      <a class="tr" href="../course/course5.html"><img src="../img/home.png" alt="更多" /></a>
+      <a class="tl" href="##"><img src="../img/back.png" alt="返回"/></a>
+      <a class="tc" href="##"><img src="../img/logo.png" alt="smile"  class="logo1"/></a>
+      <a class="tr" href="##"><img src="../img/home.png" alt="更多" /></a>
     </div>
   </header>
   <section>
-    <div class="search_tit">
-      <ul class="fl_tab">
-        <li class="active">
-          课程
-        </li>
-        <li>
-          考试
-        </li>
-        <li>
-          报名
-        </li>
-        <li>
-          约课
-        </li>
-      </ul>
-      <div class="b_search_input">
-        <img class="s_seach" src="../img/seach_icon.png" />
-        <img class="s_delate" src="../img/delate.png" />
-        <input  placeholder="选择资源类型搜索更精准">
+    <div class="appraise_w">
+       <div class="face_img3 "></div>
+      <div class="face_font">
+        <span>没有找到与 <span>“ 销售经理销售经理销售经理 ”</span> 相关课程？</span></br>
+        <span>赶紧去发起约课吧。</span>
       </div>
+      <el-row>
+        <el-col :span="12"> <button class="exam_btn orange_b fr" type="button">发起约课</button></el-col>
+        <el-col :span="12"> <button class="exam_btn green_b fl" type="button">返回首页</button></el-col>
+      </el-row>
     </div>
-    <ul class="list_border course_con  s_div">
-      <li>
-        <img class="s_ing"  src="../img/s_ing.png" />
-        <span>历史查询</span>
-        <img class="s_delate" src="../img/s_delate.png"/>
-      </li>
-      <li class="s_tag">
-        <span class="history_tag">销售经理的角色认识</span> <span class="history_tag">销售经理的角色认识</span> <span class="history_tag">销售经理的角色认识</span>
-      </li>
-    </ul>
-    <ul class="list_border course_con  s_div mt3">
-      <li>
-        <img class="s_ing"  src="../img/s_fire.png" />
-        <span>热门推荐</span>
-      </li>
-      <li class="s_tag">
-        <span class="history_tag">成为一个出色的销售</span> <span class="history_tag">成为一个出色的销售</span> <span class="history_tag">成为一个出色的销售</span>
-      </li>
-    </ul>
   </section>
 </div>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -90,12 +60,9 @@
 <script>
     new Vue({
         el: '#app',
-        data: {
-
-        },
-      methods: {
-
-      }
+        data: function() {
+            return { visible: false }
+        }
     })
 </script>
 </body>

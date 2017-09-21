@@ -100,6 +100,8 @@ header .search_c .search_input input{
   position: relative;
   line-height: 0;
   box-sizing: border-box;
+  /*margin: .3rem;*/
+  margin-bottom:0rem;
 }
 .b_search_input input{
   width: 100%;
@@ -140,6 +142,9 @@ header .search_c .search_input input{
 }
 .s_div img{
   width:.24rem;
+}
+.s_absolute{
+
 }
   /*header end*/
 section form{
@@ -263,6 +268,13 @@ section .form_list input{
 }
 .face_img2{
   background: url('../img/face_img2.png')no-repeat center center;
+  background-size: 100% 100%;
+  width:1.5rem;
+  height:1.7rem;
+  margin:0.36rem auto;
+}
+.face_img3{
+  background: url('../img/face_img3.png')no-repeat center center;
   background-size: 100% 100%;
   width:1.5rem;
   height:1.7rem;
@@ -1334,3 +1346,67 @@ footer .exam_b .btn span{
 }
 
 
+#slide_menu {
+  transition: all .3s 0s ease-in-out;
+  -webkit-transform: translate(100%,0);
+  transform: translate(100%,0);
+  width: 69.6875%;
+  background-color: #f2f4f5;
+  position: fixed;
+  height: 100%;
+  right: 0;
+  top: 0;
+  z-index: 9;
+  font-size:.28rem;
+  color: #333;
+}
+#slide_menu.active {
+  -webkit-transform: translate(0,0);
+  transform: translate(0,0);
+}
+#slide_menu .user_info {
+  height: 1.5rem;
+  background-color: #00b553;
+  text-align: center;
+  line-height: 2.3rem;
+  transition: all .3s 0s ease-in-out;
+}
+#slide_menu .user_info img {
+  display: inline-block;
+  width: 1rem;
+  height:1rem;
+  border-radius: 50%;
+  /*float: left;*/
+}
+#slide_menu .nav li {
+  border-bottom: 1px solid #f2f4f5;
+  width: 100%;
+  background-color: #fff;
+}
+#slide_menu .nav li>a {
+  display: block;
+  height: .82rem;
+  line-height: .8rem;
+  text-indent: .2rem;
+  font-size: .28rem;
+  color: #333;
+  position: relative;
+  overflow-x: hidden;
+}
+
+#slide_menu .nav li>a:after {
+  transition: all .3s 0s ease-in-out;
+  position: absolute;
+  content: "";
+  display: block;
+  border-top: 0.02rem solid #999;
+  border-left: 0.02rem solid #999;
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  right: .3rem;
+  width: 0.2rem;
+  height: 0.2rem;
+  top: .3rem;
+}
