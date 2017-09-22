@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import homepage from '@/views/homepage/index'
-import me from '@/views/home/me'
 
 // 登录
 import login from '@/views/login'
@@ -31,6 +30,16 @@ import newBooking from '@/views/booking/new'
 import getEnrollList from '@/views/registration/list'
 import getEnroll from '@/views/registration/detail'
 import getEnrollComment from '@/views/registration/comment'
+
+// 个人中心
+import me from '@/views/personal/me'
+import myLearning from '@/views/personal/learning'
+import myTask from '@/views/personal/task'
+import myExam from '@/views/personal/exam'
+import myEnrollment from '@/views/personal/enrollment'
+import myBooking from '@/views/personal/booking'
+import myFavorites from '@/views/personal/favorite'
+import changePWD from '@/views/personal/changePWD'
 
 Vue.use(Router)
 
@@ -149,17 +158,61 @@ export default new Router({
       component: getEnrollComment,
       meta: {requiresAuth: requiresAuth}
     },
+    // 个人中心
+    {
+      path: '/me',
+      name: 'me',
+      component: me,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/myLearning',
+      name: 'myLearning',
+      component: myLearning,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/myTask',
+      name: 'myTask',
+      component: myTask,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/myExam',
+      name: 'myExam',
+      component: myExam,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/myEnrollment',
+      name: 'myEnrollment',
+      component: myEnrollment,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/myBooking',
+      name: 'myBooking',
+      component: myBooking,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/myFavorites',
+      name: 'myFavorites',
+      component: myFavorites,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/changePWD',
+      name: 'changePWD'
+      component: changePWD,
+      meta: {requiresAuth: requiresAuth}
+    }
+
     // 其他
     {
       path: '/',
       name: 'homepage',
       component: homepage,
-      meta: { requiresAuth: requiresAuth }
-    },
-    {
-      path: '/me',
-      name: 'me',
-      component: me,
       meta: { requiresAuth: requiresAuth }
     },
     {
