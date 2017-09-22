@@ -204,4 +204,19 @@ public class ExamServiceImpl implements ExamService {
         }
     }
 
+    @Override
+    public List<Exam> getMyExamlistPassed(int companyid, int userid, int skip, int take) {
+        return examRepo.getMyExamlistPassed(companyid, userid, skip, take);
+    }
+
+    @Override
+    public List<Exam> getMyExamlistNotPassed(int companyid, int userid, int skip, int take) {
+        return  examRepo.getMyExamlistNotPassed(companyid, userid, skip, take);
+    }
+
+    @Override
+    public List<Exam> getMyCollectionList(int userid, int skip, int take) {
+        return     examRepo.getMyCollectionList(userid,skip,take);
+    }
+
 }

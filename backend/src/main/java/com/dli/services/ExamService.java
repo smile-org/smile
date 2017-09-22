@@ -26,4 +26,10 @@ public interface ExamService {
 
     void   finishhistoryForAllPassTimeLimit();
 
+    List<Exam>   getMyExamlistPassed(  int  companyid,  int userid ,  int  skip  , int take);
+
+    List<Exam>    getMyExamlistNotPassed(int  companyid,  int userid ,  int  skip  ,  int take);
+
+    List<Exam> getMyCollectionList( int userid,  int  skip , int take );
+
 }

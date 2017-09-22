@@ -2,20 +2,52 @@ package com.dli.helper;
 
 import com.dli.entities.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class Helper {
 
-    public   static User GetCurrentUser(){
 
-        User u =new User();
-        u.setUser_id(1);
-        u.setCompany_id(1);
-        u.setFull_name("fullname");
-        u.setCell_phone("cellphone");
-        u.setPassword("123");
 
-        return   u;
+    public static String getCurrentWeekBegin() {
+        int mondayPlus;
+        Calendar cd = Calendar.getInstance();
+// 获得今天是一周的第几天，星期日是第一天，星期二是第二天......
+        int dayOfWeek = cd.get(Calendar.DAY_OF_WEEK) - 1; // 因为按中国礼拜一作为第一天所以这里减1
+        if (dayOfWeek == 1) {
+            mondayPlus = 0;
+        } else {
+            mondayPlus = 1 - dayOfWeek;
+        }
+        GregorianCalendar currentDate = new GregorianCalendar();
+        currentDate.add(GregorianCalendar.DATE, mondayPlus);
+        Date monday = currentDate.getTime();
+
+
+        DateFormat df = DateFormat.getDateInstance();
+        String preMonday = df.format(monday);
+
+        return preMonday + " 00:00:00";
+
 
     }
+
+    public  static  String getCurrentMonthBegin() {
+        // 获取当月第一天和最后一天
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String firstday;
+        // 获取前月的第一天
+        Calendar cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 0);
+        cale.set(Calendar.DAY_OF_MONTH, 1);
+        firstday = format.format(cale.getTime());
+
+        return   firstday + " 00:00:00";
+    }
+
 
     // 1. 学课  2.考试 3. 培训报名 4. 约课
 
@@ -34,10 +66,6 @@ public class Helper {
        return  returnvalue;
     }
 
-   // public  static  int GetCurrentUserID()
-    //{
-    //    return  1;
-   // }
 
     public static int getRandNum(int min, int max) {
         int randNum = min + (int)(Math.random() * ((max - min) + 1));
@@ -61,8 +89,7 @@ public class Helper {
     * 1. job to delete sms that create 5minitues ago , perhaps hourly
     *  prevent from invoke  send sms too frequently
     *2. job to disable course , exam, enroll  while over due expiration date
-    *3.  exam  job to  finish the exam
-    *    job 去更新  非正常关闭  ， 超时的 考试状态， 计算结果
+    *3. job to reminder user that enrollemnt open again
     *
     * */
 }

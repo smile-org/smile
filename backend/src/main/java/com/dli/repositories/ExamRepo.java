@@ -29,31 +29,6 @@ public interface ExamRepo {
 
       void   addExamRecordAnserchoice( @Param("record_id") int record_id,  @Param("answer_id") int answer_id );
 
-     /*
-     *   <select id="getQuestionListByExamid"  resultMap="QuestionMap"  >
-        select  select * from question  where  indicator =1 and  question_id in (
-        select question_id from exam_question where  exam_id = #{examid} )
-    </select>
-
-    <select id="getExamHistoryRecord"    resultMap="RecordMap" >
-        select * from exam_record where historyid= #{historyid} and question_id=#{questionid}
-    </select>
-
-    <update id="updateExamHistoryRecord">
-        update exam_record set is_right=#{isright} where record_id=#{recordid};
-    </update>
-
-    <select id="getExamHistoryCorrectRecrdCount"  resultType="int">
-        select count(*) from  exam_record  where history_id=#{historyid} and is_right=1;
-    </select>
-
-    <update id="updateExamHistory">
-        update exam_history  set score= #{score},  status= #{status},  end_date= now() where history_id= #{historyid};
-    </update>
-     *
-     *
-     * */
-
        List<Question>  getQuestionListByExamid(int examid);
 
       List<String>  getCorrectAnswerListByQuestionid(int questionid);
@@ -76,6 +51,12 @@ public interface ExamRepo {
        List<ExamHistory>  getAllInProcessHistoryForJob();
 
        int getStudyCountByExamid(int examid);
+
+    List<Exam>   getMyExamlistPassed(@Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
+
+    List<Exam>    getMyExamlistNotPassed(@Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
+
+    List<Exam> getMyCollectionList( @Param("userid") int userid,  @Param("skip")int  skip , @Param("take")int take );
 }
 
 

@@ -191,4 +191,84 @@ left join ( select * from exam_record  where history_id in
         select  count(  distinct user_id)   as   renshu from   exam_history  where exam_id = #{examid}  ;
     </select>
 
+
+    <select id="getMyExamlistPassed"  resultMap="ExamMap"  >
+            select * from (
+  select result.*,
+          case when o1.renshu  is not null then o1.renshu else 0 end  as study_count,
+          case when  o2.userct is not null then  o2.userct else 0  end   as collect_count
+          from (
+          select * from exam  where indicator =1   and company_id=#{companyid}
+          )result
+
+          left join (
+          select exam_id, count(*)  as  renshu from (
+          select  exam_id, user_id from exam_history  group by exam_id, user_id)t group by exam_id)o1
+          on result.exam_id=o1.exam_id
+
+          left join
+          (
+          select item_id as exam_id,  count(user_id) as userct from  user_favor where item_type='exam' group by item_id)o2
+            on result.exam_id=o2.exam_id
+           join
+          (
+          select exam_id from  exam_history  where    user_id=#{userid}     and `status`='pass'  group by  exam_id
+          ) o3 on    result.exam_id=o3.exam_id
+
+       )t   order by   start_date limit #{skip} ,#{take}
+    </select>
+
+
+    <select id="getMyExamlistNotPassed"  resultMap="ExamMap"  >
+        select * from (
+        select result.*,
+        case when o1.renshu  is not null then o1.renshu else 0 end  as study_count,
+        case when  o2.userct is not null then  o2.userct else 0  end   as collect_count
+        from (
+        select * from exam  where indicator =1   and company_id=#{companyid}
+        )result
+
+        left join (
+        select exam_id, count(*)  as  renshu from (
+        select  exam_id, user_id from exam_history  group by exam_id, user_id)t group by exam_id)o1
+        on result.exam_id=o1.exam_id
+
+        left join
+        (
+        select item_id as exam_id,  count(user_id) as userct from  user_favor where item_type='exam' group by item_id)o2
+          on result.exam_id=o2.exam_id
+
+        join
+        (
+        select distinct exam_id from  exam_history  where    user_id=#{userid}  and   exam_id not in (
+        select exam_id from  exam_history  where    user_id=#{userid}     and `status`='pass'  group by  exam_id)
+        ) o3 on    result.exam_id=o3.exam_id
+
+      )t   order by   start_date limit #{skip} ,#{take}
+    </select>
+
+
+
+    <select id="getMyCollectionList"  resultMap="ExamMap">
+
+        select * from (
+        select result.*,
+        case when o1.renshu  is not null then o1.renshu else 0 end  as study_count,
+        case when  o2.userct is not null then  o2.userct else 0  end   as collect_count
+        from (
+        select * from exam  where indicator =1   and  exam_id in
+        (select  item_id from user_favor  where  user_id=#{userid} and item_type='exam')
+        )result
+
+        left join (
+        select exam_id, count(*)  as  renshu from (
+        select  exam_id, user_id from exam_history  group by exam_id, user_id)t group by exam_id)o1
+        on result.exam_id=o1.exam_id
+
+        left join
+        (
+        select item_id as exam_id,  count(user_id) as userct from  user_favor where item_type='exam' group by item_id)o2
+        on result.exam_id=o2.exam_id)t   order by   start_date limit #{skip} ,#{take}
+    </select>
+
 </mapper>

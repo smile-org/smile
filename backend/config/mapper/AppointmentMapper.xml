@@ -96,4 +96,17 @@ where  af.appointment_id = #{appointmnetId}
         values (#{appointmentId},#{word})
     </insert>
 
+
+    <select id="getMyAppointmentList" resultMap="app">
+         select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
+        from (select * from appointment
+            where  appointment_id  in(select  DISTINCT appointment_id from
+            appointment_follower  where  follower_id =#{userid}))a   join  user u on a.sponsor_id = u.user_id
+        join (select appointment_id, group_concat(word) key_word from appointment_keyword) ak on a.appointment_id = ak.appointment_id
+        left join (select appointment_id, count(*) follow_count from appointment_follower ) af on a.appointment_id = af.appointment_id
+
+        order by af.follow_count desc
+        limit #{skip},#{take};
+    </select>
+
 </mapper>

@@ -160,4 +160,174 @@ select * from course where course_id in (
 select  course_id from  exam_course where exam_id= #{examid});
 
     </select>
+
+    <select id="getMyCourseListInprocess"  resultMap="CourseMap">
+
+      select result.* ,
+  case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
+  case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+         from (
+select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
+  where indicator=1  and  company_id=#{companyid}   and
+( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
+
+left join (
+select course_id, count(*)  as  renshu from (
+select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+on result.course_id =o1.course_id
+left join
+(
+select  course_id,    total/ct as pingfen from (
+select course_id, sum(star) as total , count(comment_id) as ct from course_comment  group by course_id)t)o2
+on result.course_id= o2.course_id
+left join
+(
+select item_id as course_id,  count(user_id) as userct from  user_favor where item_type='course' group by item_id)o3
+on   result.course_id= o3.course_id
+
+JOIN
+(
+select course_id from   learn_progress  where user_id=#{userid}  and `status`='NotStarted'  group by course_id)o4
+on  result.course_id=o4.course_id
+order by  renshu desc, pingfen desc  limit #{skip},#{take};
+
+    </select>
+
+
+
+    <select id="getMyCourseListFinished"  resultMap="CourseMap">
+
+        select result.* ,
+        case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
+        case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+        from (
+        select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
+        where indicator=1  and    company_id=#{companyid}   and
+        ( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
+
+        left join (
+        select course_id, count(*)  as  renshu from (
+        select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+        on result.course_id =o1.course_id
+        left join
+        (
+        select  course_id,    total/ct as pingfen from (
+        select course_id, sum(star) as total , count(comment_id) as ct from course_comment  group by course_id)t)o2
+        on result.course_id= o2.course_id
+        left join
+        (
+        select item_id as course_id,  count(user_id) as userct from  user_favor where item_type='course' group by item_id)o3
+        on   result.course_id= o3.course_id
+
+        JOIN
+        (
+         select  DISTINCT course_id from   learn_progress  where user_id=#{userid}   and course_id not in (
+        select course_id from   learn_progress  where user_id=#{userid}  and `status`='NotStarted'  group by course_id))o4
+        on  result.course_id=o4.course_id
+        order by  renshu desc, pingfen desc  limit #{skip},#{take};
+
+    </select>
+
+
+    <select id="getMyCourseListInTask"  resultMap="CourseMap">
+
+        select result.* ,
+        case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
+        case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
+        case when  o2.course_id is not null then  1 else 0 end  started
+        from (
+        select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
+        where indicator=1   and  company_id=#{companyid}   and
+        type_id=2  and  w.user_id=#{userid}  )result
+
+        left join (
+        select course_id, count(*)  as  renshu from (
+        select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+        on result.course_id =o1.course_id
+        left join
+        (
+       SELECT  distinct   course_id from learn_progress where  user_id=#{userid}
+        )o2
+        on result.course_id= o2.course_id
+        left join
+        (
+        select item_id as course_id,  count(user_id) as userct from  user_favor where item_type='course' group by item_id)o3
+        on   result.course_id= o3.course_id
+
+        LEFT  JOIN
+        (
+        select  DISTINCT course_id from   learn_progress  where user_id=#{userid}   and course_id not in (
+        select course_id from   learn_progress  where user_id=#{userid}  and `status`='NotStarted'  group by course_id))o4
+        on  result.course_id=o4.course_id
+        where   o4.course_id is null
+        order by  started desc  ,renshu desc  limit #{skip},#{take};
+
+    </select>
+
+    <select id="getStudyCourseCountByUserid"   resultType="int">
+        select    count(  distinct course_id )from    learn_progress    where user_id=#{userid}
+    </select>
+
+    <select id="getCurrentMonthStudyCourseCountByUserid"  resultType="int">
+        select count(     course_id )  from (
+select course_id, min(created_at) as  created_at   from  learn_progress  where  user_id=#{userid} GROUP BY course_id)t
+where created_at
+>= date_add(curdate(), interval - day(curdate()) + 1 day)
+    </select>
+
+    <select id="getLastStudyDaysCountByUserid"   resultType="int" >
+        select  DATEDIFF(  Date( max(learn_at) ),  CURDATE())  from learn_progress     where user_id=#{userid}
+    </select>
+
+
+
+    <select id="getMyCollectionList" resultMap="CourseMap">
+        select result.* ,
+        case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
+        case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+        from (
+        select  * from course
+        where indicator=1 and   course_id IN (
+        select  item_id from user_favor  where  user_id=#{userid} and item_type='course'  ) )result
+
+        left join (
+        select course_id, count(*)  as  renshu from (
+        select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+        on result.course_id =o1.course_id
+        left join
+        (
+        select  course_id,    total/ct as pingfen from (
+        select course_id, sum(star) as total , count(comment_id) as ct from course_comment  group by course_id)t)o2
+        on result.course_id= o2.course_id
+        left join
+        (
+        select item_id as course_id,  count(user_id) as userct from  user_favor where item_type='course' group by item_id)o3
+        on   result.course_id= o3.course_id
+        order by  renshu desc, pingfen desc  limit #{skip},#{take};
+    </select>
+
+
+
+    <select id="getFirstPageCourseList" resultMap="CourseMap">
+        select result.* ,
+        case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
+        case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+        from (
+        select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
+        where indicator=1 and  created_at > #{scope}  and company_id=#{companyid}   and
+        ( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
+
+        left join (
+        select course_id, count(*)  as  renshu from (
+        select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+        on result.course_id =o1.course_id
+
+        left join
+        (
+        select item_id as course_id,  count(user_id) as userct from  user_favor where item_type='course' group by item_id)o3
+        on   result.course_id= o3.course_id
+        order by  renshu desc  limit #{skip},#{take};
+    </select>
+
+
 </mapper>

@@ -31,4 +31,6 @@ public interface AppointmentRepo {
     int getMaxAppointmentId();
 
     int addKeyword(@Param("appointmentId") int appointmentId, @Param("word") String word);
+
+    List<Appointment>  getMyAppointmentList(@Param("userid")int userid, @Param("skip")int skip, @Param("take")int take);
 }
