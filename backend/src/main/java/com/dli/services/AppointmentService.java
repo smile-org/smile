@@ -19,4 +19,6 @@ public interface AppointmentService {
     int addItem(int appointmentId,String content,int sponsorId, Date sponsorDate);
 
     int addAppointment(String appointmentTitle,int sponsorId,int companyId,List<String> keywords, List<String> items);
+
+    List<Appointment>  getMyAppointmentList(int userid, int skip, int take);
 }

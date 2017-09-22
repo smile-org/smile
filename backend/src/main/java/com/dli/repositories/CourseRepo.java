@@ -35,4 +35,22 @@ public interface CourseRepo {
     List<Course>  searchCourse( @Param("keyword") String keyword);
 
     List<Course>  getCourseListByExamid( int  examid);
+
+    List<Course>  getMyCourseListInprocess( @Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
+
+    List<Course>  getMyCourseListFinished(@Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
+
+    List<Course>  getMyCourseListInTask(@Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
+
+     int   getStudyCourseCountByUserid(  int  userid);
+
+    int  getCurrentMonthStudyCourseCountByUserid( int userid);
+
+      int   getLastStudyDaysCountByUserid(  int userid);
+
+      List<Course> getMyCollectionList( @Param("userid") int userid,  @Param("skip")int  skip , @Param("take")int take );
+
+      List<Course>  getFirstPageCourseList( @Param("scope") String scope  ,  @Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
+
+
 }

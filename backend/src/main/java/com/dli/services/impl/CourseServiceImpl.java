@@ -3,6 +3,7 @@ package com.dli.services.impl;
 
 import com.dli.entities.*;
 import com.dli.repositories.CourseRepo;
+import com.dli.repositories.UserRepo;
 import com.dli.services.CourseService;
 import com.dli.services.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseRepo courseRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
 
     @Override
@@ -91,5 +95,43 @@ public class CourseServiceImpl implements CourseService {
         return  courseRepo.getCourseListByExamid(examid);
     }
 
+    @Override
+    public List<Course> getMyCourseListInprocess(int  companyid,int userid, int skip, int take) {
+        return    courseRepo.getMyCourseListInprocess( companyid,userid, skip, take);
+    }
 
+    @Override
+    public List<Course> getMyCourseListFinished(int  companyid,int userid, int skip, int take) {
+        return courseRepo.getMyCourseListFinished( companyid,userid, skip, take);
+    }
+
+    @Override
+    public List<Course> getMyCourseListInTask(int  companyid,int userid, int skip, int take) {
+        return   courseRepo.getMyCourseListInTask( companyid,userid, skip, take);
+    }
+
+    @Override
+    public UserInfoAndStudyStatus getMyStudyStatus(int userid) {
+        User   user=     userRepo.getUserByUserID(userid);
+
+        UserInfoAndStudyStatus result =new  UserInfoAndStudyStatus();
+        result.setFull_name( user.getFull_name() );
+        result.setAvatar(  user.getAvatar());
+
+        result.setLastStudy(  courseRepo.getLastStudyDaysCountByUserid(userid)    );
+        result.setCourseCountThisMonth( courseRepo.getCurrentMonthStudyCourseCountByUserid(userid)  );
+        result.setCoursecountTotal( courseRepo.getStudyCourseCountByUserid(userid)    );
+
+        return  result;
+    }
+
+    @Override
+    public List<Course> getMyCollectionList(int userid, int skip, int take) {
+        return   courseRepo.getMyCollectionList(userid, skip, take);
+    }
+
+    @Override
+    public List<Course> getFirstPageCourseList(String scope, int companyid, int userid, int skip, int take) {
+        return     courseRepo.getFirstPageCourseList(scope, companyid, userid, skip, take);
+    }
 }

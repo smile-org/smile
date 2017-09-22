@@ -63,4 +63,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         return appointmentId;
     }
+
+    @Override
+    public List<Appointment> getMyAppointmentList(int userid, int skip, int take) {
+        return   appointmentRepo.getMyAppointmentList(userid,skip,take);
+    }
 }
