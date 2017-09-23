@@ -14,7 +14,7 @@
           <hr>
           <div class="w_p3">
             <img class="add_input" src="../../assets/img/icon9.png" />
-            <input class="w_yueke" type="text" v-model="title" placeholder="在此输入列表需求" maxlength="200" minlength="1">
+            <input class="w_yueke" type="text" v-model="title" placeholder="在此输入列表需求" maxlength=200 minlength=1>
           </div>
         </div>
         <div class="add_bg">
@@ -36,9 +36,9 @@
             <img class="add_input" src="../../assets/img/icon10.png" />
             <img class="add_input2" src="../../assets/img/icon12.png" v-on:click="addRequirement" />
 
-            <input class="w_yueke" type="text" v-model="requirement" placeholder="请在此输入约课主题" maxlength="200" minlength="1">
+            <input class="w_yueke" type="text" v-model="requirement" placeholder="请在此输入需求" maxlength=200 minlength=1>
             <p v-for="(item, index) in requirements" :key="index">
-              {{index}}.{{item}}
+              {{index+1}}. {{item}}
               <img class="delate_add" src="../../assets/img/icon11.png" v-on:click="removeRequirement(item)" />
             </p>
           </div>
@@ -47,8 +47,12 @@
     </section>
     <footer>
       <el-row class="exam_b">
-        <el-col class="btn g_f line_add" :span="12" v-on:click="submit">确认</el-col>
-        <el-col class="btn o_f" :span="12" v-on:click="cancel">取消</el-col>
+        <el-col class="btn g_f line_add" :span="12">
+          <button class="btn g_f line_add" v-on:click="submit">确认</button>
+        </el-col>
+        <el-col class="btn o_f" :span="12">
+          <button class="btn g_f line_add" v-on:click="cancel">取消</button>
+        </el-col>
       </el-row>
     </footer>
   </div>
@@ -118,7 +122,10 @@ export default {
     },
 
     addRequirement () {
-      this.requirements.push(this.requirement)
+      if (this.requirement) {
+        this.requirements.push(this.requirement)
+        this.requirement = ''
+      }
     },
 
     showInput () {

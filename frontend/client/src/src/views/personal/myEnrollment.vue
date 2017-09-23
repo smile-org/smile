@@ -71,7 +71,7 @@ import api from '../../services/api'
 import axios from 'axios'
 import {formatDate} from '../../common/date'
 export default {
-  data: function() {
+  data: function () {
     return {
       activeName: 'first',
       dataInProgress: [],
@@ -87,18 +87,18 @@ export default {
     formatImage: function (uri) {
       return axios.defaults.baseURL + uri
     },
-    formatDate: function (date) {
-      var date = new Date(date)
+    formatDate: function (time) {
+      var date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd')
     }
   },
   methods: {
-    handleClick: function(tab, event) {
+    handleClick: function (tab, event) {
 
     },
 
-    loadMore: function() {
-      if (this.activeName === 'first' && dataFinish.length === 0) {
+    loadMore: function () {
+      if (this.activeName === 'first' && this.dataFinish.length === 0) {
         this.currentPage_finish = this.currentPage_finish + 1
         this.isBusy_finish = true
         api.fetch(api.uri.getMyEnrollFinish, { take: this.take, skip: this.currentPage_finish * this.take }).then(data => {
@@ -114,7 +114,7 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'second' && dataInProgress.length === 0) {
+      if (this.activeName === 'second' && this.dataInProgress.length === 0) {
         this.currentPage_inProgress = this.currentPage_inProgress + 1
         this.isBusy_inProgress = true
         api.fetch(api.uri.getMyEnrollInProgress, { take: this.take, skip: this.currentPage_inProgress * this.take }).then(data => {

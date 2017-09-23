@@ -69,6 +69,8 @@ export default {
           this.showError = false
           this.errorMessage = ''
           sessionStorage.setItem('smile', data.result)
+          sessionStorage.setItem('username', data.userInfo.full_name)
+          sessionStorage.setItem('userAvatar', data.userInfo.avatar)
           router.push({ name: 'homepage' })
         } else {
           this.showError = true

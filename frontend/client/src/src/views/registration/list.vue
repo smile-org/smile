@@ -17,7 +17,7 @@
         <el-tab-pane label="正在报名" name="first">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in data" :key="item.period_id">
-              <router-link v-bind:to="{name: '', query: {id: item.period_id}}">
+              <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
                 <img class="person_header fl" :src="item.icon | formatImage">
                 <div class="bm_con">
                   <div class="hidden bm_font">
@@ -46,7 +46,7 @@
         <el-tab-pane label="结束报名" name="second">
           <ul class=" list_border course_line reg_nohover"  v-infinite-scroll="loadMore_sec" infinite-scroll-disabled="busy_sec" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in data_sec" :key="item.period_id">
-              <router-link v-bind:to="{name: '', query: {id: item.period_id}}">
+              <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
                 <img class="person_header fl" :src="item.icon | formatImage">
                 <div class="bm_con">
                   <div class="hidden bm_font">
@@ -63,13 +63,23 @@
                         <span class="redff7">{{item.collect_count}}</span>
                       </li>
                     </ul>
-                    <span class="surplus_num s_num" v-if="item.left_count > 0">
+                    <span>
+                    </span>
+                    <span class="surplus_num s_num" v-if="!item.isFinished && item.left_count > 0">
                       剩余{{item.left_count}}人
                     </span>
-                    <span class="surplus_num red_full" v-else-if="item.left_count === 0">
+                    <span class="surplus_num red_full" v-if="!item.isFinished && item.left_count === 0">
                       已 满
                     </span>
-                    <img class="end_png" src="../../assets/img/end.png" />
+                    <button class="surplus_num g_remind" v-if="item.isFinished && !item.isReminderAdded" v-on:click="remind(item.period_id)" >
+                    开班提醒我
+                    </button>
+                    <span class="surplus_num end_grey" v-if="item.isFinished && item.isReminderAdded">
+                      开班提醒我
+                    </span>
+                    <span v-if="item.isFinished">
+                      <img class="end_png" src="../../assets/img/end.png" />
+                    </span>
                   </div>
                 </div>
               </router-link>
@@ -82,8 +92,6 @@
 </template>
 
 <script>
-// TODO: 已满， 剩余， 开办提醒 等状态
-
 import api from '../../services/api'
 import axios from 'axios'
 import { formatDate } from '../../common/date'
@@ -112,11 +120,9 @@ export default {
     }
   },
   methods: {
-    // handleClick: function (tab, event){
-    //   if (!data_finish_loaded && tab.name === 'second') {
-    //     api.fetch(api.uri.getEnrollListFinish, )
-    //   }
-    // },
+    handleClick: function (tab, event) {
+      console.log(tab, event)
+    },
     loadMore: function () {
       this.busy = true
       this.currentPage = this.currentPage + 1
@@ -158,6 +164,24 @@ export default {
           // 只有实际拿到数据后， 才附加到data属性上
           if (data.result.length > 0) {
             this.data_sec = this.data_sec.concat(data.result)
+          }
+        } else {
+          // TODO:
+        }
+      }).catch(error => {
+        // TODO:
+        console.log(error.message)
+      })
+    },
+    remind: function (id) {
+      console.log(id)
+      api.fetch(api.uri.addEnrollReminder, {periodid: id}).then(data => {
+        if (data.status === 1) {
+          for (var i = 0; i < this.data_sec.length; i++) {
+            if (this.data_sec[i].period_id === id) {
+              this.data_sec[i].isReminderAdded = true
+              break
+            }
           }
         } else {
           // TODO:

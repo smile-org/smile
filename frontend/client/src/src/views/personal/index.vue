@@ -87,7 +87,6 @@
 <script>
 import api from '../../services/api'
 import axios from 'axios'
-import router from '../../router'
 export default {
   data: function () {
     return {

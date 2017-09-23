@@ -4,7 +4,7 @@ import conf from '../config/index.js'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
 
-axios.defaults.baseURL = 'http://123.207.154.226:8888' // 'http://192.168.0.108:3000'
+axios.defaults.baseURL = 'http://192.168.0.106:8888' // 'http://192.168.0.108:3000'
 
 /**
  * 拦截器， 对所有的请求。
@@ -86,7 +86,7 @@ export default {
 
     // *** 考试 ***
     // 获取所有考试
-    getExamList: '',
+    getExamList: '/getExamList',
     // 获取考试
     getExamInfo: '',
     // 取消收藏考试
@@ -120,11 +120,11 @@ export default {
     // 获取结束报名列表
     getEnrollListFinish: '/getEnrollmentPeriodListFinished',
     // 获取课程信息
-    getEnrollCourse: '',
+    getEnrollCourse: '/getEnrollmentPeriodByID',
     // 获取课程目录
     getEnrollCourseCategory: '/getEnrollmentContentListByID',
     // 获取课程评价
-    getEnrollCourseComment: '',
+    getEnrollCourseComment: '/getEnrollmentCommentList',
     // 报名
     enroll: '/addEnrollmentMapping',
     // 收藏报名
@@ -133,6 +133,8 @@ export default {
     cancelFavoriteEnrollment: '/cancelEnrollmentCollection',
     // 添加评论
     addEnrollmentComment: '/addEnrollmentComment',
+    // 添加开班提醒
+    addEnrollReminder: '/addReminderMapping',
 
     // *** 个人中心  ***
     // 首页
@@ -150,7 +152,7 @@ export default {
     // 获取我的失败考试:
     getMyExamListFailed: '',
     // 获取我的约课列表
-    getMyAppointmentList: "getMyAppointmentList",
+    getMyAppointmentList: 'getMyAppointmentList',
     // 获取我的报名 - 已经报名
     getMyEnrollFinish: '',
     // 获取我的报名 - 预约报名
@@ -161,5 +163,8 @@ export default {
     getMyFavoriteEnroll: '',
     // 我的收藏 - 考试
     getMyFavoriteExam: '',
+
+    // 首页
+    getHomepageCourse: '/getFirstPageCourseList'
   }
 }
