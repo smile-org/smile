@@ -132,6 +132,34 @@ export default {
     // 取消报名
     cancelFavoriteEnrollment: '/cancelEnrollmentCollection',
     // 添加评论
-    addEnrollmentComment: '/addEnrollmentComment'
+    addEnrollmentComment: '/addEnrollmentComment',
+
+    // *** 个人中心  ***
+    // 首页
+    getPersonal: '/getMyStudyStatus',
+    // 获取我的课程 - 进行中
+    getMyCourseListInProgress: '/getMyCourseListInprocess',
+    // 获取我的课程 - 已完成
+    getMyCourseListFinished: '/getMyCourseListFinished',
+    // 获取我的任务 - 进行中
+    getMyTaskListInProgress: '',
+    // 获取我的任务 - 未开始
+    getMyTaskListNotStart: '',
+    // 获取我的通过考试
+    getMyExamListPassed: '',
+    // 获取我的失败考试:
+    getMyExamListFailed: '',
+    // 获取我的约课列表
+    getMyAppointmentList: "getMyAppointmentList",
+    // 获取我的报名 - 已经报名
+    getMyEnrollFinish: '',
+    // 获取我的报名 - 预约报名
+    getMyEnrollInProgress: '',
+    // 我的收藏 - 课程
+    getMyFavoriteCourse: '',
+    // 我的收藏 - 报名
+    getMyFavoriteEnroll: '',
+    // 我的收藏 - 考试
+    getMyFavoriteExam: '',
   }
 }
