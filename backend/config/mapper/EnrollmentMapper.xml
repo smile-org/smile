@@ -149,7 +149,7 @@
        p.indicator=1 and e.indicator=1 and p.period_id=#{periodid})result
          left join (
          select period_id, count(*)  as  renshu from
-         user_enrollment )o1   on  result.period_id =o1.period_id
+         user_enrollment  GROUP  by period_id)o1   on  result.period_id =o1.period_id
          left join(
          select item_id as period_id,  count(user_id) as userct from  user_favor where item_type='enrollment' group by item_id)o2
          on   result.period_id= o2.period_id

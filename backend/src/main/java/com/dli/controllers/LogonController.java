@@ -99,9 +99,6 @@ public class LogonController {
         Map<String, Object> result = new HashMap<String, Object>();
 
         try {
-
-
-
             String  pwd =(String)  body.get("pwd");
             String   cellphone=(String)  body.get("cellphone");
 
@@ -110,6 +107,7 @@ public class LogonController {
                 result.put(Constant.status, 1);
                 User user = logonService.getUserByPhoneNumber(cellphone);
                 result.put(Constant.result, user.getToken());
+                result.put("userInfo", user);
 
             } else {
 
