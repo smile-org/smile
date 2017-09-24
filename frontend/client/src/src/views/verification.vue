@@ -8,30 +8,33 @@
       </div>
     </header>
     <section>
-      <div class="login_a sologan2"></div>
-      <div class="form_list">
-        <span class=" login_icon1"></span>
-        <el-input type="text" placeholder="请输入您的手机号" v-model="username" @input="$v.username.$touch()"></el-input>
+      <div class="p3">
+        <div class="login_a sologan2"></div>
+        <div class="form_list">
+          <span class=" login_icon1"></span>
+          <el-input type="text" placeholder="请输入您的手机号" v-model="username" @input="$v.username.$touch()"></el-input>
+        </div>
+        <el-row class="form_list">
+          <el-col :span="14">
+            <span class="login_icon3"></span>
+            <el-input placeholder="验证码" v-model="code" @input="$v.code.$touch()"></el-input>
+          </el-col>
+          <el-col class="form_num " :span="8" :offset="2">
+            <div class="form_num_s " v-on:click="getCode" v-show="showCode" :disabled="$v.username.$invalid">
+              获取验证码
+            </div>
+            <div class="form_num_s " v-show="!showCode">
+              {{countDown}} s
+            </div>
+          </el-col>
+        </el-row>
+        <p class="form_warning" v-show="showError">
+          <img class="warnning_img" src="../assets/img/warnning.png" />{{errorMessage}}
+        </p>
+        <button class="login_btn" type="button" v-on:click="verifyCode" :disabled="$v.code.$invalid || $v.username.$invalid">下一步</button>
+
       </div>
-      <el-row class="form_list">
-        <el-col :span="14">
-          <span class="login_icon3"></span>
-          <el-input placeholder="验证码" v-model="code" @input="$v.code.$touch()"></el-input>
-        </el-col>
-        <el-col class="form_num " :span="8" :offset="2">
-          <div class="form_num_s " v-on:click="getCode" v-show="showCode" :disabled="$v.username.$invalid">
-            获取验证码
-          </div>
-          <div class="form_num_s " v-show="!showCode">
-            {{countDown}} s
-          </div>
-        </el-col>
-      </el-row>
-      <p class="form_warning" v-show="showError">
-        <img class="warnning_img" src="../assets/img/warnning.png" />{{errorMessage}}
-      </p>
-      <button class="login_btn" type="button" v-on:click="verifyCode" :disabled="$v.code.$invalid || $v.username.$invalid">下一步</button>
-    </section>
+      </section>
   </div>
 </template>
 
