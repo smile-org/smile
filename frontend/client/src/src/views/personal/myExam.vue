@@ -45,7 +45,6 @@
         <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_Failed" infinite-scroll-distance="10">
           <li class="course_list  line_only" v-for="item in dataFailed" :key="item.exam_id">
             <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
-            <a>
               <img :src="item.icon | formatImage" class="fl img_bg">
               <div class="course_cen">
                 <div class="hidden">
@@ -66,7 +65,6 @@
               <p class="exam_explain">
                 {{item.intro}}
               </p>
-            </a>
             </router-link>
           </li>
         </ul>

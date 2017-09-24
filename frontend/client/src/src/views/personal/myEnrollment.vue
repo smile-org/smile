@@ -14,7 +14,6 @@
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_finish" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataFinish" :key="item.enrollment_id">
               <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
-              <a>
                 <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
                   <div class="hidden bm_font ml6">
@@ -33,7 +32,6 @@
                     </ul>
                   </div>
                 </div>
-              </a>
               </router-link>
             </li>
           </ul>
