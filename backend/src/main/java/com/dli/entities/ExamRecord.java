@@ -1,7 +1,6 @@
 package com.dli.entities;
 
 
-import com.sun.istack.internal.Nullable;
 
 public class ExamRecord {
 

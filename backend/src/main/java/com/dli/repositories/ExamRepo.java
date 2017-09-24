@@ -2,7 +2,6 @@ package com.dli.repositories;
 
 
 import com.dli.entities.*;
-import com.sun.istack.internal.Nullable;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,7 +35,7 @@ public interface ExamRepo {
 
        ExamRecord    getExamHistoryRecord(@Param("historyid") int historyid, @Param("questionid") int   questionid);
 
-       void  updateExamHistoryRecord(@Param("recordid")int recordid, @Nullable @Param("isright") Boolean  isright , @Param("status")  String status );
+       void  updateExamHistoryRecord(@Param("recordid")int recordid,  @Param("isright") Boolean  isright , @Param("status")  String status );
 
        int getExamHistoryCorrectRecrdCount(int  historyid);
 
