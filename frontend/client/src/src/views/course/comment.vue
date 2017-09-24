@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     quickComments: function (comments) {
-      this.comments = comments
+      this.comments += comments
     },
     submit: function () {
       if (this.$v.$invalid) {

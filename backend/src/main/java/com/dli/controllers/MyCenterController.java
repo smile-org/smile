@@ -116,10 +116,8 @@ public class MyCenterController {
         return result;
     }
 
-
-
     @RequestMapping(value = "/getMyStudyStatus", method = RequestMethod.GET)
-    public Map getMyStudyStatus( int skip, int take, @RequestHeader Map header) {
+    public Map getMyStudyStatus(  @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);

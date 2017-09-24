@@ -57,12 +57,15 @@ public class ExamServiceImpl implements ExamService {
 
         //处理histroyid, 如果是第一次  ，histroyid 则为0
         List<ExamHistory> lst = examRepo.getExamHistoryList(examid, userid);
+
         if (lst.size() > 0) {
             ExamHistory h = lst.get(lst.size() - 1);
             if (h.getStatus().equals("in-process")) {
                 e.setHistory_id(h.getHistory_id());
             }
         }
+
+       // e.setTries_limit(  e.getTries_limit()-  lst.size()   );
 
         return  e;
     }
@@ -173,7 +176,7 @@ public class ExamServiceImpl implements ExamService {
         }
 
         int correct = examRepo.getExamHistoryCorrectRecrdCount(historyid);
-        int score = correct / questionLst.size() * 100;
+        int score =  100  * correct / questionLst.size() ;
 
         Exam exam = examRepo.getExambyID(examid);
         String status = "failure";

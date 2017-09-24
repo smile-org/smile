@@ -17,6 +17,11 @@ public class Helper {
         Calendar cd = Calendar.getInstance();
 // 获得今天是一周的第几天，星期日是第一天，星期二是第二天......
         int dayOfWeek = cd.get(Calendar.DAY_OF_WEEK) - 1; // 因为按中国礼拜一作为第一天所以这里减1
+        if(dayOfWeek ==0)
+        {
+            dayOfWeek=7;
+        }
+
         if (dayOfWeek == 1) {
             mondayPlus = 0;
         } else {
@@ -86,8 +91,7 @@ public class Helper {
 
     /*
     * todo
-    * 1. job to delete sms that create 5minitues ago , perhaps hourly
-    *  prevent from invoke  send sms too frequently
+
     *2. job to disable course , exam, enroll  while over due expiration date
     *3. job to reminder user that enrollemnt open again
     *

@@ -2,6 +2,7 @@ package com.dli.services.impl;
 
 
 import com.dli.entities.Demo;
+import com.dli.entities.SMS;
 import com.dli.entities.User;
 import com.dli.repositories.LogonRepo;
 import com.dli.repositories.LogonRepo;
@@ -65,6 +66,31 @@ public class LogonServiceImpl implements LogonService {
     @Override
     public User getUserByToken(String token) {
         return logonRepo.getUserByToken(token);
+    }
+
+    @Override
+    public void deleteSMSOverdue() {
+        logonRepo.deleteSMSOverdue();
+    }
+
+    @Override
+    public boolean allowGetSMSByCellphone(String cellphone) {
+
+         List<SMS>    smsList=   logonRepo.getSMSHistoryByCellphone(cellphone);
+
+         if( smsList.size()==0 || smsList==null )
+             return  true;
+
+         if( smsList.size()!=3 )
+             return  true;
+
+        SMS  histroy= smsList.get(smsList.size()-1 );
+
+        if(  (new Date().getTime()-   histroy.getCreated_at().getTime())/1000  >30*60 )
+             return   true;
+        else
+            return  false;
+
     }
 
 

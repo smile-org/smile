@@ -276,7 +276,7 @@ where created_at
     </select>
 
     <select id="getLastStudyDaysCountByUserid"   resultType="int" >
-        select  DATEDIFF(  Date( max(learn_at) ),  CURDATE())  from learn_progress     where user_id=#{userid}
+        select  DATEDIFF(    CURDATE(), Date( max(learn_at) ))  from learn_progress     where user_id=#{userid}
     </select>
 
 
