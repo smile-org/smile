@@ -10,7 +10,7 @@
   <!--</header>-->
   <common-header></common-header>
   <section>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs class="f_con2" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="已通过"  name="first">
         <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_Passed" infinite-scroll-distance="10">
           <li class="course_list  line_only" v-for="item in dataPassed" :key="item.exam_id" >
