@@ -157,13 +157,13 @@ section .form_list input{
   border:1px solid #ededed;
   border-radius: 0.1rem;
   font-size:0.3rem;
-  padding:0.2rem 0.2rem 0.2rem 0.9rem;
+  padding:0.2rem 0.2rem 0.2rem 0.8rem;
   color: #666;
   outline: 0;
   background: #fff;
   -webkit-appearance:none;
   position: relative;
-  margin-top:0.2rem;
+  /*margin-top:0.2rem;*/
 }
 .form_num .form_num_s{  /*获取验证码的样式*/
   width:100%;
@@ -176,7 +176,7 @@ section .form_list input{
   color: #00b553;
   outline: 0;
   position: relative;
-  margin-top:0.45rem;
+  margin-top:0.35rem;
 }
 
 .form_num .form_num_s:active,.form_num .active{/*此处active 为获取验证码后点击样式*/
@@ -228,16 +228,20 @@ section .form_list input{
 /*此处为各种引用图片路径*/
 .login_icon0{
   background: url('../img/logo_img0.png')no-repeat center center;
+  background-size: .38rem;
 }
 .login_icon1{
   background: url('../img/logo_img1.png')no-repeat center center;
+  background-size: .38rem;
 }
 .login_icon2{
   background: url('../img/logo_img2.png')no-repeat center center;
+  background-size: .38rem;
 }
 
 .login_icon3{
   background: url('../img/logo_img3.png')no-repeat center center;
+  background-size: .38rem;
 }
 
 .sologan1{
@@ -754,6 +758,7 @@ section .form_list input{
   -webkit-line-clamp: 2;
   overflow: hidden;
   max-width: 70%;
+  margin-left:1.4rem;
   /*max-width:-moz-calc(100% - (2.1rem ));
   max-width:-webkit-calc(100% - (2.1rem ));
   max-width: calc(100% - (2.1rem ))*/
@@ -1092,7 +1097,7 @@ footer .exam_b .btn span{
   content: " ";
   display: block;
   position: absolute;
-  bottom: .05rem;
+  bottom: .07rem;
   margin-left: -.2rem;
 }
 .add_bg h3{
@@ -1356,7 +1361,7 @@ footer .exam_b .btn span{
   display: block;
 }
 .home_sec{
-  padding:.5rem .3rem;
+  padding:.3rem .3rem;
   background: #fff;
   border-bottom:1px solid #ededed;
 

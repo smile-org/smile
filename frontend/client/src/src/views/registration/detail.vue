@@ -65,7 +65,7 @@
           <ul class="list_border course_con mb3hafe">
             <li v-for="item in courseComment" :key="item.comment_id">
               <el-row class="font22">
-                <el-col :span="4"><img class="person_header" src="item.user_idAvatar | formatImage"></el-col>
+                <el-col :span="4"><img class="person_header" :src="item.user_idAvatar | formatImage"></el-col>
                 <el-col :span="6" class="">
                   <p>{{item.user_idName}}</p>
                   <el-rate v-model="item.star" disabled text-color="#ff9900" text-template="{value}">

@@ -11,7 +11,7 @@
       <div class="p3">
         <div class="login_a sologan1"></div>
         <div class="form_list">
-          <span class=" login_icon1"></span>
+          <span class=" login_icon0"></span>
           <el-input type="text" placeholder="请输入用户名" v-model.trim="username" @input="$v.username.$touch()"></el-input>
         </div>
         <div class="form_list">

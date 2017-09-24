@@ -29,10 +29,11 @@
                     </li>
                   </ul>
                 </div>
-                <p class="exam_explain">
-                  {{item.intro}}
-                </p>
+
               </div>
+              <p class="exam_explain">
+                {{item.intro}}
+              </p>
             </a>
           </li>
         </ul>
@@ -56,10 +57,11 @@
                     </li>
                   </ul>
                 </div>
-                <p class="exam_explain">
-                  {{item.intro}}
-                </p>
+
               </div>
+              <p class="exam_explain">
+                {{item.intro}}
+              </p>
             </a>
           </li>
         </ul>
@@ -160,7 +162,7 @@ export default {
   font-size: .28rem;
   color: #666;
   position: relative;
-  width: 50%;
+  width: 50%!important;
 }
 
 .el-tabs__item.is-active {

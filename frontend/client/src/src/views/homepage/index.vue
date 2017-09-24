@@ -98,10 +98,10 @@
                           </li>
                         </ul>
                       </div>
-                      <p class="exam_explain">
-                        {{item.intro}}
-                      </p>
                     </div>
+                    <p class="exam_explain">
+                      {{item.intro}}
+                    </p>
                   </router-link>
                 </li>
               </ul>
@@ -125,10 +125,10 @@
                           </li>
                         </ul>
                       </div>
-                      <p class="exam_explain">
-                        {{item.intro}}
-                      </p>
                     </div>
+                    <p class="exam_explain">
+                      {{item.intro}}
+                    </p>
                   </router-link>
                 </li>
               </ul>
@@ -152,10 +152,10 @@
                           </li>
                         </ul>
                       </div>
-                      <p class="exam_explain">
-                        {{item.intro}}
-                      </p>
                     </div>
+                    <p class="exam_explain">
+                      {{item.intro}}
+                    </p>
                   </router-link>
                 </li>
               </ul>
@@ -188,10 +188,11 @@
                     </li>
                   </ul>
                 </div>
-                <p class="exam_explain">
-                  {{item.intro}}
-                </p>
+
               </div>
+              <p class="exam_explain">
+                {{item.intro}}
+              </p>
             </router-link>
           </li>
 
@@ -370,7 +371,7 @@ export default {
   font-size: .28rem;
   color: #666;
   position: relative;
-  width: 33.33%;
+  width: 33.33%!important;
 }
 
 .el-tabs__item.is-active {

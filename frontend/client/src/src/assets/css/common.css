@@ -86,6 +86,7 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 }
 ::-webkit-input-placeholder{
   color:#999!important;
+  margin-top:-.1rem;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
   color:#999!important;
