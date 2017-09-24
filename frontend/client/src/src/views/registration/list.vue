@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <header>
+    <!--<header>
       <div class="search_c">
         <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
         <div class="search_input">
-          <!--<el-input icon="el-icon-search" />-->
           <img src="../../assets/img/seach_icon.png" />
           <img src="../../assets/img/delate.png" />
           <input placeholder="输入关键词搜索相关培训报名">
         </div>
         <a class="seach_tit tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
       </div>
-    </header>
+    </header>-->
+    <search-header v-bind:holder="searchPlaceHolder"></search-header>
     <section>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="正在报名" name="first">
@@ -95,6 +95,7 @@
 import api from '../../services/api'
 import axios from 'axios'
 import { formatDate } from '../../common/date'
+import searchHeader from '../../components/SearchHeader'
 export default {
   data: function () {
     return {
@@ -107,8 +108,13 @@ export default {
       data_sec: [],
       // data_finish_loaded: false,
       currentPage_sec: -1,
-      busy_sec: false
+      busy_sec: false,
+
+      searchPlaceHolder: '输入关键词搜索相关课程'
     }
+  },
+  components: {
+    searchHeader
   },
   filters: {
     formatImage: function (uri) {
