@@ -12,16 +12,15 @@
     <section>
       <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.appointment_id">
-          <a>
+          <router-link v-bind:to="{name: 'getBooking', query: {id: item.appointmentId}}">
             <div class="hidden">
               <img class="person_header fl" :src="item.avatar | formatImage">
               <div class="bm_con">
-                <div class="hidden bm_font">
+                <div class="hidden bm_font ml2">
                   <h3 class="fl ">{{item.appointmentTitle}}</h3>
                   <p>主讲：{{item.sponsorName}}
                     <span class="ml2">{{item.sponsorDate | formatDate}}</span>
                   </p>
-
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -39,7 +38,7 @@
             <ul class="keword_num">
               <li v-for="(keyword, index) in item.keywords" :key="index">{{keyword}}</li>
             </ul>
-          </a>
+          </router-link>
         </li>
       </ul>
     </section>
@@ -98,5 +97,13 @@ export default {
   }
 }
 </script>
+<style>
+  .bm_font .small_icon {
+    top: .3rem;
+  }
+  .bm_font p {
+    margin-top: .45rem;
+  }
+</style>
 
 

@@ -225,6 +225,7 @@ section .form_list input{
 .exam_btn:active{
   opacity: .5;
 }
+
 /*此处为各种引用图片路径*/
 .login_icon0{
   background: url('../img/logo_img0.png')no-repeat center center;
@@ -660,7 +661,7 @@ section .form_list input{
 .repeat_pic{
   width:0.68rem;
   position: absolute;
-  top: -.1rem;
+  top: .1rem;
 }
 .exam_peo{
   position:absolute;
@@ -678,7 +679,7 @@ section .form_list input{
   bottom:0;
   right: 0;
   border-radius: 0;
-  z-index: 999;
+  z-index: 99;
 }
 .b_active{
   background: #dcdcdc
@@ -794,8 +795,8 @@ section .form_list input{
   margin-right: 0px;
 }
 .exam_circle .c_style{
-  width: .35rem;
-  height:.35rem;
+  width: .3rem;
+  height:.3rem;
   border-radius: .35rem;
   vertical-align: middle;
   display: inline-block;
@@ -840,6 +841,20 @@ footer .exam_b .btn span{
   line-height: .32rem;
   width: 100%;
   box-sizing: border-box;
+}
+.btn_sc{
+  width:100%;
+  height:1rem;
+  border:none;
+  outline: none;
+  color: #fff;
+  font-size:.34rem;
+}
+.btn_sure{
+  background: #00b553;
+}
+.btn_cancel{
+  background: #fe9508;
 }
 .subject_list h4{
   font-size: .26rem;
@@ -950,7 +965,7 @@ footer .exam_b .btn span{
   height: 100%;
   opacity: .5;
   background: #000;
-  z-index: 2;
+  z-index: 97;
   pointer-events:none
 }
 .q_num{
@@ -1089,7 +1104,9 @@ footer .exam_b .btn span{
   position: absolute;
   right:.3rem;
   top:.7rem;
-
+}
+.see_student a{
+  color: #00b553;
 }
 /*约课页面*/
 .list_need{
@@ -1191,6 +1208,7 @@ footer .exam_b .btn span{
   line-height: .38rem;
   padding-bottom: .1rem;
   border-bottom: 1px solid #ededed;
+  word-wrap: break-word;
 }
 .add_input{
   position: absolute;
@@ -1238,7 +1256,7 @@ footer .exam_b .btn span{
   backface-visibility: hidden;
   -webkit-transition: .2s;
   transition: .2s;
-  z-index: 111;
+  z-index: 98;
   box-sizing: border-box;
 }
 .booking_add h3{
@@ -1299,7 +1317,7 @@ footer .exam_b .btn span{
   color: #ffffff;
 }
 .per_num{
-  font-size:.34rem;
+  font-size:.32rem;
   text-align: center;
   vertical-align:middle ;
   padding-top:.1rem;
@@ -1311,10 +1329,10 @@ footer .exam_b .btn span{
 }
 .per_num p span{
   margin-right: .05rem;
-  font-size: .32rem;
+  font-size: .3rem;
 }
 .per_num .sec_p{
-  font-size:.3rem;
+  font-size:.28rem;
   margin-top:.05rem;
 
 }
@@ -1380,9 +1398,9 @@ footer .exam_b .btn span{
   height:.86rem;
 }
 .home_icon p{
-  font-size:.3rem;
+  font-size:.28rem;
   color: #333;
-  margin-top:.02rem;
+  margin-top:-.1rem;
 }
 .home_third{
   position: relative;
@@ -1392,7 +1410,7 @@ footer .exam_b .btn span{
   color: #999;
   float: right;
   padding-right:.5rem;
-  padding-top:.4rem;
+  padding-top:.35rem;
   position: relative;
 }
 .home_more:after {
@@ -1434,7 +1452,7 @@ footer .exam_b .btn span{
   height: 100%;
   right: 0;
   top: 0;
-  z-index: 9;
+  z-index: 101;
   font-size:.28rem;
   color: #333;
 }
@@ -1460,6 +1478,7 @@ footer .exam_b .btn span{
   border-bottom: 1px solid #f2f4f5;
   width: 100%;
   background-color: #fff;
+  text-align: left;
 }
 #slide_menu .nav li>a {
   display: block;
@@ -1492,4 +1511,122 @@ footer .exam_b .btn span{
   font-size: .22rem;
   color: #999;
   margin-top: .15rem;
+}
+
+/*tab切换*/
+.f_con2 .el-rate__icon {
+  font-size: .16rem;
+  margin-right: .006rem;
+}
+
+.f_con2 .el-tabs__active-bar {
+  width: 0!important;
+  transform: translateX(0rem)!important;
+}
+
+.f_con2 .el-tabs__item.is-active:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: .3rem;
+  right: .3rem;
+  height: 3px;
+  background: #00b553;
+  z-index: 2;
+}
+
+.f_con2 .el-tabs__item {
+  padding: 0 .5rem;
+  height: .7rem;
+  box-sizing: border-box;
+  line-height: .5rem;
+  display: inline-block;
+  list-style: none;
+  font-size: .28rem;
+  color: #666;
+  position: relative;
+  width:50%!important;
+}
+
+.f_con2 .el-tabs__item.is-active {
+  color: #00b553!important;
+}
+
+.f_con2 .el-tabs__nav {
+  width: 100%;
+  text-align: center;
+  margin-top: -.3rem;
+}
+
+.f_con2 .el-tabs__header {
+  border-bottom: 0;
+  margin: 0;
+}
+
+.f_con2 .el-tabs__nav .el-tabs__item:first-child {
+  border-right: 1px solid #ededed;
+}
+.f_con2 .quyu_click{
+  width: 100%;
+  display: inline-block;
+}
+
+
+
+.three_tab .el-rate__icon {
+  font-size: .16rem;
+  margin-right: .006rem;
+}
+
+.three_tab .el-tabs__active-bar {
+  width: 0!important;
+  transform: translateX(0rem)!important;
+}
+
+
+
+.three_tab .el-tabs__item.is-active:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: .3rem;
+  right: .3rem;
+  height: 3px;
+  background: #00b553;
+  z-index: 2;
+}
+
+.three_tab .el-tabs__item {
+  padding: 0 .5rem;
+  height: .7rem;
+  box-sizing: border-box;
+  line-height: .5rem;
+  display: inline-block;
+  list-style: none;
+  font-size: .28rem;
+  color: #666;
+  position: relative;
+  width: 33.33%!important;
+}
+.three_tab .el-tabs__item.is-active {
+  color: #00b553!important;
+}
+
+.three_tab .el-tabs__nav {
+  width: 100%;
+  text-align: center;
+  margin-top: -.3rem;
+}
+
+.three_tab .el-tabs__header {
+  border-bottom: 0;
+  margin: 0;
+}
+
+.three_tab .el-tabs__nav .el-tabs__item:first-child {
+  border-right: 1px solid #ededed;
+}
+.quyu_click{
+  width: 100%;
+  display: inline-block;
 }

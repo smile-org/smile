@@ -33,7 +33,7 @@
         </ul>
 
       </div>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs class="three_tab" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="考试信息" name="first">
           <ul class="mb3hafe list_border course_con">
             <li class="tc">
@@ -44,7 +44,7 @@
                     <span>次</span>
                   </p>
                   <div>
-                    <img class="exam_time" src="../../assets/img/icon6.png" />
+                    <img class="exam_time" src="../../assets/img/icon14.png" />
                     <span>次数限制</span>
                   </div>
                 </el-col>
@@ -54,7 +54,7 @@
                     <span>分</span>
                   </p>
                   <div>
-                    <img class="exam_time" src="../../assets/img/icon7.png" />
+                    <img class="exam_time" src="../../assets/img/icon13.png" />
                     <span>通过分数</span>
                   </div>
                 </el-col>
@@ -228,63 +228,54 @@ export default {
 }
 </script>
 
-<style>
-.el-pager li.active {
-  border-color: #20a0ff;
-  background-color: #20a0ff;
-  color: #fff;
-  cursor: default;
-}
-
-.el-pager li.c_g {
-  background: #00b553;
-  color: #fff;
-}
-
-.el-pager li.c_o {
-  background: #fc7a06;
-  color: #fff;
-}
-
-.el-pager li .c_grey {
-  background: #dedede;
-  color: #666;
-}
-
-.el-pagination {
-  padding: .02rem .05rem;
-}
-
-.el-pagination .btn-prev {
-  border-radius: 0.02rem 0 0 0.02rem;
-}
-
-.el-pagination button {
-  padding: 0 6px;
-}
-
-.el-pagination button,
-.el-pagination span {
-  font-size: .24rem;
-  min-width: 0.55rem;
-  height: 0.55rem;
-  line-height: 0.55rem;
-}
-
-.el-pager li {
-  padding: 0 0.02rem;
-  font-size: 0.24rem;
-  min-width: 0.55rem;
-  height: 0.55rem;
-  line-height: 0.55rem;
-}
-
-.el-pager li.btn-quicknext,
-.el-pager li.btn-quickprev {
-  line-height: 0.55rem;
-}
-.course_tit li{
-  margin-right: 0;
-}
-</style>
+<!--<style>-->
+  <!--.el-rate__icon {-->
+    <!--font-size: .16rem;-->
+    <!--margin-right: .006rem;-->
+  <!--}-->
+  <!--.el-tabs__active-bar{-->
+    <!--width: 0!important;-->
+    <!--transform: translateX(0rem)!important;-->
+  <!--}-->
+  <!--.three_tab .el-tabs__item.is-active:before {-->
+    <!--content: "";-->
+    <!--position: absolute;-->
+    <!--bottom: 0;-->
+    <!--left: .3rem;-->
+    <!--right: .3rem;-->
+    <!--height: 3px;-->
+    <!--background: #00b553;-->
+    <!--z-index: 2;-->
+  <!--}-->
+  <!--.three_tab .el-tabs__item {-->
+    <!--padding: 0 .5rem;-->
+    <!--height: .7rem;-->
+    <!--box-sizing: border-box;-->
+    <!--line-height: .5rem;-->
+    <!--display: inline-block;-->
+    <!--list-style: none;-->
+    <!--font-size: .28rem;-->
+    <!--color: #666;-->
+    <!--position: relative;-->
+    <!--width:33.33%;-->
+  <!--}-->
+  <!--.el-tabs__item.is-active {-->
+    <!--color: #00b553;-->
+  <!--}-->
+  <!--.el-tabs__nav{-->
+    <!--width:100%;-->
+    <!--text-align: center;-->
+    <!--margin-top: -.3rem;-->
+  <!--}-->
+  <!--.el-tabs__header {-->
+    <!--border-bottom:0;-->
+    <!--margin: 0;-->
+  <!--}-->
+  <!--.el-tabs__nav .el-tabs__item:first-child{-->
+    <!--border-right:1px solid #ededed;-->
+  <!--}-->
+  <!--.course_cen h3{-->
+    <!--max-width: 4.5rem;-->
+  <!--}-->
+<!--</style>-->
 

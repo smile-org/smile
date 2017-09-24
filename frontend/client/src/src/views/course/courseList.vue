@@ -1,17 +1,6 @@
 <template>
   <div>
-    <header>
-      <div class="search_c">
-        <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <div class="search_input">
-          <!--<el-input icon="el-icon-search" />-->
-          <img src="../../assets/img/seach_icon.png" />
-          <img src="../../assets/img/delate.png" />
-          <input placeholder="输入关键词搜索相关课程" >
-        </div>
-        <a class="seach_tit tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>
+    <search-header v-bind:holder="searchPlaceHolder"></search-header>
     <section>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.course_id">
@@ -31,10 +20,10 @@
                   </li>
                 </ul>
               </div>
-              <p class="exam_explain">
-                {{item.intro}}
-              </p>
             </div>
+            <p class="exam_explain">
+              {{item.intro}}
+            </p>
           </router-link>
         </li>
       </ul>
@@ -45,14 +34,19 @@
 <script>
 import api from '../../services/api'
 import axios from 'axios'
+import searchHeader from '../../components/SearchHeader'
 export default {
   data: function () {
     return {
       currentPage: -1,
       take: 20,
       data: [],
-      busy: false
+      busy: false,
+      searchPlaceHolder: '输入关键词搜索相关课程'
     }
+  },
+  components: {
+    searchHeader
   },
   filters: {
     formatImage: function (uri) {

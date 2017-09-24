@@ -1,13 +1,14 @@
 <template>
-  <div id="app" @click="homeClick(false)">
+  <div @click="homeClick(false)">
     <header>
       <div class="search_c">
-        <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <div class="search_input">
-          <!--<el-input icon="el-icon-search" />-->
+        <a class="seach_tit tl" href="##">
+          <img src="../../assets/img/logo.png" style="width:.8rem" />
+        </a>
+        <div class="search_input" style="margin-left: .1rem;margin-right: -.15rem;">
           <img src="../../assets/img/seach_icon.png" />
           <img src="../../assets/img/delate.png" />
-          <input placeholder="输入关键词搜索相关培训报名">
+          <input placeholder="输入关键词搜索相关培训报名" @focus="goSearch">
         </div>
         <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)"><img src="../../assets/img/home.png" alt="更多" /></a>
       </div>
@@ -78,7 +79,7 @@
           </router-link>
         </div>
         <div class="f_con">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tabs class="three_tab" v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="本周" name="first">
               <ul class="list_border course_line">
                 <li class="course_list  line_only" v-for="item in courseWeek" :key="item.course_id">
@@ -272,6 +273,7 @@
 import api from '../../services/api'
 import {formatDate} from '../../common/date'
 import axios from 'axios'
+import router from '../../router'
 export default {
   data: function () {
     return {
@@ -334,12 +336,15 @@ export default {
     },
     homeClick: function (status, event) {
       this.nav1 = status
+    },
+    goSearch: function () {
+      router.push({name: 'search', query: {type: 1}})
     }
   }
 }
 </script>
 
-<style>
+<!--<style>-->
 .el-rate__icon {
   font-size: .16rem;
   margin-right: .006rem;
@@ -350,7 +355,7 @@ export default {
   transform: translateX(0rem)!important;
 }
 
-.el-tabs__item.is-active:before {
+.three_tab .el-tabs__item.is-active:before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -361,7 +366,7 @@ export default {
   z-index: 2;
 }
 
-.el-tabs__item {
+.three_tab .el-tabs__item {
   padding: 0 .5rem;
   height: .7rem;
   box-sizing: border-box;

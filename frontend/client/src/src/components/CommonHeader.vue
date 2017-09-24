@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="logo_c">
-      <a class="tl" href="##"><img src="../assets/img/back.png" alt="返回" /></a>
+      <a class="tl"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack" /></a>
       <router-link v-bind:to="{name: 'homepage'}"><img src="../assets/img/logo.png" alt="smile" class="logo1" /></router-link>
       <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)">
         <img src="../assets/img/home.png" alt="更多" />
@@ -39,6 +39,7 @@
 
 <script>
 import axios from 'axios'
+import router from '../router'
 export default {
   data: function () {
     return {
@@ -52,6 +53,9 @@ export default {
   methods: {
     homeClick: function (status, event) {
       this.nav1 = status
+    },
+    goBack () {
+      router.go(-1)
     }
   }
 }

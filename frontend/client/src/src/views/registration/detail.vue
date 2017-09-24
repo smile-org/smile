@@ -32,7 +32,7 @@
         </ul>
 
       </div>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs class="three_tab" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="课程信息" name="first">
           <ul class="list_border course_con mb3hafe">
             <li class="">
@@ -166,11 +166,11 @@ export default {
       if (this.data.enrollmentCollected === 1) {
         this.data.enrollmentCollected = 0
         this.data.collect_count = this.data.collect_count - 1
-        api.fetch(api.uri.favoriteEnrollment, { periodid: this.id })
+        api.fetch(api.uri.cancelFavoriteEnrollment, { periodid: this.id })
       } else {
         this.data.enrollmentCollected = 1
         this.data.collect_count = this.data.collect_count + 1
-        api.fetch(api.uri.cancelFavoriteEnrollment, { periodid: this.id })
+        api.fetch(api.uri.favoriteEnrollment, { periodid: this.id })
       }
     },
     comment: function () {
@@ -182,56 +182,5 @@ export default {
 </script>
 
 <style>
-.el-rate__icon {
-  font-size: .16rem;
-  margin-right: .006rem;
-}
 
-.el-tabs__active-bar {
-  width: 0!important;
-  transform: translateX(0rem)!important;
-}
-
-.el-tabs__item.is-active:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: .3rem;
-  right: .3rem;
-  height: 3px;
-  background: #00b553;
-  z-index: 2;
-}
-
-.el-tabs__item {
-  padding: 0 .5rem;
-  height: .7rem;
-  box-sizing: border-box;
-  line-height: .5rem;
-  display: inline-block;
-  list-style: none;
-  font-size: .28rem;
-  color: #666;
-  position: relative;
-  width: 33.33%!important;
-}
-
-.el-tabs__item.is-active {
-  color: #00b553;
-}
-
-.el-tabs__nav {
-  width: 100%;
-  text-align: center;
-  margin-top: -.3rem;
-}
-
-.el-tabs__header {
-  border-bottom: 0;
-  margin: 0;
-}
-
-.el-tabs__nav .el-tabs__item:first-child {
-  border-right: 1px solid #ededed;
-}
 </style>

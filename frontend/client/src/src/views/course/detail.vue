@@ -32,7 +32,7 @@
         </ul>
       </div>
 
-      <el-tabs class=" " v-model="activeName" @tab-click="handleClick">
+      <el-tabs class=" three_tab" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="课程信息" name="first">
           <ul style="overflow: hidden" class="list_border course_con">
             <li class="">
@@ -165,9 +165,11 @@ export default {
       if (this.data.courseCollected === 1) {
         this.data.courseCollected = 0
         api.fetch(api.uri.cancelFavoriteCourse, { courseid: this.id })
+        this.data.collect_count -= 1
       } else {
         this.data.courseCollected = 1
         api.fetch(api.uri.favoriteCourse, { courseid: this.id })
+        this.data.collect_count += 1
       }
     },
     comment: function () {
@@ -189,54 +191,54 @@ export default {
 </script>
 
 <style>
-.el-tabs__active-bar{
-      width: 0!important;
-      transform: translateX(0rem)!important;
-    }
-    .el-tabs__item.is-active:before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: .3rem;
-      right: .3rem;
-      height: 3px;
-      background: #00b553;
-      z-index: 2;
-    }
-    .el-tabs__item {
-      padding: 0 .5rem;
-      height: .7rem;
-      box-sizing: border-box;
-      line-height: .5rem;
-      display: inline-block;
-      list-style: none;
-      font-size: .28rem;
-      color: #666;
-      position: relative;
-      width:33.33%;
-    }
-    .el-tabs__item.is-active {
-      color: #00b553;
-    }
-    .el-tabs__nav{
-      width:100%;
-      text-align: center;
-      margin-top: -.3rem;
-    }
-    .el-tabs__header {
-      border-bottom:0;
-      margin: 0;
-    }
-    .el-tabs__nav .el-tabs__item:first-child{
-      border-right:1px solid #ededed;
-    }
-    .el-rate__icon {
-      font-size: .16rem;
-      margin-right: .006rem;
-    }
-    .el-tabs__header {
-      border-bottom: 1px solid #ededed;
-      margin:0;}
+  /*.el-rate__icon {*/
+    /*font-size: .16rem;*/
+    /*margin-right: .006rem;*/
+  /*}*/
+  /*.el-tabs__active-bar{*/
+    /*width: 0!important;*/
+    /*transform: translateX(0rem)!important;*/
+  /*}*/
+  /*.three_tab .el-tabs__item.is-active:before {*/
+    /*content: "";*/
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*left: .3rem;*/
+    /*right: .3rem;*/
+    /*height: 3px;*/
+    /*background: #00b553;*/
+    /*z-index: 2;*/
+  /*}*/
+  /*.three_tab .el-tabs__item {*/
+    /*padding: 0 .5rem;*/
+    /*height: .7rem;*/
+    /*box-sizing: border-box;*/
+    /*line-height: .5rem;*/
+    /*display: inline-block;*/
+    /*list-style: none;*/
+    /*font-size: .28rem;*/
+    /*color: #666;*/
+    /*position: relative;*/
+    /*width:33.33%;*/
+  /*}*/
+  /*.el-tabs__item.is-active {*/
+    /*color: #00b553;*/
+  /*}*/
+  /*.el-tabs__nav{*/
+    /*width:100%;*/
+    /*text-align: center;*/
+    /*margin-top: -.3rem;*/
+  /*}*/
+  /*.el-tabs__header {*/
+    /*border-bottom:0;*/
+    /*margin: 0;*/
+  /*}*/
+  /*.el-tabs__nav .el-tabs__item:first-child{*/
+    /*border-right:1px solid #ededed;*/
+  /*}*/
+  .course_cen h3{
+    max-width: 4.5rem;
+  }
 </style>
 
 

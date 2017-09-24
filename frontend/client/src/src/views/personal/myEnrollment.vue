@@ -13,10 +13,10 @@
         <el-tab-pane label="已报名" name="first">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_finish" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataFinish" :key="item.enrollment_id">
-              <a>
-                <img class="person_header fl" :src="item.icon | formatImage">
+              <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
+                <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
-                  <div class="hidden bm_font">
+                  <div class="hidden bm_font ml6">
                     <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
                     <p>{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
@@ -32,17 +32,18 @@
                     </ul>
                   </div>
                 </div>
-              </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane label="预约报名" name="second">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.enrollment_id">
+              <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
               <a>
-                <img class="person_header fl" :src="item.icon | formatImage">
+                <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
-                  <div class="hidden bm_font">
+                  <div class="hidden bm_font ml6">
                      <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
                     <p>{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
@@ -59,6 +60,7 @@
                   </div>
                 </div>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>
@@ -141,51 +143,45 @@ export default {
 </script>
 
 <style>
-.el-tabs__active-bar {
-  width: 0!important;
-  transform: translateX(0rem)!important;
-}
-
-.el-tabs__item.is-active:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: .7rem;
-  right: .7rem;
-  height: 3px;
-  background: #00b553;
-  z-index: 2;
-}
-
-.el-tabs__item {
-  padding: 0 .5rem;
-  height: .7rem;
-  box-sizing: border-box;
-  line-height: .5rem;
-  display: inline-block;
-  list-style: none;
-  font-size: .28rem;
-  color: #666;
-  position: relative;
-  width: 50%;
-}
-
-.el-tabs__item.is-active {
-  color: #00b553;
-}
-
-.el-tabs__nav {
-  width: 100%;
-  text-align: center;
-  margin-top: -.3rem;
-}
-
-.el-tabs__header {
-  border-bottom: 0;
-  margin: 0;
-}
-
-.el-tabs__nav .el-tabs__item:first-child {
-  border-right: 1px solid #ededed;
-}
+  .el-tabs__active-bar{
+    width: 0!important;
+    transform: translateX(0rem)!important;
+  }
+  .el-tabs__item.is-active:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: .7rem;
+    right: .7rem;
+    height: 3px;
+    background: #00b553;
+    z-index: 2;
+  }
+  .el-tabs__item {
+    padding: 0 .5rem;
+    height: .7rem;
+    box-sizing: border-box;
+    line-height: .5rem;
+    display: inline-block;
+    list-style: none;
+    font-size: .28rem;
+    color: #666;
+    position: relative;
+    width:50%!important;
+  }
+  .el-tabs__item.is-active {
+    color: #00b553;
+  }
+  .el-tabs__nav{
+    width:100%;
+    text-align: center;
+    margin-top: -.3rem;
+  }
+  .el-tabs__header {
+    border-bottom:0;
+    margin: 0;
+  }
+  .el-tabs__nav .el-tabs__item:first-child{
+    border-right:1px solid #ededed;
+  }
 </style>

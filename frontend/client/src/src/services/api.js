@@ -175,8 +175,13 @@ export default {
     // getMyFavoriteEnroll: '',
     // // 我的收藏 - 考试
     // getMyFavoriteExam: '',
+    updatePassword: 'updatePassword',
 
     // 首页
-    getHomepageCourse: '/getFirstPageCourseList'
+    getHomepageCourse: '/getFirstPageCourseList',
+    getSearchHistoryList: '/getsearchHistoryList',
+    getRecommanedKeyWords: '/getRecommanedKeyWords',
+    addSearchHistory: '/addSearchHistory',
+    search: '/search'
   }
 }

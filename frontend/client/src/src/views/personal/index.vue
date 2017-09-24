@@ -32,49 +32,49 @@
     </div>
     <ul class="list_border course_con mb3hafe v_active">
       <li class="">
-         <router-link v-bind:to="{name: 'myLearning'}">
+         <router-link v-bind:to="{name: 'myLearning'}" class="quyu_click">
           <img class="icon_per" src="../../assets/img/logo_img4.png" />
           <span class="">我的学习记录</span>
           <img class="personal_go" src="../../assets/img/go02.png" />
         </router-link>
       </li>
       <li class="">
-        <router-link v-bind:to="{name: 'myTask'}">
+        <router-link v-bind:to="{name: 'myTask'}" class="quyu_click">
           <img class="icon_per" src="../../assets/img/logo_img5.png" />
           <span class="">我的学习任务</span>
           <img class="personal_go" src="../../assets/img/go02.png" />
         </router-link>
       </li>
       <li class="">
-        <router-link v-bind:to="{name: 'myExam'}">
+        <router-link v-bind:to="{name: 'myExam'}" class="quyu_click">
           <img class="icon_per" src="../../assets/img/logo_img6.png" />
           <span class="">我的考试记录</span>
           <img class="personal_go" src="../../assets/img/go02.png" />
         </router-link>
       </li>
       <li class="">
-        <router-link v-bind:to="{name: 'myEnrollment'}">
+        <router-link v-bind:to="{name: 'myEnrollment'}" class="quyu_click">
           <img class="icon_per" src="../../assets/img/logo_img7.png" />
           <span class="">面授报名记录</span>
           <img class="personal_go" src="../../assets/img/go02.png" />
         </router-link>
       </li>
       <li class="">
-        <router-link v-bind:to="{name: 'myBooking'}">
+        <router-link v-bind:to="{name: 'myBooking'}" class="quyu_click">
           <img class="icon_per" src="../../assets/img/logo_img8.png" />
           <span class="">我的约课记录</span>
           <img class="personal_go" src="../../assets/img/go02.png" />
         </router-link>
       </li>
       <li class="">
-        <router-link v-bind:to="{name: 'myFavorites'}">
+        <router-link v-bind:to="{name: 'myFavorites'}" class="quyu_click">
           <img class="icon_per" src="../../assets/img/logo_img9.png" />
           <span class="">我的收藏</span>
           <img class="personal_go" src="../../assets/img/go02.png" />
         </router-link>
       </li>
       <li class="">
-        <router-link v-bind:to="{name: 'changePWD'}">
+        <router-link v-bind:to="{name: 'changePWD'}" class="quyu_click">
           <img class="icon_per" src="../../assets/img/logo_img10.png" />
           <span class="">修改密码</span>
           <img class="personal_go" src="../../assets/img/go02.png" />

@@ -19,15 +19,15 @@
     </el-row>
     <div class="course_tit mt3">
         <ul class="exam_circle">
-            <li>
+            <li class="">
                <span class="c_g c_style"></span>
                <span>已答</span>
             </li>
-          <li>
+          <li class="ml1">
             <span class="c_o c_style"></span>
             <span>存疑</span>
           </li>
-          <li>
+          <li class="ml1">
             <span class="c_grey c_style"></span>
             <span>未答</span>
           </li>
@@ -62,17 +62,17 @@
   <footer>
     <el-row class="exam_b">
       <el-col class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre" :span="8">
-        <button :disabled="currentQuestionNo === 1" class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</button>
+        <span :disabled="currentQuestionNo === 1" class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</span>
       </el-col>
       <el-col class="btn" :span="8">
-        <button v-on:click="suspect">标记存疑</button>
+        <span v-on:click="suspect">标记存疑</span>
       </el-col>
       <el-col class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext" :span="8">
-        <button :disabled="currentQuestionNo === questionCount" class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</button>
+        <span :disabled="currentQuestionNo === questionCount" class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</span>
       </el-col>
     </el-row>
-  </footer>
 
+  </footer>
   <div class="popup_box" v-show="showModal">
     <div v-if="popupType === 0">
       <p>考试题尚未答完，确定交卷吗？</p>
@@ -82,7 +82,7 @@
       </ul>
       <div class="el-row dio_btn mt3">
         <div class="el-col el-col-12">
-          <button type="button" class="c_g btn fr " v-on:click="submitExam">交卷</button>
+          <span class="c_g btn fr " v-on:click="submitExam">交卷</span>
         </div>
         <div class="el-col el-col-12">
           <button type="button" class="c_o  btn fl" v-on:click='showModal=false'>取消</button>
@@ -338,64 +338,53 @@ export default {
   }
 }
 </script>
-
 <style>
-.el-pager li.active {
-  border-color: #20a0ff;
-  background-color: #20a0ff;
-  color: #fff;
-  cursor: default;
-}
+/*.el-pager li.active {*/
+/*border-color: #20a0ff;*/
+/*background-color: #20a0ff;*/
+/*color: #fff;*/
+/*cursor: default;*/
+/*}*/
+/*.el-pager li.c_g{*/
+/*background: #00b553;*/
+/*color: #fff;*/
+/*}*/
+/*.el-pager li.c_o{*/
+/*background: #fc7a06;*/
+/*color: #fff;*/
+/*}*/
+/*.el-pager li .c_grey{*/
+/*background: #dedede;*/
+/*color: #666;*/
+/*}*/
+/*.el-pagination {*/
+/*padding: .02rem .05rem;*/
+/*}*/
+/*.el-pagination .btn-prev {*/
+/*border-radius: 0.02rem 0 0 0.02rem;*/
+/*}*/
+/*.el-pagination button {*/
+/*padding: 0 6px;*/
+/*}*/
+/*.el-pagination button, .el-pagination span {*/
+/*font-size: .24rem;*/
+/*min-width: 0.55rem;*/
+/*height: 0.55rem;*/
+/*line-height:0.55rem;*/
 
-.el-pager li.c_g {
-  background: #00b553;
-  color: #fff;
-}
-
-.el-pager li.c_o {
-  background: #fc7a06;
-  color: #fff;
-}
-
-.el-pager li .c_grey {
-  background: #dedede;
-  color: #666;
-}
-
-.el-pagination {
-  padding: .02rem .05rem;
-}
-
-.el-pagination .btn-prev {
-  border-radius: 0.02rem 0 0 0.02rem;
-}
-
-.el-pagination button {
-  padding: 0 6px;
-}
-
-.el-pagination button,
-.el-pagination span {
-  font-size: .24rem;
-  min-width: 0.55rem;
-  height: 0.55rem;
-  line-height: 0.55rem;
-}
-
-.el-pager li {
-  padding: 0 0.02rem;
-  font-size: 0.24rem;
-  min-width: 0.55rem;
-  height: 0.55rem;
-  line-height: 0.55rem;
-}
-
-.el-pager li.btn-quicknext,
-.el-pager li.btn-quickprev {
-  line-height: 0.55rem;
-}
+/*}*/
+/*.el-pager li {*/
+/*padding: 0 0.02rem;*/
+/*font-size:0.24rem;*/
+/*min-width: 0.55rem;*/
+/*height: 0.55rem;*/
+/*line-height: 0.55rem;*/
+/*}*/
+/*.el-pager li.btn-quicknext, .el-pager li.btn-quickprev {*/
+/*line-height: 0.55rem;*/
+/*}*/
 .course_tit li{
-  margin-right: 0;
+  margin-right:0rem;
 }
 </style>
 
