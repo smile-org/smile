@@ -14,7 +14,6 @@
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_course" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataCourse" :key="item.course_id">
               <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
-              <a>
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
                   <div class="hidden">
@@ -30,11 +29,11 @@
                       </li>
                     </ul>
                   </div>
-                  <p class="exam_explain">
-                    {{item.intro}}
-                  </p>
+
                 </div>
-              </a>
+                <p class="exam_explain">
+                  {{item.intro}}
+                </p>
               </router-link>
             </li>
           </ul>
@@ -43,12 +42,11 @@
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_enroll" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataEnroll" :key="item.enrollment_id">
               <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
-              <a>
-                <img class="person_header fl" :src="item.icon | formatImage">
+                <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
-                  <div class="hidden bm_font">
+                  <div class="hidden bm_font ml6">
                     <h3 class="fl mb15">{{item.title}}</h3>
-                    <p class="">主讲：{{item.user_idName}}</p>
+                    <p class="">主讲：{{item.teacher}}</p>
                     <p>{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
                     <ul class="small_icon fr">
                       <li class="fl">
@@ -62,7 +60,6 @@
                     </ul>
                   </div>
                 </div>
-              </a>
               </router-link>
             </li>
           </ul>
@@ -71,7 +68,6 @@
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_exam" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataExam" :key="item.exam_id">
               <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
-              <a>
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
                   <div class="hidden">
@@ -87,11 +83,11 @@
                       </li>
                     </ul>
                   </div>
-                  <p class="exam_explain">
-                    {{item.intro}}
-                  </p>
+
                 </div>
-              </a>
+                <p class="exam_explain">
+                  {{item.intro}}
+                </p>
               </router-link>
             </li>
           </ul>
