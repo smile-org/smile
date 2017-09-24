@@ -356,4 +356,55 @@ public class EnrollmentController {
         return result;
     }
 
+        @RequestMapping(value = "/getReminderList", method = RequestMethod.GET)
+        public Map getReminderList(  @RequestHeader Map header) {
+            Map<String, Object> result = new HashMap<String, Object>();
+            String token = header.get("token").toString();
+            User user = logonService.getUserByToken(token);
+            if (user == null) {
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "无效的登录用户");
+                return result;
+            }
+
+            try {
+                List<EnrollmentReminderAndTarget> lst = enrollmentService.getReminderList(user.getUser_id());
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, lst);
+
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                result.put(Constant.status, 0);
+                result.put(Constant.result, ex.getMessage());
+            }
+            return result;
+        }
+
+
+        @RequestMapping(value = "/updateReadReminder", method = RequestMethod.GET)
+        public Map updateReadReminder(   int periodid, @RequestHeader Map header) {
+            Map<String, Object> result = new HashMap<String, Object>();
+            String token = header.get("token").toString();
+            User user = logonService.getUserByToken(token);
+            if (user == null) {
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "无效的登录用户");
+                return result;
+            }
+
+            try {
+               enrollmentService.updateReadReminder(periodid,user.getUser_id());
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, "reminder读取更新成功");
+
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                result.put(Constant.status, 0);
+                result.put(Constant.result, ex.getMessage());
+            }
+            return result;
+        }
+
 }

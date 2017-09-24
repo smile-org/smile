@@ -35,4 +35,6 @@ public interface EnrollmentRepo {
 
     List<EnrollmentReminderAndTarget>   getReminderList( int userid);
 
+    void   updateReadReminder(  @Param("periodid") int periodid,  @Param("userid")  int userid  );
+
 }

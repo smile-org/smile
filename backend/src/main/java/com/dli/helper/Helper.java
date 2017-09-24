@@ -98,7 +98,7 @@ public class Helper {
     * todo
 
     *2. job to disable course , exam, enroll  while over due expiration date
-    *3. job to reminder user that enrollemnt open again
+
     *
     * */
 }

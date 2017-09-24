@@ -6,8 +6,8 @@ public class EnrollmentReminderAndTarget {
     private  int period_id;
     private  int target_period_id;
 
-    private  EnrollmentPeriod period;
-    private   EnrollmentPeriod targetPeriod;
+    private  String teacher;
+    private  String title;
 
     public int getPeriod_id() {
         return period_id;
@@ -25,19 +25,19 @@ public class EnrollmentReminderAndTarget {
         this.target_period_id = target_period_id;
     }
 
-    public EnrollmentPeriod getPeriod() {
-        return period;
+    public String getTeacher() {
+        return teacher;
     }
 
-    public void setPeriod(EnrollmentPeriod period) {
-        this.period = period;
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
     }
 
-    public EnrollmentPeriod getTargetPeriod() {
-        return targetPeriod;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTargetPeriod(EnrollmentPeriod targetPeriod) {
-        this.targetPeriod = targetPeriod;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

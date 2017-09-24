@@ -114,9 +114,20 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public List<EnrollmentReminderAndTarget> getReminderList(int userid) {
-        return    enrollmentRepo.getReminderList(userid);
+        List<EnrollmentReminderAndTarget>    lst=    enrollmentRepo.getReminderList(userid);
+
+        for(   EnrollmentReminderAndTarget    ert : lst ){
+
+            EnrollmentPeriodEnrollment period=  enrollmentRepo.getEnrollmentPeriodByID(ert.getPeriod_id());
+            ert.setTeacher( period.getTeacher());
+
+            ert.setTitle(period.getTitle());
+        }
+        return  lst;
     }
 
-
-
+    @Override
+    public void updateReadReminder(int periodid, int userid) {
+        enrollmentRepo.updateReadReminder(periodid,userid);
+    }
 }

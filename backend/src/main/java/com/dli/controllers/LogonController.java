@@ -135,8 +135,8 @@ public class LogonController {
     }
 
 
-    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
-    public Map updatePassword(@RequestBody Map body) {
+    @RequestMapping(value = "/updatePasswordByCellphone", method = RequestMethod.POST)
+    public Map updatePasswordByCellphone(@RequestBody Map body) {
 
         // 先检查验证码 然后再改密码
         Map<String, Object> result = new HashMap<String, Object>();

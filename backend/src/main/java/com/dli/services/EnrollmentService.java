@@ -28,4 +28,6 @@ public interface EnrollmentService {
     List<EnrollmentPeriodEnrollment> getMyCollectionList( int userid, int  skip , int take );
 
     List<EnrollmentReminderAndTarget>   getReminderList( int userid);
+
+    void   updateReadReminder(   int periodid,    int userid  );
 }

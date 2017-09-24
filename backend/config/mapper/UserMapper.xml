@@ -23,5 +23,9 @@
     </select>
 
 
+    <update id="updatePasswordByUserid">
+        update   user  set   password =#{password}  where user_id=#{userid}
+    </update>
+
 
 </mapper>
