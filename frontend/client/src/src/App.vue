@@ -5,14 +5,7 @@
 </template>
 
 <script>
-import Bar from './components/Bar'
-import BarItem from './components/BarItem'
-export default {
-  components: {
-    Bar,
-    BarItem
-  }
-}
+
 </script>
 
 <style>
