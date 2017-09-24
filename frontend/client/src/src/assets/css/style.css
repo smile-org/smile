@@ -1514,12 +1514,12 @@ footer .exam_b .btn span{
 }
 
 /*tab切换*/
-.el-rate__icon {
+.f_con2 .el-rate__icon {
   font-size: .16rem;
   margin-right: .006rem;
 }
 
-.el-tabs__active-bar {
+.f_con2 .el-tabs__active-bar {
   width: 0!important;
   transform: translateX(0rem)!important;
 }
@@ -1548,6 +1548,43 @@ footer .exam_b .btn span{
   width:50%!important;
 }
 
+.f_con2 .el-tabs__item.is-active {
+  color: #00b553!important;
+}
+
+.f_con2 .el-tabs__nav {
+  width: 100%;
+  text-align: center;
+  margin-top: -.3rem;
+}
+
+.f_con2 .el-tabs__header {
+  border-bottom: 0;
+  margin: 0;
+}
+
+.f_con2 .el-tabs__nav .el-tabs__item:first-child {
+  border-right: 1px solid #ededed;
+}
+.f_con2 .quyu_click{
+  width: 100%;
+  display: inline-block;
+}
+
+
+
+.three_tab .el-rate__icon {
+  font-size: .16rem;
+  margin-right: .006rem;
+}
+
+.three_tab .el-tabs__active-bar {
+  width: 0!important;
+  transform: translateX(0rem)!important;
+}
+
+
+
 .three_tab .el-tabs__item.is-active:before {
   content: "";
   position: absolute;
@@ -1571,22 +1608,22 @@ footer .exam_b .btn span{
   position: relative;
   width: 33.33%!important;
 }
-.el-tabs__item.is-active {
-  color: #00b553;
+.three_tab .el-tabs__item.is-active {
+  color: #00b553!important;
 }
 
-.el-tabs__nav {
+.three_tab .el-tabs__nav {
   width: 100%;
   text-align: center;
   margin-top: -.3rem;
 }
 
-.el-tabs__header {
+.three_tab .el-tabs__header {
   border-bottom: 0;
   margin: 0;
 }
 
-.el-tabs__nav .el-tabs__item:first-child {
+.three_tab .el-tabs__nav .el-tabs__item:first-child {
   border-right: 1px solid #ededed;
 }
 .quyu_click{

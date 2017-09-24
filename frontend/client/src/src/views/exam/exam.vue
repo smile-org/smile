@@ -62,13 +62,13 @@
   <footer>
     <el-row class="exam_b">
       <el-col class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre" :span="8">
-        <button :disabled="currentQuestionNo === 1" class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</button>
+        <span :disabled="currentQuestionNo === 1" class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</span>
       </el-col>
       <el-col class="btn" :span="8">
-        <button v-on:click="suspect">标记存疑</button>
+        <span v-on:click="suspect">标记存疑</span>
       </el-col>
       <el-col class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext" :span="8">
-        <button :disabled="currentQuestionNo === questionCount" class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</button>
+        <span :disabled="currentQuestionNo === questionCount" class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</span>
       </el-col>
     </el-row>
   </footer>
