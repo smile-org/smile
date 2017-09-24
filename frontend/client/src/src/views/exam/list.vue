@@ -30,10 +30,11 @@
                   </li>
                 </ul>
               </div>
-              <p class="exam_explain">
-                {{item.intro}}
-              </p>
+
             </div>
+            <p class="exam_explain">
+              {{item.intro}}
+            </p>
           </router-link>
         </li>
       </ul>
