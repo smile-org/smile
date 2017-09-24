@@ -72,7 +72,6 @@
       </el-col>
     </el-row>
   </footer>
-
   <div class="popup_box" v-show="showModal">
     <div v-if="popupType === 0">
       <p>考试题尚未答完，确定交卷吗？</p>
