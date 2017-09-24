@@ -165,9 +165,11 @@ export default {
       if (this.data.courseCollected === 1) {
         this.data.courseCollected = 0
         api.fetch(api.uri.cancelFavoriteCourse, { courseid: this.id })
+        this.data.collect_count -= 1
       } else {
         this.data.courseCollected = 1
         api.fetch(api.uri.favoriteCourse, { courseid: this.id })
+        this.data.collect_count += 1
       }
     },
     comment: function () {
