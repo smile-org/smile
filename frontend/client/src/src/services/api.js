@@ -5,6 +5,8 @@ import conf from '../config/index.js'
 // axios.defaults.withCredentials = true
 
 axios.defaults.baseURL = 'http://192.168.0.106:8888' // 'http://192.168.0.108:3000'
+// axios.defaults.baseURL = 'http://123.207.154.226:8888'
+axios.defaults.imageServer = 'http://123.207.154.226:4001'
 
 /**
  * 拦截器， 对所有的请求。
@@ -88,17 +90,23 @@ export default {
     // 获取所有考试
     getExamList: '/getExamList',
     // 获取考试
-    getExamInfo: '',
+    getExamInfo: '/getExambyID',
     // 取消收藏考试
-    cancelFavoriteExam: '',
+    cancelFavoriteExam: '/cancelExamCollection',
     // 收藏考试
-    favoriteExam: '',
+    favoriteExam: '/addExamCollection',
     // 获取考试相关学习资料（课程）
-    getExamCourses: '',
+    getExamCourses: '/getCourseListByExamid',
     // 获取考试记录
-    getExamRecords: '',
+    getExamRecords: '/getExamHistoryList',
     // 获取考试信息与试题列表
-    getExamQuestions: '',
+    getExamQuestions: '/getExamQuestionAnswerCombineEntity',
+    // 开始考试
+    startExam: '/addHistory',
+    // 更新每道题
+    saveQuestionAnwser: '/updateHistory',
+    // 完成考试
+    finishExam: '/finishHistory',
 
     // *** 约课 ***
     // 获取约课列表
@@ -143,26 +151,30 @@ export default {
     getMyCourseListInProgress: '/getMyCourseListInprocess',
     // 获取我的课程 - 已完成
     getMyCourseListFinished: '/getMyCourseListFinished',
-    // 获取我的任务 - 进行中
-    getMyTaskListInProgress: '',
+    // 获取我的任务 -   ---- 只有 一个 api, 返回为开始和进行中的
+    getMyTaskListInProgress: '/getMyCourseListInTask',
+
     // 获取我的任务 - 未开始
-    getMyTaskListNotStart: '',
+    // getMyTaskListNotStart: '',
+
     // 获取我的通过考试
-    getMyExamListPassed: '',
+    getMyExamListPassed: '/getMyExamlistPassed',
     // 获取我的失败考试:
-    getMyExamListFailed: '',
+    getMyExamListFailed: '/getMyExamlistNotPassed',
     // 获取我的约课列表
-    getMyAppointmentList: 'getMyAppointmentList',
+    getMyAppointmentList: '/getMyAppointmentList',
     // 获取我的报名 - 已经报名
-    getMyEnrollFinish: '',
+    getMyEnrollFinish: '/getMyEnrollmentListEnrolled',
     // 获取我的报名 - 预约报名
-    getMyEnrollInProgress: '',
-    // 我的收藏 - 课程
-    getMyFavoriteCourse: '',
-    // 我的收藏 - 报名
-    getMyFavoriteEnroll: '',
-    // 我的收藏 - 考试
-    getMyFavoriteExam: '',
+    getMyEnrollInProgress: '/getMyEnrollmentListInReminder',
+
+    getMyFavorite: '/getMyCollectionList',
+    // // 我的收藏 - 课程
+    // getMyFavoriteCourse: '',
+    // // 我的收藏 - 报名
+    // getMyFavoriteEnroll: '',
+    // // 我的收藏 - 考试
+    // getMyFavoriteExam: '',
 
     // 首页
     getHomepageCourse: '/getFirstPageCourseList'

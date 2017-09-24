@@ -16,32 +16,28 @@
               <img class="person_header fl" :src="item.avatar | formatImage">
               <div class="bm_con">
                 <div class="hidden bm_font">
-                  <h3 class="fl ">{{item.appointment_title}}</h3>
-                  <p>主讲：{{item.username}}
-                    <span class="ml2">{{item.sponsor_date | formatDate}}</span>
+                  <h3 class="fl ">{{item.appointmentTitle}}</h3>
+                  <p>主讲：{{item.sponsorName}}
+                    <span class="ml2">{{item.sponsorDate | formatDate}}</span>
                   </p>
 
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
-                      <span class="green00b">{{item.study_count}}</span>
+                      <span class="green00b">{{item.followerCount}}</span>
                     </li>
                   </ul>
                   <span class="see_student">
+                    <router-link v-bind:to="{name: 'getBookingFollowers', query: {id: item.appointmentId}}">
                     查看同学
+                    </router-link>
                   </span>
                 </div>
               </div>
             </div>
             <ul class="keword_num">
-              <li>关键字一个</li>
-              <li>关键字一个</li>
-              <li>关键字一个</li>
-              <li>关键字一个</li>
-              <li>关键字一个</li>
-              <li>关键字一个</li>
+              <li v-for="(keyword, index) in item.keywords" :key="index">{{keyword}}</li>
             </ul>
-
           </a>
         </li>
       </ul>
@@ -64,9 +60,9 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     },
-    formateDate: function (time) {
+    formatDate: function (time) {
       var date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd')
     }
@@ -77,9 +73,15 @@ export default {
       this.busy = true
       api.fetch(api.uri.getMyAppointmentList, { take: this.take, skip: this.currentPage * this.take }).then(data => {
         if (data.status === 1) {
-          this.data = this.data.concat(data.result)
           if (data.result.length === this.take) {
             this.busy = false
+          }
+          // 只有实际拿到数据后， 才附加到data属性上
+          if (data.result.length > 0) {
+            for (var i = 0; i < data.result.length; i++) {
+              data.result[i].keywordArray = data.result[i].keyword.split(',')
+            }
+            this.data = this.data.concat(data.result)
           }
         } else {
           // todo:

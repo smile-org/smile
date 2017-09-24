@@ -8,7 +8,7 @@
       </div>
     </header>
     <section>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <!--<el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="进行中" name="first">
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.course_id">
@@ -63,8 +63,32 @@
             </li>
           </ul>
         </el-tab-pane>
-      </el-tabs>
-
+      </el-tabs>-->
+      <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
+        <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.course_id">
+          <a>
+            <img :src="item.icon | formatImage" class="fl img_bg">
+            <div class="course_cen">
+              <div class="hidden">
+                <h3 class="fl">{{item.title}}</h3>
+                <ul class="small_icon fr">
+                  <li class="fl">
+                    <span class="icon icon1"></span>
+                    <span class="green00b">{{item.study_count}}</span>
+                  </li>
+                  <li class="fl">
+                    <span class="icon icon2"></span>
+                    <span class="redff7">{{item.collect_count}}</span>
+                  </li>
+                </ul>
+              </div>
+              <p class="exam_explain">
+                {{item.intro}}
+              </p>
+            </div>
+          </a>
+        </li>
+      </ul>
     </section>
   </div>
 </template>
@@ -87,54 +111,53 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     }
   },
   methods: {
-    handleClick: function (tab, event) {
-
-    },
+    // handleClick: function (tab, event) {
+    //   this.loadMore()
+    // },
 
     loadMore: function () {
-      if (this.activeName === 'first' && this.dataInProgress.length === 0) {
-        this.currentPage_inProgress = this.currentPage_inProgress + 1
-        this.isBusy_inProgress = true
-        api.fetch(api.uri.getMyTaskListInProgress, {take: this.take, skip: this.currentPage_inProgress * this.take}).then(data => {
-          if (data.status === 1) {
-            this.dataInProgress = this.dataInProgress.concat(data.result)
-            if (data.result.length === this.take) {
-              this.isBusy_inProgress = false
-            }
-          } else {
-            // todo:
+      this.busy = true
+      this.currentPage_inProgress = this.currentPage_inProgress + 1
+      api.fetch(api.uri.getMyTaskListInProgress, { take: this.take, skip: this.currentPage_inProgress * this.take }).then(data => {
+        if (data.status === 1) {
+          this.dataInProgress = this.dataInProgress.concat(data.result)
+          if (data.result.length === this.take) {
+            this.isBusy_inProgress = false
           }
-        }).catch(error => {
-          console.log(error.message)
-        })
-      }
-      if (this.activeName === 'second' && this.dataNotStart.length === 0) {
-        this.currentPage_notStart = this.currentPage_notStart + 1
-        this.isBusy_notStart = true
-        api.fetch(api.uri.getMyTaskListNotStart, {take: this.take, skip: this.currentPage_notStart * this.take}).then(data => {
-          if (data.status === 1) {
-            this.dataNotStart = this.dataNotStart.concat(data.result)
-            if (data.result.length === this.take) {
-              this.isBusy_notStart = false
-            }
-          } else {
-            // todo:
-          }
-        }).catch(error => {
-          console.log(error.message)
-        })
-      }
+        } else {
+          // todo:
+        }
+      }).catch(error => {
+        console.log(error.message)
+      })
+
+      // if (this.activeName === 'second' && this.dataNotStart.length === 0) {
+      //   this.currentPage_notStart = this.currentPage_notStart + 1
+      //   this.isBusy_notStart = true
+      //   api.fetch(api.uri.getMyTaskListNotStart, {take: this.take, skip: this.currentPage_notStart * this.take}).then(data => {
+      //     if (data.status === 1) {
+      //       this.dataNotStart = this.dataNotStart.concat(data.result)
+      //       if (data.result.length === this.take) {
+      //         this.isBusy_notStart = false
+      //       }
+      //     } else {
+      //       // todo:
+      //     }
+      //   }).catch(error => {
+      //     console.log(error.message)
+      //   })
+      // }
     }
   }
 }
 </script>
 
 <style>
-.el-tabs__active-bar {
+/*.el-tabs__active-bar {
   width: 0!important;
   transform: translateX(0rem)!important;
 }
@@ -180,5 +203,5 @@ export default {
 
 .el-tabs__nav .el-tabs__item:first-child {
   border-right: 1px solid #ededed;
-}
+}*/
 </style>

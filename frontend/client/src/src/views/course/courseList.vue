@@ -16,7 +16,7 @@
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.course_id">
           <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
-            <img :src="item.icon" class="fl img_bg">
+            <img :src="item.icon | formatImage" class="fl img_bg">
             <div class="course_cen">
               <div class="hidden">
                 <h3 class="fl">{{item.title}}</h3>
@@ -44,6 +44,7 @@
 
 <script>
 import api from '../../services/api'
+import axios from 'axios'
 export default {
   data: function () {
     return {
@@ -53,7 +54,11 @@ export default {
       busy: false
     }
   },
-
+  filters: {
+    formatImage: function (uri) {
+      return axios.defaults.imageServer + uri
+    }
+  },
   methods: {
     loadMore: function () {
       this.busy = true
@@ -66,8 +71,10 @@ export default {
         cateid: id
       }
       api.fetch(api.uri.getCourseByCategoryId, params).then(data => {
-        this.busy = false
         if (data.status === 1) {
+          if (data.result.length === this.take) {
+            this.busy = false
+          }
           this.data = this.data.concat(data.result)
         } else {
           // TODO:统一处理弹框

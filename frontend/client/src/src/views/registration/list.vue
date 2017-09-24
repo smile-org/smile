@@ -112,7 +112,7 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     },
     formatDate (time) {
       var date = new Date(time)

@@ -87,16 +87,16 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     }
   },
   methods: {
     handleClick: function (tab, event) {
-
+      this.loadMore()
     },
 
     loadMore: function () {
-      if (this.activeName === 'first' && this.dataInProgress.length === 0) {
+      if (this.activeName === 'first' && this.dataInProgress.length === 0 && !this.isBusy_inProgress) {
         this.currentPage_inProgress = this.currentPage_inProgress + 1
         this.isBusy_inProgress = true
         api.fetch(api.uri.getMyCourseListInProgress, {take: this.take, skip: this.currentPage_inProgress * this.take}).then(data => {
@@ -112,7 +112,7 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'second' && this.dataFinish.length === 0) {
+      if (this.activeName === 'second' && this.dataFinish.length === 0 && !this.isBusy_finish) {
         this.currentPage_finish = this.currentPage_finish + 1
         this.isBusy_finish = true
         api.fetch(api.uri.getMyCourseListFinished, {take: this.take, skip: this.currentPage_finish * this.take}).then(data => {
