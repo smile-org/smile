@@ -83,10 +83,10 @@
                   </li>
                 </ul>
               </div>
-              <p class="exam_explain">
-                {{item.intro}}
-              </p>
             </div>
+            <p class="exam_explain">
+              {{item.intro}}
+            </p>
           </a>
         </li>
       </ul>
@@ -162,51 +162,45 @@ export default {
 </script>
 
 <style>
-/*.el-tabs__active-bar {
-  width: 0!important;
-  transform: translateX(0rem)!important;
-}
-
-.el-tabs__item.is-active:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: .7rem;
-  right: .7rem;
-  height: 3px;
-  background: #00b553;
-  z-index: 2;
-}
-
-.el-tabs__item {
-  padding: 0 .5rem;
-  height: .7rem;
-  box-sizing: border-box;
-  line-height: .5rem;
-  display: inline-block;
-  list-style: none;
-  font-size: .28rem;
-  color: #666;
-  position: relative;
-  width: 50%;
-}
-
-.el-tabs__item.is-active {
-  color: #00b553;
-}
-
-.el-tabs__nav {
-  width: 100%;
-  text-align: center;
-  margin-top: -.3rem;
-}
-
-.el-tabs__header {
-  border-bottom: 0;
-  margin: 0;
-}
-
-.el-tabs__nav .el-tabs__item:first-child {
-  border-right: 1px solid #ededed;
-}*/
+  .el-tabs__active-bar{
+    width: 0!important;
+    transform: translateX(0rem)!important;
+  }
+  .el-tabs__item.is-active:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: .7rem;
+    right: .7rem;
+    height: 3px;
+    background: #00b553;
+    z-index: 2;
+  }
+  .el-tabs__item {
+    padding: 0 .5rem;
+    height: .7rem;
+    box-sizing: border-box;
+    line-height: .5rem;
+    display: inline-block;
+    list-style: none;
+    font-size: .28rem;
+    color: #666;
+    position: relative;
+    width:50%!important;
+  }
+  .el-tabs__item.is-active {
+    color: #00b553;
+  }
+  .el-tabs__nav{
+    width:100%;
+    text-align: center;
+    margin-top: -.3rem;
+  }
+  .el-tabs__header {
+    border-bottom:0;
+    margin: 0;
+  }
+  .el-tabs__nav .el-tabs__item:first-child{
+    border-right:1px solid #ededed;
+  }
 </style>
