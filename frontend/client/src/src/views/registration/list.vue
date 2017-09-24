@@ -1,16 +1,5 @@
 <template>
   <div id="app">
-    <!--<header>
-      <div class="search_c">
-        <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <div class="search_input">
-          <img src="../../assets/img/seach_icon.png" />
-          <img src="../../assets/img/delate.png" />
-          <input placeholder="输入关键词搜索相关培训报名">
-        </div>
-        <a class="seach_tit tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>-->
     <search-header v-bind:holder="searchPlaceHolder"></search-header>
     <section>
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -110,7 +99,7 @@ export default {
       currentPage_sec: -1,
       busy_sec: false,
 
-      searchPlaceHolder: '输入关键词搜索相关课程'
+      searchPlaceHolder: '输入关键词搜索相关培训报名'
     }
   },
   components: {

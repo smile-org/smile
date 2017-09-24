@@ -1,10 +1,9 @@
 <template>
-  <div  @click="homeClick(false)">
+  <div @click="homeClick(false)">
     <header>
       <div class="search_c">
-        <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
+        <a class="seach_tit tl" href="##"></a>
         <div class="search_input">
-          <!--<el-input icon="el-icon-search" />-->
           <img src="../../assets/img/seach_icon.png" />
           <img src="../../assets/img/delate.png" />
           <input placeholder="输入关键词搜索相关培训报名">
