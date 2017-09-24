@@ -32,13 +32,13 @@ import getEnroll from '@/views/registration/detail'
 import getEnrollComment from '@/views/registration/comment'
 
 // 个人中心
-import me from '@/views/personal/me'
-import myLearning from '@/views/personal/learning'
-import myTask from '@/views/personal/task'
-import myExam from '@/views/personal/exam'
-import myEnrollment from '@/views/personal/enrollment'
-import myBooking from '@/views/personal/booking'
-import myFavorites from '@/views/personal/favorite'
+import me from '@/views/personal/index'
+import myLearning from '@/views/personal/myLearning'
+import myTask from '@/views/personal/myTask'
+import myExam from '@/views/personal/myExam'
+import myEnrollment from '@/views/personal/myEnrollment'
+import myBooking from '@/views/personal/myBooking'
+import myFavorites from '@/views/personal/myFavorites'
 import changePWD from '@/views/personal/changePWD'
 
 Vue.use(Router)
@@ -203,18 +203,21 @@ export default new Router({
     },
     {
       path: '/changePWD',
-      name: 'changePWD'
+      name: 'changePWD',
       component: changePWD,
       meta: {requiresAuth: requiresAuth}
-    }
+    },
 
-    // 其他
+    // 首页
     {
       path: '/',
       name: 'homepage',
       component: homepage,
       meta: { requiresAuth: requiresAuth }
     },
+
+    // 其他
+
     {
       path: '/list',
       name: 'list',

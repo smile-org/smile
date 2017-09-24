@@ -195,9 +195,9 @@ section .form_list input{
   display: block;
   margin-top:.5rem;
 }
-.login_btn:hover{
+/*.login_btn:hover{
   background: #04df68;
-}
+}*/
 .login_btn:active{
   background: #04df68;
 }
@@ -665,6 +665,9 @@ section .form_list input{
   border-radius: 0;
   z-index: 999;
 }
+.b_active{
+  background: #dcdcdc
+}
 .tab_con{
   padding-bottom:1.1rem;
 }
@@ -725,9 +728,9 @@ section .form_list input{
   text-overflow:ellipsis;/*超出部分文字以...显示*/
   margin-top: -.05rem;
   max-width:3.2rem;
-  max-width:-moz-calc(100% - (3.5rem ));
+  /*max-width:-moz-calc(100% - (3.5rem ));
   max-width:-webkit-calc(100% - (3.5rem ));
-  max-width: calc(100% - (3.5rem ))
+  max-width: calc(100% - (3.5rem ))*/
 }
 .course_cen ul{
   position: absolute;
@@ -748,9 +751,9 @@ section .form_list input{
   -webkit-line-clamp: 2;
   overflow: hidden;
   max-width: 70%;
-  max-width:-moz-calc(100% - (2.1rem ));
+  /*max-width:-moz-calc(100% - (2.1rem ));
   max-width:-webkit-calc(100% - (2.1rem ));
-  max-width: calc(100% - (2.1rem ))
+  max-width: calc(100% - (2.1rem ))*/
 
 }
 .course_tit .exam_green{

@@ -12,7 +12,7 @@
         <li class="course_list  line_only">
           <a>
             <div class="hidden">
-              <img class="person_header fl" src="../../assets/img/img01.jpg">
+              <img class="person_header fl" :src="data.avatar | formatImage">
               <div class="bm_con">
                 <div class="hidden bm_font">
                   <h3 class="fl ">{{data.appointmentTitle}}</h3>
@@ -28,14 +28,14 @@
                   </ul>
                   <span class="see_student">
                     <router-link v-bind:to="{name: 'getBookingFollowers', query: {id: id}}">
-                    查看同学
+                      查看同学
                     </router-link>
                   </span>
                 </div>
               </div>
             </div>
             <ul class="keword_num">
-              <li v-for="(item, index) in keywords" :key="index">{{keyword}}</li>
+              <li v-for="(item, index) in keywords" :key="index">{{item}}</li>
             </ul>
           </a>
         </li>
@@ -56,10 +56,11 @@
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
-                      <span class="green00b">{{followCount}}</span>
+                      <span class="green00b">{{item.followCount}}</span>
                     </li>
                     <li class="fl">
-                      <span id="c_save" @click="like(item)" class="icon icon7"></span>
+                      <span v-show="item.isFollow" class="icon icon6" id="c_save"></span>
+                      <span v-show="!item.isFollow" @click="like(item)" class="icon icon7" id="c_save"></span>
                     </li>
                   </ul>
                 </el-col>
@@ -77,11 +78,11 @@
     <div class="booking_add" v-show="showModal">
       <h3>需求描述</h3>
       <div class="booking_input">
-        <input v-model="newRequirement"  type="text">
+        <input v-model="newRequirement" type="text">
         <span class="add_img"></span>
         <div class="el-row dio_btn yk">
           <div class="el-col el-col-12">
-            <button type="button" class="c_g btn fr mr2" v-on:click="newRequirement">确定</button>
+            <button type="button" class="c_g btn fr mr2" v-on:click="subNewRequirement">确定</button>
           </div>
           <div class="el-col el-col-12">
             <button type="button" class="c_o  btn fl" v-on:click="cancel">取消</button>
@@ -107,6 +108,7 @@ export default {
       id: 0,
       keywords: [],
       newRequirement: ''
+      // otherId: 0
     }
   },
   filters: {
@@ -119,8 +121,9 @@ export default {
     }
   },
   created () {
-    this.id = this.$route.query.id
-    api.fetch(api.uri.getBooking, {id: this.id}).then(data => {
+    var queryId = this.$route.query.id
+    this.id = parseInt(queryId)
+    api.fetch(api.uri.getBooking, { appointmentId: this.id }).then(data => {
       if (data.status === 1) {
         this.data = data.result
         this.keywords = data.result.keyword.split(',')
@@ -137,10 +140,11 @@ export default {
       if (item.isFollow) {
         // TODO: 统一弹框， 已经点过赞了
       } else {
-        api.fetch(api.uri.likeBooking, {appointmentId: this.id, itemId: item.itemId}).then(data => {
+        api.fetch(api.uri.likeBooking, { appointmentId: this.id, itemId: item.itemId }).then(data => {
           if (data.status === 1) {
             item.isFollow = 1
-            this.data.followerCount ++
+            this.data.followerCount++
+            item.followCount++
           } else {
             // TODO: 统一处理
           }
@@ -149,24 +153,29 @@ export default {
       // TODO
       // api.fetch(api.uri.likeBooking, {appointmentId: this.id, itemId: item.itemId})
     },
-    newRequirement: function () {
-      api.post(api.uri.newRequirement, {appointmentId: this.id, content: this.newRequirement}).then(data => {
-        if (data.status === 1) {
-          data.itemList.push({
-            content: this.newRequirement,
-            itemId: data.result.itemId,
-            sponsorDate: data.result.sponsorDate,
-            followCount: 0,
-            isFollow: 0,
-            sponsorName: data.result.sponsorName})
-          this.showModal = false
-        } else {
+    subNewRequirement: function () {
+      if (this.newRequirement) {
+        api.post(api.uri.submitNewRequirement, { appointmentId: this.id, content: this.newRequirement }).then(data => {
+          if (data.status === 1) {
+            this.data.itemList.push({
+              content: this.newRequirement,
+              itemId: data.result.itemId,
+              sponsorDate: data.result.sponsorDate,
+              followCount: 0,
+              isFollow: 0,
+              sponsorName: data.result.sponsorName
+            })
+            this.showModal = false
+            console.log('added')
+          } else {
+            // TODO:
+            console.log('no')
+          }
+        }).catch(error => {
           // TODO:
-        }
-      }).catch(error => {
-        // TODO:
-        console.log(error.message)
-      })
+          console.log(error.message)
+        })
+      }
     },
     cancel: function () {
       this.showModal = false

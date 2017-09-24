@@ -2,9 +2,9 @@
   <div id="app">
     <header>
       <div class="logo_c">
-        <a class="tl" href="../course/course.html"><img src="../img/back.png" alt="返回" /></a>
-        <a class="tc" href="../course/course3.html"><img src="../img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="../course/course5.html"><img src="../img/home.png" alt="更多" /></a>
+        <a class="tl" href="../course/course.html"><img src="../../assets/img/back.png" alt="返回" /></a>
+        <a class="tc" href="../course/course3.html"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>
+        <a class="tr" href="../course/course5.html"><img src="../../assets/img/home.png" alt="更多" /></a>
       </div>
     </header>
     <section>
@@ -112,25 +112,25 @@ export default {
       currentPage_course: -1,
       currentPage_enroll: -1,
       currentPage_exam: -1,
-      take: 20,
+      take: 20
     }
   },
   filters: {
     formatImage: function (uri) {
       return axios.defaults.baseURL + uri
     },
-    formatDate: function (date) {
-      var date = new Date(date)
+    formatDate: function (time) {
+      var date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd')
     }
   },
   methods: {
-    handleClick: function(tab, event) {
+    handleClick: function (tab, event) {
 
     },
 
     loadMore: function () {
-      if (this.activeName === 'first' && dataCourse.length === 0) {
+      if (this.activeName === 'first' && this.dataCourse.length === 0) {
         this.currentPage_course = this.currentPage_course + 1
         this.isBusy_course = true
         api.fetch(api.uri.getMyFavoriteCourse, { take: this.take, skip: this.currentPage_course * this.take }).then(data => {
@@ -146,7 +146,7 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'second' && dataEnroll.length === 0) {
+      if (this.activeName === 'second' && this.dataEnroll.length === 0) {
         this.currentPage_enroll = this.currentPage_enroll + 1
         this.isBusy_enroll = true
         api.fetch(api.uri.getMyFavoriteEnroll, { take: this.take, skip: this.currentPage_enroll * this.take }).then(data => {
@@ -162,7 +162,7 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'third' && dataExam.length === 0) {
+      if (this.activeName === 'third' && this.dataExam.length === 0) {
         this.currentPage_exam = this.currentPage_exam + 1
         this.isBusy_exam = true
         api.fetch(api.uri.getMyFavoriteExam, { take: this.take, skip: this.currentPage_exam * this.take }).then(data => {
