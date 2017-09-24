@@ -32,11 +32,16 @@ public class Helper {
         Date monday = currentDate.getTime();
 
 
-        DateFormat df = DateFormat.getDateInstance();
-        String preMonday = df.format(monday);
+        //DateFormat df = DateFormat.getDateInstance();
+        //String preMonday = df.format(monday);
+        //return preMonday + " 00:00:00";
 
-        return preMonday + " 00:00:00";
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String preMonday = sdf.format(monday);
+
+
+        return  preMonday + " 00:00:00";
 
     }
 

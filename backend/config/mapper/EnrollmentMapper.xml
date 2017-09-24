@@ -82,6 +82,17 @@
         <result column="company_id" property="company_id"/>
     </resultMap>
 
+
+
+    <resultMap type="com.dli.entities.EnrollmentReminderAndTarget" id="ReminderAndTargetMap">
+        <id column="period_id" property="period_id"/>
+        <result column="target_period_id" property="target_period_id"/>
+
+    </resultMap>
+
+
+
+
      <select id="getEnrollmentPeriodListInprocess"  resultMap="CombineMap">
           select *   , count - study_count as left_count   from (
            select result.*  ,
@@ -269,4 +280,12 @@
 
     </select>
 
+    <select id="getReminderList"    resultMap="ReminderAndTargetMap">
+        select  o1.period_id , o2.period_id as  target_period_id from (
+select p.enrollment_id   ,r.* from     enrollment_period   p join   ( select  *  from  user_enrollment_reminder where user_id =#{userid}  and   is_read=0)r
+  on    p.period_id =r.period_id)o1
+join (  select       enrollment_id,  max(period_id)  as period_id   from  enrollment_period  where enrollment_id in ( select    enrollment_id from  enrollment_period where period_id in (
+ select  period_id  from  user_enrollment_reminder where   is_read=0  and user_id =#{userid} ))    group by    enrollment_id  )o2
+on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
+    </select>
 </mapper>

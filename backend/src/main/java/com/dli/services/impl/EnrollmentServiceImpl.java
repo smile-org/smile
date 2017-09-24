@@ -111,4 +111,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public List<EnrollmentPeriodEnrollment> getMyCollectionList(int userid, int skip, int take) {
         return   enrollmentRepo.getMyCollectionList(userid, skip, take);
     }
+
+    @Override
+    public List<EnrollmentReminderAndTarget> getReminderList(int userid) {
+        return    enrollmentRepo.getReminderList(userid);
+    }
+
+
+
 }

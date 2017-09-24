@@ -32,4 +32,7 @@ public interface EnrollmentRepo {
     List<EnrollmentPeriodEnrollment>  getMyEnrollmentListInReminder(@Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
 
     List<EnrollmentPeriodEnrollment> getMyCollectionList( @Param("userid") int userid,  @Param("skip")int  skip , @Param("take")int take );
+
+    List<EnrollmentReminderAndTarget>   getReminderList( int userid);
+
 }
