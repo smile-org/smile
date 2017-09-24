@@ -9,9 +9,9 @@
     <!--</header>-->
     <common-header></common-header>
     <section>
-      <div class="add_list">
+      <div class="add_list mb3hafe">
         <div class="add_bg">
-          <h3 class="list_need">约课主题</h3>
+          <h3 class="list_need ">约课主题</h3>
           <hr>
           <div class="w_p3">
             <img class="add_input" src="../../assets/img/icon9.png" />
@@ -48,11 +48,11 @@
     </section>
     <footer>
       <el-row class="exam_b">
-        <el-col class="btn g_f line_add" :span="12">
-          <button class="btn g_f line_add" v-on:click="submit">确认</button>
+        <el-col  :span="12">
+          <button class="btn_sc btn_sure" v-on:click="submit">确认</button>
         </el-col>
-        <el-col class="btn o_f" :span="12">
-          <button class="btn g_f line_add" v-on:click="cancel">取消</button>
+        <el-col  :span="12">
+          <button class="btn_sc btn_cancel" v-on:click="cancel">取消</button>
         </el-col>
       </el-row>
     </footer>
