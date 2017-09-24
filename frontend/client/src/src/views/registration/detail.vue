@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <header>
-      <div class="logo_c">
-        <a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="logo_c">-->
+        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+      <!--</div>-->
+    <!--</header>-->
+    <common-header></common-header>
     <section>
       <div class="course_banner">
         <a href="##"><img :src="data.pic | formatImage" /></a>
@@ -89,6 +90,7 @@ import api from '../../services/api'
 import axios from 'axios'
 import { formatDate } from '../../common/date'
 import router from '../../router'
+import commonHeader from '../../components/CommonHeader'
 export default {
   data: function () {
     return {
@@ -99,6 +101,9 @@ export default {
       id: 0,
       enrollmentId: 0
     }
+  },
+  components: {
+    commonHeader
   },
   created () {
     this.id = this.$route.query.id

@@ -1,13 +1,14 @@
 
 <template>
   <div id="app">
-    <header>
-      <div class="logo_c">
-        <a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="logo_c">-->
+        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+      <!--</div>-->
+    <!--</header>-->
+    <common-header></common-header>
     <section>
       <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.appointment_id">
@@ -49,6 +50,7 @@
 import api from '../../services/api'
 import axios from 'axios'
 import { formatDate } from '../../common/date'
+import commonHeader from '../../components/CommonHeader'
 export default {
   data: function () {
     return {
@@ -57,6 +59,9 @@ export default {
       take: 20,
       currentPage: -1
     }
+  },
+  components: {
+    commonHeader
   },
   filters: {
     formatImage: function (uri) {

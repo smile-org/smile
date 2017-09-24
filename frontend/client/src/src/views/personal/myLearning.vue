@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <header>
-      <div class="logo_c">
-        <a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="logo_c">-->
+        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+      <!--</div>-->
+    <!--</header>-->
+    <common-header></common-header>
     <section>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="进行中" name="first">
@@ -72,6 +73,7 @@
 <script>
 import api from '../../services/api'
 import axios from 'axios'
+import commonHeader from '../../components/CommonHeader'
 export default {
   data: function () {
     return {
@@ -84,6 +86,9 @@ export default {
       currentPage_inProgress: -1,
       currentPage_finish: -1
     }
+  },
+  components: {
+    commonHeader
   },
   filters: {
     formatImage: function (uri) {

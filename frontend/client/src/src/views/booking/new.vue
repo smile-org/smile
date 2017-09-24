@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <header>
-      <div class="logo_c">
-        <a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="logo_c">-->
+        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+      <!--</div>-->
+    <!--</header>-->
+    <common-header></common-header>
     <section>
       <div class="add_list">
         <div class="add_bg">
@@ -61,6 +62,7 @@
 <script>
 import api from '../../services/api'
 import router from '../../router'
+import commonHeader from '../../components/CommonHeader'
 // import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -73,6 +75,9 @@ export default {
       requirement: '',
       inputVisible: false
     }
+  },
+  components: {
+    commonHeader
   },
   // validations: {
   //   title: {

@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-<header>
-  <div class="logo_c">
-    <a class="tl" href="../course/course.html"><img src="../../assets/img/back.png" alt="返回"/></a>
-    <a class="tc" href="../course/course3.html"><img src="../../assets/img/logo.png" alt="smile"  class="logo1"/></a>
-    <a class="tr" href="../course/course5.html"><img src="../../assets/img/home.png" alt="更多" /></a>
-  </div>
-  </header>
+<!--<header>-->
+  <!--<div class="logo_c">-->
+    <!--<a class="tl" href="../course/course.html"><img src="../../assets/img/back.png" alt="返回"/></a>-->
+    <!--<a class="tc" href="../course/course3.html"><img src="../../assets/img/logo.png" alt="smile"  class="logo1"/></a>-->
+    <!--<a class="tr" href="../course/course5.html"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+  <!--</div>-->
+  <!--</header>-->
+    <common-header></common-header>
   <section>
      <div class="course_banner">
        <a href=""><img :src="data.exam.pic|formatImage"/></a>
@@ -125,6 +126,7 @@
 import api from '../../services/api'
 import axios from 'axios'
 import router from '../../router'
+import commonHeader from '../../components/CommonHeader'
 export default {
   data: function () {
     return {
@@ -156,6 +158,9 @@ export default {
       // 模态对话框类型， 0：答题卡； 1: 交卷；2：时间到交卷
       popupType: 0
     }
+  },
+  components: {
+    commonHeader
   },
   created () {
     this.id = parseInt(this.$route.query.id)

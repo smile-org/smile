@@ -1,12 +1,13 @@
 <template>
   <div>
-    <header>
-      <div class="logo_c">
-        <a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="logo_c">-->
+        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+      <!--</div>-->
+    <!--</header>-->
+    <common-header></common-header>
     <section>
       <div class="appraise_w">
         <div class="hidden">
@@ -40,6 +41,7 @@
 import { required, between } from 'vuelidate/lib/validators'
 import api from '../../services/api'
 import router from '../../router'
+import commonHeader from '../../components/CommonHeader'
 export default {
   data () {
     return {
@@ -50,6 +52,9 @@ export default {
       errorMessage: true,
       id: 0
     }
+  },
+  components: {
+    commonHeader
   },
   created () {
     this.id = this.$route.query.id

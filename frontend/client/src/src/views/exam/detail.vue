@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <header>
-      <div class="logo_c">
-        <a class="tl" href="../course/course.html"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <a class="tc" href="../course/course3.html"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="../course/course5.html"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="logo_c">-->
+        <!--<a class="tl" href="../course/course.html"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+        <!--<a class="tc" href="../course/course3.html"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+        <!--<a class="tr" href="../course/course5.html"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+      <!--</div>-->
+    <!--</header>-->
+    <common-header></common-header>
     <section>
       <div class="course_banner">
         <img :src="data.pic | formatImage" />
@@ -136,6 +137,7 @@ import api from '../../services/api'
 import router from '../../router'
 import { formatDate } from '../../common/date'
 import axios from 'axios'
+import commonHeader from '../../components/CommonHeader'
 export default {
   data: function () {
     return {
@@ -145,6 +147,9 @@ export default {
       examCourses: [],
       examRecords: []
     }
+  },
+  components: {
+    commonHeader
   },
   methods: {
     favorite: function () {
