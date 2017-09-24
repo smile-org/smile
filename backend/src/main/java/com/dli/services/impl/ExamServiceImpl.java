@@ -55,6 +55,15 @@ public class ExamServiceImpl implements ExamService {
         if(collectRepo.countCollection("exam" ,examid,  userid) >0) satus=1;
         e.setExamCollected(satus);
 
+        //处理histroyid, 如果是第一次  ，histroyid 则为0
+        List<ExamHistory> lst = examRepo.getExamHistoryList(examid, userid);
+        if (lst.size() > 0) {
+            ExamHistory h = lst.get(lst.size() - 1);
+            if (h.getStatus().equals("in-process")) {
+                e.setHistory_id(h.getHistory_id());
+            }
+        }
+
         return  e;
     }
 
@@ -77,12 +86,12 @@ public class ExamServiceImpl implements ExamService {
         }
 
 
-        //处理histroyid, 如果是第一次  ，histroyid 则为0
+        //处理剩余时间
         List<ExamHistory> lst = examRepo.getExamHistoryList(examid, userid);
         if (lst.size() > 0) {
             ExamHistory h = lst.get(lst.size() - 1);
             if (h.getStatus().equals("in-process")) {
-                e.history_id = h.getHistory_id();
+               e.leftSeconds=   e.exam.getTime_limit()*60 -(( new Date().getTime()  -h.getStart_date().getTime())/1000);
             }
         }
 
@@ -106,7 +115,7 @@ public class ExamServiceImpl implements ExamService {
 
 
     @Override
-    public int addHistory(int userid, int examid, int questionid, List<Integer> answeridList, String status) {
+    public int addHistory(int userid, int examid) {
 
         ExamHistory  h =new ExamHistory();
         h.setExam_id(examid);
@@ -114,7 +123,7 @@ public class ExamServiceImpl implements ExamService {
 
         examRepo.addExamHistroy(h);
         int historyid =h.getHistory_id();
-        addExamRecord(historyid, questionid, answeridList, status);
+      // addExamRecord(historyid, questionid, answeridList, status);
 
         return historyid;
 

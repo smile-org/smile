@@ -253,9 +253,9 @@ public class ExamController {
    // public Map addHistory(   int examid,  int questionid, int answerid,  String questionStatus ,  @RequestHeader Map header) {
     public Map addHistory(    @RequestBody Map body ,  @RequestHeader Map header) {
         int   examid =(int) body.get("examid");
-        int questionid =(int) body.get("questionid");
-        String questionStatus =(String) body.get("questionStatus");
-        List<Integer> answeridList =(List<Integer>) body.get("answeridList");
+      //  int questionid =(int) body.get("questionid");
+     //   String questionStatus =(String) body.get("questionStatus");
+      //  List<Integer> answeridList =(List<Integer>) body.get("answeridList");
 
 
         Map<String, Object> result = new HashMap<String, Object>();
@@ -268,7 +268,7 @@ public class ExamController {
         }
 
         try {
-            int  historyid = examService.addHistory( user.getUser_id(), examid,questionid ,answeridList , questionStatus );
+            int  historyid = examService.addHistory( user.getUser_id(), examid );
 
             result.put(Constant.status, 1);
             result.put(Constant.result, historyid);
