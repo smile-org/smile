@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--<meta id=”viewport” name=”viewport” content=”width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no”>-->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name=”MobileOptimized” content=”320″>
+  <meta name=”format-detection” content=”telephone=no”>
+  <title>smile</title>
+  <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+ <script>
+(function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth>=640){
+                    docEl.style.fontSize = '100px';
+                }else{
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="logo_c">
+      <a class="tl" href="../course/course.html"><img src="../img/back.png" alt="返回"/></a>
+      <a class="tc" href="../course/course3.html"><img src="../img/logo.png" alt="smile"  class="logo1"/></a>
+      <a class="tr" href="../course/course5.html"><img src="../img/home.png" alt="更多" /></a>
+    </div>
+  </header>
+  <section>
+    <div class="search_tit">
+      <ul class="fl_tab">
+        <li class="active">
+          课程
+        </li>
+        <li>
+          考试
+        </li>
+        <li>
+          报名
+        </li>
+        <li>
+          约课
+        </li>
+      </ul>
+      <div class="b_search_input">
+        <img class="s_seach" src="../img/seach_icon.png" />
+        <img class="s_delate" src="../img/delate.png" />
+        <input  placeholder="输入关键词搜索相关考试">
+      </div>
+    </div>
+    <ul class="list_border course_line">
+      <li class="course_list  line_only">
+        <a>
+          <img src="../img/img1.png" class="fl img_bg">
+          <div class="course_cen">
+            <div class="hidden">
+              <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
+              <ul class="small_icon fr">
+                <li class="fl">
+                  <span class="icon icon1"></span>
+                  <span class="green00b">80</span>
+                </li>
+                <li class="fl">
+                  <span class="icon icon2"></span>
+                  <span class="redff7">80</span>
+                </li>
+              </ul>
+            </div>
+            <p class="exam_explain">
+              考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么考试说明：这里是考试说明考试靠什么
+            </p>
+          </div>
+        </a>
+      </li>
+      <li class="course_list  line_only">
+        <a>
+          <img src="../img/img1.png" class="fl img_bg">
+          <div class="course_cen">
+            <div class="hidden">
+              <h3 class="fl">销售经理的十大必杀技秘诀销售经理的十大必杀技秘诀</h3>
+              <ul class="small_icon fr">
+                <li class="fl">
+                  <span class="icon icon1"></span>
+                  <span class="green00b">80</span>
+                </li>
+                <li class="fl">
+                  <span class="icon icon2"></span>
+                  <span class="redff7">80</span>
+                </li>
+              </ul>
+            </div>
+            <p class="exam_explain">
+              考试说明：这里是考试说明考试靠什么
+            </p>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </section>
+  <div class="loading_bg">
+    <!--<img src="../img/alert-loading.gif" style="width:.6rem"/>-->
+    <p class="text1 " style="color: #fff;">提交成功</p>
+
+  </div>
+  <div class="small_loading">
+    <p class="text ">正在加载...</p>
+    <p class="text1" v-on:click="aaa">点击加载更多</p>
+  </div>
+
+  <!--<img src="../img/alert-loading.gif" style="width:.6rem"/>-->
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+
+        },
+      methods: {
+        aaa:function(){
+            alert('aaa')
+        }
+      }
+    })
+</script>
+</body>
+</html>

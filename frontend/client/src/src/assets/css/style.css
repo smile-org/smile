@@ -226,6 +226,9 @@ section .form_list input{
   opacity: .5;
 }
 /*此处为各种引用图片路径*/
+.login_icon0{
+  background: url('../img/logo_img0.png')no-repeat center center;
+}
 .login_icon1{
   background: url('../img/logo_img1.png')no-repeat center center;
 }
@@ -883,6 +886,48 @@ footer .exam_b .btn span{
   z-index: 111;
   box-sizing: border-box;
 }
+.loading_bg{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%,-50%,0);
+  transform: translate3d(-50%,-50%,0);
+  background-color: rgba(51, 51, 51, 0.68);
+  min-width: 2.4rem;
+  max-width:3rem;
+  min-height: 2rem;
+  border-radius: .2rem;
+  font-size: .32rem;
+  padding:0rem .2rem;
+  -webkit-user-select: none;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: .2s;
+  transition: .2s;
+  z-index: 111;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small_loading .text {
+  display: inline-block;
+  padding-left: .3rem;
+  background: url(../img/alert-loading.gif) left center no-repeat;
+  background-size: .24rem .24rem;
+  font-size:.26rem;
+  color: #999;
+}
+.small_loading .text1 {
+  font-size:.26rem;
+  color: #999;
+}
+.small_loading {
+  line-height: .2rem;
+  text-align: center;
+}
 .c-modal {
   position: fixed;
   left: 0;
@@ -1047,7 +1092,7 @@ footer .exam_b .btn span{
   content: " ";
   display: block;
   position: absolute;
-  bottom: .04rem;
+  bottom: .05rem;
   margin-left: -.2rem;
 }
 .add_bg h3{
