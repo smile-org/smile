@@ -17,7 +17,7 @@
         select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
 from appointment a join user u on a.sponsor_id = u.user_id
 join (select appointment_id, group_concat(word) key_word from appointment_keyword  group by appointment_id) ak on a.appointment_id = ak.appointment_id
-left join (select appointment_id, count(*) follow_count from appointment_follower    group by appointment_id) af on a.appointment_id = af.appointment_id
+left join (select appointment_id, count(*) follow_count from appointment_follower where follower_type='follower' group by appointment_id) af on a.appointment_id = af.appointment_id
 where a.company_id = #{companyId}
 order by af.follow_count desc
 limit #{skip},#{take};
@@ -27,7 +27,7 @@ limit #{skip},#{take};
         select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
 from appointment a join user u on a.sponsor_id = u.user_id
 join (select appointment_id, group_concat(word) key_word from appointment_keyword group by  appointment_id) ak on a.appointment_id = ak.appointment_id
-left join (select appointment_id, count(*) follow_count from appointment_follower  group by  appointment_id) af on a.appointment_id = af.appointment_id
+left join (select appointment_id, count(*) follow_count from appointment_follower where follower_type='follower' group by  appointment_id) af on a.appointment_id = af.appointment_id
 where a.appointment_id = #{appointmentId}
     </select>
 
