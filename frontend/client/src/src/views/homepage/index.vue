@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="homeClick(false)">
+  <div  @click="homeClick(false)">
     <header>
       <div class="search_c">
         <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>

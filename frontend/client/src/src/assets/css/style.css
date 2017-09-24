@@ -1301,7 +1301,7 @@ footer .exam_b .btn span{
   color: #ffffff;
 }
 .per_num{
-  font-size:.34rem;
+  font-size:.32rem;
   text-align: center;
   vertical-align:middle ;
   padding-top:.1rem;
@@ -1313,10 +1313,10 @@ footer .exam_b .btn span{
 }
 .per_num p span{
   margin-right: .05rem;
-  font-size: .32rem;
+  font-size: .3rem;
 }
 .per_num .sec_p{
-  font-size:.3rem;
+  font-size:.28rem;
   margin-top:.05rem;
 
 }
@@ -1382,9 +1382,9 @@ footer .exam_b .btn span{
   height:.86rem;
 }
 .home_icon p{
-  font-size:.3rem;
+  font-size:.28rem;
   color: #333;
-  margin-top:.02rem;
+  margin-top:-.1rem;
 }
 .home_third{
   position: relative;
