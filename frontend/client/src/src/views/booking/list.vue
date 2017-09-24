@@ -16,7 +16,7 @@
     <section>
       <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.appointmentId">
-          <router-link v-bind:to="{name: '/getBooking', query: {id: item.appointmentId}}">
+          <router-link v-bind:to="{name: 'getBooking', query: {id: item.appointmentId}}">
             <div class="hidden">
               <img class="person_header fl" :src="item.avatar | formatImage">
               <div class="bm_con">

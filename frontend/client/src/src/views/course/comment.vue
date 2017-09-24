@@ -68,9 +68,10 @@ export default {
       this.comments = comments
     },
     submit: function () {
-      if (this.$v.invalid) {
+      if (this.$v.$invalid) {
         this.showError = true
         this.errorMessage = '请评分并评论后再提交'
+        return
       }
       api.post(api.uri.submitCourseComments, {courseid: this.id, star: this.star, comment: this.comments}).then(data => {
         if (data.status === 1) {

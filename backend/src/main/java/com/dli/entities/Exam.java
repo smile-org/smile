@@ -26,6 +26,15 @@ public class Exam {
     private  int collect_count;
     private   String  manager_idName;
     private   int examCollected;
+    private  int history_id;
+
+    public int getHistory_id() {
+        return history_id;
+    }
+
+    public void setHistory_id(int history_id) {
+        this.history_id = history_id;
+    }
 
     public String getStatus() {
         return status;

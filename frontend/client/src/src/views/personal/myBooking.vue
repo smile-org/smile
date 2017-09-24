@@ -17,7 +17,7 @@
               <div class="bm_con">
                 <div class="hidden bm_font">
                   <h3 class="fl ">{{item.appointment_title}}</h3>
-                  <p>主讲：{{item_username}}
+                  <p>主讲：{{item.username}}
                     <span class="ml2">{{item.sponsor_date | formatDate}}</span>
                   </p>
 
@@ -59,15 +59,15 @@ export default {
       data: [],
       busy: false,
       take: 20,
-      currentPage: -1,
+      currentPage: -1
     }
   },
   filters: {
     formatImage: function (uri) {
       return axios.defaults.baseURL + uri
     },
-    formateDate: function (date) {
-      var date = new Date(date)
+    formateDate: function (time) {
+      var date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd')
     }
   },

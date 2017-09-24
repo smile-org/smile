@@ -68,11 +68,12 @@ export default {
       this.comments = comments
     },
     comment: function () {
-      if (this.$v.invalid) {
+      if (this.$v.$invalid) {
         this.showError = true
         this.errorMessage = '请评分并评论后再提交'
+        return
       }
-      api.post(api.uri.addEnrollmentComment, {enrollmentid: this.id, star: this.star, comment: this.comments}).then(data => {
+      api.post(api.uri.addEnrollmentComment, {enrollmentid: parseInt(this.id), star: this.star, comment: this.comments}).then(data => {
         if (data.status === 1) {
           // TODO: element ui 弹出框后再跳转
           router.push({name: 'getEnroll', query: { id: this.id }})

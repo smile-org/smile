@@ -96,7 +96,7 @@ export default {
     },
 
     loadMore: function () {
-      if (this.activeName === 'first' && dataInProgress.length === 0) {
+      if (this.activeName === 'first' && this.dataInProgress.length === 0) {
         this.currentPage_inProgress = this.currentPage_inProgress + 1
         this.isBusy_inProgress = true
         api.fetch(api.uri.getMyTaskListInProgress, {take: this.take, skip: this.currentPage_inProgress * this.take}).then(data => {
@@ -112,7 +112,7 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'second' && dataNotStart.length === 0) {
+      if (this.activeName === 'second' && this.dataNotStart.length === 0) {
         this.currentPage_notStart = this.currentPage_notStart + 1
         this.isBusy_notStart = true
         api.fetch(api.uri.getMyTaskListNotStart, {take: this.take, skip: this.currentPage_notStart * this.take}).then(data => {

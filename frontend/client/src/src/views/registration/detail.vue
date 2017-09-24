@@ -57,7 +57,7 @@
         <el-tab-pane label="课程目录" name="second">
           <ul class="list_border course_con mb3hafe">
             <li v-for="item in courseContent" :key="item.content_id">
-              {{item.title}} {{item.content}}
+              {{item.sequnce_title}} {{item.content}}
             </li>
           </ul>
         </el-tab-pane>
@@ -79,7 +79,7 @@
       </el-tabs>
     </section>
     <footer>
-      <button class="login_btn btn_position" type="button" v-on:click="enroll">我要报名</button>
+      <button class="login_btn btn_position" :class="{ b_active: data.isEnrollemntAdded }" type="button" v-on:click="enroll">我要报名</button>
     </footer>
   </div>
 </template>
@@ -96,13 +96,15 @@ export default {
       data: {},
       courseContent: [],
       courseComment: [],
-      id: 0
+      id: 0,
+      enrollmentId: 0
     }
   },
   created () {
     this.id = this.$route.query.id
     api.fetch(api.uri.getEnrollCourse, { periodid: this.id }).then(data => {
       if (data.status === 1) {
+        this.enrollmentId = data.result.enrollment_id
         this.data = data.result
       } else {
         // alert(data.result)
@@ -133,7 +135,7 @@ export default {
           console.log(error.message)
         })
       } else if (tab.name === 'third') {
-        api.fetch(api.uri.getEnrollCourseComment, { periodid: this.id }).then(data => {
+        api.fetch(api.uri.getEnrollCourseComment, { enrollmentid: this.enrollmentId }).then(data => {
           if (data.status === 1) {
             this.courseComment = data.result
           } else {
@@ -147,7 +149,7 @@ export default {
     enroll: function () {
       api.fetch(api.uri.enroll, { periodid: this.id }).then(data => {
         if (data.status === 1) {
-          alert('报名成功')
+          this.data.isEnrollemntAdded = true
         } else {
           alert(data.message)
         }
@@ -158,15 +160,17 @@ export default {
     favorite: function () {
       if (this.data.enrollmentCollected === 1) {
         this.data.enrollmentCollected = 0
+        this.data.collect_count = this.data.collect_count - 1
         api.fetch(api.uri.favoriteEnrollment, { periodid: this.id })
       } else {
         this.data.enrollmentCollected = 1
+        this.data.collect_count = this.data.collect_count + 1
         api.fetch(api.uri.cancelFavoriteEnrollment, { periodid: this.id })
       }
     },
     comment: function () {
       sessionStorage.setItem('enrollCourseTitle', this.data.title)
-      router.push({ name: 'enrollCourseComment', query: { id: this.id } })
+      router.push({ name: 'getEnrollComment', query: { id: this.enrollmentId } })
     }
   }
 }

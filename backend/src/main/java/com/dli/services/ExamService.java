@@ -18,7 +18,7 @@ public interface ExamService {
 
     ExamQuestionAnswer  getExamQuestionAnswerCombineEntity(int examid, int userid);
 
-    int  addHistory( int userid,  int examid,  int questionid, List<Integer> answeridList,  String status  );
+    int  addHistory( int userid,  int examid  );
 
     void  updateHistory(int historyid , int  questionid, List<Integer>  answeridList,  String status )  ;
 

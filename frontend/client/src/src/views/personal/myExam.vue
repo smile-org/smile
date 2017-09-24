@@ -73,7 +73,7 @@
 import api from '../../services/api'
 import axios from 'axios'
 export default {
-  data: function() {
+  data: function () {
     return {
       activeName: 'first',
       dataPassed: [],
@@ -86,17 +86,17 @@ export default {
     }
   },
   filters: {
-      formatImage: function(uri) {
-        return axios.defaults.baseURL + uri
-      }
-    },
+    formatImage: function (uri) {
+      return axios.defaults.baseURL + uri
+    }
+  },
   methods: {
-    handleClick: function(tab, event) {
+    handleClick: function (tab, event) {
 
     },
 
-    loadMore: function() {
-      if (this.activeName === 'first' && dataPassed.length === 0) {
+    loadMore: function () {
+      if (this.activeName === 'first' && this.dataPassed.length === 0) {
         this.currentPage_Passed = this.currentPage_Passed + 1
         this.isBusy_Passed = true
         api.fetch(api.uri.getMyExamListPassed, { take: this.take, skip: this.currentPage_Passed * this.take }).then(data => {
@@ -112,7 +112,7 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'second' && dataFailed.length === 0) {
+      if (this.activeName === 'second' && this.dataFailed.length === 0) {
         this.currentPage_Failed = this.currentPage_Failed + 1
         this.isBusy_Failed = true
         api.fetch(api.uri.getMyExamListFailed, { take: this.take, skip: this.currentPage_Failed * this.take }).then(data => {
