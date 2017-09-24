@@ -91,6 +91,14 @@
     </resultMap>
 
 
+    <resultMap type="com.dli.entities.SearchResult" id="SearchMap">
+        <id column="period_id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="intro" property="intro"/>
+        <result column="icon" property="icon"/>
+    </resultMap>
+
+
 
 
      <select id="getEnrollmentPeriodListInprocess"  resultMap="CombineMap">
@@ -292,4 +300,11 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
     <update id="updateReadReminder">
         update  user_enrollment_reminder   set is_read =1   ,read_date = now() where   period_id=#{periodid} and user_id=#{userid}
     </update>
+
+
+    <select id="searchEnrollment" resultMap="SearchMap">
+         select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
+         on p.enrollment_id= e.enrollment_id where
+           p.indicator=1 and e.indicator=1 and e.company_id=#{companyid} and  e.title like '%${keyword}%'  limit #{skip},#{take};
+    </select>
 </mapper>

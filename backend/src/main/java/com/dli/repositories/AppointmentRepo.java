@@ -4,6 +4,7 @@ package com.dli.repositories;
 import com.dli.entities.Appointment;
 import com.dli.entities.AppointmentFollower;
 import com.dli.entities.AppointmentItem;
+import com.dli.entities.SearchResult;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +34,6 @@ public interface AppointmentRepo {
     int addKeyword(@Param("appointmentId") int appointmentId, @Param("word") String word);
 
     List<Appointment>  getMyAppointmentList(@Param("userid")int userid, @Param("skip")int skip, @Param("take")int take);
+
+    List<SearchResult> searchAppointment(@Param("companyid") int companyid, @Param("keyword")String keyword, @Param("skip") int skip, @Param("take")  int take);
 }

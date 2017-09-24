@@ -231,4 +231,8 @@ public class ExamServiceImpl implements ExamService {
         return     examRepo.getMyCollectionList(userid,skip,take);
     }
 
+    @Override
+    public List<SearchResult> searchExam(int companyid, String keyword, int skip, int take) {
+        return  examRepo.searchExam(companyid,keyword,skip,take);
+    }
 }

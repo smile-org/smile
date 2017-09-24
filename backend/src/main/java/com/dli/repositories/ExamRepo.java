@@ -56,6 +56,8 @@ public interface ExamRepo {
     List<Exam>    getMyExamlistNotPassed(@Param("companyid")int  companyid, @Param("userid") int userid , @Param("skip") int  skip  , @Param("take") int take);
 
     List<Exam> getMyCollectionList( @Param("userid") int userid,  @Param("skip")int  skip , @Param("take")int take );
+
+    List<SearchResult>  searchExam(@Param("companyid") int companyid,  @Param("keyword")String keyword,   @Param("skip") int skip,@Param("take")  int take);
 }
 
 

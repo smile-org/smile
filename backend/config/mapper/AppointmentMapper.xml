@@ -13,6 +13,13 @@
     </resultMap>
 
 
+
+    <resultMap type="com.dli.entities.SearchResult" id="SearchMap">
+        <id column="appointment_id" property="id"/>
+        <result column="appointment_title" property="title"/>
+    </resultMap>
+
+
     <select id="getAppointmentList" resultMap="app">
         select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
 from appointment a join user u on a.sponsor_id = u.user_id
@@ -107,6 +114,10 @@ where  af.appointment_id = #{appointmnetId}
 
         order by af.follow_count desc
         limit #{skip},#{take};
+    </select>
+
+    <select id="searchAppointment" resultMap="SearchMap">
+      select * from   appointment  where appointment_title like '%${keyword}%'  and company_id=#{companyid} and indicator=1  limit #{skip} ,#{take}
     </select>
 
 </mapper>

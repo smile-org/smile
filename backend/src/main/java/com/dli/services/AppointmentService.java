@@ -2,6 +2,7 @@ package com.dli.services;
 
 import com.dli.entities.Appointment;
 import com.dli.entities.AppointmentFollower;
+import com.dli.entities.SearchResult;
 
 import java.util.Date;
 import java.util.List;
@@ -21,4 +22,7 @@ public interface AppointmentService {
     int addAppointment(String appointmentTitle,int sponsorId,int companyId,List<String> keywords, List<String> items);
 
     List<Appointment>  getMyAppointmentList(int userid, int skip, int take);
+
+
+    List<SearchResult> searchAppointment(int companyid, String keyword, int skip, int take);
 }

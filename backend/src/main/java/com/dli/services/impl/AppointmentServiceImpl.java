@@ -3,6 +3,7 @@ package com.dli.services.impl;
 import com.dli.entities.Appointment;
 import com.dli.entities.AppointmentFollower;
 import com.dli.entities.AppointmentItem;
+import com.dli.entities.SearchResult;
 import com.dli.repositories.AppointmentRepo;
 import com.dli.services.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> getMyAppointmentList(int userid, int skip, int take) {
         return   appointmentRepo.getMyAppointmentList(userid,skip,take);
+    }
+
+    @Override
+    public List<SearchResult> searchAppointment(int companyid, String keyword, int skip, int take) {
+        return   appointmentRepo.searchAppointment(companyid, keyword, skip, take);
     }
 }

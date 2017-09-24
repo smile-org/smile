@@ -75,6 +75,14 @@
         <result column="learn_at" property="learn_at"/>
     </resultMap>
 
+
+    <resultMap type="com.dli.entities.SearchResult" id="SearchMap">
+        <id column="course_id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="intro" property="intro"/>
+        <result column="icon" property="icon"/>
+    </resultMap>
+
     <select id="getCourseCategoryList"  resultMap="CategoryMap">
         SELECT * FROM course_category where indicator=1 and company_id=#{companyid} LIMIT #{skip},#{take};
     </select>
@@ -151,8 +159,8 @@ join (
         update   learn_progress  set status='Finished' ,learn_at =now() where user_id=#{userid} and content_id=#{contentid};
     </update>
 
-    <select id="searchCourse" resultMap="CourseMap">
-        select * from  course where title like '%${keyword}%';
+    <select id="searchCourse" resultMap="SearchMap">
+          select * from  course where title like '%${keyword}%'    and  indicator=1     and   company_id=#{companyid} limit #{skip}, #{take}
     </select>
 
     <select id="getCourseListByExamid" resultMap="CourseMap">

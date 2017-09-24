@@ -130,4 +130,9 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public void updateReadReminder(int periodid, int userid) {
         enrollmentRepo.updateReadReminder(periodid,userid);
     }
+
+    @Override
+    public List<SearchResult> searchEnrollment(int companyid, String keyword, int skip, int take) {
+        return   enrollmentRepo.searchEnrollment(companyid, keyword, skip, take);
+    }
 }

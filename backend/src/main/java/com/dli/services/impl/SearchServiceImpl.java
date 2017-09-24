@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SearchServiceImpl implements SearchService {
+public class SearchServiceImpl implements   SearchService {
 
     @Autowired
     private SearchRepo searchRepo;
@@ -34,4 +34,11 @@ public class SearchServiceImpl implements SearchService {
     public List<String> getRecommanedKeyWords(String type) {
         return  searchRepo.getRecommanedKeyWords( type);
     }
+
+    @Override
+    public void deleteSearchHistory(String type, int userid) {
+          searchRepo.deleteSearchHistory(type,userid);
+    }
+
+
 }

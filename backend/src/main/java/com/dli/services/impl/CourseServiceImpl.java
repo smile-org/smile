@@ -86,9 +86,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> searchCourse(String keyword) {
-        return   courseRepo.searchCourse(keyword);
+    public List<SearchResult> searchCourse(int companyid, String keyword, int skip, int take) {
+        return courseRepo.searchCourse(companyid, keyword, skip, take);
     }
+
 
     @Override
     public List<Course> getCourseListByExamid(int examid) {
