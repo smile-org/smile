@@ -18,12 +18,12 @@
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in data" :key="item.period_id">
               <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
-                <img class="person_header fl" :src="item.icon | formatImage">
+                <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
-                  <div class="hidden bm_font">
+                  <div class="hidden bm_font ml6">
                     <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
-                    <p>{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
+                    <p class="new_p">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
                     <ul class="small_icon fr">
                       <li class="fl">
                         <span class="icon icon1"></span>
@@ -47,9 +47,9 @@
           <ul class=" list_border course_line reg_nohover"  v-infinite-scroll="loadMore_sec" infinite-scroll-disabled="busy_sec" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in data_sec" :key="item.period_id">
               <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
-                <img class="person_header fl" :src="item.icon | formatImage">
+                <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
-                  <div class="hidden bm_font">
+                  <div class="hidden bm_font ml6">
                     <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
                     <p>{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
@@ -116,7 +116,7 @@ export default {
     },
     formatDate (time) {
       var date = new Date(time)
-      return formatDate(date, 'yyyy-MM-dd hh:mm')
+      return formatDate(date, 'yyyy-MM-dd')
     }
   },
   methods: {
@@ -222,7 +222,7 @@ export default {
   font-size: .28rem;
   color: #666;
   position: relative;
-  width: 50%;
+  width: 50%!important;
 }
 
 .el-tabs__item.is-active {

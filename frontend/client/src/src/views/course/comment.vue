@@ -57,7 +57,7 @@ export default {
     commonHeader
   },
   created () {
-    this.id = this.$route.query.id
+    this.id = parseInt(this.$route.query.id)
     this.courseTitle = sessionStorage.getItem('courseTitle')
   },
   validations: {
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     quickComments: function (comments) {
-      this.comments += comments
+      this.comments += (' ' + comments)
     },
     submit: function () {
       if (this.$v.$invalid) {
@@ -94,4 +94,22 @@ export default {
   }
 }
 </script>
+<style>
+  .el-rate {
+    height: .4rem;
+    line-height: 0.4rem;
+  }
+
+  .el-textarea textarea {
+    min-height: 4rem;
+    outline: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .el-rate__icon {
+    font-size: .26rem;
+    margin-right: .08rem;
+  }
+</style>
 

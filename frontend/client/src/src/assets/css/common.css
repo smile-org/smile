@@ -75,6 +75,9 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .ml2{
   margin-left:.2rem;
 }
+.ml6{
+  margin-left:.6rem;
+}
 .font22{
    font-size:.22rem;
  }
