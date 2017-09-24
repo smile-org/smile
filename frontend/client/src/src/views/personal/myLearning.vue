@@ -14,7 +14,6 @@
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.course_id">
               <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
-              <a>
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
                   <div class="hidden">
@@ -34,7 +33,6 @@
                 <p class="exam_explain">
                   {{item.intro}}
                 </p>
-              </a>
               </router-link>
             </li>
           </ul>
