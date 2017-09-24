@@ -190,8 +190,8 @@ export default {
       content: "";
       position: absolute;
       bottom: 0;
-      left: .7rem;
-      right: .7rem;
+      left: .3rem;
+      right: .3rem;
       height: 3px;
       background: #00b553;
       z-index: 2;
@@ -223,6 +223,13 @@ export default {
     .el-tabs__nav .el-tabs__item:first-child{
       border-right:1px solid #ededed;
     }
+    .el-rate__icon {
+      font-size: .16rem;
+      margin-right: .006rem;
+    }
+    .el-tabs__header {
+      border-bottom: 1px solid #ededed;
+      margin:0;}
 </style>
 
 

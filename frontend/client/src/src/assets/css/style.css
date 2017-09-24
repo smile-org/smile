@@ -446,7 +446,7 @@ section .form_list input{
   display: block;
 }
 .line_only .p3_line{
-  padding-left: .3rem;
+  /*padding-left: .3rem;*/
   display: block;
 }
 .course_line .line_only:after{
@@ -620,7 +620,15 @@ section .form_list input{
   max-height: .7rem;
   border-radius: .7rem;
 }
+.person_header2{
+  width: 1.19rem;
+  height: .9rem;
+  max-width: 1.19rem;
+  max-height: .9rem;
+}
+.bm_time{
 
+}
 /*这里是我要评价页面*/
 .appraise_w{
   margin:.3rem;
@@ -990,7 +998,7 @@ footer .exam_b .btn span{
   padding-right: .3rem;
 }
 .bm_font{
-  margin-left:.2rem;
+  /*margin-left:.2rem;*/
 }
 .bm_font h3 {
   font-size: .28rem;
@@ -1383,8 +1391,25 @@ footer .exam_b .btn span{
   font-size:.24rem;
   color: #999;
   float: right;
-  padding-right:.3rem;
+  padding-right:.5rem;
   padding-top:.4rem;
+  position: relative;
+}
+.home_more:after {
+  transition: all .3s 0s ease-in-out;
+  position: absolute;
+  content: "";
+  display: block;
+  border-top: 0.02rem solid #999;
+  border-left: 0.02rem solid #999;
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  left: .5rem;
+  width: 0.13rem;
+  height: 0.13rem;
+  bottom: .07rem;
 }
 .home_person{
   position: absolute;
@@ -1461,4 +1486,10 @@ footer .exam_b .btn span{
   width: 0.2rem;
   height: 0.2rem;
   top: .3rem;
+}
+
+.new_p{
+  font-size: .22rem;
+  color: #999;
+  margin-top: .15rem;
 }

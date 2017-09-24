@@ -44,7 +44,7 @@
         <div class="hidden">
           <h3 class="list_need fl">热门约课</h3>
           <router-link v-bind:to="{name: 'getBookingList'}" class="home_more">
-            更多 >
+            更多
           </router-link>
         </div>
         <ul class=" list_border course_line reg_nohover">
@@ -53,7 +53,7 @@
               <div class="p3_line wid100 hidden">
                 <img class="person_header fl" :src="item.avatar | formatImage">
                 <div class="bm_con">
-                  <div class="hidden bm_font">
+                  <div class="hidden bm_font ml2">
                     <h3 class="fl ">{{item.appointmentTitle}}</h3>
                     <div class="hidden wid100">
                       <p class="fl">主讲：{{item.sponsorName}}</p>
@@ -74,7 +74,7 @@
         <div class="hidden">
           <h3 class="list_need fl">课程排行</h3>
           <router-link v-bind:to="{name: 'courseCategories'}" class="home_more">
-            更多 >
+            更多
           </router-link>
         </div>
         <div class="f_con">
@@ -167,7 +167,7 @@
         <div class="hidden">
           <h3 class="list_need fl">近期考试</h3>
           <router-link v-bind:to="{name: 'getExamList'}" class="home_more">
-            更多 >
+            更多
           </router-link>
         </div>
         <ul class="list_border course_line">
@@ -202,18 +202,18 @@
         <div class="hidden">
           <h3 class="list_need fl">培训报名</h3>
           <router-link v-bind:to="{name: 'getEnrollList'}" class="home_more">
-            更多 >
+            更多
           </router-link>
         </div>
         <ul class=" list_border course_line reg_nohover">
           <li class="course_list  line_only"  v-for="item in enroll" :key="item.period_id">
             <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
-              <img class="person_header fl" :src="item.icon | formatImage">
+              <img class="person_header2 fl" :src="item.icon | formatImage">
               <div class="bm_con">
-                <div class="hidden bm_font">
+                <div class="hidden bm_font ml6">
                   <h3 class="fl mb15">{{item.title}}</h3>
                   <p class="">主讲：{{item.teacher}}</p>
-                  <p>{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
+                  <p class="bm_time">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>

@@ -208,7 +208,7 @@ export default {
   font-size: .28rem;
   color: #666;
   position: relative;
-  width: 33.33%;
+  width: 33.33%!important;
 }
 
 .el-tabs__item.is-active {

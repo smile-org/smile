@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     quickComments: function (comments) {
-      this.comments += comments
+      this.comments += (' ' + comments)
     },
     comment: function () {
       if (this.$v.$invalid) {
@@ -105,7 +105,7 @@ export default {
 }
 
 .el-rate__icon {
-  font-size: .18rem;
+  font-size: .26rem;
   margin-right: .08rem;
 }
 </style>
