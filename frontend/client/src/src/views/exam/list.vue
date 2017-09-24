@@ -14,8 +14,8 @@
     <section>
       <ul class="mt3 list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.exam_id">
-          <router-link v-bind:to="{path: '/getExamInfo', query: {id: item.exam_id}}">
-            <img :src="item.icon|formatImage" class="fl img_bg">
+          <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
+            <img :src="item.icon | formatImage" class="fl img_bg">
             <div class="course_cen">
               <div class="hidden">
                 <h3 class="fl">{{item.exam_title}}</h3>
@@ -56,7 +56,7 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     }
   },
   methods: {

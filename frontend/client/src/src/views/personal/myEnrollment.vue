@@ -17,7 +17,7 @@
                 <div class="bm_con">
                   <div class="hidden bm_font">
                     <h3 class="fl mb15">{{item.title}}</h3>
-                    <p class="">主讲：{{item.user_idName}}</p>
+                    <p class="">主讲：{{item.teacher}}</p>
                     <p>{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
                     <ul class="small_icon fr">
                       <li class="fl">
@@ -37,13 +37,13 @@
         </el-tab-pane>
         <el-tab-pane label="预约报名" name="second">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
-            <li class="course_list  line_only" v-for="item in dataFinish" :key="item.enrollment_id">
+            <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.enrollment_id">
               <a>
                 <img class="person_header fl" :src="item.icon | formatImage">
                 <div class="bm_con">
                   <div class="hidden bm_font">
                      <h3 class="fl mb15">{{item.title}}</h3>
-                    <p class="">主讲：{{item.user_idName}}</p>
+                    <p class="">主讲：{{item.teacher}}</p>
                     <p>{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
                     <ul class="small_icon fr">
                       <li class="fl">
@@ -85,7 +85,7 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     },
     formatDate: function (time) {
       var date = new Date(time)
@@ -94,11 +94,11 @@ export default {
   },
   methods: {
     handleClick: function (tab, event) {
-
+      this.loadMore()
     },
 
     loadMore: function () {
-      if (this.activeName === 'first' && this.dataFinish.length === 0) {
+      if (this.activeName === 'first' && this.dataFinish.length === 0 && !this.isBusy_finish) {
         this.currentPage_finish = this.currentPage_finish + 1
         this.isBusy_finish = true
         api.fetch(api.uri.getMyEnrollFinish, { take: this.take, skip: this.currentPage_finish * this.take }).then(data => {
@@ -114,7 +114,7 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'second' && this.dataInProgress.length === 0) {
+      if (this.activeName === 'second' && this.dataInProgress.length === 0 && !this.isBusy_inProgress) {
         this.currentPage_inProgress = this.currentPage_inProgress + 1
         this.isBusy_inProgress = true
         api.fetch(api.uri.getMyEnrollInProgress, { take: this.take, skip: this.currentPage_inProgress * this.take }).then(data => {

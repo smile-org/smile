@@ -17,7 +17,7 @@
       <ul class="list_border course_bg" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="con_list" v-for="item in data" :key="item.category_id">
           <router-link v-bind:to="{path: '/getCourses', query: {id: item.category_id}}">
-            <img :src="item.icon" class="course_img" />
+            <img :src="item.icon | formatImage" class="course_img" />
             <span class="c_list_font">{{item.category_name}}</span>
           </router-link>
         </li>
@@ -29,7 +29,7 @@
 <script>
 import api from '../../services/api'
 // import router from '../../router/index'
-
+import axios from 'axios'
 export default {
   data: function () {
     return {
@@ -71,14 +71,13 @@ export default {
       }
       api.fetch(api.uri.getCourseCategories, params).then(data => {
         if (data.status === 1) {
-          if (data.result.length === 0) {
-            this.currentPage = this.currentPage - 1
+          if (data.result.length === this.take) {
+            this.busy = false
           }
           this.data = this.data.concat(data.result)
         } else {
           this.open(data.result)
         }
-        this.busy = false
       }).catch(error => {
         this.openMessageBox(error.message)
       })
@@ -93,6 +92,11 @@ export default {
           })
         }
       })
+    }
+  },
+  filters: {
+    formatImage: function (uri) {
+      return axios.defaults.imageServer + uri
     }
   }
 }

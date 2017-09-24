@@ -117,7 +117,7 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     },
     formatDate: function (time) {
       var date = new Date(time)
@@ -126,14 +126,14 @@ export default {
   },
   methods: {
     handleClick: function (tab, event) {
-
+      this.loadMore()
     },
 
     loadMore: function () {
-      if (this.activeName === 'first' && this.dataCourse.length === 0) {
+      if (this.activeName === 'first' && this.dataCourse.length === 0 && !this.isBusy_course) {
         this.currentPage_course = this.currentPage_course + 1
         this.isBusy_course = true
-        api.fetch(api.uri.getMyFavoriteCourse, { take: this.take, skip: this.currentPage_course * this.take }).then(data => {
+        api.fetch(api.uri.getMyFavorite, { typeid: 1, take: this.take, skip: this.currentPage_course * this.take }).then(data => {
           if (data.status === 1) {
             this.dataCourse = this.dataCourse.concat(data.result)
             if (data.result.length === this.take) {
@@ -146,10 +146,10 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'second' && this.dataEnroll.length === 0) {
+      if (this.activeName === 'second' && this.dataEnroll.length === 0 && !this.isBusy_enroll) {
         this.currentPage_enroll = this.currentPage_enroll + 1
         this.isBusy_enroll = true
-        api.fetch(api.uri.getMyFavoriteEnroll, { take: this.take, skip: this.currentPage_enroll * this.take }).then(data => {
+        api.fetch(api.uri.getMyFavorite, { typeid: 3, take: this.take, skip: this.currentPage_enroll * this.take }).then(data => {
           if (data.status === 1) {
             this.dataEnroll = this.dataEnroll.concat(data.result)
             if (data.result.length === this.take) {
@@ -162,10 +162,10 @@ export default {
           console.log(error.message)
         })
       }
-      if (this.activeName === 'third' && this.dataExam.length === 0) {
+      if (this.activeName === 'third' && this.dataExam.length === 0 && !this.isBusy_exam) {
         this.currentPage_exam = this.currentPage_exam + 1
         this.isBusy_exam = true
-        api.fetch(api.uri.getMyFavoriteExam, { take: this.take, skip: this.currentPage_exam * this.take }).then(data => {
+        api.fetch(api.uri.getMyFavorite, { typeid: 2, take: this.take, skip: this.currentPage_exam * this.take }).then(data => {
           if (data.status === 1) {
             this.dataExam = this.dataExam.concat(data.result)
             if (data.result.length === this.take) {

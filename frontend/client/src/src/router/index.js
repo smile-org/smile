@@ -19,6 +19,8 @@ import commentCourse from '@/views/course/comment'
 import getExamList from '@/views/exam/list'
 import getExamInfo from '@/views/exam/detail'
 import startExam from '@/views/exam/exam'
+import examSuccess from '@/views/exam/success'
+import examFailed from '@/views/exam/failed'
 
 // 约课
 import getBookingList from '@/views/booking/list'
@@ -111,6 +113,18 @@ export default new Router({
       path: '/startExam',
       name: 'startExam',
       component: startExam,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/examSuccess',
+      name: 'examSuccess',
+      component: examSuccess,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/examFailed',
+      name: 'examFailed',
+      component: examFailed,
       meta: {requiresAuth: requiresAuth}
     },
 

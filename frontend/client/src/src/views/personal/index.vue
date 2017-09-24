@@ -17,7 +17,7 @@
       <el-row class="person_black">
         <el-col :span="8" class="per_num">
            <p>上次学习</p>
-          <p class="sec_p"><span>{{data.lastStudyDays}}</span>天前</p>
+          <p class="sec_p"><span>{{data.lastStudy}}</span>天前</p>
         </el-col>
         <el-col :span="8"  class="per_num">
           <p>本月学习</p>
@@ -102,7 +102,7 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     }
   }
 }

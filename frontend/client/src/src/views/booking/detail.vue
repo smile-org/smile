@@ -45,7 +45,7 @@
         <ul class="list_border course_con mb3hafe">
           <li class="course_list  line_only" v-for="(item, index) in data.itemList" :key="item.itemId">
             <div class="demand_font">
-              <p>{{index}}.{{item.content}}</p>
+              <p>{{index + 1}}. {{item.content}}</p>
               <el-row class="demand_emo">
                 <el-col :span="12" class="fl">
                   <p class="small_f">{{item.sponsorName}}
@@ -113,7 +113,7 @@ export default {
   },
   filters: {
     formatImage: function (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     },
     formatDate (time) {
       var date = new Date(time)

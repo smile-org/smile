@@ -65,7 +65,7 @@
           <ul style="overflow: hidden" class="list_border course_con">
             <li v-for="item in courseComment" :key="item.comment_id">
               <el-row style="font-size: .22rem;">
-                <el-col :span="4"><img class="person_header" :src="item.user_idAvatar"></el-col>
+                <el-col :span="4"><img class="person_header" :src="item.user_idAvatar | formatImage"></el-col>
                 <el-col :span="6" class="">
                   <p>{{item.user_idName}}</p>
                   <el-rate v-model="item.star" disabled text-color="#ff9900" text-template="{value}">
@@ -103,7 +103,7 @@ export default {
       return formatDate(date, 'yyyy-MM-dd')
     },
     formatImage (uri) {
-      return axios.defaults.baseURL + uri
+      return axios.defaults.imageServer + uri
     }
   },
   created () {
@@ -173,12 +173,56 @@ export default {
         contentid: contentId
       }).then(data => {
         if (data.status === 1) {
-          window.open(contentLink, '_blank')
+          window.open(axios.defaults.imageServer + contentLink, '_blank')
         }
       })
     }
   }
 }
 </script>
+
+<style>
+.el-tabs__active-bar{
+      width: 0!important;
+      transform: translateX(0rem)!important;
+    }
+    .el-tabs__item.is-active:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: .7rem;
+      right: .7rem;
+      height: 3px;
+      background: #00b553;
+      z-index: 2;
+    }
+    .el-tabs__item {
+      padding: 0 .5rem;
+      height: .7rem;
+      box-sizing: border-box;
+      line-height: .5rem;
+      display: inline-block;
+      list-style: none;
+      font-size: .28rem;
+      color: #666;
+      position: relative;
+      width:50%;
+    }
+    .el-tabs__item.is-active {
+      color: #00b553;
+    }
+    .el-tabs__nav{
+      width:100%;
+      text-align: center;
+      margin-top: -.3rem;
+    }
+    .el-tabs__header {
+      border-bottom:0;
+      margin: 0;
+    }
+    .el-tabs__nav .el-tabs__item:first-child{
+      border-right:1px solid #ededed;
+    }
+</style>
 
 
