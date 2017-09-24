@@ -119,7 +119,7 @@
         select q.* ,r.status as lastStatus from (  select qu.*  ,m.question_num  from question qu join exam_question  m
  on qu.question_id  =m.question_id where    m.exam_id=#{examid} and  qu.indicator =1  )  q
 left join ( select * from exam_record  where history_id in
-(select max(history_id) from  exam_history where exam_id=#{examid} and user_id=#{userid}  and status ='in-process' group  by history_id)
+(select max(history_id) from  exam_history where exam_id=#{examid} and user_id=#{userid}  and status ='in-process' )
  )r on q.question_id= r.question_id  order by q.question_num;
     </select>
 

@@ -270,7 +270,7 @@ public class EnrollmentController {
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
@@ -294,7 +294,7 @@ public class EnrollmentController {
             result.put(Constant.result, "取消收藏成功");
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
@@ -324,7 +324,7 @@ public class EnrollmentController {
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
@@ -350,7 +350,7 @@ public class EnrollmentController {
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;

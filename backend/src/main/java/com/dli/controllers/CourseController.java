@@ -154,7 +154,8 @@ public class CourseController {
             result.put(Constant.result, message);
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            throw ex;
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
         }
         return result;
     }
@@ -189,7 +190,7 @@ public class CourseController {
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
@@ -213,7 +214,7 @@ public class CourseController {
             result.put(Constant.result, "取消收藏成功");
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
@@ -243,7 +244,7 @@ public class CourseController {
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
@@ -269,7 +270,7 @@ public class CourseController {
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
@@ -296,7 +297,7 @@ public class CourseController {
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-            result.put(Constant.status, 1);
+            result.put(Constant.status, 0);
             result.put(Constant.result, ex.getMessage());
         }
         return result;
