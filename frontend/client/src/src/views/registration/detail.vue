@@ -32,7 +32,7 @@
         </ul>
 
       </div>
-      <el-tabs class="f_con2 " v-model="activeName" @tab-click="handleClick">
+      <el-tabs class="three_tab" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="课程信息" name="first">
           <ul class="list_border course_con mb3hafe">
             <li class="">
