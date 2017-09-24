@@ -13,6 +13,7 @@
         <el-tab-pane label="我的课程" name="first">
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_course" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataCourse" :key="item.course_id">
+              <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
               <a>
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
@@ -34,12 +35,14 @@
                   </p>
                 </div>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane label="我的报名" name="second">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_enroll" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataEnroll" :key="item.enrollment_id">
+              <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
               <a>
                 <img class="person_header fl" :src="item.icon | formatImage">
                 <div class="bm_con">
@@ -60,12 +63,14 @@
                   </div>
                 </div>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane label="我的考试" name="third">
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_exam" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataExam" :key="item.exam_id">
+              <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
               <a>
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
@@ -87,6 +92,7 @@
                   </p>
                 </div>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>

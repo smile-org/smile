@@ -13,6 +13,7 @@
         <el-tab-pane label="已报名" name="first">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_finish" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataFinish" :key="item.enrollment_id">
+              <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
               <a>
                 <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
@@ -33,12 +34,14 @@
                   </div>
                 </div>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane label="预约报名" name="second">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.enrollment_id">
+              <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
               <a>
                 <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con">
@@ -59,6 +62,7 @@
                   </div>
                 </div>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>

@@ -13,6 +13,7 @@
         <el-tab-pane label="进行中" name="first">
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.course_id">
+              <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
               <a>
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
@@ -34,12 +35,14 @@
                   {{item.intro}}
                 </p>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane label="已完成" name="second">
           <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_finish" infinite-scroll-distance="10">
             <li class="course_list  line_only"  v-for="item in dataFinish" :key="item.course_id">
+              <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
               <a>
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
@@ -61,6 +64,7 @@
                   {{item.intro}}
                 </p>
               </a>
+              </router-link>
             </li>
           </ul>
         </el-tab-pane>
