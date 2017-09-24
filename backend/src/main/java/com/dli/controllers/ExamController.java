@@ -138,6 +138,9 @@ public class ExamController {
 
             exam.setStatus(userExamStatus);
 
+            //要在处理状态之后赋值,  因为处理状态的时候用到次数了
+            exam.setTries_limit(  exam.getTries_limit()-  historyList.size()   );
+
 
             result.put(Constant.status, 1);
             result.put(Constant.result, exam);

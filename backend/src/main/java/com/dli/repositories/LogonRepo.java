@@ -2,6 +2,7 @@ package com.dli.repositories;
 
 
 import com.dli.entities.Demo;
+import com.dli.entities.SMS;
 import com.dli.entities.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,4 +27,8 @@ public interface LogonRepo {
     User getUserByID(@Param("id")  int id);
 
     User getUserByToken(String token);
+
+     void  deleteSMSOverdue();
+
+     List<SMS>  getSMSHistoryByCellphone( @Param("cellphone") String  cellphone);
 }

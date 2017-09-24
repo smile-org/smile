@@ -2,6 +2,7 @@ package com.dli.schedulers;
 
 
 import com.dli.services.ExamService;
+import com.dli.services.LogonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class TimerScheduler {
     @Autowired
     private ExamService examService;
 
+
+    @Autowired
+    private LogonService logonService;
+
     /*//每3秒执行一次
     @Scheduled(fixedRate = 3000)
     public void timerRate() {
@@ -41,8 +46,16 @@ public class TimerScheduler {
     }*/
 
 
+    //第一次延迟1秒执行，当执行完后3分钟再执行
     @Scheduled(initialDelay = 1000, fixedDelay = 3000*60)
     public void finishhistoryForAllPassTimeLimit() {
        // examService.finishhistoryForAllPassTimeLimit();
+    }
+
+
+    //每天晚上2点执行
+    @Scheduled(cron = "00 00 02 * * ?")
+    public void deleteSMSOverdue() {
+      //  logonService.deleteSMSOverdue();
     }
 }

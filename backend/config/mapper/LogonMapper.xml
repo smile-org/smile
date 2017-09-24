@@ -17,17 +17,27 @@
         <result column="token" property="token"/>
     </resultMap>
 
+
+    <resultMap  id="SMSMap" type="com.dli.entities.SMS">
+        <id column="sms_id" property="sms_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="cell_phone" property="cell_phone"/>
+        <result column="code" property="code"/>
+        <result column="sms_type" property="sms_type"/>
+        <result column="created_at" property="created_at"/>
+    </resultMap>
+
     <select id="getUserByPhoneNumber"   resultMap="UserMap">
         select * from user where cell_phone= #{0} and indicator=1
     </select>
 
     <insert id="addSMS" >
-        INSERT INTO sms  VALUES (null, #{userid}, #{cellphone},  #{vcode},#{smstype},#{now});
+        INSERT INTO sms  VALUES (null, #{userid}, #{cellphone},  #{vcode},#{smstype},#{now} );
     </insert>
 
 
     <select id="checkSMS" resultType="int" >
-        select count(*)  from  sms where  cell_phone =#{cellphone} and code=#{vcode} and TIMESTAMPDIFF(SECOND  , created_at,now()) &lt;=300;
+        select count(*)  from  sms where   cell_phone =#{cellphone} and code=#{vcode} and TIMESTAMPDIFF(SECOND  , created_at,now()) &lt;=300;
     </select>
 
     <update id="updatePwdByCellphone">
@@ -47,6 +57,14 @@
 
     <select id="getUserByToken" resultMap="UserMap">
         select * from user where token=#{token}
+    </select>
+
+    <delete id="deleteSMSOverdue">
+        DELETE from sms  where  TIMESTAMPDIFF(SECOND,   created_at , now()) &gt; 300
+    </delete>
+
+    <select id="getSMSHistoryByCellphone"  resultMap="SMSMap">
+        select * from  sms   WHERE  cell_phone=#{cellphone}  order by created_at desc limit 0,3
     </select>
 
 </mapper>

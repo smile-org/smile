@@ -22,4 +22,8 @@ public interface LogonService {
     User getUserByID(int id);
 
     User getUserByToken(String token);
+
+    void  deleteSMSOverdue();
+
+     boolean     allowGetSMSByCellphone  (  String  cellphone);
 }

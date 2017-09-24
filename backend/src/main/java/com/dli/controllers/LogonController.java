@@ -42,12 +42,24 @@ public class LogonController {
                 result.put(Constant.status, 0);
                 result.put(Constant.result, "手机号码不存在");
             } else {
-                String vcode = String.valueOf(Helper.getRandNum(0, 999999));
-                Helper.SendMessage(cellphone, "[smile]您的验证码为:" + vcode);
-                logonService.addSMS(u.getUser_id(), cellphone, vcode, Constant.findpwd, new Date());
+               boolean allow=  logonService.allowGetSMSByCellphone(cellphone);
 
-                result.put(Constant.status, 1);
-                result.put(Constant.result, "验证码已发送");
+                if(!allow){
+
+                    result.put(Constant.status, 0);
+                    result.put(Constant.result, "您获取验证码过于频繁，请过30分钟再尝试");
+
+                }
+                    else {
+                    String vcode = String.valueOf(Helper.getRandNum(0, 999999));
+                    Helper.SendMessage(cellphone, "[smile]您的验证码为:" + vcode);
+                    logonService.addSMS(u.getUser_id(), cellphone, vcode, Constant.findpwd, new Date());
+
+                    result.put(Constant.status, 1);
+                    result.put(Constant.result, "验证码已发送");
+
+                }
+
 
             }
 
