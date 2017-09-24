@@ -1478,6 +1478,7 @@ footer .exam_b .btn span{
   border-bottom: 1px solid #f2f4f5;
   width: 100%;
   background-color: #fff;
+  text-align: left;
 }
 #slide_menu .nav li>a {
   display: block;
