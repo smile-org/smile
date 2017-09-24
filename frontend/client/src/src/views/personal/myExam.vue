@@ -15,7 +15,6 @@
         <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_Passed" infinite-scroll-distance="10">
           <li class="course_list  line_only" v-for="item in dataPassed" :key="item.exam_id" >
             <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
-            <a>
               <img :src="item.icon | formatImage" class="fl img_bg">
               <div class="course_cen">
                 <div class="hidden">
@@ -36,14 +35,13 @@
               <p class="exam_explain">
                 {{item.intro}}
               </p>
-            </a>
             </router-link>
           </li>
         </ul>
       </el-tab-pane>
       <el-tab-pane label="未通过" name="second">
         <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_Failed" infinite-scroll-distance="10">
-          <li class="course_list  line_only" v-for="item in dataFailed" :key="item.exam_id">
+          <li class="course_list  line_only " v-for="item in dataFailed" :key="item.exam_id">
             <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
               <img :src="item.icon | formatImage" class="fl img_bg">
               <div class="course_cen">
@@ -60,7 +58,6 @@
                     </li>
                   </ul>
                 </div>
-
               </div>
               <p class="exam_explain">
                 {{item.intro}}
@@ -142,52 +139,52 @@ export default {
 }
 </script>
 
-<style>
-.el-tabs__active-bar {
-  width: 0!important;
-  transform: translateX(0rem)!important;
-}
+<!--<style>-->
+<!--.el-tabs__active-bar {-->
+  <!--width: 0!important;-->
+  <!--transform: translateX(0rem)!important;-->
+<!--}-->
 
-.el-tabs__item.is-active:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: .7rem;
-  right: .7rem;
-  height: 3px;
-  background: #00b553;
-  z-index: 2;
-}
+<!--.el-tabs__item.is-active:before {-->
+  <!--content: "";-->
+  <!--position: absolute;-->
+  <!--bottom: 0;-->
+  <!--left: .7rem;-->
+  <!--right: .7rem;-->
+  <!--height: 3px;-->
+  <!--background: #00b553;-->
+  <!--z-index: 2;-->
+<!--}-->
 
-.el-tabs__item {
-  padding: 0 .5rem;
-  height: .7rem;
-  box-sizing: border-box;
-  line-height: .5rem;
-  display: inline-block;
-  list-style: none;
-  font-size: .28rem;
-  color: #666;
-  position: relative;
-  width: 50%!important;
-}
+<!--.el-tabs__item {-->
+  <!--padding: 0 .5rem;-->
+  <!--height: .7rem;-->
+  <!--box-sizing: border-box;-->
+  <!--line-height: .5rem;-->
+  <!--display: inline-block;-->
+  <!--list-style: none;-->
+  <!--font-size: .28rem;-->
+  <!--color: #666;-->
+  <!--position: relative;-->
+  <!--width: 50%!important;-->
+<!--}-->
 
-.el-tabs__item.is-active {
-  color: #00b553;
-}
+<!--.el-tabs__item.is-active {-->
+  <!--color: #00b553;-->
+<!--}-->
 
-.el-tabs__nav {
-  width: 100%;
-  text-align: center;
-  margin-top: -.3rem;
-}
+<!--.el-tabs__nav {-->
+  <!--width: 100%;-->
+  <!--text-align: center;-->
+  <!--margin-top: -.3rem;-->
+<!--}-->
 
-.el-tabs__header {
-  border-bottom: 0;
-  margin: 0;
-}
+<!--.el-tabs__header {-->
+  <!--border-bottom: 0;-->
+  <!--margin: 0;-->
+<!--}-->
 
-.el-tabs__nav .el-tabs__item:first-child {
-  border-right: 1px solid #ededed;
-}
-</style>
+<!--.el-tabs__nav .el-tabs__item:first-child {-->
+  <!--border-right: 1px solid #ededed;-->
+<!--}-->
+<!--</style>-->

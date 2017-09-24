@@ -795,8 +795,8 @@ section .form_list input{
   margin-right: 0px;
 }
 .exam_circle .c_style{
-  width: .35rem;
-  height:.35rem;
+  width: .3rem;
+  height:.3rem;
   border-radius: .35rem;
   vertical-align: middle;
   display: inline-block;
@@ -1511,4 +1511,85 @@ footer .exam_b .btn span{
   font-size: .22rem;
   color: #999;
   margin-top: .15rem;
+}
+
+/*tab切换*/
+.el-rate__icon {
+  font-size: .16rem;
+  margin-right: .006rem;
+}
+
+.el-tabs__active-bar {
+  width: 0!important;
+  transform: translateX(0rem)!important;
+}
+
+.f_con2 .el-tabs__item.is-active:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: .3rem;
+  right: .3rem;
+  height: 3px;
+  background: #00b553;
+  z-index: 2;
+}
+
+.f_con2 .el-tabs__item {
+  padding: 0 .5rem;
+  height: .7rem;
+  box-sizing: border-box;
+  line-height: .5rem;
+  display: inline-block;
+  list-style: none;
+  font-size: .28rem;
+  color: #666;
+  position: relative;
+  width: 33.33%!important;
+}
+
+.three_tab .el-tabs__item.is-active:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: .3rem;
+  right: .3rem;
+  height: 3px;
+  background: #00b553;
+  z-index: 2;
+}
+
+.three_tab .el-tabs__item {
+  padding: 0 .5rem;
+  height: .7rem;
+  box-sizing: border-box;
+  line-height: .5rem;
+  display: inline-block;
+  list-style: none;
+  font-size: .28rem;
+  color: #666;
+  position: relative;
+  width: 33.33%!important;
+}
+.el-tabs__item.is-active {
+  color: #00b553;
+}
+
+.el-tabs__nav {
+  width: 100%;
+  text-align: center;
+  margin-top: -.3rem;
+}
+
+.el-tabs__header {
+  border-bottom: 0;
+  margin: 0;
+}
+
+.el-tabs__nav .el-tabs__item:first-child {
+  border-right: 1px solid #ededed;
+}
+.quyu_click{
+  width: 100%;
+  display: inline-block;
 }
