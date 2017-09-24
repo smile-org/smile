@@ -166,11 +166,11 @@ export default {
       if (this.data.enrollmentCollected === 1) {
         this.data.enrollmentCollected = 0
         this.data.collect_count = this.data.collect_count - 1
-        api.fetch(api.uri.favoriteEnrollment, { periodid: this.id })
+        api.fetch(api.uri.cancelFavoriteEnrollment, { periodid: this.id })
       } else {
         this.data.enrollmentCollected = 1
         this.data.collect_count = this.data.collect_count + 1
-        api.fetch(api.uri.cancelFavoriteEnrollment, { periodid: this.id })
+        api.fetch(api.uri.favoriteEnrollment, { periodid: this.id })
       }
     },
     comment: function () {
