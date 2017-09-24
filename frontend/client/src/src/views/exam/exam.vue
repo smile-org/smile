@@ -71,6 +71,7 @@
         <span :disabled="currentQuestionNo === questionCount" class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</span>
       </el-col>
     </el-row>
+
   </footer>
   <div class="popup_box" v-show="showModal">
     <div v-if="popupType === 0">
