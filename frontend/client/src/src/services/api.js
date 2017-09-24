@@ -178,6 +178,10 @@ export default {
     updatePassword: 'updatePassword',
 
     // 首页
-    getHomepageCourse: '/getFirstPageCourseList'
+    getHomepageCourse: '/getFirstPageCourseList',
+    getSearchHistoryList: '/getsearchHistoryList',
+    getRecommanedKeyWords: '/getRecommanedKeyWords',
+    addSearchHistory: '/addSearchHistory',
+    search: '/search'
   }
 }
