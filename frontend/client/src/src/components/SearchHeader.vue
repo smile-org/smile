@@ -1,7 +1,7 @@
 <template>
   <header @click="homeClick(false)">
     <div class="search_c">
-      <a class="seach_tit tl" href="##"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack"/></a>
+      <a class="seach_tit tl"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack"/></a>
       <div class="search_input">
         <img src="../assets/img/seach_icon.png" />
         <img src="../assets/img/delate.png" />
