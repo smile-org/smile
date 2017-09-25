@@ -78,8 +78,13 @@
         <result column="question_id" property="question_id"/>
         <result column="status" property="status"/>
         <result column="is_right" property="is_right"/>
+    </resultMap>
 
-
+    <resultMap type="com.dli.entities.SearchResult" id="SearchMap">
+        <id column="exam_id" property="id"/>
+        <result column="exam_title" property="title"/>
+        <result column="intro" property="intro"/>
+        <result column="icon" property="icon"/>
     </resultMap>
 
 
@@ -269,6 +274,11 @@ left join ( select * from exam_record  where history_id in
         (
         select item_id as exam_id,  count(user_id) as userct from  user_favor where item_type='exam' group by item_id)o2
         on result.exam_id=o2.exam_id)t   order by   start_date limit #{skip} ,#{take}
+    </select>
+
+
+    <select id="searchExam" resultMap="SearchMap">
+           select * from   exam  where exam_title like '%${keyword}%'  and company_id=#{companyid} and indicator=1  limit #{skip} ,#{take}
     </select>
 
 </mapper>

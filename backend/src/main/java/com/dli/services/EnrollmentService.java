@@ -30,4 +30,6 @@ public interface EnrollmentService {
     List<EnrollmentReminderAndTarget>   getReminderList( int userid);
 
     void   updateReadReminder(   int periodid,    int userid  );
+
+    List<SearchResult>  searchEnrollment(int companyid,  String keyword,    int skip,  int take);
 }

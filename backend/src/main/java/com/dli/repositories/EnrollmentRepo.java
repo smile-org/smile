@@ -37,4 +37,6 @@ public interface EnrollmentRepo {
 
     void   updateReadReminder(  @Param("periodid") int periodid,  @Param("userid")  int userid  );
 
+      List<SearchResult>  searchEnrollment(@Param("companyid") int companyid,  @Param("keyword")String keyword,   @Param("skip") int skip,@Param("take")  int take);
+
 }

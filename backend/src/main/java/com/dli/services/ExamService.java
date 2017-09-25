@@ -32,4 +32,7 @@ public interface ExamService {
 
     List<Exam> getMyCollectionList( int userid,  int  skip , int take );
 
+
+    List<SearchResult>  searchExam(int companyid,  String keyword,    int skip,  int take);
+
 }

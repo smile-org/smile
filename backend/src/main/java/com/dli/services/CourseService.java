@@ -26,7 +26,7 @@ public interface CourseService {
 
     String ClickCourseContent(int courseid, int contentid, int userid);
 
-    List<Course> searchCourse(String keyword);
+    List<SearchResult> searchCourse(int companyid,  String keyword,    int skip,  int take);
 
     List<Course> getCourseListByExamid(int examid);
 

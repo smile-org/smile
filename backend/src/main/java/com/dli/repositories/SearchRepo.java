@@ -17,4 +17,8 @@ public interface SearchRepo {
 
      List<String>   getRecommanedKeyWords( @Param("type") String type );
 
+     void  deleteSearchHistory(  @Param("type") String  type,    @Param("userid")  int userid);
+
+
+
 }

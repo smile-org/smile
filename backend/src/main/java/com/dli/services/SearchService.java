@@ -16,5 +16,5 @@ public interface SearchService {
     List<String>   getRecommanedKeyWords(String type );
 
 
-
+    void  deleteSearchHistory( String  type,   int userid);
 }

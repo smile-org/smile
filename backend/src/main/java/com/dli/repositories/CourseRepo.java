@@ -32,7 +32,7 @@ public interface CourseRepo {
 
     void  updateLearnProgress(  @Param("userid")  int userid,  @Param("contentid")  int contentid);
 
-    List<Course>  searchCourse( @Param("keyword") String keyword);
+    List<SearchResult>  searchCourse(@Param("companyid") int companyid,  @Param("keyword")String keyword,   @Param("skip") int skip,@Param("take")  int take);
 
     List<Course>  getCourseListByExamid( int  examid);
 
