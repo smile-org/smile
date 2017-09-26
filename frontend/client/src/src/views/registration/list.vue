@@ -2,7 +2,7 @@
   <div id="app">
     <search-header v-bind:holder="searchPlaceHolder"></search-header>
     <section>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs class="f_con2" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="正在报名" name="first">
           <ul class=" list_border course_line reg_nohover" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <li class="course_list  line_only" v-for="item in data" :key="item.period_id">

@@ -62,13 +62,13 @@
   <footer>
     <el-row class="exam_b">
       <el-col class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre" :span="8">
-        <span :disabled="currentQuestionNo === 1" class="btn" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</span>
+        <span :disabled="currentQuestionNo === 1"  v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</span>
       </el-col>
       <el-col class="btn" :span="8">
         <span v-on:click="suspect">标记存疑</span>
       </el-col>
       <el-col class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext" :span="8">
-        <span :disabled="currentQuestionNo === questionCount" class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</span>
+        <span :disabled="currentQuestionNo === questionCount"  v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</span>
       </el-col>
     </el-row>
 
@@ -110,8 +110,8 @@
         <li v-for="(item, index) in data.questions" :key="item.question_id" :class="{c_o: item.lastStatus === 'indoubt', c_g: item.lastStatus === 'finished'}">{{index + 1}}</li>
       </ul>
       <div class="el-row dio_btn mt3">
-        <div class="el-col el-col-12">
-          <button type="button" class="c_g btn fr " v-on:click="submitExam">确定</button>
+        <div class="el-col el-col-24 tc">
+          <button type="button" class="c_g btn " v-on:click="submitExam">确定</button>
         </div>
       </div>
     </div>

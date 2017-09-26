@@ -26,7 +26,7 @@
             受益匪浅
           </li>
         </ul>
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="comments">
+        <el-input class="aaaa" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="comments">
         </el-input>
         <p class="form_warning" v-show="showError">
           {{errorMessage}}
@@ -99,15 +99,10 @@ export default {
     height: .4rem;
     line-height: 0.4rem;
   }
-  .el-textarea textarea{
-    min-height:4rem;
-    outline: 0;
-    -webkit-appearance: none;
-    appearance: none;
-  }
   .el-rate__icon {
     font-size: .18rem;
     margin-right:.08rem;
   }
+
 </style>
 
