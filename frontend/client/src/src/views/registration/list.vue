@@ -190,7 +190,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped="scope">
 .el-tabs__active-bar {
   width: 0!important;
   transform: translateX(0rem)!important;
