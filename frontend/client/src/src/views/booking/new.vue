@@ -151,7 +151,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped="scope">
 .input-new-tag {
   /*width:1rem;*/
   max-width: 3rem;

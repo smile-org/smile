@@ -97,12 +97,9 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped="scope">
   .bm_font .small_icon {
     top: .3rem;
-  }
-  .bm_font p {
-    margin-top: .45rem;
   }
 </style>
 

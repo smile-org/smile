@@ -116,7 +116,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped="scope">
 .el-tabs__active-bar{
       width: 0!important;
       transform: translateX(0rem)!important;
@@ -157,9 +157,6 @@ export default {
     }
     .el-tabs__nav .el-tabs__item:first-child{
       border-right:1px solid #ededed;
-    }
-    .bm_font p {
-      margin-top: .45rem;
     }
     .bm_font .small_icon {
       top: .3rem;

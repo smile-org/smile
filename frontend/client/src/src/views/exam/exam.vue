@@ -338,51 +338,51 @@ export default {
   }
 }
 </script>
-<style>
-/*.el-pager li.active {*/
-/*border-color: #20a0ff;*/
-/*background-color: #20a0ff;*/
-/*color: #fff;*/
-/*cursor: default;*/
-/*}*/
-/*.el-pager li.c_g{*/
-/*background: #00b553;*/
-/*color: #fff;*/
-/*}*/
-/*.el-pager li.c_o{*/
-/*background: #fc7a06;*/
-/*color: #fff;*/
-/*}*/
-/*.el-pager li .c_grey{*/
-/*background: #dedede;*/
-/*color: #666;*/
-/*}*/
-/*.el-pagination {*/
-/*padding: .02rem .05rem;*/
-/*}*/
-/*.el-pagination .btn-prev {*/
-/*border-radius: 0.02rem 0 0 0.02rem;*/
-/*}*/
-/*.el-pagination button {*/
-/*padding: 0 6px;*/
-/*}*/
-/*.el-pagination button, .el-pagination span {*/
-/*font-size: .24rem;*/
-/*min-width: 0.55rem;*/
-/*height: 0.55rem;*/
-/*line-height:0.55rem;*/
+<style scoped="scope">
+.el-pager li.active {
+border-color: #20a0ff;
+background-color: #20a0ff;
+color: #fff;
+cursor: default;
+}
+.el-pager li.c_g{
+background: #00b553;
+color: #fff;
+}
+.el-pager li.c_o{
+background: #fc7a06;
+color: #fff;
+}
+.el-pager li .c_grey{
+background: #dedede;
+color: #666;
+}
+.el-pagination {
+padding: .02rem .05rem;
+}
+.el-pagination .btn-prev {
+border-radius: 0.02rem 0 0 0.02rem;
+}
+.el-pagination button {
+padding: 0 6px;
+}
+.el-pagination button, .el-pagination span {
+font-size: .24rem;
+min-width: 0.55rem;
+height: 0.55rem;
+line-height:0.55rem;
 
-/*}*/
-/*.el-pager li {*/
-/*padding: 0 0.02rem;*/
-/*font-size:0.24rem;*/
-/*min-width: 0.55rem;*/
-/*height: 0.55rem;*/
-/*line-height: 0.55rem;*/
-/*}*/
-/*.el-pager li.btn-quicknext, .el-pager li.btn-quickprev {*/
-/*line-height: 0.55rem;*/
-/*}*/
+}
+.el-pager li {
+padding: 0 0.02rem;
+font-size:0.24rem;
+min-width: 0.55rem;
+height: 0.55rem;
+line-height: 0.55rem;
+}
+.el-pager li.btn-quicknext, .el-pager li.btn-quickprev {
+line-height: 0.55rem;
+}
 .course_tit li{
   margin-right:0rem;
 }

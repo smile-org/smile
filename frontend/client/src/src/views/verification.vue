@@ -115,7 +115,7 @@ export default {
       })
     },
 
-    // 提交验证码
+    // 提交验证码!
     verifyCode: function () {
       var uri = api.uri.verifyCode
       api.post(uri, { cellphone: this.username, vcode: this.code }).then(data => {
