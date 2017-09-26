@@ -5,7 +5,7 @@
       <div class="search_input">
         <img src="../assets/img/seach_icon.png" />
         <img src="../assets/img/delate.png" />
-        <input :placeholder="holder">
+        <input :placeholder="holder" @focus="goSearch">
       </div>
       <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)"><img src="../assets/img/home.png" alt="更多" /></a>
     </div>
@@ -43,7 +43,7 @@
 import axios from 'axios'
 import router from '../router'
 export default {
-  props: ['holder'],
+  props: ['holder', 'type'],
   data: function () {
     return {
       nav1: false,
@@ -59,6 +59,9 @@ export default {
     },
     goBack () {
       router.go(-1)
+    },
+    goSearch () {
+      router.push({name: 'search', query: {type: this.type}})
     }
   }
 }

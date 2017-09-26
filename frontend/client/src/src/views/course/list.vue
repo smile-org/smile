@@ -12,7 +12,7 @@
         <a class="seach_tit tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
       </div>
     </header>-->
-    <search-header v-bind:holder="searchPlaceHolder"></search-header>
+    <search-header v-bind:holder="searchPlaceHolder" v-bind:type="type"></search-header>
     <section>
       <ul class="list_border course_bg" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="con_list" v-for="item in data" :key="item.category_id">
@@ -38,7 +38,8 @@ export default {
       take: 20,
       data: [],
       busy: false,
-      searchPlaceHolder: '输入关键词搜索相关课程'
+      searchPlaceHolder: '输入关键词搜索相关课程',
+      type: 1
     }
   },
   components: {

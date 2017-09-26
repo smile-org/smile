@@ -182,6 +182,7 @@ export default {
     getSearchHistoryList: '/getsearchHistoryList',
     getRecommanedKeyWords: '/getRecommanedKeyWords',
     addSearchHistory: '/addSearchHistory',
+    deleteSearchHistory: '/deleteSearchHistory',
     search: '/search'
   }
 }

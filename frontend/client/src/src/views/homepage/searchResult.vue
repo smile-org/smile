@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <common-header></common-header>
-    <section>
+    <section v-show="!noResult">
       <div class="search_tit">
         <ul class="fl_tab">
           <li :class="{active: type === 1}" v-on:click="selectModule(1)">
@@ -49,6 +49,21 @@
         </li>
       </ul>
     </section>
+    <section v-show="noResult">
+      <div class="appraise_w">
+        <div class="face_img3 ">
+
+        </div>
+        <div class="face_font">
+          <span>没有找到与 <span>“ {{this.search}} ”</span> 相关课程？</span></br>
+          <span>赶紧去发起约课吧。</span>
+        </div>
+        <el-row>
+          <el-col :span="12"> <button class="exam_btn orange_b fr" type="button" v-on:click="goBooking">发起约课</button></el-col>
+          <el-col :span="12"> <button class="exam_btn green_b fl" type="button" v-on:click="goHome">返回首页</button></el-col>
+        </el-row>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -65,7 +80,8 @@ export default {
       currentPage: -1,
       busy: false,
       search: '',
-      data: []
+      data: [],
+      noResult: false
     }
   },
   components: {
@@ -82,6 +98,7 @@ export default {
   },
   methods: {
     loadMore: function () {
+      this.noResult = false
       this.busy = true
       this.currentPage = this.currentPage + 1
       var params = {
@@ -99,6 +116,9 @@ export default {
             this.data = this.data.concat(data.result)
           }
         }
+        if (this.data.length === 0) {
+          this.noResult = true
+        }
       })
     },
     goBack: function () {
@@ -107,11 +127,13 @@ export default {
     selectModule: function (type) {
       this.type = type
       router.push({name: 'search'}, {query: { type: type }})
+    },
+    goBooking: function () {
+      router.push({name: 'newBooking'})
+    },
+    goHome: function () {
+      router.push({name: 'homepage'})
     }
   }
 }
 </script>
-
-<style>
-
-</style>
