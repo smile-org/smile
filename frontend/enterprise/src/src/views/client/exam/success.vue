@@ -1,22 +1,23 @@
+
 <template>
   <div id="app">
     <!--<header>-->
       <!--<div class="logo_c">-->
-        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
-        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
-        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+        <!--<a class="tl" href="../course/course.html"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+        <!--<a class="tc" href="../course/course3.html"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+        <!--<a class="tr" href="../course/course5.html"><img src="../../assets/img/home.png" alt="更多" /></a>-->
       <!--</div>-->
     <!--</header>-->
     <common-header></common-header>
     <section>
       <div class="appraise_w">
-        <div class="face_img2 "></div>
+        <div class="face_img1"></div>
         <div class="face_font">
-          <span>很抱歉本次考试未通过，</span>
+          <span>恭喜您通过了本次考试，</span>
           </br>
           <span>{{score}}分，</span>
           </br>
-          <span>继续加油吧。</span>
+          <span>还可以继续挑战高分哦。</span>
         </div>
         <el-row>
           <el-col :span="12">
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     goExam: function () {
-      router.push({name: 'getExamInfo', query: {id: this.id}})
+      router.push({name: 'startExam', query: {id: this.id, historyId: this.historyId}})
     },
     goHomepage: function () {
       router.push({name: 'homepage'})
@@ -60,3 +61,9 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>
+
+

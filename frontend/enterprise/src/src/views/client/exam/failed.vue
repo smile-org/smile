@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     goExam: function () {
-      router.push({name: 'getExamInfo', query: {id: this.id}})
+      router.push({name: 'startExam', query: {id: this.id, historyId: this.historyId}})
     },
     goHomepage: function () {
       router.push({name: 'homepage'})
