@@ -109,8 +109,8 @@ where  af.appointment_id = #{appointmnetId}
         from (select * from appointment
             where  appointment_id  in(select  DISTINCT appointment_id from
             appointment_follower  where  follower_id =#{userid}))a   join  user u on a.sponsor_id = u.user_id
-        join (select appointment_id, group_concat(word) key_word from appointment_keyword) ak on a.appointment_id = ak.appointment_id
-        left join (select appointment_id, count(*) follow_count from appointment_follower ) af on a.appointment_id = af.appointment_id
+        join (select appointment_id, group_concat(word) key_word from appointment_keyword group by  appointment_id) ak on a.appointment_id = ak.appointment_id
+        left join (select appointment_id, count(*) follow_count from appointment_follower   group by appointment_id) af on a.appointment_id = af.appointment_id
 
         order by af.follow_count desc
         limit #{skip},#{take};
