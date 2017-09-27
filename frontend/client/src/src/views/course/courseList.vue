@@ -1,6 +1,6 @@
 <template>
   <div>
-    <search-header v-bind:holder="searchPlaceHolder"></search-header>
+    <search-header v-bind:holder="searchPlaceHolder" v-bind:type="type"></search-header>
     <section>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.course_id">
@@ -42,7 +42,8 @@ export default {
       take: 20,
       data: [],
       busy: false,
-      searchPlaceHolder: '输入关键词搜索相关课程'
+      searchPlaceHolder: '输入关键词搜索相关课程',
+      type: 1
     }
   },
   components: {

@@ -11,7 +11,7 @@
         <a class="seach_tit tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
       </div>
     </header>-->
-    <search-header v-bind:holder="searchPlaceHolder"></search-header>
+    <search-header v-bind:holder="searchPlaceHolder" v-bind:type="2"></search-header>
     <section>
       <ul class="mt3 list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.exam_id">
@@ -55,7 +55,8 @@ export default {
       take: 20,
       data: [],
       busy: false,
-      searchHeader: '输入关键词搜索相关考试'
+      searchPlaceHolder: '输入关键词搜索相关考试',
+      type: 2
     }
   },
   components: {

@@ -1,27 +1,21 @@
 
 <template>
   <div>
-    <!--<header>
-      <div class="logo_c">
-        <a class="tl" href="../course/course.html"><img src="../img/back.png" alt="返回" /></a>
-        <a class="tc" href="../course/course3.html"><img src="../img/logo.png" alt="smile" class="logo1" /></a>
-        <a class="tr" href="../course/course5.html"><img src="../img/home.png" alt="更多" /></a>
-      </div>
-    </header>-->
     <common-header></common-header>
     <section>
+
       <div class="search_tit">
-        <ul class="fl_tab">
-          <li :class="{active: type === 1}" v-on:click="alert(1111)">
+        <ul class="fl_tab" style="position: relative;z-index:9;">
+          <li :class="{active: type === 1}" v-on:click="changeModule(1)">
             课程
           </li>
-          <li :class="{active: type === 2}" v-on:click="alert(1111)">
+          <li :class="{active: type === 2}" v-on:click="changeModule(2)">
             考试
           </li>
-          <li :class="{active: type === 3}" v-on:click="alert(1111)">
+          <li :class="{active: type === 3}" v-on:click="changeModule(3)">
             报名
           </li>
-          <li :class="{active: type === 4}" v-on:click="alert(1111)">
+          <li :class="{active: type === 4}" v-on:click="changeModule(4)">
             约课
           </li>
         </ul>
@@ -31,11 +25,12 @@
           <input placeholder="选择资源类型搜索更精准" v-model.trim="searchText" @keyup.13="search">
         </div>
       </div>
+
       <ul class="list_border course_con s_div">
         <li>
           <img class="s_ing" src="../../assets/img/s_ing.png" />
           <span>历史查询</span>
-          <img class="s_delate" src="../../assets/img/s_delate.png" v-on:click="searchText=''" />
+          <img class="s_delate" src="../../assets/img/s_delate.png" v-on:click="deleteSearchHistory" />
         </li>
         <li class="s_tag">
           <span class="history_tag" v-on:click="clickHistory(item)" v-for="(item, index) in historySearchItems" :key="index">{{item.keyword}}</span>
@@ -62,7 +57,7 @@ import router from '../../router'
 export default {
   data: function () {
     return {
-      type: 0, // 1: 课程, 2: 考试, 3: 报名, 4: 约课
+      type: 1, // 1: 课程, 2: 考试, 3: 报名, 4: 约课
       searchText: '',
       historySearchItems: [],
       hotSearchItems: []
@@ -81,18 +76,45 @@ export default {
       this.search()
     },
     search: function () {
-      api.fetch(api.uri.addSearchHistory, {typeid: this.type, keyword: this.searchText}).then(data => {
+      api.fetch(api.uri.addSearchHistory, { typeid: this.type, keyword: this.searchText }).then(data => {
         if (data.status === 1) {
-          router.push({name: 'searchResult', query: {type: this.type, search: this.searchText}})
+          router.push({ name: 'searchResult', query: { type: this.type, search: this.searchText } })
+        }
+      })
+    },
+    changeModule: function (index) {
+      this.type = index
+      axios.all([
+        api.fetch(api.uri.getSearchHistoryList, { typeid: this.type }),
+        api.fetch(api.uri.getRecommanedKeyWords, { typeid: this.type })
+      ]).then(axios.spread((historyList, recommandList) => {
+        if (historyList.status === 1) {
+          this.historySearchItems = historyList.result
+        }
+        if (recommandList.status === 1) {
+          this.hotSearchItems = recommandList.result
+        }
+      }))
+      console.log(this.type)
+    },
+    deleteSearchHistory: function () {
+      this.searchText = ''
+      this.historySearchItems = []
+      api.fetch(api.uri.deleteSearchHistory, { typeid: this.type }).then(data => {
+        if (data.status === 1) {
+          this.historySearchItems = []
         }
       })
     }
   },
   created () {
-    this.type = parseInt(this.$route.query.type)
+    var queryType = parseInt(this.$route.query.type)
+    if (queryType) {
+      this.type = queryType
+    }
     axios.all([
-      api.fetch(api.uri.getSearchHistoryList, {typeid: this.type}),
-      api.fetch(api.uri.getRecommanedKeyWords, {typeid: this.type})
+      api.fetch(api.uri.getSearchHistoryList, { typeid: this.type }),
+      api.fetch(api.uri.getRecommanedKeyWords, { typeid: this.type })
     ]).then(axios.spread((historyList, recommandList) => {
       if (historyList.status === 1) {
         this.historySearchItems = historyList.result

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <search-header v-bind:holder="searchPlaceHolder"></search-header>
+    <search-header v-bind:holder="searchPlaceHolder" type=3></search-header>
     <section>
       <el-tabs class="f_con2" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="正在报名" name="first">

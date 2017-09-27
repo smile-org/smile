@@ -188,10 +188,12 @@ export default {
             clearInterval(self.timerTask)
 
             self.timerTask = setInterval(function () {
-              self.autoSubmitCountDown = self.countDown - 1
+              self.autoSubmitCountDown = self.autoSubmitCountDown - 1
               if (self.autoSubmitCountDown <= 0) {
                 clearInterval(self.timerTask)
+                self.showModal = false
                 // TODO: 自动交卷API
+                self.submitExam()
               }
             }, 1000)
             // timer = this.data.time_limit

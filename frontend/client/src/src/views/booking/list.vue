@@ -1,18 +1,7 @@
 
 <template>
   <div>
-    <!--<header>
-      <div class="search_c">
-        <a class="seach_tit tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>
-        <div class="search_input">
-          <img src="../../assets/img/seach_icon.png" />
-          <img src="../../assets/img/delate.png" />
-          <input placeholder="输入关键词搜索相关约课">
-        </div>
-        <a class="seach_tit tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>
-      </div>
-    </header>-->
-    <search-header v-bind:holder="searchPlaceHolder"></search-header>
+    <search-header v-bind:holder="searchPlaceHolder" type=4></search-header>
     <section>
       <ul class=" list_border course_line reg_nohover mb3hafe" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.appointmentId">
