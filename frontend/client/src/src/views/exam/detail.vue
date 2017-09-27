@@ -94,10 +94,11 @@
                   <div class="hidden">
                     <h3 class="fl">{{item.title}}</h3>
                   </div>
-                  <p class="exam_explain">
-                    {{item.intro}}
-                  </p>
+
                 </div>
+                <p class="exam_explain">
+                  {{item.intro}}
+                </p>
               </router-link>
             </li>
           </ul>
