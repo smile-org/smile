@@ -832,7 +832,7 @@ footer .exam_b{
 footer .exam_b .active{
   color:#999
 }
-footer .exam_b .btn span{
+footer .exam_b .btn span:nth-child(2){
   color: #fc7a06;
   border-right: 1px solid #dcdcdc;
   border-left: 1px solid #dcdcdc;
@@ -1439,8 +1439,17 @@ footer .exam_b .btn span{
   background: #fff;
   border-top:1px solid #ededed;
 }
-
-
+.s_delate{
+  float: right;
+  margin-top: .05rem;
+}
+.s_tag span{
+  padding: .04rem .2rem;
+  background-color: #ededed;
+  border-radius: 1rem;
+  color: #999;
+  margin-right: .2rem;
+}
 #slide_menu {
   transition: all .3s 0s ease-in-out;
   -webkit-transform: translate(100%,0);
@@ -1544,7 +1553,7 @@ footer .exam_b .btn span{
   font-size: .28rem;
   color: #666;
   position: relative;
-  width:50%!important;
+  width:50%;
 }
 
 .f_con2 .el-tabs__item.is-active {
@@ -1605,7 +1614,7 @@ footer .exam_b .btn span{
   font-size: .28rem;
   color: #666;
   position: relative;
-  width: 33.33%!important;
+  width: 33.33%;
 }
 .three_tab .el-tabs__item.is-active {
   color: #00b553!important;
