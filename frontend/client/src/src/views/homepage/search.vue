@@ -76,11 +76,13 @@ export default {
       this.search()
     },
     search: function () {
-      api.fetch(api.uri.addSearchHistory, { typeid: this.type, keyword: this.searchText }).then(data => {
-        if (data.status === 1) {
-          router.push({ name: 'searchResult', query: { type: this.type, search: this.searchText } })
-        }
-      })
+      if (this.searchText.trim().length > 0) {
+        api.fetch(api.uri.addSearchHistory, { typeid: this.type, keyword: this.searchText }).then(data => {
+          if (data.status === 1) {
+            router.push({ name: 'searchResult', query: { type: this.type, search: this.searchText } })
+          }
+        })
+      }
     },
     changeModule: function (index) {
       this.type = index
