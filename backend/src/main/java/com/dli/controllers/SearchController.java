@@ -57,8 +57,9 @@ public class SearchController {
         }
 
         try {
-
-            searchService.addSearchHistory(user.getUser_id(), keyword, Helper.GetItemType(typeid));
+            if(keyword != null && !keyword.equals("")) {
+                searchService.addSearchHistory(user.getUser_id(), keyword, Helper.GetItemType(typeid));
+            }
 
             result.put(Constant.status, 1);
             result.put(Constant.result, "关键词添加成功");
