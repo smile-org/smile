@@ -3,7 +3,7 @@
     <common-header></common-header>
     <section v-show="!noResult">
       <div class="search_tit">
-        <ul class="fl_tab">
+        <ul class="fl_tab" style="position: relative;z-index:9;">
           <li :class="{active: type === 1}" v-on:click="selectModule(1)">
             课程
           </li>
@@ -25,7 +25,7 @@
       </div>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.id">
-          <a>
+          <router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">
             <img :src="item.icon | formatImage" class="fl img_bg">
             <div class="course_cen">
               <div class="hidden">
@@ -45,7 +45,7 @@
           <p class="exam_explain">
             {{item.intro}}
           </p>
-          </a>
+          </router-link>
         </li>
       </ul>
     </section>

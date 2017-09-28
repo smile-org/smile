@@ -37,7 +37,7 @@
             <img class="add_input" src="../../assets/img/icon10.png" />
             <img class="add_input2" src="../../assets/img/icon12.png" v-on:click="addRequirement" />
 
-            <input class="w_yueke" type="text" v-model="requirement" placeholder="请在此输入需求" maxlength=200 minlength=1>
+            <input class="w_yueke" type="text" v-model="requirement.trim" placeholder="请在此输入需求" maxlength=200 minlength=1>
             <p v-for="(item, index) in requirements" :key="index">
               {{index+1}}. {{item}}
               <img class="delate_add" src="../../assets/img/icon11.png" v-on:click="removeRequirement(item)" />
@@ -127,7 +127,7 @@ export default {
     },
 
     addRequirement () {
-      if (this.requirement) {
+      if (this.requirement.length > 0) {
         this.requirements.push(this.requirement)
         this.requirement = ''
       }
