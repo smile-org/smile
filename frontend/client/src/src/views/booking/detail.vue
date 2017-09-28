@@ -17,7 +17,7 @@
               <div class="bm_con">
                 <div class="hidden bm_font ml2">
                   <h3 class="fl ">{{data.appointmentTitle}}</h3>
-                  <p>主讲：{{data.sponsorName}}
+                  <p>发起者：{{data.sponsorName}}
                     <span class="ml2">{{data.sponsorDate | formatDate}}</span>
                   </p>
 

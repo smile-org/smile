@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     clickHot: function (item) {
-      this.searchText = item.keyword
+      this.searchText = item
       this.search()
     },
     clickHistory: function (item) {
