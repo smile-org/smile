@@ -25,7 +25,8 @@
       </div>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.id">
-          <router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">
+          <a v-on:click="goDetail(item.id)">
+          <!--<router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">-->
             <img :src="item.icon | formatImage" class="fl img_bg">
             <div class="course_cen">
               <div class="hidden">
@@ -45,7 +46,8 @@
           <p class="exam_explain">
             {{item.intro}}
           </p>
-          </router-link>
+          </a>
+          <!--</router-link>-->
         </li>
       </ul>
     </section>
@@ -133,6 +135,17 @@ export default {
     },
     goHome: function () {
       router.push({name: 'homepage'})
+    },
+    goDetail: function (itemId) {
+      if (this.type === 1) {
+        router.push({path: '/getCourses', query: {id: itemId}})
+      } else if (this.type === 2) {
+        router.push({name: 'getExamInfo', query: {id: itemId}})
+      } else if (this.type === 3) {
+        router.push({name: 'getEnroll', query: {id: itemId}})
+      } else {
+        router.push({name: 'getBooking', query: {id: itemId}})
+      }
     }
   }
 }
