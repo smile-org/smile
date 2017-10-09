@@ -15,7 +15,7 @@
           <hr>
           <div class="w_p3">
             <img class="add_input" src="../../assets/img/icon9.png" />
-            <input class="w_yueke" type="text" v-model="title" placeholder="在此输入列表需求" maxlength=200 minlength=1>
+            <input class="w_yueke" type="text" v-model="title" placeholder="输入列表需求" maxlength=200 minlength=1>
           </div>
         </div>
         <div class="add_bg">
@@ -47,14 +47,15 @@
       </div>
     </section>
     <footer>
-      <el-row class="exam_b">
-        <el-col  :span="12">
-          <button class="btn_sc btn_sure" v-on:click="submit">确认</button>
-        </el-col>
-        <el-col  :span="12">
-          <button class="btn_sc btn_cancel" v-on:click="cancel">取消</button>
-        </el-col>
-      </el-row>
+      <button class="login_btn btn_position" type="button" v-on:click="submit">提交约课</button>
+      <!--<el-row class="exam_b">-->
+        <!--<el-col  :span="12">-->
+          <!--<button class="btn_sc btn_sure" v-on:click="submit">确认</button>-->
+        <!--</el-col>-->
+        <!--<el-col  :span="12">-->
+          <!--<button class="btn_sc btn_cancel" v-on:click="cancel">取消</button>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
     </footer>
   </div>
 </template>

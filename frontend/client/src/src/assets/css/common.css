@@ -125,6 +125,12 @@ footer .disabled:active{
 .position_r{
   position: relative;
 }
+input[type="text"] {
+  -webkit-appearance: none;
+}
+textarea{
+  -webkit-appearance: none;
+}
 .wid100 {width:100%;}/*字体颜色*/
 .green00b{color:#00b553}
 .redff7{color: #ff7866  }

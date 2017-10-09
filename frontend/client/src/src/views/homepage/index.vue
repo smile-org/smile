@@ -8,7 +8,7 @@
         <div class="search_input" style="margin-left: .1rem;margin-right: -.15rem;">
           <img src="../../assets/img/seach_icon.png" />
           <img src="../../assets/img/delate.png" />
-          <input placeholder="输入关键词搜索相关培训报名" @focus="goSearch">
+          <input placeholder="输入关键词搜索相关学习资源" @focus="goSearch">
         </div>
         <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)"><img src="../../assets/img/home.png" alt="更多" /></a>
       </div>

@@ -17,7 +17,7 @@
       <el-col :span="4" class="tc" ><a class="exam_green" v-on:click="goQuestionList">答题卡</a></el-col>
       <el-col :span="4" class="tr" ><a class="exam_green" v-on:click="goSubmitModal">交卷</a></el-col>
     </el-row>
-    <div class="course_tit mt3">
+    <div class="course_tit2 mt3">
         <ul class="exam_circle">
             <li class="">
                <span class="c_g c_style"></span>
@@ -65,7 +65,7 @@
         <span :disabled="currentQuestionNo === 1"  v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</span>
       </el-col>
       <el-col class="btn" :span="8">
-        <span v-on:click="suspect">标记存疑</span>
+        <span class="orange_b" v-on:click="suspect">标记存疑</span>
       </el-col>
       <el-col class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext" :span="8">
         <span :disabled="currentQuestionNo === questionCount"  v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext">下一题</span>
