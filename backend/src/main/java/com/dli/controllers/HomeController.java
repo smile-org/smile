@@ -1,10 +1,12 @@
 package com.dli.controllers;
 
 import com.dli.entities.Demo;
+import com.dli.helper.OfficeUtil;
 import com.dli.services.DemoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,6 +21,9 @@ public class HomeController {
 
     @Autowired
     private DemoService demoService;
+
+    @Value("${html.path}")
+    private String htmlPath;
 
     @RequestMapping("")
     public String index() {
@@ -87,6 +92,18 @@ public class HomeController {
         result.put("status", "successful");
         result.put("result", row + " row affected.");
         return result;
+    }
+
+    @RequestMapping(value = "/officeUtilTest", method = RequestMethod.GET)
+    public String officeUtilTest(){
+        try {
+            OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.doc",htmlPath);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return "finished";
     }
 
 
