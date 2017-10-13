@@ -97,7 +97,10 @@ public class HomeController {
     @RequestMapping(value = "/officeUtilTest", method = RequestMethod.GET)
     public String officeUtilTest(){
         try {
-            OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.doc",htmlPath);
+            //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.doc",htmlPath);
+            //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.docx",htmlPath);
+            //OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.ppt",htmlPath);
+            OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.pptx",htmlPath);
         }
         catch (Exception ex){
             ex.printStackTrace();
