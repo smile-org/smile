@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,14 +96,30 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/officeUtilTest", method = RequestMethod.GET)
-    public String officeUtilTest(){
+    public String officeUtilTest() {
         try {
             //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.doc",htmlPath);
             //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.docx",htmlPath);
             //OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.ppt",htmlPath);
-            OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.pptx",htmlPath);
-        }
-        catch (Exception ex){
+            //OfficeUtil.getInstance().ppt2html("/root/smile/files/course/office/ETL调度设计.pptx",htmlPath);
+
+            String sheetName = "testSheet";
+            List<String> rowNameList = new ArrayList<>();
+            rowNameList.add("序号");
+            rowNameList.add("姓名");
+            rowNameList.add("性别");
+            rowNameList.add("出生日期");
+
+            List<Object[]> dataList = new ArrayList<>();
+            Object[] dataArray = new Object[4];
+            dataArray[0] = 1;
+            dataArray[1] = "张三";
+            dataArray[2] = "男";
+            dataArray[3] = "1984-01-01 12:12:12";
+            dataList.add(dataArray);
+
+            OfficeUtil.getInstance().export2excel(sheetName, rowNameList, dataList,"/home/wangqc/Desktop/testExcel.xlsx");
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
