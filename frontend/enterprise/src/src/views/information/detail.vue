@@ -84,55 +84,6 @@
               <span>公司地址：</span> <span>望京soho</span>
             </li>
           </ul>
-          <!--此部分为信息列表end-->
-          <!--&lt;!&ndash;此部分为上传页面&ndash;&gt;-->
-          <!--<table class="page_m" cellspacing="0"; cellpadding="0";border="0">-->
-          <!--<tr>-->
-          <!--<td class="page_m_a">-->
-          <!--logo-->
-          <!--</td>-->
-          <!--<td class="page_m_b">-->
-          <!--<img src="img/logo1.png" width="20%"/>-->
-          <!--</td>-->
-          <!--<td class="page_m_c">-->
-          <!--<a>使用默认</a>-->
-          <!--<a>上传</a>-->
-          <!--</td>-->
-          <!--</tr>-->
-          <!--<tr>-->
-          <!--<td class="page_m_a">-->
-          <!--banner-->
-          <!--</td>-->
-          <!--<td class="page_m_b">-->
-          <!--<img src="img/banner_05.png" width="100%"/>-->
-          <!--</td>-->
-          <!--<td class="page_m_c">-->
-          <!--<a>使用默认</a>-->
-          <!--<a>上传</a>-->
-          <!--</td>-->
-          <!--</tr>-->
-
-          <!--</table>-->
-          <!--<div class="tc">-->
-          <!--<button class="inf_btn btn_margin">预  览</button>-->
-          <!--</div>-->
-          <!--&lt;!&ndash;此部分为上传页面end&ndash;&gt;-->
-          <!--此部分为为预览-->
-          <!--<div class="m_show">-->
-          <!--<div class="m_show_header">-->
-          <!--<img src="img/small_logo.png"/>-->
-          <!--</div>-->
-          <!--<img class="m_show_banner" src="img/banner_bg.png" width="100%"/>-->
-          <!--</div>-->
-          <!--<div class="tc">-->
-          <!--<button class="inf_btn btn_margin">返  回</button>-->
-          <!--</div>-->
-          <!--此部分为为预览end-->
-          <!--此处为上传-->
-          <!--<button class="inf_btn">浏  览</button>-->
-          <!--<div></div>-->
-          <!--此处为上传end-->
-
         </div>
       </section>
     </div>
