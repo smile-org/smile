@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>企业管理后台</title>
+    <link href="./css/style.css" type="text/css" rel="stylesheet"/>
     <link href="./css/common.css" type="text/css" rel="stylesheet"/>
-  <link href="./css/style.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
 <header>
@@ -53,13 +56,13 @@
           <span class="h_icon aside_icon01 vm"></span>
           <span class="vm">基本信息</span>
       </div>
-    <ul>
-      <!--<li>-->
-        <!--<span class="vm">个人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></span>-->
-      <!--</li>-->
-      <!--<li>-->
-        <!--<span class="vm">个人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></span>-->
-      <!--</li>-->
+    <ul class="tc">
+      <li>
+        <span class="vm">公司基本信息</span>
+      </li>
+      <li>
+        <span class="vm">页面定置管理</span>
+      </li>
     </ul>
   </aside>
   <section class="con_main_r">
@@ -68,41 +71,92 @@
        <span class="vm">您的当前位置 : <span class="f_blue">基本信息</span></span>
 
     </nav>
-    <section class="con_tab">
-         <div class="con_list">
-           <!--<h5>待处理事项</h5>-->
-           <!--<ul class="t_form">-->
-             <!--<li>-->
-                 <!--<label>类型 </label>-->
-                 <!--<select class='aaa' value="请选择">-->
-                   <!--<option>nihao </option>-->
-                   <!--<option>nihao </option>-->
-                   <!--<option>nihao </option>-->
-                 <!--</select>-->
-             <!--</li>-->
-             <!--<li>-->
-               <!--<label>公司名称 </label>-->
-               <!--<input type="text" placeholder="关键字"/>-->
-             <!--</li>-->
-             <!--<li>-->
-               <!--<label>提交时间 </label>-->
-               <!--<input type="text" placeholder="提交时间"/>-->
-             <!--</li>-->
-             <!--<li>-->
-               <!--<button class="btn_b btn_bass mr10">查 询</button>-->
-               <!--<button class="btn_y btn_bass">重 置</button>-->
-             <!--</li>-->
-           <!--</ul>-->
+    <div class="con_tab">
 
-           <table>
+      <!--此部分为信息列表-->
+         <!--<ul class="basic_inf">-->
+           <!--<li>-->
+               <!--<span>公司名称：</span> <span>北京某某科技股份有限公司</span>-->
+           <!--</li>-->
+           <!--<li>-->
+             <!--<span>联系人：</span> <span>张某某</span>-->
+           <!--</li>-->
+           <!--<li>-->
+             <!--<span>联系电话：</span> <span>13801109876</span>-->
+           <!--</li>-->
+           <!--<li>-->
+             <!--<span>所在省份：</span> <span>北京市</span>-->
+           <!--</li>-->
+           <!--<li>-->
+             <!--<span>所在城市：</span> <span>朝阳区</span>-->
+           <!--</li>-->
+           <!--<li>-->
+             <!--<span>公司地址：</span> <span>望京soho</span>-->
+           <!--</li>-->
+         <!--</ul>-->
+      <!--此部分为信息列表end-->
+      <!--&lt;!&ndash;此部分为上传页面&ndash;&gt;-->
+      <!--<table class="page_m" cellspacing="0"; cellpadding="0";border="0">-->
+        <!--<tr>-->
+          <!--<td class="page_m_a">-->
+            <!--logo-->
+          <!--</td>-->
+          <!--<td class="page_m_b">-->
+            <!--<img src="img/logo1.png" width="20%"/>-->
+          <!--</td>-->
+          <!--<td class="page_m_c">-->
+            <!--<a>使用默认</a>-->
+            <!--<a>上传</a>-->
+          <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td class="page_m_a">-->
+            <!--banner-->
+          <!--</td>-->
+          <!--<td class="page_m_b">-->
+            <!--<img src="img/banner_05.png" width="100%"/>-->
+          <!--</td>-->
+          <!--<td class="page_m_c">-->
+            <!--<a>使用默认</a>-->
+            <!--<a>上传</a>-->
+          <!--</td>-->
+        <!--</tr>-->
 
-           </table>
-         </div>
+      <!--</table>-->
+      <!--<div class="tc">-->
+        <!--<button class="inf_btn btn_margin">预  览</button>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;此部分为上传页面end&ndash;&gt;-->
+      <!--此部分为为预览-->
+      <div class="m_show">
+           <div class="m_show_header">
+             <img src="img/small_logo.png"/>
+           </div>
+        <!--<img src="img/p_header.jpg"/>-->
+        <img class="m_show_banner" src="img/banner_bg.png" width="100%"/>
+      </div>
+      <div class="tc">
+      <button class="inf_btn btn_margin">返  回</button>
+      </div>
+      <!--此部分为为预览end-->
+      <!--此处为上传-->
+      <!--<button class="inf_btn">浏  览</button>-->
+      <div></div>
+      <!--此处为上传end-->
 
-
-    </section>
+    </div>
   </section>
 </div>
-
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: function() {
+      return { visible: false }
+    }
+  })
+</script>
 </body>
 </html>
