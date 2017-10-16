@@ -16,13 +16,22 @@ import courseCategoryList from '@/views/course/category/list'
 import courseList from '@/views/course/list'
 import courseDetail from '@/views/course/detail'
 
+// test
+import testCorp from '@/views/test/corp-ori'
+
 Vue.use(Router)
 var requiresAuth = false
 
 export default new Router({
   mode: 'history',
   routes: [
-
+    // test corp & upload
+    {
+      path: '/testcorp',
+      name: 'testCorp',
+      component: testCorp,
+      meta: { requiresAuth: requiresAuth }
+    },
     // 公司信息管理
     {
       path: '/',

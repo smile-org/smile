@@ -1,61 +1,61 @@
 <template>
   <header>
-    <div class="logo_c">
-      <a class="tl"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack" /></a>
-      <router-link v-bind:to="{name: 'homepage'}"><img src="../assets/img/logo.png" alt="smile" class="logo1" /></router-link>
-      <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)">
-        <img src="../assets/img/home.png" alt="更多" />
-      </a>
+    <div class="logo">
+      <img class="vm" :src="companyLogo" />
+      <span class="vm">企业管理后台</span>
     </div>
-    <nav @click="homeClick(false,$event)" id="slide_menu" :class="nav1 ?'active' : ''">
-      <div class="user_info">
-        <img :src="userAvatar" width="100%" alt="default_img">
-      </div>
-      <ul class="nav" style="height: 581px;">
-        <li class="">
-          <router-link v-bind:to="{name: 'homepage'}">首页</router-link>
-        </li>
-        <li class="">
-          <router-link v-bind:to="{name: 'courseCategories'}">我要学课</router-link>
-        </li>
-        <li class="">
-          <router-link v-bind:to="{name: 'getExamList'}">我要考试</router-link>
-        </li>
-        <li class="">
-          <router-link v-bind:to="{name: 'getEnrollList'}">我要报名</router-link>
-        </li>
-        <li class="">
-          <router-link v-bind:to="{name: 'getBookingList'}">我要约课</router-link>
-        </li>
-        <li class="">
-          <router-link v-bind:to="{name: 'me'}">个人中心</router-link>
-        </li>
-      </ul>
-    </nav>
-    <div class="c-modal" :style="{display:nav1 ? 'block':'none'}">
-    </div>
+    <ul class="fr">
+      <li v-on:click="routeByName('informationDetail')">
+        <span class="h_icon h_icon01"></span>
+        <p>基本信息</p>
+      </li>
+      <li v-on:click="routeByName('userList')">
+        <span class="h_icon h_icon02"></span>
+        <p>员工管理</p>
+      </li>
+      <li>
+        <span class="h_icon h_icon03"></span>
+        <p>课程类别</p>
+      </li>
+      <li>
+        <span class="h_icon h_icon04"></span>
+        <p>考试管理</p>
+      </li>
+      <li>
+        <span class="h_icon h_icon05"></span>
+        <p>报名管理</p>
+      </li>
+      <li>
+        <span class="h_icon h_icon06"></span>
+        <p>约课管理</p>
+      </li>
+      <li>
+        <span class="h_icon h_icon07"></span>
+        <p class="name_e">公司管理员</p>
+      </li>
+      <li>
+        <span class="h_icon h_icon08"></span>
+        <p>退出</p>
+      </li>
+    </ul>
   </header>
 </template>
 
 <script>
-import axios from 'axios'
 import router from '../router'
 export default {
   data: function () {
     return {
-      nav1: false,
-      userAvatar: ''
+      companyLogo: ''
     }
   },
   created () {
-    this.userAvatar = axios.defaults.imageServer + sessionStorage.getItem('userAvatar')
+    // retrieve logo from session storage
+    this.companyLogo = 'http://ww2.sinaimg.cn/thumb180/8892b46egw1f319hyl0juj20iz0sgq4v.jpg'
   },
   methods: {
-    homeClick: function (status, event) {
-      this.nav1 = status
-    },
-    goBack () {
-      router.go(-1)
+    routeByName: function (name) {
+      router.push({ name: name })
     }
   }
 }

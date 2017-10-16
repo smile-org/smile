@@ -10,7 +10,6 @@ import 'element-ui/lib/theme-default/index.css'
 // import 'mint-ui/lib/style.css'
 import vueInfiniteScroll from 'vue-infinite-scroll'
 import VueCookie from 'vue-cookie'
-
 import conf from './config/'
 
 Vue.config.productionTip = false
