@@ -14,6 +14,7 @@ import userCreate from '@/views/user/create'
 import courseCategoryList from '@/views/course/category/list'
 
 import courseList from '@/views/course/list'
+import courseDetail from '@/views/course/detail'
 
 Vue.use(Router)
 var requiresAuth = false
@@ -59,6 +60,12 @@ export default new Router({
       path: '/course/category/list',
       name: 'courseCategoryList',
       component: courseCategoryList,
+      meta: { requiresAuth: requiresAuth }
+    },
+    {
+      path: '/course/detail',
+      name: 'courseDetail',
+      component: courseDetail,
       meta: { requiresAuth: requiresAuth }
     },
     {
