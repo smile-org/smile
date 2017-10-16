@@ -43,15 +43,18 @@
     <div class="con_main">
       <aside>
         <div class="a_tit">
-          <span class="h_icon aside_icon01 vm"></span>
-          <span class="vm">基本信息</span>
+          <span class="h_icon aside_icon03 vm"></span>
+          <span class="vm">课程管理</span>
         </div>
         <ul class="tc">
           <li>
-            <span class="vm">公司基本信息</span>
+            <span class="vm">课程类别管理</span>
           </li>
           <li>
-            <span class="vm">页面定置管理</span>
+            <span class="vm">课程信息管理</span>
+          </li>
+          <li>
+            <span class="vm">员工学习记录</span>
           </li>
         </ul>
       </aside>
@@ -62,55 +65,7 @@
 
         </nav>
         <div class="con_tab">
-          <div>
-            <button class="inf_btn mr15">添加员工</button>
-            <button class="inf_btn mr15">批量导入</button>
-            <button class="inf_btn mr15">下载导入模板</button>
-            <button class="inf_btn mr15">导  出</button>
-          </div>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
-            <!--<el-row>-->
-            <el-form-item label="姓名">
-              <el-input v-model="formInline.user" placeholder="姓名"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号">
-              <el-input v-model="formInline.num" placeholder="手机号"></el-input>
-            </el-form-item>
-            <!--</el-row>-->
-            <!--<el-row>-->
-            <el-form-item label="部门">
-              <el-input v-model="formInline.department" placeholder="部门"></el-input>
-            </el-form-item>
-            <el-form-item label="区域">
-              <el-input v-model="formInline.area" placeholder="区域"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="onSubmit">查询</el-button>
-            </el-form-item>
-            <!--</el-row>-->
-          </el-form>
-          <template>
-            <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="name" label="姓名" width="180">
-              </el-table-column>
-              <el-table-column prop="number" label="手机" width="180">
-              </el-table-column>
-              <el-table-column prop="workNum" label="工号">
-              </el-table-column>
-              <el-table-column prop="email" label="邮箱" width="180">
-              </el-table-column>
-              <el-table-column prop="department" label="部门" width="180">
-              </el-table-column>
-              <el-table-column prop="address" label="区域">
-              </el-table-column>
-              <el-table-column prop="date" label="创建时间" width="180">
-              </el-table-column>
-              <el-table-column prop="name" label="最后修改时间" width="180">
-              </el-table-column>
-              <el-table-column prop="address" label="">
-              </el-table-column>
-            </el-table>
-          </template>
+
         </div>
       </section>
     </div>

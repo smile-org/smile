@@ -6,11 +6,11 @@
         <span class="vm">企业管理后台</span>
       </div>
       <ul class="fr">
-        <li>
+        <li v-on:click="routeByName('informationDetail')">
           <span class="h_icon h_icon01"></span>
           <p>基本信息</p>
         </li>
-        <li>
+        <li v-on:click="routeByName('userList')">
           <span class="h_icon h_icon02"></span>
           <p>员工管理</p>
         </li>

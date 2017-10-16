@@ -43,15 +43,18 @@
     <div class="con_main">
       <aside>
         <div class="a_tit">
-          <span class="h_icon aside_icon01 vm"></span>
-          <span class="vm">基本信息</span>
+          <span class="h_icon aside_icon03 vm"></span>
+          <span class="vm">课程管理</span>
         </div>
         <ul class="tc">
           <li>
-            <span class="vm">公司基本信息</span>
+            <span class="vm">课程类别管理</span>
           </li>
           <li>
-            <span class="vm">页面定置管理</span>
+            <span class="vm">课程信息管理</span>
+          </li>
+          <li>
+            <span class="vm">员工学习记录</span>
           </li>
         </ul>
       </aside>
@@ -62,29 +65,6 @@
 
         </nav>
         <div class="con_tab">
-          <div>
-            <button class="inf_btn mr15">添加员工</button>
-            <button class="inf_btn mr15">批量导入</button>
-            <button class="inf_btn mr15">下载导入模板</button>
-            <button class="inf_btn mr15">导  出</button>
-          </div>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
-            <el-form-item label="姓名">
-              <el-input v-model="formInline.user" placeholder="姓名"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号">
-              <el-input v-model="formInline.user" placeholder="手机号"></el-input>
-            </el-form-item>
-            <el-form-item label="部门">
-              <el-input v-model="formInline.user" placeholder="部门"></el-input>
-            </el-form-item>
-            <el-form-item label="区域">
-              <el-input v-model="formInline.user" placeholder="区域"></el-input>
-            </el-form-item>
-            </el-form-item><el-form-item>
-            <el-button class="inf_btn" type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-          </el-form>
 
         </div>
       </section>

@@ -6,6 +6,11 @@ import informationDetail from '@/views/information/detail'
 import informationEdit from '@/views/information/edit'
 import informationShow from '@/views/information/show'
 
+// 员工管理
+import userList from '@/views/user/list'
+import userCreate from '@/views/user/create'
+
+// 课程管理
 import courseCategoryList from '@/views/course/category/list'
 
 import courseList from '@/views/course/list'
@@ -34,6 +39,19 @@ export default new Router({
       path: '/information/show',
       name: 'informationShow',
       component: informationShow,
+      meta: { requiresAuth: requiresAuth }
+    },
+    // 员工管理
+    {
+      path: '/user/list',
+      name: 'userList',
+      component: userList,
+      meta: { requiresAuth: requiresAuth }
+    },
+    {
+      path: '/user/create',
+      name: 'userCreate',
+      component: userCreate,
       meta: { requiresAuth: requiresAuth }
     },
     // 课程管理
