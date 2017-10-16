@@ -126,6 +126,7 @@
 </template>
 
 <script>
+  import router from '../../router'
   export default {
     data: function () {
       return {
@@ -166,6 +167,10 @@
     methods: {
       onSubmit: function () {
         console.log('submit!')
+      },
+      routeByName: function (name) {
+        console.log(name)
+        router.push({ name: name })
       }
     }
   }
