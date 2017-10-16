@@ -12,22 +12,22 @@
           <!--此部分为信息列表-->
           <ul class="basic_inf">
             <li>
-              <span>公司名称：</span> <span>北京某某科技股份有限公司</span>
+              <span>公司名称：</span> <span>{{company.name}}</span>
             </li>
             <li>
-              <span>联系人：</span> <span>张某某</span>
+              <span>联系人：</span> <span>{{company.username}}</span>
             </li>
             <li>
-              <span>联系电话：</span> <span>13801109876</span>
+              <span>联系电话：</span> <span>{{company.userMobile}}</span>
             </li>
             <li>
-              <span>所在省份：</span> <span>北京市</span>
+              <span>所在省份：</span> <span>{{company.province}}</span>
             </li>
             <li>
-              <span>所在城市：</span> <span>朝阳区</span>
+              <span>所在城市：</span> <span>{{company.city}}</span>
             </li>
             <li>
-              <span>公司地址：</span> <span>望京soho</span>
+              <span>公司地址：</span> <span>{{company.address}}</span>
             </li>
           </ul>
         </div>
@@ -37,23 +37,27 @@
 </template>
 
 <script>
-  import router from '../../router'
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
+  import api from '../../services/api'
   export default {
     data: function () {
-      return { a: 1 }
+      return {
+        company: null
+      }
     },
     components: {
       commonHeader,
       navigator
     },
     created () {
+      api.fetch(api.uri.getCompanyInfo).then(data => {
+        if (data.status === 1) {
+          this.company = data
+        }
+      })
     },
     methods: {
-      routeByName: function (name) {
-        router.push({ name: name })
-      }
     }
   }
 </script>
