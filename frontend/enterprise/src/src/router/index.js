@@ -17,6 +17,7 @@ import courseCategoryList from '@/views/course/category/list'
 
 import courseList from '@/views/course/list'
 import courseDetail from '@/views/course/detail'
+import courseEdit from '@/views/course/edit'
 
 // test
 import testCorp from '@/views/test/corp-ori'
@@ -89,6 +90,12 @@ export default new Router({
       path: '/course/detail',
       name: 'courseDetail',
       component: courseDetail,
+      meta: { requiresAuth: requiresAuth }
+    },
+    {
+      path: '/course/edit',
+      name: 'courseEdit',
+      component: courseEdit,
       meta: { requiresAuth: requiresAuth }
     },
     {

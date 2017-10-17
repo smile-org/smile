@@ -49,13 +49,13 @@ export default {
         name: '课程管理',
         items: [{
           text: '课程类别管理',
-          routeName: ''
+          routeName: 'courseCategoryList'
         }, {
           text: '课程信息管理',
-          routeName: ''
+          routeName: 'courseDetail'
         }, {
           text: '员工学习记录',
-          routeName: ''
+          routeName: 'courseList'
         }]
       }
     } else if (this.module === 'exam') {
