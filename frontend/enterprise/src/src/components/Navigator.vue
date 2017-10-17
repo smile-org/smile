@@ -38,10 +38,10 @@ export default {
         name: '员工管理',
         items: [{
           text: '员工信息管理',
-          routeName: ''
+          routeName: 'userList'
         }, {
           text: '员工登录日志',
-          routeName: ''
+          routeName: 'userLog'
         }]
       }
     } else if (this.module === 'course') {
