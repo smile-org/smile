@@ -63,6 +63,7 @@
   import commonHeader from '../../../components/CommonHeader'
   import navigator from '../../../components/Navigator'
   import api from '../../../services/api'
+  import router from '../../../router'
   export default {
     data: function () {
       return {
@@ -80,7 +81,11 @@
         }
       })
     },
-    methods: {}
+    methods: {
+      routeByName (name) {
+        router.push({name: name})
+      }
+    }
   }
 </script>
 
