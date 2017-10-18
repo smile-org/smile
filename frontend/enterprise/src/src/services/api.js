@@ -68,7 +68,20 @@ export default {
     setDefaultImage: '',
 
     // 上传公司图片
-    uploadCompanyImage: ''
+    uploadCompanyImage: '',
+
+    // *** 用户 ***
+    // 搜索日志
+    searchUserLog: '',
+
+    // 获取用户列表
+    searchUserList: '',
+
+    // 创建用户
+    createUser: '',
+
+    // 编辑用户
+    editUser: ''
 
     // // 获取验证码
     // getCode: '/getVerificationCode',
