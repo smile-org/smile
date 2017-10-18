@@ -61,8 +61,7 @@
         }
       })
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 
