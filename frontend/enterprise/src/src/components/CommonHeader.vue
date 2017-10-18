@@ -13,7 +13,7 @@
         <span class="h_icon h_icon02"></span>
         <p>员工管理</p>
       </li>
-      <li>
+      <li v-on:click="routeByName('courseCategoryList')">
         <span class="h_icon h_icon03"></span>
         <p>课程类别</p>
       </li>

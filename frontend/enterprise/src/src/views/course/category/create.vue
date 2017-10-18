@@ -9,50 +9,14 @@
           <span class="vm">您的当前位置 : <span class="f_blue">基本信息</span></span>
         </nav>
         <div class="con_tab">
-          <button class="inf_btn " v-on:click="routeByName('courseCategoryCreate')">添加课程类别</button>
-          <table class="approve_tab" cellspacing="0" cellpadding="0" border="0">
-            <tr>
-              <th>
-                <span class="bold">课程类别</span><span></span>
-              </th>
-              <th>
-                <span class="bold">操作</span><span></span>
-              </th>
-            </tr>
-            <tr>
-              <td class="">
-                <span>市场类</span>
-              </td>
-              <td>
-                <div class="cell">
-                  <button type="button" class="el-button el-button--text el-button--small mr20">编辑</button>
-                  <button type="button" class="el-button el-button--text el-button--small">删除</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="">
-                <span>市场类</span>
-              </td>
-              <td>
-                <div class="cell">
-                  <button type="button" class="el-button el-button--text el-button--small mr20">编辑</button>
-                  <button type="button" class="el-button el-button--text el-button--small">删除</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="">
-                <span>市场类</span>
-              </td>
-              <td>
-                <div class="cell">
-                  <button type="button" class="el-button el-button--text el-button--small mr20">编辑</button>
-                  <button type="button" class="el-button el-button--text el-button--small">删除</button>
-                </div>
-              </td>
-            </tr>
-          </table>
+          <div class="el-form-item el-form--label-left mt20">
+            <label class="el-form-item__label" style="width: 100px;">课程类别</label>
+            <input type="" class="el-input__inner">
+          </div>
+          <div class="">
+            <button type="button" class="inf_btn ">保  存</button>
+          </div>
+
         </div>
       </section>
     </div>
@@ -128,5 +92,14 @@
   .el-button--small {
     font-size: 14px;
     color: #00b553;
+  }
+
+  .el-input__inner{
+    width:50%;
+    min-width: 200px;
+    max-width:500px;
+  }
+  .el-input__inner:focus{
+    border-color: #00b553;
   }
 </style>

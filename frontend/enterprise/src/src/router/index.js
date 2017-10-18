@@ -14,10 +14,12 @@ import userLog from '@/views/user/log'
 
 // 课程管理
 import courseCategoryList from '@/views/course/category/list'
+import courseCategoryCreate from '@/views/course/category/create'
 
 import courseList from '@/views/course/list'
 import courseDetail from '@/views/course/detail'
 import courseEdit from '@/views/course/edit'
+import courseComment from '@/views/course/comment'
 
 // test
 import testCorp from '@/views/test/corp-ori'
@@ -87,6 +89,12 @@ export default new Router({
       meta: { requiresAuth: requiresAuth }
     },
     {
+      path: '/course/category/create',
+      name: 'courseCategoryCreate',
+      component: courseCategoryCreate,
+      meta: { requiresAuth: requiresAuth }
+    },
+    {
       path: '/course/detail',
       name: 'courseDetail',
       component: courseDetail,
@@ -96,6 +104,12 @@ export default new Router({
       path: '/course/edit',
       name: 'courseEdit',
       component: courseEdit,
+      meta: { requiresAuth: requiresAuth }
+    },
+    {
+      path: '/course/comment',
+      name: 'courseComment',
+      component: courseComment,
       meta: { requiresAuth: requiresAuth }
     },
     {

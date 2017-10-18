@@ -55,8 +55,8 @@
               </el-table-column>
               <el-table-column prop="timeEnd" label="最后修改时间" width="180">
               </el-table-column>
-              <el-table-column   label="操作"  width="100">
-                <template scope="scope">
+              <el-table-column  label="操作" class="tc" width="">
+                <template scope="scope"  >
                   <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
                   <el-button @click="checkFail(scope.row.id)" type="text" size="small">删除</el-button>
                 </template>
@@ -153,5 +153,9 @@
 
   .el-button--primary:hover, .el-button--primary:active {
     background: rgba(0, 181, 83, 0.75);
+  }
+  .el-button--small {
+    font-size: 14px;
+    color: #00b553;
   }
 </style>
