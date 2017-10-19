@@ -28,17 +28,17 @@
             </el-form-item>
           </el-form>
           <el-table :data="tableData"  border style="width: 100%">
-            <el-table-column prop="user" label="员工姓名" width="180">
+            <el-table-column prop="user" label="员工姓名">
             </el-table-column>
-            <el-table-column prop="name" label="课程名称" width="180">
+            <el-table-column prop="name" label="课程名称">
             </el-table-column>
-            <el-table-column prop="department" label="部门" width="180">
+            <el-table-column prop="department" label="部门">
             </el-table-column>
-            <el-table-column prop="area" label="区域" width="180">
+            <el-table-column prop="area" label="区域">
             </el-table-column>
-            <el-table-column prop="content" label="课程内容" width="180">
+            <el-table-column prop="content" label="课程内容">
             </el-table-column>
-            <el-table-column prop="study" label="学习时间" width="180">
+            <el-table-column prop="study" label="学习时间">
             </el-table-column>
           </el-table>
         </div>

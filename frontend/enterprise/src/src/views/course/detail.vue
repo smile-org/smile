@@ -31,7 +31,7 @@
             </el-form-item>
           </el-form>
           <div class="fr hidden mb20">
-            <button type="button" class="inf_btn mr20">添加课程</button>
+            <button type="button" class="inf_btn mr20" v-on:click="routeByName('courseEdit')" >添加课程</button>
             <button type="button" class="inf_btn">导  入</button>
           </div>
           <el-table  :data="tableData" border style="width: 100%">
@@ -51,9 +51,9 @@
             </el-table-column>
             <el-table-column prop="timeEnd" label="发布日期" width="180">
             </el-table-column>
-            <el-table-column prop="appraise" label="查看评价" width="180">
+            <el-table-column  prop="appraise" label="查看评价" width="180">
               <template scope="scope">
-                <el-button type="text" size="small">查看课程评价</el-button>
+                <el-button  v-on:click="routeByName('courseComment')" type="text" size="small">查看课程评价</el-button>
               </template>
             </el-table-column>
             <el-table-column label="操作" class="tc" width="100">
@@ -74,6 +74,7 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
+  import router from '../../router'
   export default {
     data: function () {
       return {
@@ -124,7 +125,12 @@
         }
       })
     },
-    methods: {}
+    methods: {
+      routeByName: function (name) {
+        console.log(name)
+        router.push({ name: name })
+      }
+    }
   }
 </script>
 
