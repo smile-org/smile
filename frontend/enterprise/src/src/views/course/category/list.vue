@@ -6,7 +6,7 @@
       <section class="con_main_r">
         <nav>
           <img src="../../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="f_blue">基本信息</span></span>
+          <span class="vm">您的当前位置 : <span class="">课程管理</span> > <span class="f_blue">课程类别管理</span></span>
         </nav>
         <div class="con_tab">
           <button class="inf_btn " v-on:click="routeByName('courseCategoryCreate')">添加课程类别</button>
