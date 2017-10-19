@@ -16,21 +16,21 @@
             <button class="inf_btn mr15">下载导入模板</button>
             <button class="inf_btn mr15">导  出</button>
           </div>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
+          <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
             <!--<el-row>-->
             <el-form-item label="姓名">
-              <el-input v-model="formInline.user" placeholder="姓名"></el-input>
+              <el-input v-model="formInLine.user" placeholder="姓名"></el-input>
             </el-form-item>
             <el-form-item label="手机号">
-              <el-input v-model="formInline.num" placeholder="手机号"></el-input>
+              <el-input v-model="formInLine.mobile" placeholder="手机号"></el-input>
             </el-form-item>
             <!--</el-row>-->
             <!--<el-row>-->
             <el-form-item label="部门">
-              <el-input v-model="formInline.department" placeholder="部门"></el-input>
+              <el-input v-model="formInLine.department" placeholder="部门"></el-input>
             </el-form-item>
             <el-form-item label="区域">
-              <el-input v-model="formInline.area" placeholder="区域"></el-input>
+              <el-input v-model="formInLine.area" placeholder="区域"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -38,22 +38,22 @@
             <!--</el-row>-->
           </el-form>
           <template>
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="data" border style="width: 100%">
               <el-table-column prop="name" label="姓名" width="100">
               </el-table-column>
-              <el-table-column prop="number" label="手机" width="180">
+              <el-table-column prop="mobile" label="手机" width="180">
               </el-table-column>
-              <el-table-column prop="workNum" label="工号"  width="180">
+              <el-table-column prop="employeeNo" label="工号"  width="180">
               </el-table-column>
               <el-table-column prop="email" label="邮箱" width="180">
               </el-table-column>
               <el-table-column prop="department" label="部门" width="180">
               </el-table-column>
-              <el-table-column prop="address" label="区域"  width="180" >
+              <el-table-column prop="area" label="区域"  width="180" >
               </el-table-column>
-              <el-table-column prop="timeStart" label="创建时间" width="180">
+              <el-table-column prop="createdTime | formatDate" label="创建时间" width="180">
               </el-table-column>
-              <el-table-column prop="timeEnd" label="最后修改时间" width="180">
+              <el-table-column prop="updatedTime | formatDate" label="最后修改时间" width="180">
               </el-table-column>
               <el-table-column  label="操作" class="tc" width="150">
                 <template scope="scope"  >
@@ -64,7 +64,7 @@
             </el-table>
           </template>
           <div class="ds_oq_pageF" style="margin:10px 38%">
-            <el-pagination @current-change="ds_oq_handleCurrentChange" :current-page="currentPage"  :page-size="10" layout="total, prev, pager, next" :total="totalRow"></el-pagination>
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="1" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
       </section>
@@ -78,42 +78,21 @@
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
   import router from '../../router'
+  import moment from 'moment'
   export default {
     data: function () {
       return {
-        company: {},
-        formInline: {
-          user: '',
-          region: ''
+        formInLine: {
+          department: '',
+          area: '',
+          name: '',
+          // 去掉， 还要写验证， 麻烦
+          mobile: ''
         },
-        tableData: [{
-          name: '王小虎',
-          number: '12323243222',
-          workNum: '12345644',
-          email: '378999999999@qq.com',
-          department: '378999999999@qq.com',
-          address: '上海市普陀区金沙江路 1518 弄',
-          timeStart: '12345644',
-          timeEnd: '12323243222'
-        }, {
-          name: '王小虎',
-          number: '12323243222',
-          workNum: '12345644',
-          email: '378999999999@qq.com',
-          department: '378999999999@qq.com',
-          address: '上海市普陀区金沙江路 1518 弄',
-          timeStart: '12345644',
-          timeEnd: '12323243222'
-        }, {
-          name: '王小虎',
-          number: '12323243222',
-          workNum: '12345644',
-          email: '378999999999@qq.com',
-          department: '378999999999@qq.com',
-          address: '上海市普陀区金沙江路 1518 弄',
-          timeStart: '12345644',
-          timeEnd: '12323243222'
-        }]
+        data: [],
+        take: 20,
+        currentPage: 0,
+        total: 0
       }
     },
     components: {
@@ -121,18 +100,64 @@
       navigator
     },
     created () {
-      api.fetch(api.uri.getCompanyInfo).then(data => {
+      api.fetch(api.uri.searchUserList, {
+        name: this.formInLine.name,
+        area: this.formInLine.area,
+        department: this.formInLine.department,
+        mobile: this.formInLine.mobile,
+        skip: this.currentPage * this.take,
+        take: this.take
+      }).then(data => {
         if (data.status === 1) {
-          this.company = data
+          this.data = data.result
+          this.total = data.total
         }
+      }).catch(error => {
+        alert(error.message)
       })
     },
+    filter: {
+      formatDate: function (time) {
+        var date = new Date(time)
+        return moment(date).format('YYYY-MM-DD hh:mm:ss')
+      }
+    },
     methods: {
+      handleCurrentChange: function (value) {
+        api.fetch(api.uri.searchUserList, {
+          name: this.formInLine.name,
+          area: this.formInLine.area,
+          department: this.formInLine.department,
+          mobile: this.formInLine.mobile,
+          skip: this.currentPage * this.take,
+          take: this.take
+        }).then(data => {
+          if (data.status === 1) {
+            this.data = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          alert(error.message)
+        })
+      },
       onSubmit: function () {
-        console.log('submit!')
+        api.fetch(api.uri.searchUserList, {
+          name: this.formInLine.name,
+          area: this.formInLine.area,
+          department: this.formInLine.department,
+          mobile: this.formInLine.mobile,
+          skip: this.currentPage * this.take,
+          take: this.take
+        }).then(data => {
+          if (data.status === 1) {
+            this.data = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          alert(error.message)
+        })
       },
       routeByName: function (name) {
-        console.log(name)
         router.push({ name: name })
       }
     }

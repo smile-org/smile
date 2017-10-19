@@ -81,7 +81,10 @@ export default {
     createUser: '',
 
     // 编辑用户
-    editUser: ''
+    editUser: '',
+
+    // 获取用户
+    getUser: ''
 
     // // 获取验证码
     // getCode: '/getVerificationCode',
