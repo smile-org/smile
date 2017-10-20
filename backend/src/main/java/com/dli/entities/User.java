@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class User {
 
-
     private int user_id;
     private String cell_phone;
     private String password;
@@ -13,11 +12,28 @@ public class User {
     private String avatar;
     private String full_name;
     private int company_id;
+    private  String department;
+    private  String area;
     private String token;
     private Boolean indicator;
     private Date created_at;
     private Date updated_at;
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
 
     public int getUser_id() {
         return user_id;

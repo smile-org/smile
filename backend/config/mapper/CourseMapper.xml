@@ -338,4 +338,102 @@ where created_at
     </select>
 
 
+       <insert id="backAddCourseCategory"   parameterType="com.dli.entities.CourseCategory"   useGeneratedKeys="true"   keyProperty="category_id">
+           insert course_category  values(  null, #{category_name} ,  #{icon},  #{company_id},  1,   now(), now() )
+       </insert>
+
+   <update id="backUpdateCourseCategoryIcon">
+       update  course_category set icon = #{icon}  where category_id= #{cateid}
+   </update>
+
+    <update id="backUpdateCourseCategoryName">
+        update  course_category set category_name = #{catename}  where category_id= #{cateid}
+    </update>
+
+    <update id="backDisableCourseCategory">
+        update  course_category set indicator = 0  where category_id= #{cateid}
+    </update>
+
+     <select id="backGetCourseCategoryByID"  resultType="com.dli.entities.CourseCategory">
+         select * from   course_category where category_id=#{cateid}
+     </select>
+
+
+    <insert id="backAddCourseContent"   parameterType="com.dli.entities.CourseContent"   useGeneratedKeys="true"   keyProperty="content_id">
+        insert course_content  values ( null, #{sequnce_num}, #{sequnce_title},  #{content} , null, null , #{content_type}, null, 1, now(),now()   )
+    </insert>
+
+    <update id="backUpdateCourseContentPath">
+        update  course_content set orignal_path = #{path}  where content_id= #{id}
+    </update>
+
+    <update id="backUpdateCourseContentLink">
+        update  course_content set content_link = #{link}  where content_id= #{id}
+    </update>
+
+    <update id="backUpdateCourseContentCourseID">
+        update  course_content set course_id = #{courseid}  where content_id= #{id}
+    </update>
+
+
+    <update id="backUpdateCourseContent"   parameterType="com.dli.entities.CourseContent"  >
+        update  course_content
+        <set>
+        <if test="sequnce_num!=null">sequnce_num=#{sequnce_num},</if>
+        <if test="sequnce_title!=null">sequnce_title=#{sequnce_title},</if>
+        <if test="content!=null">content=#{content},</if>
+       <if test="content_type!=null">content_type= #{content_type}</if>
+       </set>
+where  content_id=#{content_id}
+    </update>
+
+    <delete id="backDisableCourseContent">
+        update  course_content set indicator = 0  where content_id=#{contentid}
+    </delete>
+
+    <select id="backGetCourseContentByID"  resultType="com.dli.entities.CourseContent">
+        select * from   course_content where content_id=#{contentid}
+    </select>
+
+     <delete id="backDeleteCourseWhilteListByCourseID">
+         delete from course_whitelist where course_id =#{courseid}
+     </delete>
+
+     <insert id="backAddCourseWhilteListMapping">
+         insert  course_whitelist values( #{courseid},  #{userid} )
+     </insert>
+
+    <select id="backGetCourseWhiteListByCourseID"  resultType="com.dli.entities.User">
+        select u.* from  course_whitelist  m join  user  u      on m.user_id = u.user_id where  m.course_id=#{courseid}
+    </select>
+
+    <insert id="backAddCourse" parameterType="com.dli.entities.Course"      useGeneratedKeys="true"   keyProperty="course_id"  >
+        insert course  values (  0, #{category_id},#{title}, #{principal_user_id},  #{department}, #{expiration_date},#{intro}  , #{icon}, #{pic}, #{type_id}, 0,#{company_id}, 1,now(),now()   )
+    </insert>
+
+
+    <update id="backUpdateCourseIconAndPic"  parameterType="com.dli.entities.Course">
+        update   course    <set>    <if test="icon!=null">icon = #{icon},</if>   <if test="pic!=null"> pic =#{pic}</if>  </set>  where course_id =#{course_id}
+    </update>
+
+    <update id="backUpdateCoursePublishStatus">
+        update course set ispublished =#{status} where course_id = #{courseid}
+    </update>
+
+    <select id="backGetCourseByID" resultType="com.dli.entities.Course">
+         select * from course where course_id =#{courseid}
+    </select>
+
+    <update id="backUpdateCourse" parameterType="com.dli.entities.Course"    >
+        update   course SET category_id=#{category_id},
+      title=#{title},
+     principal_user_id=#{principal_user_id},
+     department=#{department},
+   expiration_date=#{expiration_date},
+    intro= #{intro},
+    icon=#{icon},
+     pic=#{pic},
+   type_id=#{type_id}
+   where course_id=#{course_id}
+    </update>
 </mapper>

@@ -2,6 +2,7 @@ package com.dli.services;
 
 
 import com.dli.entities.Demo;
+import com.dli.entities.LogonHistory;
 import com.dli.entities.User;
 
 import java.util.Date;
@@ -26,4 +27,10 @@ public interface LogonService {
     void  deleteSMSOverdue();
 
      boolean     allowGetSMSByCellphone  (  String  cellphone);
+
+    boolean backlogon(String  pwd, String  cellphone);
+
+    void  addLogonHistory(int userid);
+
+    List<LogonHistory>  backGetLogonHistoryList(LogonHistory   h);
 }

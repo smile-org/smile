@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.CompanyRepo">
+
+    <resultMap type="com.dli.entities.Company" id="CompanyMap">
+        <id column="company_id" property="company_id"/>
+        <result column="company_name" property="company_name"/>
+
+        <result column="contact_person" property="contact_person"/>
+        <result column="phone_number" property="phone_number"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="address" property="address"/>
+
+        <result column="logo" property="logo"/>
+        <result column="banner" property="banner"/>
+    </resultMap>
+
+    <select id="backGetCompanyByID" resultMap="CompanyMap">
+        select * from (
+select  c.company_id, c.company_name, i.contact_person,i.phone_number,i.province,i.city,i.address  from company c join company_info i on c.company_id=i.company_id
+where  c.company_id=#{companyid})result join
+(
+select pic_url as  banner from company_pic
+where  company_id=#{companyid}  and pic_type='banner')banner on 1=1  join
+(
+select pic_url as logo from company_pic
+where  company_id=#{companyid}  and pic_type='logo') logo on 1=1
+    </select>
+
+    <update id="backSetCompanyPic">
+        update  company_pic  set pic_url=#{picurl}  ,updated_at=NOW()
+where company_id=#{companyid} and pic_type=#{pictype}
+    </update>
+</mapper>

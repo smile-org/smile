@@ -2,6 +2,7 @@ package com.dli.repositories;
 
 
 import com.dli.entities.Demo;
+import com.dli.entities.LogonHistory;
 import com.dli.entities.SMS;
 import com.dli.entities.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -31,4 +32,10 @@ public interface LogonRepo {
      void  deleteSMSOverdue();
 
      List<SMS>  getSMSHistoryByCellphone( @Param("cellphone") String  cellphone);
+
+    int backlogon(@Param("pwd") String  pwd,@Param("cellphone") String  cellphone);
+
+    void  addLogonHistory(int userid);
+
+    List<LogonHistory>  backGetLogonHistoryList(LogonHistory   h);
 }

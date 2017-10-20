@@ -152,12 +152,12 @@ public class OfficeUtil {
         }
         rowIndex += 1;
 
-        columnIndex = 0;
         for (Object[] dataArray : dataList) {
+            columnIndex = 0;
             XSSFRow dataRow = sheet.createRow(rowIndex);
             for (Object data : dataArray) {
                 XSSFCell cell = dataRow.createCell(columnIndex, Cell.CELL_TYPE_STRING);
-                cell.setCellValue(data.toString());
+                cell.setCellValue( data==null? null:  data.toString());
                 columnIndex += 1;
             }
             rowIndex += 1;

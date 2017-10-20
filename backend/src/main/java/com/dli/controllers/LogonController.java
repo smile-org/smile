@@ -1,6 +1,7 @@
 package com.dli.controllers;
 
 
+import com.dli.entities.LogonHistory;
 import com.dli.entities.User;
 import com.dli.helper.Constant;
 import com.dli.helper.Helper;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -121,6 +123,8 @@ public class LogonController {
                 result.put(Constant.result, user.getToken());
                 result.put("userInfo", user);
 
+                 logonService.addLogonHistory(user.getUser_id());
+
             } else {
 
                 result.put(Constant.status, 0);
@@ -168,6 +172,7 @@ public class LogonController {
     }
 
   //暂时没用到
+    /*
     @RequestMapping(value = "/getUserByID", method = RequestMethod.GET)
     public Map getUserByID(int id) {
         Map<String, Object> result = new HashMap<String, Object>();
@@ -184,6 +189,83 @@ public class LogonController {
             result.put(Constant.result, ex.getMessage());;
         }
         return result;
+    }*/
+
+
+    @RequestMapping(value = "/back/logon", method = RequestMethod.POST)
+    public Map backlogon(@RequestBody Map body) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        try {
+            String  pwd =(String)  body.get("pwd");
+            String   cellphone=(String)  body.get("cellphone");
+
+            if (logonService.backlogon(pwd, cellphone)) {
+
+                result.put(Constant.status, 1);
+                User user = logonService.getUserByPhoneNumber(cellphone);
+                result.put(Constant.result, user.getToken());
+                result.put("userInfo", user);
+
+            } else {
+
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "用户名或密码错误");
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
     }
+
+
+
+    @RequestMapping(value = "/back/GetLogonHistoryList", method = RequestMethod.GET)
+    public Map backGetLogonHistoryList(@RequestParam String fullname, @RequestParam String department,
+                               @RequestParam String area, @RequestParam String start, @RequestParam String end,@RequestParam int skip,@RequestParam int take, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            LogonHistory  h=new LogonHistory();
+            if( ! Helper.isNullOrEmpty(fullname)  )
+                 h.setFull_name(fullname);
+            if( ! Helper.isNullOrEmpty(department)  )
+                h.setDepartment(department);
+            if( ! Helper.isNullOrEmpty(area)  )
+                h.setArea(area);
+            if( ! Helper.isNullOrEmpty(start)  )
+                h.setStart(start);
+            if( ! Helper.isNullOrEmpty(end)  )
+                h.setEnd(end);
+
+
+                h.setSkip(skip);
+                h.setTake(take);
+                h.setCompany_id( user.getCompany_id());
+
+            List<LogonHistory> lst=   logonService.backGetLogonHistoryList(h);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
 
 }

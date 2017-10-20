@@ -41,4 +41,39 @@ public interface CourseService {
     List<Course> getMyCollectionList( int userid, int  skip , int take );
 
     List<Course>  getFirstPageCourseList(  String scope  , int  companyid,  int userid ,int  skip  , int take);
+
+    void  backAddCourseCategory( CourseCategory cate);
+
+    void     backUpdateCourseCategoryIcon( String icon,  int cateid);
+
+    CourseCategory   backGetCourseCategoryByID(int cateid);
+
+    void     backUpdateCourseCategoryName( String catename, int cateid);
+
+    void  backDisableCourseCategory(int cateid);
+
+    void  backAddCourseContent(CourseContent  c);
+
+
+    void  backUpdateCourseContentPath(String  path ,int id);
+    void  backUpdateCourseContentLink(String  link ,int id);
+    void  backUpdateCourseContentCourseID(int courseid ,int id);
+
+    void   backUpdateCourseContent(CourseContent  c);
+
+    void   backDisableCourseContent(int contentid);
+
+    CourseContent backGetCourseContentByID(int contentid);
+
+    void  backSaveCourseWhilteList(int  courseid, String[]   useridList);
+
+    CourseEditPageInfo backGetCourseEditPageInfo( int companyid,int courseid);
+
+    void   backAddCourse(Course  c);
+
+    void   backUpdateCourseIconAndPic( Course  c);
+
+    void     backUpdateCoursePublishStatus(int  status , int courseid );
+
+    void   backUpdateCourse(Course  c);
 }

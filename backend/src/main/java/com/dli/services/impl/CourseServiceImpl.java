@@ -7,6 +7,7 @@ import com.dli.repositories.UserRepo;
 import com.dli.services.CourseService;
 import com.dli.services.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -135,4 +136,120 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getFirstPageCourseList(String scope, int companyid, int userid, int skip, int take) {
         return     courseRepo.getFirstPageCourseList(scope, companyid, userid, skip, take);
     }
+
+    @Override
+    public void backAddCourseCategory(CourseCategory cate) {
+          courseRepo.backAddCourseCategory(cate);
+    }
+
+    @Override
+    public void backUpdateCourseCategoryIcon(String icon, int cateid) {
+        courseRepo.backUpdateCourseCategoryIcon(icon,cateid);
+    }
+
+    @Override
+    public CourseCategory backGetCourseCategoryByID(int cateid) {
+        return courseRepo.backGetCourseCategoryByID(cateid);
+    }
+
+    @Override
+    public void backUpdateCourseCategoryName(String catename, int cateid) {
+        courseRepo.backUpdateCourseCategoryName(catename,cateid);
+    }
+
+    @Override
+    public void backDisableCourseCategory(int cateid) {
+        courseRepo.backDisableCourseCategory(cateid);
+    }
+
+    @Override
+    public void backAddCourseContent(CourseContent c) {
+        courseRepo.backAddCourseContent(c);
+    }
+
+    @Override
+    public void backUpdateCourseContentPath(String path ,int id) {
+        courseRepo.backUpdateCourseContentPath(path , id);
+    }
+
+    @Override
+    public void backUpdateCourseContentLink(String link ,int id) {
+        courseRepo.backUpdateCourseContentLink(link , id);
+    }
+
+    @Override
+    public void backUpdateCourseContentCourseID(int courseid ,int id) {
+        courseRepo.backUpdateCourseContentCourseID(courseid , id);
+    }
+
+    @Override
+    public void backUpdateCourseContent(CourseContent c) {
+        courseRepo. backUpdateCourseContent(c);
+    }
+
+    @Override
+    public void backDisableCourseContent(int contentid) {
+        courseRepo.backDisableCourseContent(contentid);
+    }
+
+    @Override
+    public CourseContent backGetCourseContentByID(int contentid) {
+        return courseRepo.backGetCourseContentByID(contentid);
+    }
+
+    @Override
+    public void backSaveCourseWhilteList(int courseid, String[] useridList) {
+        courseRepo.backDeleteCourseWhilteListByCourseID(courseid);
+
+        for( String  userid  : useridList   ){
+            courseRepo.backAddCourseWhilteListMapping(courseid, Integer.parseInt( userid));
+        }
+    }
+
+
+    @Value("${defaultcourseicon}")
+    private String defaultcourseicon;
+
+    @Value("${defaultcoursepic}")
+    private String defaultcoursepic;
+
+    @Override
+    public CourseEditPageInfo backGetCourseEditPageInfo(int companyid,int courseid ) {
+        CourseEditPageInfo entity =new CourseEditPageInfo();
+
+        entity.CategoryList = courseRepo.getCourseCategoryList(companyid, 0,  99999);
+        entity.AdminList =userRepo.backGetCompanyAdminList( companyid );
+
+        if(courseid >  0)
+        {
+            entity.CourseTobeEdit = courseRepo.backGetCourseByID(courseid);
+            entity.ContentList =  courseRepo.getCourseContentListByID(courseid);
+            entity.UserWhiteList =courseRepo.backGetCourseWhiteListByCourseID(courseid);
+        }
+
+
+        return entity;
+    }
+
+    @Override
+    public void backAddCourse(Course c) {
+        courseRepo.backAddCourse(c);
+    }
+
+    @Override
+    public void backUpdateCourseIconAndPic(Course c) {
+        courseRepo.backUpdateCourseIconAndPic(c);
+    }
+
+    @Override
+    public void backUpdateCoursePublishStatus(int status, int courseid) {
+        courseRepo.backUpdateCoursePublishStatus(status, courseid);
+    }
+
+    @Override
+    public void backUpdateCourse(Course c) {
+        courseRepo.backUpdateCourse(c);
+    }
+
+
 }

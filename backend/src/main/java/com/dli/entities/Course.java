@@ -14,6 +14,7 @@ public class Course {
     private String icon;
     private String pic;
     private int type_id;
+    private  boolean ispublished;
     private int company_id;
     private boolean indicator;
     private Date created_at;
@@ -168,4 +169,13 @@ public class Course {
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
+
+    public boolean isIspublished() {
+        return ispublished;
+    }
+
+    public void setIspublished(boolean ispublished) {
+        this.ispublished = ispublished;
+    }
+
 }

@@ -2,6 +2,7 @@ package com.dli.services.impl;
 
 
 import com.dli.entities.Demo;
+import com.dli.entities.LogonHistory;
 import com.dli.entities.SMS;
 import com.dli.entities.User;
 import com.dli.repositories.LogonRepo;
@@ -91,6 +92,28 @@ public class LogonServiceImpl implements LogonService {
         else
             return  false;
 
+    }
+
+    @Override
+    public boolean backlogon(String pwd, String cellphone) {
+
+        int count = logonRepo.backlogon(pwd, cellphone);
+        if (count > 0)
+            return true;
+        else
+            return false;
+
+
+    }
+
+    @Override
+    public void addLogonHistory(int userid) {
+        logonRepo.addLogonHistory(userid);
+    }
+
+    @Override
+    public List<LogonHistory> backGetLogonHistoryList(LogonHistory h) {
+        return    logonRepo.backGetLogonHistoryList(h);
     }
 
 

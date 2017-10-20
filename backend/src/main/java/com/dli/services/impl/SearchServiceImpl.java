@@ -39,5 +39,4 @@ public class SearchServiceImpl implements SearchService {
         searchRepo.deleteSearchHistory(type, userid);
     }
 
-
 }

@@ -76,7 +76,6 @@ public class Helper {
        return  returnvalue;
     }
 
-
     public static int getRandNum(int min, int max) {
         int randNum = min + (int)(Math.random() * ((max - min) + 1));
         return randNum;
@@ -87,18 +86,50 @@ public class Helper {
     {
 
     }
-
-
-    public  static  String GenerateToken()
+    public  static  boolean  isNullOrEmpty(String value)
     {
-        return "123123";
+        if (value==null || value.trim().equals("") ) return  true;
+        else  return  false;
     }
+
+    public  static  String  formatDate( Date d)
+    {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String result= sdf.format(d);
+        return  result;
+    }
+
+    public  static  String getFileNameExtension(String fileName)
+    {
+        String[] arr= fileName.split("\\.");
+        return arr[arr.length-1];
+    }
+
+    public  static  Date dateParse(String  dateString)
+     throws Exception
+    {
+        try
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(dateString);
+            return   date;
+        }
+        catch (Exception e)
+        {
+            throw  e;
+        }
+    }
+
 
     /*
     * todo
 
     *2. job to disable course , exam, enroll  while over due expiration date
-
+     3. generate token . when : log on , if token is null.
+     4. job to create records into table short_message(table created already) ,  for new user which password is null
+     5. job to send message ,record from short_message
+     6.  员工管理列表页面  批量导入，  下载倒入模板
+     7.  job 清理  course_content 中没有course_id的记录 和对应的 文件， 考虑一下当前正在编辑的课程（也是这种情况，但是不能删除），比如删除一周以前创建的
     *
     * */
 }

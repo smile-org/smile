@@ -27,6 +27,15 @@
         <result column="created_at" property="created_at"/>
     </resultMap>
 
+    <resultMap  id="LogonHistoryMap" type="com.dli.entities.LogonHistory">
+        <result column="full_name" property="full_name"/>
+        <result column="department" property="department"/>
+        <result column="area" property="area"/>
+        <result column="logon_at" property="logon_at"/>
+    </resultMap>
+
+
+
     <select id="getUserByPhoneNumber"   resultMap="UserMap">
         select * from user where cell_phone= #{0} and indicator=1
     </select>
@@ -45,9 +54,7 @@
     </update>
 
     <select id="logon"  resultType="int">
-
-        select count(*) from user where cell_phone=#{cellphone} and password=#{pwd}
-
+        select count(*) from user u join  user_role  m on u.user_id =m.user_id where  m.role_id in (1,2)  and  cell_phone=#{cellphone} and password=#{pwd}
     </select>
 
 
@@ -65,6 +72,26 @@
 
     <select id="getSMSHistoryByCellphone"  resultMap="SMSMap">
         select * from  sms   WHERE  cell_phone=#{cellphone}  order by created_at desc limit 0,3
+    </select>
+
+    <select id="backlogon"  resultType="int">
+        select count(*) from user u join user_role m on u.user_id= m.user_id where  m.role_id=2 and cell_phone=#{cellphone} and password=#{pwd}
+    </select>
+
+    <insert id="addLogonHistory">
+        insert  logon_history values( #{uesrid}, NOW())
+    </insert>
+
+    <select id="backGetLogonHistoryList"  parameterType="com.dli.entities.LogonHistory"  resultMap="LogonHistoryMap">
+        select   u.*, h.logon_at from  logon_history  h  join  user u on h.user_id = u.user_id
+        where   u.company_id=#{company_id}
+         <if test="full_name!=null">and  u.full_name like '%${full_name}%'</if>
+         <if test="department!=null">and  u.department like '%${department}%'</if>
+         <if test="area!=null">and  u.area like '%${area}%'</if>
+         <if test="start!=null">and  h.logon_at &gt; #{start}</if>
+         <if test="end!=null">and  h.logon_at &lt; #{end}</if>
+        order by h.logon_at
+        desc LIMIT #{skip}, #{take}
     </select>
 
 </mapper>
