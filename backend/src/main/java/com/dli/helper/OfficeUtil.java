@@ -7,6 +7,7 @@ import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.hslf.usermodel.HSLFTextParagraph;
 import org.apache.poi.hslf.usermodel.HSLFTextRun;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.converter.WordToHtmlConverter;
 import org.apache.poi.sl.usermodel.SlideShow;
@@ -34,6 +35,9 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -162,6 +166,41 @@ public class OfficeUtil {
 
         workbook.write(outputStream);
         outputStream.close();
+    }
+
+    public List<Object[]> extractExcel(String excelPath)
+            throws Exception {
+        List<Object[]> result = new ArrayList<>();
+        InputStream is = new FileInputStream(excelPath);
+        XSSFWorkbook workbook = new XSSFWorkbook(is);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        int rowCount = sheet.getLastRowNum();
+        for (int rowNum = 0; rowNum < rowCount; rowNum++){
+            XSSFRow row = sheet.getRow(rowNum);
+            int cellCount = row.getLastCellNum();
+            Object[] dataArray = new Object[cellCount];
+            for(int cellNum = 0; cellNum < row.getLastCellNum();cellNum++){
+                XSSFCell cell = row.getCell(cellNum);
+                Object val = null;
+                if (cell.getCellType() == cell.CELL_TYPE_BOOLEAN) {
+                    val =  cell.getBooleanCellValue();
+                } else if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
+                    if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                        Date date = cell.getDateCellValue();
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                        val = sdf.format(date);
+                    } else {
+                        val = cell.getNumericCellValue();
+                    }
+                }
+                else {
+                    val = cell.getStringCellValue();
+                }
+                dataArray[cellNum] = val;
+            }
+            result.add(dataArray);
+        }
+        return result;
     }
 
     private void doc2html(String htmlPath, File wordFile, String wordFileName, File htmlFile, String imagePath)

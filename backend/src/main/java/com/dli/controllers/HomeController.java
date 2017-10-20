@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.support.nativejdbc.OracleJdbc4NativeJdbcExtractor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class HomeController {
             //OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.ppt",htmlPath);
             //OfficeUtil.getInstance().ppt2html("/root/smile/files/course/office/ETL调度设计.pptx",htmlPath);
 
-            String sheetName = "testSheet";
+            /*String sheetName = "testSheet";
             List<String> rowNameList = new ArrayList<>();
             rowNameList.add("序号");
             rowNameList.add("姓名");
@@ -118,7 +119,18 @@ public class HomeController {
             dataArray[3] = "1984-01-01 12:12:12";
             dataList.add(dataArray);
 
-            OfficeUtil.getInstance().export2excel(sheetName, rowNameList, dataList,"/home/wangqc/Desktop/testExcel.xlsx");
+            OfficeUtil.getInstance().export2excel(sheetName, rowNameList, dataList,"/home/wangqc/Desktop/testExcel.xlsx");*/
+
+            List<Object[]> result = OfficeUtil.getInstance().extractExcel("/home/wangqc/Desktop/合计.xlsx");
+            for(Object[] objectArray : result){
+                for(Object obj: objectArray){
+                    logger.info(obj.toString());
+                }
+            }
+
+
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
