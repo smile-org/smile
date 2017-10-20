@@ -89,8 +89,5 @@
   }
 </script>
 
-<style>
-  .el-input__inner:focus{
-    border-color: #01b554;
-  }
+<style scoped="scope">
 </style>

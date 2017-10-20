@@ -28,13 +28,10 @@
             </el-form-item>
             <el-form-item>
               <button type="button" class="inf_btn ml20">查  询</button>
+              <button type="button" class="inf_btn ml20">导  出</button>
             </el-form-item>
           </el-form>
           <!--添加报名导出表格-->
-          <div class="fr hidden mb20">
-            <button type="button" class="inf_btn mr20" v-on:click="routeByName('registrationEdit')">添加报名</button>
-            <button type="button" class="inf_btn">导  出</button>
-          </div>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="name" label="课程名称" width="">
             </el-table-column>
@@ -44,22 +41,11 @@
             </el-table-column>
             <el-table-column prop="timeEnd" label="结束时间" width="">
             </el-table-column>
-            <el-table-column prop="appraise" label="查看评价" width="180">
-              <template scope="scope">
-                <el-button v-on:click="routeByName('courseComment')" type="text" size="small">查看课程评价</el-button>
-              </template>
+            <el-table-column prop="people" label="人数限制" width="">
             </el-table-column>
-            <el-table-column prop="appraise" label="再开一期" width="100">
-              <template scope="scope">
-                <el-button v-on:click="routeByName('')" type="text" size="small">再开一期</el-button>
-              </template>
+            <el-table-column prop="thisR" label="本期报名" width="">
             </el-table-column>
-
-            <el-table-column label="操作" class="tc" width="180">
-              <template scope="scope">
-                <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
-                <el-button @click="checkFail(scope.row.id)" type="text" size="small">删除</el-button>
-              </template>
+            <el-table-column prop="nextR" label="预约下期" width="">
             </el-table-column>
           </el-table>
         </div>
@@ -89,17 +75,26 @@
           name: '成功过心理学',
           lecturer: '望天有',
           timeStart: '2017年10月12日',
-          timeEnd: '2017年10月12日'
+          timeEnd: '2017年10月12日',
+          people: '80',
+          thisR: '40',
+          nextR: '40'
         }, {
           name: '成功过心理学',
           lecturer: '望天有',
           timeStart: '2017年10月12日',
-          timeEnd: '2017年10月12日'
+          timeEnd: '2017年10月12日',
+          people: '80',
+          thisR: '40',
+          nextR: '40'
         }, {
           name: '成功过心理学',
           lecturer: '望天有',
           timeStart: '2017年10月12日',
-          timeEnd: '2017年10月12日'
+          timeEnd: '2017年10月12日',
+          people: '80',
+          thisR: '40',
+          nextR: '40'
         }]
       }
     },

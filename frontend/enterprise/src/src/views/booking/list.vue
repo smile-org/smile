@@ -128,11 +128,7 @@
   }
 </script>
 
-<style>
-  .el-input__inner:focus {
-    border-color: #01b554;
-  }
-
+<style scoped="scope">
   .booking_detail li {
     margin-bottom: 20px;
     font-size: 14px;

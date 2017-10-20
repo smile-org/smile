@@ -80,7 +80,7 @@
               <el-col :span="24">
                 <el-form-item label="主题">
                   <el-input v-model="formInline.topic" placeholder="主题" style="width:400px;"></el-input>
-                  <el-button :plain="true" type="success" size="primary">添加主题</el-button>
+                  <el-button :plain="true" type="success" size="primary" class="ml10">添加主题</el-button>
                 </el-form-item>
               </el-col>
             </el-form>
@@ -179,7 +179,7 @@
   }
 </script>
 
-<style>
+<style scoped="scope">
   .el-dialog__body {
     padding: 10px 20px;
   }
@@ -192,9 +192,6 @@
   .el-button--small:hover, .el-button--small:active, .el-button--small:focus {
     font-size: 14px;
     color: #1DB513;
-  }
-  .el-input__inner:focus{
-    border-color: #01b554;
   }
 
 </style>

@@ -101,7 +101,7 @@
   }
 </script>
 
-<style>
+<style scoped="scope">
 
 </style>
 

@@ -78,7 +78,7 @@
             </p>
             <template>
               <el-dialog title="添加/编辑课程内容" :visible.sync="dialogFormVisible">
-                <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline mt20" label-width="80px">
+                <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline mt20" label-width="50px">
                   <el-form-item label="序号">
                     <el-input v-model="formInline.user" placeholder="序号"></el-input>
                   </el-form-item>
@@ -86,7 +86,7 @@
                     <el-input v-model="formInline.user" placeholder="章节"></el-input>
                   </el-form-item>
                   <el-form-item label="标题">
-                    <el-input v-model="formInline.address" placeholder="标题"></el-input>
+                    <el-input v-model="formInline.address" placeholder="标题" style="width: 300px;"></el-input>
                   </el-form-item>
                 </el-form>
                 <!--<div slot="footer" class="dialog-footer">-->
@@ -115,7 +115,7 @@
                 <el-table-column label="操作" class="tc" width="">
                   <template scope="scope">
                     <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
-                    <el-button @click="checkFail(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="open2" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -123,7 +123,11 @@
 
           </div>
           <div class="mt30">
-            <p><template><el-checkbox v-model="checked">备选项</el-checkbox></template>白名单
+            <p>
+              <template>
+                <el-checkbox v-model="checked">备选项</el-checkbox>
+              </template>
+              白名单
               <el-button type="text" @click="dialogTableVisible = true">导入白名单</el-button>
             </p>
             <el-dialog title="导入白名单" :visible.sync="dialogTableVisible">
@@ -134,8 +138,8 @@
                 <el-form-item label="部门">
                   <el-input v-model="formInline.department" placeholder="部门"></el-input>
                 </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" @click="onSubmit">查询</el-button>
+                <el-form-item class="wrapper">
+                  <el-button type="success" @click="onSubmit" >查询</el-button>
                 </el-form-item>
               </el-form>
               <el-table :data="gridData" border>
@@ -148,6 +152,7 @@
                 <el-table-column property="name" label="手机" width=""></el-table-column>
                 <el-table-column property="address" label="部门"></el-table-column>
               </el-table>
+                <el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"> </el-pagination>
               <div class="tc">
                 <button type="button" class="inf_btn mt30 mb20" v-on:click="routeByName('informationEdit')">保  存
                 </button>
@@ -253,7 +258,25 @@
     methods: {
       onSubmit: function () {
         console.log('submit!')
+      },
+      open2 () {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       }
+
     }
   }
 </script>
@@ -272,21 +295,36 @@
     font-size: 14px;
     color: #1DB513;
   }
-  .baiming_list{
-    width:100%;
-    min-height:30px;
-    padding:20px;
+
+  .baiming_list {
+    width: 100%;
+    min-height: 30px;
+    padding: 20px;
     border: 1px solid #dcdcdc;
-    margin-top:20px;
+    margin-top: 20px;
   }
-  .baiming_list span{
-    margin-right:20px;
+
+  .baiming_list span {
+    margin-right: 20px;
     height: 34px;
     line-height: 32px;
     padding: 0 5px 0 15px;
     font-size: 14px;
   }
-  .baiming_list span i{
-    margin-left:10px;
+
+  .baiming_list span i {
+    margin-left: 10px;
+  }
+
+  /*此处为弹出小分页的颜色*/
+  .el-pager li.active {
+    border-color: #00b553;
+    background-color: #00b553;
+    color: #fff;
+    cursor: default;
+  }
+  .el-pager li:hover {
+    color: #00b553;
   }
 </style>
+
