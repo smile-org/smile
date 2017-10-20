@@ -10,6 +10,10 @@
         </nav>
         <div class="con_tab">
           <div class="el-form-item el-form--label-left mt20">
+            <label class="el-form-item__label" style="width: 100px;">课程图片</label>
+            <img src="../../../assets/img/baoming.png" class="course_header" />
+          </div>
+          <div class="el-form-item el-form--label-left mt20">
             <label class="el-form-item__label" style="width: 100px;">课程类别</label>
             <input type="" class="el-input__inner">
           </div>

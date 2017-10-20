@@ -18,11 +18,13 @@ header .logo {
   width: 190px;
   flex: 1; /*这里设置为占比1，填充满剩余空间*/
 }
-header .logo img{
-  width:45px;
-  height:45px;
-  border-radius:22.5px;
+
+header .logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 22.5px;
 }
+
 header .logo span {
   font-size: 24px;
   color: #fff;
@@ -273,6 +275,7 @@ nav span .f_blue {
   max-width: calc(100vw - 250px);
   min-width: 1005px;
 }
+
 /*按钮样式*/
 .btn_bass {
   font-size: 16px;
@@ -291,15 +294,19 @@ nav span .f_blue {
 .btn_b {
   background: #01b554;
 }
+
 .btn_y {
   background: #ffb752;
 }
+
 .btn_g {
   background: #7ec75f;
 }
+
 .btn_bass:hover {
   opacity: .8;
 }
+
 table {
   width: 100%;
 }
@@ -315,6 +322,7 @@ table {
   position: relative;
   text-align: center;
 }
+
 .pos_center {
   position: absolute;
   margin-top: -260px;
@@ -322,6 +330,7 @@ table {
   margin-left: -220px;
   left: 50%;
 }
+
 @media only screen and (max-width: 1366px) {
   .pos_center {
     transform: scale(.8);
@@ -529,6 +538,7 @@ table {
   border-left: 1px solid #dcdcdc;
   border-top: 1px solid #dcdcdc;
 }
+
 .m_show {
   max-width: 660px;
   width: 660px;
@@ -536,6 +546,7 @@ table {
   border: 1px solid #dcdcdc;
   margin: 20px auto 0;
 }
+
 .m_show_header {
   width: 640px;
   height: 100px;
@@ -544,6 +555,7 @@ table {
   text-align: left;
   background-size: 100% 100%;
 }
+
 .m_show_header img {
   width: 80px;
   padding-left: 30px;
@@ -551,4 +563,13 @@ table {
 
 .m_show_banner {
   width: 640px;
+}
+
+.course_header {
+  width: 120px;
+  height: 90px;
+  max-width: 120px;
+  max-height: 90px;
+  border: 1px solid #ededed;
+  padding: 5px;
 }
