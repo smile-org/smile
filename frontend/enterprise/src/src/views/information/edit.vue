@@ -28,6 +28,7 @@
                 banner
               </td>
               <td class="page_m_b">
+                <img v-if="bannerSrc" :src="bannerSrc" v-show="true" style="display: none;">
                 <img :src="bannerSrc | formatImage" width="100%"/>
               </td>
               <td class="page_m_c">
@@ -48,7 +49,6 @@
     @crop-upload-fail="cropUploadFail"
     :width="300"
     :height="300"
-    url="http://192.168.1.106:3001/users/upload"
     :params="params"
     :headers="headers"
     :value.sync="show"
@@ -79,7 +79,6 @@
         params: {
           type: 1
         }
-        // imgDataUrl: '' // the datebase64 url of created image
       }
     },
     components: {
@@ -104,7 +103,9 @@
         this.params.type = type
         this.show = !this.show
       },
-      cropSuccess (imgDataUrl, field) {
+      cropSuccess (data, field) {
+        console.log(data)
+        this.bannerSrc = data
         // console.log('-------- crop success --------')
         // this.imgDataUrl = imgDataUrl
         // this.logoSrc = imgDataUrl

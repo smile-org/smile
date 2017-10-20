@@ -26,23 +26,16 @@
 <script>
   import commonHeader from '../../../components/CommonHeader'
   import navigator from '../../../components/Navigator'
-  import api from '../../../services/api'
+  // import api from '../../../services/api'
   export default {
     data: function () {
       return {
-        company: {}
+
       }
     },
     components: {
       commonHeader,
       navigator
-    },
-    created () {
-      api.fetch(api.uri.getCompanyInfo).then(data => {
-        if (data.status === 1) {
-          this.company = data
-        }
-      })
     },
     methods: {}
   }

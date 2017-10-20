@@ -6,32 +6,17 @@
       <section class="con_main_r">
         <nav>
           <img src="../../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">课程管理</span> > <span class="f_blue">课程类别管理</span></span>
+          <span class="vm">您的当前位置 : <span class="">课程管理</span> > <span class="">课程类别管理</span> > <span class="f_blue">编辑课程类别</span></span>
         </nav>
         <div class="con_tab">
-          <button class="inf_btn " v-on:click="routeByName('courseCategoryCreate')">添加课程类别</button>
-          <table class="approve_tab" cellspacing="0" cellpadding="0" border="0">
-            <tr>
-              <th>
-                <span class="bold">课程类别</span><span></span>
-              </th>
-              <th>
-                <span class="bold">操作</span><span></span>
-              </th>
-            </tr>
-            <tr v-for="item in data" :key="item.name">
-              <td class="">
-                <span>{{item.name}}</span>
-              </td>
-              <td>
-                <div class="cell">
-                  <button type="button" class="el-button el-button--text el-button--small mr20" v-on:click="edit(item.id)">编辑</button>
-                  <button type="button" class="el-button el-button--text el-button--small" v-on:click="del(item.id)">删除</button>
-                </div>
-              </td>
-            </tr>
+          <div class="el-form-item el-form--label-left mt20">
+            <label class="el-form-item__label" style="width: 100px;">课程类别</label>
+            <input type="" class="el-input__inner">
+          </div>
+          <div class="">
+            <button type="button" class="inf_btn ">保  存</button>
+          </div>
 
-          </table>
         </div>
       </section>
     </div>
@@ -42,11 +27,10 @@
   import commonHeader from '../../../components/CommonHeader'
   import navigator from '../../../components/Navigator'
   import api from '../../../services/api'
-  import router from '../../../router'
   export default {
     data: function () {
       return {
-        data: []
+        company: {}
       }
     },
     components: {
@@ -54,25 +38,13 @@
       navigator
     },
     created () {
-      api.fetch(api.uri.getCategory).then(data => {
+      api.fetch(api.uri.getCompanyInfo).then(data => {
         if (data.status === 1) {
-          this.data = data
+          this.company = data
         }
-      }).catch(error => {
-        alert(error.message)
       })
     },
-    methods: {
-      routeByName (name) {
-        router.push({name: name})
-      },
-      edit (id) {
-        router.push({name: 'courseCategoryEdit', query: {id: this.id}})
-      },
-      del (id) {
-        alert(id)
-      }
-    }
+    methods: {}
   }
 </script>
 
@@ -120,5 +92,14 @@
   .el-button--small {
     font-size: 14px;
     color: #00b553;
+  }
+
+  .el-input__inner{
+    width:50%;
+    min-width: 200px;
+    max-width:500px;
+  }
+  .el-input__inner:focus{
+    border-color: #00b553;
   }
 </style>

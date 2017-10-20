@@ -15,6 +15,7 @@ import userLog from '@/views/user/log'
 // 课程管理
 import courseCategoryList from '@/views/course/category/list'
 import courseCategoryCreate from '@/views/course/category/create'
+import courseCategoryEdit from '@/views/course/category/edit'
 
 import courseList from '@/views/course/list'
 import courseDetail from '@/views/course/detail'
@@ -35,22 +36,12 @@ import bookingDetail from '@/views/booking/detail'
 import adminList from '@/views/admin/list'
 import adminChangePWD from '@/views/admin/changePWD'
 
-// test
-import testCorp from '@/views/test/corp-ori'
-
 Vue.use(Router)
 var requiresAuth = false
 
 export default new Router({
   mode: 'history',
   routes: [
-    // test corp & upload
-    {
-      path: '/testcorp',
-      name: 'testCorp',
-      component: testCorp,
-      meta: {requiresAuth: requiresAuth}
-    },
     // 公司信息管理
     {
       path: '/',
@@ -107,6 +98,12 @@ export default new Router({
       name: 'courseCategoryCreate',
       component: courseCategoryCreate,
       meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/course/category/edit',
+      name: 'courseCategoryEdit',
+      component: courseCategoryEdit,
+      meta: { requiresAuth: requiresAuth }
     },
     {
       path: '/course/detail',
