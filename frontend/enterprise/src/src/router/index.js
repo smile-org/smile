@@ -21,6 +21,20 @@ import courseDetail from '@/views/course/detail'
 import courseEdit from '@/views/course/edit'
 import courseComment from '@/views/course/comment'
 
+// 报名管理
+import registrationDetail from '@/views/registration/detail'
+import registrationList from '@/views/registration/list'
+import registrationEdit from '@/views/registration/edit'
+import registrationRecord from '@/views/registration/record'
+
+// 约课管理
+import bookingList from '@/views/booking/list'
+import bookingDetail from '@/views/booking/detail'
+
+// 修改密码
+import adminList from '@/views/admin/list'
+import adminChangePWD from '@/views/admin/changePWD'
+
 // test
 import testCorp from '@/views/test/corp-ori'
 
@@ -35,88 +49,138 @@ export default new Router({
       path: '/testcorp',
       name: 'testCorp',
       component: testCorp,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     // 公司信息管理
     {
       path: '/',
       name: 'informationDetail',
       component: informationDetail,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/information/edit',
       name: 'informationEdit',
       component: informationEdit,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/information/show',
       name: 'informationShow',
       component: informationShow,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     // 员工管理
     {
       path: '/user/list',
       name: 'userList',
       component: userList,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/user/create',
       name: 'userCreate',
       component: userCreate,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/user/edit',
       name: 'userEdit',
       component: userEdit,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/user/log',
       name: 'userLog',
       component: userLog,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     // 课程管理
     {
       path: '/course/category/list',
       name: 'courseCategoryList',
       component: courseCategoryList,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/course/category/create',
       name: 'courseCategoryCreate',
       component: courseCategoryCreate,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/course/detail',
       name: 'courseDetail',
       component: courseDetail,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/course/edit',
       name: 'courseEdit',
       component: courseEdit,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/course/comment',
       name: 'courseComment',
       component: courseComment,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/course/list',
       name: 'courseList',
       component: courseList,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
+    },
+    // 报名管理
+    {
+      path: '/registration/detail',
+      name: 'registrationDetail',
+      component: registrationDetail,
+      meta: {requiresAuth: requiresAuth}
+    }, {
+      path: '/registration/list',
+      name: 'registrationList',
+      component: registrationList,
+      meta: {requiresAuth: requiresAuth}
+    }, {
+      path: '/registration/edit',
+      name: 'registrationEdit',
+      component: registrationEdit,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/registration/record',
+      name: 'registrationRecord',
+      component: registrationRecord,
+      meta: {requiresAuth: requiresAuth}
+    },
+    // 约课
+    {
+      path: '/booking/list',
+      name: 'bookingList',
+      component: bookingList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/booking/detail',
+      name: 'bookingDetail',
+      component: bookingDetail,
+      meta: {requiresAuth: requiresAuth}
+    },
+    // 系统管理
+    {
+      path: '/admin/changePWD',
+      name: 'adminChangePWD',
+      component: adminChangePWD,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/admin/list',
+      name: 'adminList',
+      component: adminList,
+      meta: {requiresAuth: requiresAuth}
     }
+
   ]
 })

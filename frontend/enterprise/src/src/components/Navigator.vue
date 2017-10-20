@@ -77,10 +77,10 @@ export default {
         name: '培训报名管理',
         items: [{
           text: '培训报名管理',
-          routeName: ''
+          routeName: 'registrationDetail'
         }, {
           text: '员工报名管理',
-          routeName: ''
+          routeName: 'registrationList'
         }]
       }
     } else if (this.module === 'booking') {
@@ -88,7 +88,7 @@ export default {
         name: '约课管理',
         items: [{
           text: '约课信息管理',
-          routeName: ''
+          routeName: 'bookingDetail'
         }]
       }
     } else {
@@ -96,10 +96,10 @@ export default {
         name: '系统管理',
         items: [{
           text: '公司管理员',
-          routeName: ''
+          routeName: 'adminList'
         }, {
           text: '修改密码',
-          routeName: ''
+          routeName: 'adminChangePWD'
         }]
       }
     }

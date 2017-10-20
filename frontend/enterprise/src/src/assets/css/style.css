@@ -266,7 +266,7 @@ nav span .f_blue {
   min-height: -webkit-calc(100vh - 155px);
   min-height: calc(100vh - 155px);
   margin: 25px 10px 0;
-  padding: 20px 40px;
+  padding: 30px 40px 20px;
   background: #fff;
   max-width: 1600px;
   max-width: -webkit-calc(100vw - 250px);

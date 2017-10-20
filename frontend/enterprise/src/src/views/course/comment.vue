@@ -12,7 +12,7 @@
           <template>
             <el-table :data="tableData" border style="width: 100%">
               <el-table-column prop="date" label="员工姓名" width="180"></el-table-column>
-              <el-table-column prop="name" label="星级" width="180">
+              <el-table-column prop="name" label="星级" width="">
                 <template scope="scope">
                   <el-rate v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                 </template>

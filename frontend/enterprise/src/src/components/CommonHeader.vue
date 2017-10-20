@@ -21,15 +21,15 @@
         <span class="h_icon h_icon04"></span>
         <p>考试管理</p>
       </li>
-      <li>
+      <li v-on:click="routeByName('registrationDetail')">
         <span class="h_icon h_icon05"></span>
         <p>报名管理</p>
       </li>
-      <li>
+      <li v-on:click="routeByName('bookingDetail')">
         <span class="h_icon h_icon06"></span>
         <p>约课管理</p>
       </li>
-      <li>
+      <li v-on:click="routeByName('adminList')">
         <span class="h_icon h_icon07"></span>
         <p class="name_e">公司管理员</p>
       </li>
