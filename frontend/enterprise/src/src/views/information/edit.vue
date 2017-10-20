@@ -65,7 +65,7 @@
   import axios from 'axios'
 
   export default {
-    filter: {
+    filters: {
       formatImage: function (uri) {
         return axios.defaults.imageServer + uri
       }
