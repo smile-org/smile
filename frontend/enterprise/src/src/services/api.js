@@ -1,23 +1,25 @@
 import axios from 'axios'
-import conf from '../config/index.js'
+// import conf from '../config/index.js'
 
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
 
-// axios.defaults.baseURL = 'http://192.168.0.106:8888' // 'http://192.168.0.108:3000'
-axios.defaults.baseURL = 'http://123.207.154.226:8888'
-axios.defaults.imageServer = 'http://123.207.154.226:4001'
+axios.defaults.baseURL = 'http://192.168.1.111:8888' // 'http://192.168.0.108:3000'
+// axios.defaults.baseURL = 'http://123.207.154.226:8888'
+axios.defaults.imageServer = 'http://192.168.1.111:4001'
+// axios.defaults.imageServer = 'http://123.207.154.226:4001'
 
 /**
  * 拦截器， 对所有的请求。
  * 作用： 可以为每个请求加上额外参数
  */
 axios.interceptors.request.use(config => {
-  var token = sessionStorage.getItem(conf.cookie.key)
-  if (token) {
-    // token放到header中
-    config.headers.common.token = token
-  }
+  // var token = sessionStorage.getItem(conf.cookie.key)
+  // if (token) {
+  //   // token放到header中
+  //   config.headers.common.token = token
+  // }
+  config.headers.common.token = '666666'
   return config
 }, error => {
   return Promise.reject(error)
@@ -88,18 +90,23 @@ export default {
 
     // *** 课程管理 ***
     // 课程分类
-    getCategory: '',
-    createCategory: '',
-    editCategory: '',
-    deleteCategory: '',
+    getCategory: '/getCategoryList',
+    createCategory: '/back/AddCourseCategory',
+    editCategory: '/back/UpdateCourseCategory',
+    deleteCategory: '/back/DisableCourseCategory',
+    getCategoryByID: '/back/GetCourseCategoryByID',
 
     // 课程信息管理
     searchCourse: '',
     addCourse: '',
     addCourseContent: '',
     editCourseContent: '',
+    uploadCategoryImage: axios.defaults.baseURL + '/back/UploadCourseCategoryIcon',
 
     // 学习记录
     getCourseLearningRecords: ''
+  },
+  image: {
+    category: '/default/cateicon.png'
   }
 }

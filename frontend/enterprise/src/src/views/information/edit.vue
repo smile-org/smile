@@ -19,7 +19,7 @@
                 <img :src="bannerSrc | formatImage" width="20%"/>
               </td>
               <td class="page_m_c">
-                <!--<a v-on:click="setDefault(1)">使用默认</a>-->
+                <a v-on:click="setDefault(1)">使用默认</a>
                 <a v-on:click="toggleShow(1)">上传</a>
               </td>
             </tr>
@@ -32,7 +32,7 @@
                 <img :src="bannerSrc | formatImage" width="100%"/>
               </td>
               <td class="page_m_c">
-                <!--<a v-on:click="setDefault(2)">使用默认</a>-->
+                <a v-on:click="setDefault(2)">使用默认</a>
                 <a v-on:click="toggleShow(2)">上传</a>
               </td>
             </tr>
@@ -53,6 +53,7 @@
     :headers="headers"
     :value.sync="show"
     :no-circle=true
+    url="/upload"
     img-format="png"></my-upload>
   </div>
 </template>

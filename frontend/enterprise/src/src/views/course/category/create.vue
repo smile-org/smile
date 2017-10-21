@@ -11,16 +11,30 @@
         <div class="con_tab">
           <div class="el-form-item el-form--label-left mt20">
             <label class="el-form-item__label" style="width: 100px;">课程图片</label>
-            <img src="../../../assets/img/baoming.png" class="course_header" />
+            <img :src="imageSrc" class="course_header" />
+            <a v-on:click="toggleShow">上传</a>
+            <a v-on:click="setDefault">使用默认</a>
+            <my-upload @input="closeMyUpload" field="file"
+              @crop-success="cropSuccess"
+              @crop-upload-success="cropUploadSuccess"
+              @crop-upload-fail="cropUploadFail"
+              :url="uploadUrl"
+              :width="750"
+              :headers="headers"
+              :height="240"
+              :value.sync="show"
+              :no-circle=true
+              img-format="png">
+            </my-upload>
           </div>
-          <div class="el-form-item el-form--label-left mt20">
-            <label class="el-form-item__label" style="width: 100px;">课程类别</label>
-            <input type="" class="el-input__inner">
-          </div>
-          <div class="">
-            <button type="button" class="inf_btn ">保  存</button>
-          </div>
-
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="课程类别" prop="content">
+              <el-input v-model="ruleForm.content"></el-input>
+            </el-form-item>
+            <div class="tc">
+              <button type="button" class="inf_btn " v-on:click="submitForm('ruleForm')">保  存</button>
+            </div>
+          </el-form>
         </div>
       </section>
     </div>
@@ -30,18 +44,86 @@
 <script>
   import commonHeader from '../../../components/CommonHeader'
   import navigator from '../../../components/Navigator'
-  // import api from '../../../services/api'
+  import myUpload from 'vue-image-crop-upload'
+  import api from '../../../services/api'
+  import axios from 'axios'
+  import router from '../../../router'
+  import lang from 'vue-image-crop-upload/utils/language'
   export default {
     data: function () {
       return {
-
+        imageSrc: '',
+        image: axios.defaults.imageServer + api.image.category,
+        ruleForm: {
+          content: ''
+        },
+        rules: {
+          content: [
+            { required: true, message: '请输入课程分类名称', trigger: 'blur' }
+          ]
+        },
+        show: false,
+        uploadUrl: api.uri.uploadCategoryImage,
+        returnedImageUrl: '',
+        headers: {
+          token: '666666'
+        }
       }
+    },
+    created () {
+      this.imageSrc = this.image
+      lang.zh.preview = '课程分类'
     },
     components: {
       commonHeader,
-      navigator
+      navigator,
+      myUpload
     },
-    methods: {}
+    methods: {
+      closeMyUpload: function (value) {
+        this.show = value
+      },
+      setDefault () {
+        this.imageSrc = this.image
+      },
+      cropSuccess (data, field) {
+        this.imageSrc = data
+      },
+      cropUploadSuccess (jsonData, field) {
+        if (jsonData.status === 1) {
+          this.returnedImageUrl = jsonData.result
+        }
+      },
+      cropUploadFail (status, field) {
+        console.log(status)
+      },
+      toggleShow: function () {
+        this.show = !this.show
+      },
+      submitForm (formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            var obj = {}
+            if (this.returnedImageUrl) {
+              obj.iconPath = this.returnedImageUrl
+            } else {
+              // 默认图片路径
+              obj.iconPath = api.image.category
+            }
+            obj.catename = this.ruleForm.content
+            api.fetch(api.uri.createCategory, obj).then(data => {
+              if (data.status === 1) {
+                router.push({name: 'courseCategoryList'})
+              }
+            }).catch(error => {
+              alert(error.message)
+            })
+          } else {
+            return false
+          }
+        })
+      }
+    }
   }
 </script>
 

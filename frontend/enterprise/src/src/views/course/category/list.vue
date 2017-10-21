@@ -19,14 +19,14 @@
                 <span class="bold">操作</span><span></span>
               </th>
             </tr>
-            <tr v-for="item in data" :key="item.name">
+            <tr v-for="item in data" :key="item.category_id">
               <td class="">
-                <span>{{item.name}}</span>
+                <span>{{item.category_name}}</span>
               </td>
               <td>
                 <div class="cell">
-                  <button type="button" class="el-button el-button--text el-button--small mr20" v-on:click="edit(item.id)">编辑</button>
-                  <button type="button" class="el-button el-button--text el-button--small" v-on:click="del(item.id)">删除</button>
+                  <button type="button" class="el-button el-button--text el-button--small mr20" v-on:click="edit(item.category_id)">编辑</button>
+                  <button type="button" class="el-button el-button--text el-button--small" v-on:click="del(item.category_id)">删除</button>
                 </div>
               </td>
             </tr>
@@ -54,9 +54,9 @@
       navigator
     },
     created () {
-      api.fetch(api.uri.getCategory).then(data => {
+      api.fetch(api.uri.getCategory, {skip: 0, take: 10000}).then(data => {
         if (data.status === 1) {
-          this.data = data
+          this.data = data.result
         }
       }).catch(error => {
         alert(error.message)
@@ -67,11 +67,34 @@
         router.push({name: name})
       },
       edit (id) {
-        router.push({name: 'courseCategoryEdit', query: {id: this.id}})
+        router.push({name: 'courseCategoryEdit', query: {id: id}})
       },
       del (id) {
-        alert(id)
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          // var _this = this
+          api.fetch(api.uri.deleteCategory, {cateid: id}).then(data => {
+            api.fetch(api.uri.getCategory, {skip: 0, take: 10000}).then(data1 => {
+              if (data1.status === 1) {
+                this.data = data1.result
+              }
+            }).catch(error => {
+              alert(error.message)
+            })
+          }).catch(error => {
+            alert(error.message)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       }
+
     }
   }
 </script>
