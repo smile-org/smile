@@ -88,7 +88,7 @@ export default {
         name: '约课管理',
         items: [{
           text: '约课信息管理',
-          routeName: 'bookingDetail'
+          routeName: 'bookingList'
         }]
       }
     } else {

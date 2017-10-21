@@ -25,7 +25,7 @@
         <span class="h_icon h_icon05"></span>
         <p>报名管理</p>
       </li>
-      <li v-on:click="routeByName('bookingDetail')">
+      <li v-on:click="routeByName('bookingList')">
         <span class="h_icon h_icon06"></span>
         <p>约课管理</p>
       </li>

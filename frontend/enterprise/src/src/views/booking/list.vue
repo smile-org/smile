@@ -1,3 +1,4 @@
+eee
 <template>
   <div>
     <common-header></common-header>
@@ -6,76 +7,37 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">约课管理</span> > <span class="">约课信息管理</span> > <span class="f_blue">约课详情</span></span>
+          <span class="vm">您的当前位置 : <span class="">约课管理</span> > <span class="f_blue">约课信息管理</span></span>
         </nav>
         <div class="con_tab">
-          <ul class="booking_detail">
-            <li>
-              <span class="tit">约课主题 :</span>
-              <div class="con">
-                <span>销售经理必须具备的技能培训</span>
-              </div>
-            </li>
-            <li>
-              <span class="tit">关键字 :</span>
-              <div class="con">
-                <span>销售经理</span>
-                <span>销售技能</span>
-                <span>技能培训</span>
-              </div>
-            </li>
-            <li>
-              <span class="tit">发起人 :</span>
-              <div class="con">
-                <span>张三</span>
-              </div>
-            </li>
-            <li>
-              <span class="tit">发起时间 :</span>
-              <div class="con">
-                <span>2017-08-20 12:00:00</span>
-              </div>
-            </li>
-            <li>
-              <span class="tit">需求列表 :</span>
-              <ul class="con">
-                <li>
-                  1.<span>销售经理必须具备的技能培训</span>
-                  <span>张三</span>
-                  <span>2017-08-20 12:00:00</span>
-                </li>
-                <li>
-                  1.<span>销售经理必须具备的技能培训</span>
-                  <span>张三</span>
-                  <span>2017-08-20 12:00:00</span>
-                </li>
-                <li>
-                  1.<span>销售经理必须具备的技能培训</span>
-                  <span>张三</span>
-                  <span>2017-08-20 12:00:00</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="tit">参与者 :</span>
-              <div class="con">
-                <span>100人</span>
-                <el-table :data="tableData" border class="mt20" style="width: 100%">
-                  <el-table-column prop="user" label="姓名" width="">
-                  </el-table-column>
-                  <el-table-column prop="role" label="角色" width="">
-                  </el-table-column>
-                  <el-table-column prop="department" label="部门" width="">
-                  </el-table-column>
-                  <el-table-column prop="address" label="区域" width="">
-                  </el-table-column>
-                </el-table>
-              </div>
-            </li>
-          </ul>
-          <div class="tc btn_margin">
-            <button type="button" class="inf_btn  " v-on:click="routeByName('')">关闭约课</button>
-          </div>
+          <el-form ref="form" :inline="true" :model="form" class="demo-form-inline" label-width="80px">
+            <el-form-item label="约课主题">
+              <el-input v-model="form.name" placeholder="约课主题"></el-input>
+            </el-form-item>
+            <el-form-item label="结束时间">
+              <el-col>
+                <el-date-picker type="date" placeholder="发起时间" v-model="form.date1" style="width: 100%;"></el-date-picker>
+              </el-col>
+            </el-form-item>
+            <el-form-item>
+              <button type="button" class="inf_btn ml20">查  询</button>
+              <el-button type="button" v-on:click="click" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
+            </el-form-item>
+          </el-form>
+          <el-table :data="tableData" border style="width: 100%">
+            <el-table-column prop="topic" label="约课主题" width="">
+            </el-table-column>
+            <el-table-column prop="lecturer" label="发起者" width="">
+            </el-table-column>
+            <el-table-column prop="timeStart" label="发起时间" width="">
+            </el-table-column>
+            <el-table-column prop="thisR" label="操作" width="" >
+              <template scope="scope" >
+                <el-button v-on:click="routeByName('bookingDetail')" type="text" size="small">查看</el-button>
+                <el-button  type="text" size="small">关闭约课</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
       </section>
     </div>
@@ -90,22 +52,25 @@
   export default {
     data: function () {
       return {
-        company: {},
+        showloading: false,
+        form: {
+          name: '',
+          company: {},
+          date: '',
+          date1: ''
+        },
         tableData: [{
-          user: '张三',
-          role: '发起者',
-          department: '技术部',
-          address: '天安门'
+          topic: '成功过心理学',
+          lecturer: '望天有',
+          timeStart: '2017年10月12日'
         }, {
-          user: '张三',
-          role: '发起者',
-          department: '技术部',
-          address: '天安门'
+          topic: '成功过心理学',
+          lecturer: '望天有',
+          timeStart: '2017年10月12日'
         }, {
-          user: '张三',
-          role: '发起者',
-          department: '技术部',
-          address: '天安门'
+          topic: '成功过心理学',
+          lecturer: '望天有',
+          timeStart: '2017年10月12日'
         }]
       }
     },
@@ -122,31 +87,24 @@
     },
     methods: {
       routeByName: function (name) {
-        router.push({name: name})
+        router.push({ name: name })
+      },
+      click: function () {
+        this.showloading = true
       }
     }
   }
 </script>
 
-<style scoped="scope">
-  .booking_detail li {
-    margin-bottom: 20px;
-    font-size: 14px;
+<style>
+  .el-icon-loading{
+    color: #fff;
   }
-
-  .booking_detail li .tit {
-    width: 100px;
-    text-align: left;
-    font-weight: bold;
-    float: left;
+  .export_bor{
+    border:none;
+    color: #fff;
   }
-
-  .booking_detail li .con {
-    margin-left: 100px;
-    /*float: left;*/
-  }
-
-  .booking_detail li .con span {
-    margin-right: 20px;
+  .export_bor:hover, .export_bor:active{
+    color: #fff;
   }
 </style>
