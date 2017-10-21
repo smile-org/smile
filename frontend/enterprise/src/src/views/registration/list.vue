@@ -48,6 +48,10 @@
               </template>
             </el-table-column>
             <el-table-column prop="nextR" label="预约下期" width="">
+              <template scope="scope">
+                <el-button v-on:click="routeByName('registrationRecord')" type="text" size="small">40</el-button>
+              </template>
+            </el-table-column>
             </el-table-column>
           </el-table>
         </div>
