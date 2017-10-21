@@ -8,7 +8,10 @@
 
 </script>
 
-<style>
+<style >
 @import './assets/css/common.css';
 @import './assets/css/style.css';
+.el-input__inner:focus{
+  border-color: #01b554;
+}
 </style>

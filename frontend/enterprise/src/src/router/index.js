@@ -39,7 +39,9 @@ import adminList from '@/views/admin/list'
 import adminChangePWD from '@/views/admin/changePWD'
 
 // 考试管理
-import examDetail from '@/views/exam/detail'
+import examList from '@/views/exam/list'
+import examQuestionList from '@/views/exam/questionList'
+import examUserList from '@/views/exam/userList'
 Vue.use(Router)
 var requiresAuth = false
 
@@ -196,9 +198,21 @@ export default new Router({
     },
 // 考试管理
     {
-      path: '/exam/detail',
-      name: 'examDetail',
-      component: examDetail,
+      path: '/exam/list',
+      name: 'examList',
+      component: examList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/exam/questionList',
+      name: 'examQuestionList',
+      component: examQuestionList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/exam/userList',
+      name: 'examUserList',
+      component: examUserList,
       meta: {requiresAuth: requiresAuth}
     }
   ]

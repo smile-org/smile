@@ -63,13 +63,13 @@ export default {
         name: '考试管理',
         items: [{
           text: '考试信息管理',
-          routeName: 'examDetail'
+          routeName: 'examList'
         }, {
           text: '题库信息管理',
-          routeName: ''
+          routeName: 'examQuestionList'
         }, {
           text: '员工考试记录',
-          routeName: ''
+          routeName: 'examUserList'
         }]
       }
     } else if (this.module === 'registration') {
