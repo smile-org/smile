@@ -2,6 +2,7 @@ package com.dli.services.impl;
 
 
 import com.dli.entities.*;
+import com.dli.helper.Constant;
 import com.dli.repositories.CourseRepo;
 import com.dli.repositories.UserRepo;
 import com.dli.services.CourseService;
@@ -47,6 +48,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseComment> getCourseCommentList(int courseid ) {
         return courseRepo.getCourseCommentList(courseid);
+    }
+
+    @Override
+    public int getCourseCommentListCount(int courseid) {
+       return   courseRepo.getCourseCommentListCount(courseid);
     }
 
     @Override
@@ -217,7 +223,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseEditPageInfo backGetCourseEditPageInfo(int companyid,int courseid ) {
         CourseEditPageInfo entity =new CourseEditPageInfo();
 
-        entity.CategoryList = courseRepo.getCourseCategoryList(companyid, 0,  99999);
+        entity.CategoryList = courseRepo.getCourseCategoryList(companyid, 0,  Constant.takeMax);
         entity.AdminList =userRepo.backGetCompanyAdminList( companyid );
 
         if(courseid >  0)
@@ -249,6 +255,26 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void backUpdateCourse(Course c) {
         courseRepo.backUpdateCourse(c);
+    }
+
+    @Override
+    public   List<backCourse >  backGetCourseList(backCourse bc) {
+        return courseRepo.backGetCourseList(bc);
+    }
+
+    @Override
+    public int backGetCourseListCount(backCourse bc) {
+        return   courseRepo.backGetCourseListCount(bc);
+    }
+
+    @Override
+    public List<UserLearnProgress> backGetUserLearnProgressList(UserLearnProgress ulp) {
+        return courseRepo.backGetUserLearnProgressList(ulp);
+    }
+
+    @Override
+    public int backGetUserLearnProgressListCount(UserLearnProgress ulp) {
+        return courseRepo.backGetUserLearnProgressListCount(ulp);
     }
 
 

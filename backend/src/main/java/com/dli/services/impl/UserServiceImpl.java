@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int backGetUserListCount(int company_id, String full_name, String cell_phone, String department, String area) {
+        return userRepo.backGetUserListCount(company_id, full_name, cell_phone, department, area );
+    }
+
+    @Override
     public void backDisableUserByID(int userid) {
         userRepo.backDisableUserByID(userid);
     }

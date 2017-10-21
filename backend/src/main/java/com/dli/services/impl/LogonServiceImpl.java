@@ -116,5 +116,10 @@ public class LogonServiceImpl implements LogonService {
         return    logonRepo.backGetLogonHistoryList(h);
     }
 
+    @Override
+    public int backGetLogonHistoryListCount(LogonHistory h) {
+        return    logonRepo.backGetLogonHistoryListCount(h);
+    }
+
 
 }

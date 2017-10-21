@@ -94,4 +94,15 @@
         desc LIMIT #{skip}, #{take}
     </select>
 
+
+    <select id="backGetLogonHistoryListCount"  parameterType="com.dli.entities.LogonHistory"   resultType="int">
+        select  count(*) from  logon_history  h  join  user u on h.user_id = u.user_id
+        where   u.company_id=#{company_id}
+        <if test="full_name!=null">and  u.full_name like '%${full_name}%'</if>
+        <if test="department!=null">and  u.department like '%${department}%'</if>
+        <if test="area!=null">and  u.area like '%${area}%'</if>
+        <if test="start!=null">and  h.logon_at &gt; #{start}</if>
+        <if test="end!=null">and  h.logon_at &lt; #{end}</if>
+    </select>
+
 </mapper>

@@ -56,6 +56,15 @@ where user_id=#{user_id}
         limit #{skip}, #{take}
     </select>
 
+
+    <select id="backGetUserListCount"   resultType="int">
+        select count(*) from user where company_id=#{company_id} and indicator=1
+        <if test="full_name!=null">and full_name like '%${full_name}%'</if>
+        <if test="cell_phone!=null">and cell_phone like '%${cell_phone}%' </if>
+        <if test="department!=null">and department like '%${department}%'</if>
+        <if test="area!=null">and area like '%${area}%'</if>
+    </select>
+
     <update id="backDisableUserByID">
           update  user set  indicator=0 where user_id =#{userid}
     </update>

@@ -254,9 +254,11 @@ public class LogonController {
                 h.setCompany_id( user.getCompany_id());
 
             List<LogonHistory> lst=   logonService.backGetLogonHistoryList(h);
+            int total =    logonService.backGetLogonHistoryListCount(h);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
+            result.put(Constant.total, total);
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
