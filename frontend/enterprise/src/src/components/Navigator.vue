@@ -63,7 +63,7 @@ export default {
         name: '考试管理',
         items: [{
           text: '考试信息管理',
-          routeName: ''
+          routeName: 'examDetail'
         }, {
           text: '题库信息管理',
           routeName: ''

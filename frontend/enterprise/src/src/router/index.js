@@ -36,6 +36,8 @@ import bookingDetail from '@/views/booking/detail'
 import adminList from '@/views/admin/list'
 import adminChangePWD from '@/views/admin/changePWD'
 
+// 考试管理
+import examDetail from '@/views/exam/detail'
 Vue.use(Router)
 var requiresAuth = false
 
@@ -177,7 +179,13 @@ export default new Router({
       name: 'adminList',
       component: adminList,
       meta: {requiresAuth: requiresAuth}
+    },
+// 考试管理
+    {
+      path: '/exam/detail',
+      name: 'examDetail',
+      component: examDetail,
+      meta: {requiresAuth: requiresAuth}
     }
-
   ]
 })

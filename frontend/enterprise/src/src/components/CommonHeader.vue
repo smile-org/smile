@@ -17,7 +17,7 @@
         <span class="h_icon h_icon03"></span>
         <p>课程类别</p>
       </li>
-      <li>
+      <li  v-on:click="routeByName('examDetail')">
         <span class="h_icon h_icon04"></span>
         <p>考试管理</p>
       </li>
