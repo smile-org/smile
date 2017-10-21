@@ -2,20 +2,19 @@ package com.dli.controllers;
 
 import com.dli.entities.*;
 import com.dli.helper.Constant;
+import com.dli.helper.Helper;
 import com.dli.services.AppointmentService;
 import com.dli.services.LogonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.HeaderParam;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.ConsoleHandler;
+import java.util.*;
 
 @RestController
 @RequestMapping("/appointment")
@@ -322,6 +321,66 @@ public class AppointmentController {
         }
 
         return result;
+    }
+
+    @Value("${fileroot}")
+    private String fileroot;
+
+    @Value("${exportfolder}")
+    private  String exportfolder;
+
+    @RequestMapping(value = "/exportAppointment", method = RequestMethod.GET)
+    public Map exportAppointment(@RequestHeader Map header, @RequestParam String title,
+                                 @RequestParam String sponsorDate) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            int companyId = user.getCompany_id();
+            Date newSponsorDate = null;
+            if (sponsorDate != null && !sponsorDate.equals("")) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                newSponsorDate = sdf.parse(sponsorDate);
+            }
+            List<BackAppointment> appointmentList =
+                    appointmentService.getBackAppointmentList(companyId, title, newSponsorDate, 0, Constant.takeMax);
+
+            List<String> rowNameList = new ArrayList<>();
+
+            rowNameList.add("约课主题");
+            rowNameList.add("发起者");
+            rowNameList.add("发起时间");
+
+            List<Object[]> dataList = new ArrayList<>();
+            for (BackAppointment appointment : appointmentList) {
+                Object[] dataArray = new Object[6];
+
+                dataArray[0] = appointment.getAppointmentTitle();
+                dataArray[1] = appointment.getSponsorName();
+                dataArray[2] = appointment.getSponsorDate();
+                dataList.add(dataArray);
+            }
+            String url = Helper.Export(rowNameList, dataList, "Appointment-", fileroot, exportfolder);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, url);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+
+        return result;
+
     }
 
 

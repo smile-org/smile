@@ -20,7 +20,18 @@
             </el-form-item>
             <el-form-item>
               <button type="button" class="inf_btn ml20" v-on:click="queryAppointment">查  询</button>
-              <el-button type="button" v-on:click="click" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
+              <el-button type="button" v-on:click="exportAppointment" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
+              <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+
+                <div class="tc">
+                  <!--<p class="exal">电子表格文件生成成功</p>-->
+                  <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+                </div>
+                <div class="tc">
+                  <a v-bind:href="excelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                  <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
+                </div>
+              </el-dialog>
             </el-form-item>
           </el-form>
           <el-table :data="tableData" border style="width: 100%">
@@ -66,8 +77,9 @@
         tableData: [],
         take: 10,
         currentPage: 1,
-        total: 0
-
+        total: 0,
+        excelUrl: '',
+        dialogTableVisible: false
       }
     },
     components: {
@@ -98,8 +110,21 @@
         console.log(row.appointmentId)
         router.push({ name: 'bookingDetail', query: {id: row.appointmentId} })
       },
-      click: function () {
+      exportAppointment: function () {
+        console.log('start export appointment.')
         this.showloading = true
+        var date = ''
+        if (this.form.date1) {
+          date = moment(this.form.date1).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.exportAppointment, {title: this.form.name, sponsorDate: date}).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.excelUrl = data.result
+            this.showloading = false
+            this.dialogTableVisible = true
+          }
+        })
       },
       queryAppointment: function () {
         console.log(this.form.date1)
@@ -157,5 +182,29 @@
   }
   .export_bor:hover, .export_bor:active{
     color: #fff;
+  }
+
+  .download {
+    line-height: 38px;
+    display: inline-block;
+  }
+
+  .qx_btn {
+    min-width: 120px;
+    height: 38px;
+    text-align: center;
+    color: #fff;
+    background: #a4a4a4;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    padding: 0 20px;
+  }
+
+  .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
+    color: #fff;
+    background: #c3c3c3;
+    outline: none;
   }
 </style>
