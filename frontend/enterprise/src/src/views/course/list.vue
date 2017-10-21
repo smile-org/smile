@@ -14,7 +14,7 @@
             <el-form-item label="课程名称">
               <el-input v-model="formInline.name" placeholder="课程名称"></el-input>
             </el-form-item>
-            <el-form-item label="课程类别" prop="formInline.categoryId">
+            <el-form-item label="课程类别">
               <el-select v-model="formInline.categoryId" placeholder="请选择课程类别">
                  <el-option
                   v-for="item in categoryList"
@@ -28,42 +28,45 @@
               <el-input v-model="formInline.user" placeholder="责任人"></el-input>
             </el-form-item>
             <el-form-item label="发布时间">
-              <el-input v-model="formInline.date" placeholder="发布时间"></el-input>
+              <el-date-picker type="date" placeholder="发布时间" v-model="formInline.date" style="width: 100%;"></el-date-picker>
             </el-form-item>
             <el-form-item>
-              <button type="button" class="inf_btn ml20">查  询</button>
+              <button type="button" class="inf_btn ml20" v-on:click="search">查  询</button>
             </el-form-item>
           </el-form>
           <div class="fr hidden mb20">
             <button type="button" class="inf_btn mr20" v-on:click="routeByName('courseEdit')" >添加课程</button>
             <button type="button"  class="inf_btn">导  出</button>
           </div>
-          <el-table  :data="tableData" border style="width: 100%">
-            <el-table-column prop="" label="课程名称" width="180">
+          <el-table :data="tableData" border style="width: 100%">
+            <el-table-column prop="title" label="课程名称" width="180">
             </el-table-column>
-            <el-table-column prop="number" label="课程类别" width="180">
+            <el-table-column prop="category_name" label="课程类别" width="180">
             </el-table-column>
-            <el-table-column prop="workNum" label="责任人" width="180">
+            <el-table-column prop="principal_user_idName" label="责任人" width="180">
             </el-table-column>
-            <el-table-column prop="email" label="部门" width="180">
+            <el-table-column prop="department" label="部门" width="180">
             </el-table-column>
-            <el-table-column prop="department" label="有效期" width="180">
+            <el-table-column prop="expiration_date" label="有效期" width="180">
             </el-table-column>
-            <el-table-column prop="address" label="课程类型" width="180">
+            <el-table-column prop="type_name" label="课程类型" width="180">
             </el-table-column>
-            <el-table-column prop="timeStart" label="课程状态" width="180">
+            <el-table-column prop="ispublished" label="课程状态" width="180">
+              <template scope="scope" >
+                {{scope.row.ispublished ? "已发布" : "未发布"}}
+              </template>
             </el-table-column>
-            <el-table-column prop="timeEnd" label="发布日期" width="180">
+            <el-table-column prop="publish_date" label="发布日期" width="180">
             </el-table-column>
-            <el-table-column  prop="appraise" label="查看评价" width="180">
+            <el-table-column  label="查看评价" width="180">
               <template scope="scope">
-                <el-button  v-on:click="routeByName('courseComment')" type="text" size="small">查看课程评价</el-button>
+                <el-button  v-on:click="comment(course_id)" type="text" size="small">查看课程评价</el-button>
               </template>
             </el-table-column>
             <el-table-column label="操作" class="tc" width="180">
               <template scope="scope">
-                <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
-                <el-button @click="open2" type="text" size="small">删除</el-button>
+                <el-button @click="edit(course_id)" type="text" size="small">编辑</el-button>
+                <el-button @click="del(course_id)" type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -81,6 +84,7 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
+  import moment from 'moment'
   export default {
     data: function () {
       return {
@@ -94,7 +98,10 @@
           categoryId: ''
         },
         tableData: [],
-        categoryList: []
+        categoryList: [{
+          category_id: -1,
+          category_name: '请选择'
+        }]
       }
     },
     components: {
@@ -105,16 +112,17 @@
       api.fetch(api.uri.searchCourse, {
         title: this.formInline.name,
         priName: this.formInline.user,
-        typeid: this.formInline.categoryId,
+        typeid: this.formInline.categoryId ? parseInt(this.formInline.categoryId) : 0,
         pubdate: this.formInline.date,
         skip: 0,
         take: this.take
       }).then(data => {
         if (data.status === 1) {
           this.tableData = data.result
-          api.fetch(api.uri.getCategory).then(data1 => {
+          this.total = data.total
+          api.fetch(api.uri.getCategory, {skip: 0, take: this.take}).then(data1 => {
             if (data1.status === 1) {
-              this.categoryList = data1.result
+              this.categoryList = this.categoryList.concat(data1.result)
             }
           }).catch(err => {
             this.$message(err.message)
@@ -126,7 +134,30 @@
     },
     methods: {
       handleCurrentChange: function (val) {
+        this.currentPage = val
+        this.search()
+      },
 
+      search: function () {
+        var pubDate = ''
+        if (this.formInline.date) {
+          pubDate = moment(this.formInline.date).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.searchCourse, {
+          title: this.formInline.name,
+          priName: this.formInline.user,
+          typeid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
+          pubdate: pubDate,
+          skip: this.take * (this.currentPage - 1),
+          take: this.take
+        }).then(data => {
+          if (data.status === 1) {
+            this.tableData = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
       }
     }
   }
