@@ -56,10 +56,10 @@
                 <el-button  v-on:click="routeByName('courseComment')" type="text" size="small">查看课程评价</el-button>
               </template>
             </el-table-column>
-            <el-table-column label="操作" class="tc" width="100">
+            <el-table-column label="操作" class="tc" width="180">
               <template scope="scope">
                 <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
-                <el-button @click="checkFail(scope.row.id)" type="text" size="small">删除</el-button>
+                <el-button @click="open2" type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -129,7 +129,25 @@
       routeByName: function (name) {
         console.log(name)
         router.push({ name: name })
+      },
+      open2 () {
+        this.$confirm('此课程将要被删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       }
+
     }
   }
 </script>
