@@ -1,9 +1,8 @@
 package com.dli.services;
 
-import com.dli.entities.Appointment;
-import com.dli.entities.AppointmentFollower;
-import com.dli.entities.SearchResult;
+import com.dli.entities.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +14,21 @@ public interface AppointmentService {
 
     List<AppointmentFollower> getAppointmentFollowList(int appointmentId);
 
-    int follow(int appointmentId, int itemId, int followerId,String followerType);
+    int follow(int appointmentId, int itemId, int followerId, String followerType);
 
-    int addItem(int appointmentId,String content,int sponsorId, Date sponsorDate);
+    int addItem(int appointmentId, String content, int sponsorId, Date sponsorDate);
 
-    int addAppointment(String appointmentTitle,int sponsorId,int companyId,List<String> keywords, List<String> items);
+    int addAppointment(String appointmentTitle, int sponsorId, int companyId, List<String> keywords, List<String> items);
 
-    List<Appointment>  getMyAppointmentList(int userid, int skip, int take);
-
+    List<Appointment> getMyAppointmentList(int userid, int skip, int take);
 
     List<SearchResult> searchAppointment(int companyid, String keyword, int skip, int take);
+
+    List<BackAppointment> getBackAppointmentList(int companyId,String title,Date sponsorDate, int skip,int take) throws ParseException;
+
+    BackAppointmentDetail getBackAppointmentDetail(int appointmentId);
+
+    List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId, int skip,int take);
+
+    void closeAppointment(int appointmentId);
 }

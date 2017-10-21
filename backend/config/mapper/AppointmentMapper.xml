@@ -131,4 +131,79 @@ where ai.appointment_id = #{appointmentId}
       where a.appointment_title like '%${keyword}%' and a.company_id=#{companyid} and a.indicator=1  limit #{skip} ,#{take}
     </select>
 
+    <resultMap id="backAppointment" type="com.dli.entities.BackAppointment">
+        <id column="appointment_id" property="appointmentId"/>
+        <result column="appointment_title" property="appointmentTitle"/>
+        <result column="sponsor_name" property="sponsorName"/>
+        <result column="sponsor_date" property="sponsorDate"/>
+    </resultMap>
+
+    <select id="getBackAppointmentList" resultMap="backAppointment">
+        SELECT
+            a.appointment_id,
+            a.appointment_title,
+            u.full_name sponsor_name,
+            a.sponsor_date
+        FROM
+            appointment a
+            left JOIN user u on a.sponsor_id = u.user_id
+        WHERE
+            a.company_id = #{companyId}
+        AND a.indicator = 1
+        <if test="title!=null"> AND a.appointment_title LIKE '%${title}%'</if>
+        <if test="startDate!=null"> AND a.sponsor_date <![CDATA[>=]]> #{startDate} AND  a.sponsor_date <![CDATA[<=]]> #{endDate}</if>
+        LIMIT #{skip}, #{take}
+    </select>
+
+    <resultMap id="backAppointmentDetail" type="com.dli.entities.BackAppointmentDetail">
+        <id column="appointment_id" property="appointmentId"/>
+        <result column="appointment_title" property="appointmentTitle"/>
+        <result column="sponsor_name" property="sponsorName"/>
+        <result column="sponsor_date" property="sponsorDate"/>
+        <result column="key_word" property="keyWord" />
+        <result column="follower_count" property="followerCount"/>
+    </resultMap>
+
+    <select id="getBackAppointment" resultMap="backAppointmentDetail">
+        select a.appointment_id,a.appointment_title,u.full_name sponsor_name, a.sponsor_date,ak.key_word,af.follower_count
+        from appointment a join user u on a.sponsor_id = u.user_id
+        join (select appointment_id, group_concat(word) key_word from appointment_keyword group by  appointment_id) ak on a.appointment_id = ak.appointment_id
+        join (select appointment_id, count(appointment_id) follower_count from appointment_follower group by appointment_id) af on a.appointment_id = af.appointment_id
+        where a.appointment_id = #{appointmentId}
+    </select>
+
+    <resultMap id="backAppointmentItem" type="com.dli.entities.BackAppointmentDetailItem">
+        <id column="item_id" property="itemId" />
+        <result column="item_title" property="itemTitle" />
+        <result column="sponsor_name" property="sponsorName"/>
+        <result column="sponsor_date" property="sponsorDate"/>
+    </resultMap>
+
+    <select id="getBackAppointmentItem" resultMap="backAppointmentItem">
+        select ai.item_id,ai.content item_title,u.full_name sponsor_name, ai.sponsor_date
+        from appointment_item ai
+        left join user u on ai.sponsor_id = u.user_id
+        where appointment_id = #{appointmentId}
+    </select>
+
+    <resultMap id="backAppointmentFollower" type="com.dli.entities.BackAppointmentFollower">
+        <id column="follower_id" property="followerId" />
+        <result column="follower_name" property="followerName"/>
+        <result column="follower_type" property="followerType"/>
+        <result column="department" property="department"/>
+        <result column="area" property="area"/>
+    </resultMap>
+
+    <select id="getBackAppointmentFollowers" resultMap="backAppointmentFollower">
+        select af.follower_id,u.full_name follower_name,af.follower_type,u.department,u.area
+        from appointment_follower af
+        left join user u on af.follower_id = u.user_id
+        where af.appointment_id = #{appointmentId}
+        limit #{skip},#{take}
+    </select>
+
+    <update id="closeAppointment">
+        update appointment set indicator = 0 where appointment_id=#{appointmentId}
+    </update>
+
 </mapper>

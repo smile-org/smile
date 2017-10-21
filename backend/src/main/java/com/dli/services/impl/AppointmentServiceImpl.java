@@ -1,14 +1,13 @@
 package com.dli.services.impl;
 
-import com.dli.entities.Appointment;
-import com.dli.entities.AppointmentFollower;
-import com.dli.entities.AppointmentItem;
-import com.dli.entities.SearchResult;
+import com.dli.entities.*;
 import com.dli.repositories.AppointmentRepo;
 import com.dli.services.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -67,11 +66,43 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> getMyAppointmentList(int userid, int skip, int take) {
-        return   appointmentRepo.getMyAppointmentList(userid,skip,take);
+        return appointmentRepo.getMyAppointmentList(userid, skip, take);
     }
 
     @Override
     public List<SearchResult> searchAppointment(int companyid, String keyword, int skip, int take) {
-        return   appointmentRepo.searchAppointment(companyid, keyword, skip, take);
+        return appointmentRepo.searchAppointment(companyid, keyword, skip, take);
+    }
+
+    @Override
+    public List<BackAppointment> getBackAppointmentList(int companyId, String title, Date sponsorDate, int skip, int take) throws ParseException {
+        Date startDate = null;
+        Date endDate=null;
+        if(sponsorDate != null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+            startDate = sdf1.parse(sdf.format(sponsorDate)+" 00:00:00");
+            endDate = sdf1.parse(sdf.format(sponsorDate)+" 23:59:59");
+        }
+        return appointmentRepo.getBackAppointmentList(companyId, title, startDate,endDate, skip, take);
+    }
+
+    @Override
+    public BackAppointmentDetail getBackAppointmentDetail(int appointmentId) {
+        BackAppointmentDetail detail = appointmentRepo.getBackAppointment(appointmentId);
+        List<BackAppointmentDetailItem> itemList = appointmentRepo.getBackAppointmentItem(appointmentId);
+        detail.setItemList(itemList);
+        return detail;
+    }
+
+    @Override
+    public List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId, int skip, int take) {
+        return appointmentRepo.getBackAppointmentFollowers(appointmentId,skip,take);
+    }
+
+    @Override
+    public void closeAppointment(int appointmentId) {
+        appointmentRepo.closeAppointment(appointmentId);
     }
 }
