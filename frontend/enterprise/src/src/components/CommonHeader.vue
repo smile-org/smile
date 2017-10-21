@@ -15,7 +15,7 @@
       </li>
       <li v-on:click="routeByName('courseCategoryList')">
         <span class="h_icon h_icon03"></span>
-        <p>课程类别</p>
+        <p>课程管理</p>
       </li>
       <li  v-on:click="routeByName('examDetail')">
         <span class="h_icon h_icon04"></span>

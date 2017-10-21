@@ -6,41 +6,70 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">课程管理</span> > <span class="f_blue">员工学习记录</span></span>
+          <span class="vm">您的当前位置 : <span class="">课程管理</span> > <span class="f_blue">课程信息管理</span></span>
         </nav>
         <div class="con_tab">
+
           <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
             <el-form-item label="课程名称">
               <el-input v-model="formInline.name" placeholder="课程名称"></el-input>
             </el-form-item>
-            <el-form-item label="员工姓名" prop="region">
-              <el-input v-model="formInline.user" placeholder="员工姓名"></el-input>
+            <el-form-item label="课程类别" prop="formInline.categoryId">
+              <el-select v-model="formInline.categoryId" placeholder="请选择课程类别">
+                 <el-option
+                  v-for="item in categoryList"
+                  :key="item.category_id"
+                  :label="item.category_name"
+                  :value="item.category_id">
+                </el-option>
+              </el-select>
             </el-form-item>
-            <el-form-item label="部门">
-              <el-input v-model="formInline.department" placeholder="部门"></el-input>
+            <el-form-item label="责任人">
+              <el-input v-model="formInline.user" placeholder="责任人"></el-input>
             </el-form-item>
-            <el-form-item label="区域">
-              <el-input v-model="formInline.area" placeholder="区域"></el-input>
+            <el-form-item label="发布时间">
+              <el-input v-model="formInline.date" placeholder="发布时间"></el-input>
             </el-form-item>
             <el-form-item>
               <button type="button" class="inf_btn ml20">查  询</button>
-              <button type="button" class="inf_btn ml20">导  出</button>
             </el-form-item>
           </el-form>
-          <el-table :data="tableData"  border style="width: 100%">
-            <el-table-column prop="user" label="员工姓名">
+          <div class="fr hidden mb20">
+            <button type="button" class="inf_btn mr20" v-on:click="routeByName('courseEdit')" >添加课程</button>
+            <button type="button"  class="inf_btn">导  出</button>
+          </div>
+          <el-table  :data="tableData" border style="width: 100%">
+            <el-table-column prop="" label="课程名称" width="180">
             </el-table-column>
-            <el-table-column prop="name" label="课程名称">
+            <el-table-column prop="number" label="课程类别" width="180">
             </el-table-column>
-            <el-table-column prop="department" label="部门">
+            <el-table-column prop="workNum" label="责任人" width="180">
             </el-table-column>
-            <el-table-column prop="area" label="区域">
+            <el-table-column prop="email" label="部门" width="180">
             </el-table-column>
-            <el-table-column prop="content" label="课程内容">
+            <el-table-column prop="department" label="有效期" width="180">
             </el-table-column>
-            <el-table-column prop="study" label="学习时间">
+            <el-table-column prop="address" label="课程类型" width="180">
+            </el-table-column>
+            <el-table-column prop="timeStart" label="课程状态" width="180">
+            </el-table-column>
+            <el-table-column prop="timeEnd" label="发布日期" width="180">
+            </el-table-column>
+            <el-table-column  prop="appraise" label="查看评价" width="180">
+              <template scope="scope">
+                <el-button  v-on:click="routeByName('courseComment')" type="text" size="small">查看课程评价</el-button>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" class="tc" width="180">
+              <template scope="scope">
+                <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
+                <el-button @click="open2" type="text" size="small">删除</el-button>
+              </template>
             </el-table-column>
           </el-table>
+          <div class="ds_oq_pageF" style="margin:10px 38%">
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
+          </div>
         </div>
       </section>
     </div>
@@ -55,35 +84,17 @@
   export default {
     data: function () {
       return {
+        currentPage: 0,
+        take: 10,
+        total: 0,
         formInline: {
           name: '',
           user: '',
-          company: {},
-          department: '',
-          area: ''
+          date: '',
+          categoryId: ''
         },
-        tableData: [{
-          user: '王小虎',
-          name: '销售经理的十大必杀技',
-          department: '销售部',
-          area: '北京',
-          content: '如何接触客户.ppt3',
-          study: '2017-07-20 10:20:10'
-        }, {
-          user: '王小虎',
-          name: '销售经理的十大必杀技',
-          department: '销售部',
-          area: '北京',
-          content: '如何接触客户.ppt3',
-          study: '2017-07-20 10:20:10'
-        }, {
-          user: '王小虎',
-          name: '销售经理的十大必杀技',
-          department: '销售部',
-          area: '北京',
-          content: '如何接触客户.ppt3',
-          study: '2017-07-20 10:20:10'
-        }]
+        tableData: [],
+        categoryList: []
       }
     },
     components: {
@@ -91,17 +102,36 @@
       navigator
     },
     created () {
-      api.fetch(api.uri.getCompanyInfo).then(data => {
+      api.fetch(api.uri.searchCourse, {
+        title: this.formInline.name,
+        priName: this.formInline.user,
+        typeid: this.formInline.categoryId,
+        pubdate: this.formInline.date,
+        skip: 0,
+        take: this.take
+      }).then(data => {
         if (data.status === 1) {
-          this.company = data
+          this.tableData = data.result
+          api.fetch(api.uri.getCategory).then(data1 => {
+            if (data1.status === 1) {
+              this.categoryList = data1.result
+            }
+          }).catch(err => {
+            this.$message(err.message)
+          })
         }
+      }).catch(error => {
+        this.$message(error.message)
       })
     },
-    methods: {}
+    methods: {
+      handleCurrentChange: function (val) {
+
+      }
+    }
   }
 </script>
 
-<style scoped="scope">
+<style scoped>
 
 </style>
-

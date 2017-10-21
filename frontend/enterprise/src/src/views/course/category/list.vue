@@ -75,7 +75,6 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          // var _this = this
           api.fetch(api.uri.deleteCategory, {cateid: id}).then(data => {
             api.fetch(api.uri.getCategory, {skip: 0, take: 10000}).then(data1 => {
               if (data1.status === 1) {

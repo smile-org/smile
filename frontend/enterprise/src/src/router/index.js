@@ -18,9 +18,10 @@ import courseCategoryCreate from '@/views/course/category/create'
 import courseCategoryEdit from '@/views/course/category/edit'
 
 import courseList from '@/views/course/list'
-import courseDetail from '@/views/course/detail'
+// import courseDetail from '@/views/course/detail'
 import courseEdit from '@/views/course/edit'
 import courseComment from '@/views/course/comment'
+import learningList from '@/views/course/learningList'
 
 // 报名管理
 import registrationDetail from '@/views/registration/detail'
@@ -107,12 +108,12 @@ export default new Router({
       component: courseCategoryEdit,
       meta: { requiresAuth: requiresAuth }
     },
-    {
-      path: '/course/detail',
-      name: 'courseDetail',
-      component: courseDetail,
-      meta: {requiresAuth: requiresAuth}
-    },
+    // {
+    //   path: '/course/detail',
+    //   name: 'courseDetail',
+    //   component: courseDetail,
+    //   meta: {requiresAuth: requiresAuth}
+    // },
     {
       path: '/course/edit',
       name: 'courseEdit',
@@ -129,6 +130,12 @@ export default new Router({
       path: '/course/list',
       name: 'courseList',
       component: courseList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/course/learningList',
+      name: 'learningList',
+      component: learningList,
       meta: {requiresAuth: requiresAuth}
     },
     // 报名管理

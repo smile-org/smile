@@ -52,10 +52,10 @@ export default {
           routeName: 'courseCategoryList'
         }, {
           text: '课程信息管理',
-          routeName: 'courseDetail'
+          routeName: 'courseList'
         }, {
           text: '员工学习记录',
-          routeName: 'courseList'
+          routeName: 'learningList'
         }]
       }
     } else if (this.module === 'exam') {
