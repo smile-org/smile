@@ -66,6 +66,7 @@
   import api from '../../services/api'
   import router from '../../router'
   import moment from 'moment'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
@@ -120,7 +121,7 @@
         api.fetch(api.uri.exportAppointment, {title: this.form.name, sponsorDate: date}).then(data => {
           if (data.status === 1) {
             console.log(data.result)
-            this.excelUrl = data.result
+            this.excelUrl = axios.defaults.imageServer + data.result
             this.showloading = false
             this.dialogTableVisible = true
           }
