@@ -13,68 +13,60 @@
             <li>
               <span class="tit">约课主题 :</span>
               <div class="con">
-                <span>销售经理必须具备的技能培训</span>
+                <span>{{appointmentTitle}}</span>
               </div>
             </li>
             <li>
               <span class="tit">关键字 :</span>
               <div class="con">
-                <span>销售经理</span>
-                <span>销售技能</span>
-                <span>技能培训</span>
+                <span v-for="item in keywords" :key="item">{{item}}</span>
               </div>
             </li>
             <li>
               <span class="tit">发起人 :</span>
               <div class="con">
-                <span>张三</span>
+                <span>{{sponsorName}}</span>
               </div>
             </li>
             <li>
               <span class="tit">发起时间 :</span>
               <div class="con">
-                <span>2017-08-20 12:00:00</span>
+                <span>{{sponsorDate | formatDate}}</span>
               </div>
             </li>
             <li>
               <span class="tit">需求列表 :</span>
               <ul class="con">
-                <li>
-                  1.<span>销售经理必须具备的技能培训</span>
-                  <span>张三</span>
-                  <span>2017-08-20 12:00:00</span>
-                </li>
-                <li>
-                  1.<span>销售经理必须具备的技能培训</span>
-                  <span>张三</span>
-                  <span>2017-08-20 12:00:00</span>
-                </li>
-                <li>
-                  1.<span>销售经理必须具备的技能培训</span>
-                  <span>张三</span>
-                  <span>2017-08-20 12:00:00</span>
+                <li v-for="(item, index) in itemList" :key="index">
+                  {{index ++}}.
+                  <span>{{item.itemTitle}}</span>
+                  <span>{{item.sponsorName}}</span>
+                  <span>{{item.sponsorDate | formatDate}}</span>
                 </li>
               </ul>
-            </li>
-            <li>
               <span class="tit">参与者 :</span>
               <div class="con">
-                <span>100人</span>
+                <span>{{followerCount}}人</span>
                 <el-table :data="tableData" border class="mt20" style="width: 100%">
-                  <el-table-column prop="user" label="姓名" width="">
+                  <el-table-column prop="followerName" label="姓名" width="">
                   </el-table-column>
-                  <el-table-column prop="role" label="角色" width="">
+                  <el-table-column prop="followerType" label="角色" width="">
+                    <template scope="scope" >
+                      <span v-if="scope.row.followerType === 'appointment_sponsor'">发起者</span>
+                      <span v-else-if="scope.row.followerType === 'item_sponsor'">响应者</span>
+                      <span v-else>同约者</span>
+                    </template>
                   </el-table-column>
                   <el-table-column prop="department" label="部门" width="">
                   </el-table-column>
-                  <el-table-column prop="address" label="区域" width="">
+                  <el-table-column prop="area" label="区域" width="">
                   </el-table-column>
                 </el-table>
               </div>
             </li>
           </ul>
           <div class="tc btn_margin">
-            <button type="button" class="inf_btn  " v-on:click="routeByName('')">关闭约课</button>
+            <button type="button" class="inf_btn  " @click="closeAppointment()">关闭约课</button>
           </div>
         </div>
       </section>
@@ -86,27 +78,18 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
-  import router from '../../router'
+  import moment from 'moment'
   export default {
     data: function () {
       return {
-        company: {},
-        tableData: [{
-          user: '张三',
-          role: '发起者',
-          department: '技术部',
-          address: '天安门'
-        }, {
-          user: '张三',
-          role: '发起者',
-          department: '技术部',
-          address: '天安门'
-        }, {
-          user: '张三',
-          role: '发起者',
-          department: '技术部',
-          address: '天安门'
-        }]
+        tableData: [],
+        id: '',
+        appointmentTitle: '',
+        keywords: [],
+        sponsorName: '',
+        sponsorDate: '',
+        itemList: [],
+        followerCount: ''
       }
     },
     components: {
@@ -114,15 +97,52 @@
       navigator
     },
     created () {
-      api.fetch(api.uri.getCompanyInfo).then(data => {
+      this.id = parseInt(this.$route.query.id)
+      console.log(this.id)
+      api.fetch(api.uri.backAppointment, {appointmentId: this.id}).then(data => {
         if (data.status === 1) {
-          this.company = data
+          this.appointmentTitle = data.result.appointmentTitle
+          this.keywords = data.result.keyWord.split(',')
+          this.sponsorName = data.result.sponsorName
+          this.sponsorDate = data.result.sponsorDate
+          this.itemList = data.result.itemList
+        }
+      })
+      api.fetch(api.uri.backAppointmentFollowers, {appointmentId: this.id}).then(data => {
+        if (data.status === 1) {
+          this.tableData = data.result
+          this.followerCount = data.result.length
         }
       })
     },
+    filters: {
+      formatDate (time) {
+        var date = new Date(time)
+        return moment(date).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
     methods: {
-      routeByName: function (name) {
-        router.push({name: name})
+      closeAppointment () {
+        console.log(this.id)
+        this.$confirm('此操作将关闭该约课需求，是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.fetch(api.uri.closeAppointment, {appointmentId: this.id}).then(data => {
+            if (data.status === 1) {
+              this.$message({
+                type: 'success',
+                message: '关闭成功!'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消关闭'
+          })
+        })
       }
     }
   }
