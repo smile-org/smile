@@ -25,7 +25,7 @@ import learningList from '@/views/course/learningList'
 
 // 报名管理
 import registrationEnrollmentRecord from '@/views/registration/enrollmentRecord'
-import registrationTrainlist from '@/views/registration/trainlist'
+import registrationTrainlist from '@/views/registration/trainList'
 import registrationEdit from '@/views/registration/edit'
 import registrationRecord from '@/views/registration/record'
 import registrationComment from '@/views/registration/comment'
