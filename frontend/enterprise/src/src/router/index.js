@@ -196,7 +196,6 @@ export default new Router({
       name: 'adminList',
       component: adminList,
       meta: {requiresAuth: requiresAuth}
-<<<<<<< Updated upstream
     },
 // 考试管理
     {
@@ -216,15 +215,6 @@ export default new Router({
       name: 'examUserList',
       component: examUserList,
       meta: {requiresAuth: requiresAuth}
-=======
->>>>>>> Stashed changes
     }
-// // 考试管理
-//     {
-//       path: '/exam/detail',
-//       name: 'examDetail',
-//       component: examDetail,
-//       meta: {requiresAuth: requiresAuth}
-//     }
   ]
 })
