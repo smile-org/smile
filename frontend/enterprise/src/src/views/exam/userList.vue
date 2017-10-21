@@ -6,7 +6,7 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="f_blue">考试信息管理</span></span>
+          <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="f_blue">员工学习记录</span></span>
         </nav>
         <div class="con_tab">
 
@@ -32,7 +32,17 @@
             </el-form-item>
             <el-form-item>
               <button type="button" class="inf_btn ml20">查  询</button>
-              <button type="button" class="inf_btn ml20">导  出</button>
+              <el-button type="button" v-on:click="click" :loading="showloading" @click="dialogTableVisible = true" class="inf_btn ml20 export_bor">导  出</el-button>
+              <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                <div class="tc">
+                  <!--<p class="exal">电子表格文件生成成功</p>-->
+                  <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+                </div>
+                <div class="tc">
+                  <a href="#" download="w3logo" class="inf_btn download" style="display: inline-block;">下  载</a>
+                  <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
+                </div>
+              </el-dialog>
             </el-form-item>
           </el-form>
           <el-table  :data="tableData" border style="width: 100%">
@@ -82,6 +92,7 @@
         currentPage: 0,
         total: 0,
         showloading: false,
+        dialogTableVisible: false,
         formInline: {
           user: '',
           company: {},
@@ -92,6 +103,9 @@
         }
       }
     },
+//    click: function () {
+//      this.dialogTableVisible = !this.dialogTableVisible
+//    },
     components: {
       commonHeader,
       navigator
@@ -150,4 +164,30 @@
     animation: rotating 1s linear infinite;
     color: #fff;
   }
+
+  /*导出样式*/
+  .download {
+    line-height: 38px;
+    display: inline-block;
+  }
+
+  .qx_btn {
+    min-width: 120px;
+    height: 38px;
+    text-align: center;
+    color: #fff;
+    background: #a4a4a4;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    padding: 0 20px;
+  }
+
+  .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
+    color: #fff;
+    background: #c3c3c3;
+    outline: none;
+  }
+  /*导出样式end*/
 </style>

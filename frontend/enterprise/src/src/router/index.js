@@ -43,6 +43,8 @@ import adminChangePWD from '@/views/admin/changePWD'
 import examList from '@/views/exam/list'
 import examQuestionList from '@/views/exam/questionList'
 import examUserList from '@/views/exam/userList'
+import examEdit from '@/views/exam/edit'
+
 
 Vue.use(Router)
 var requiresAuth = false
@@ -221,6 +223,12 @@ export default new Router({
       path: '/exam/userList',
       name: 'examUserList',
       component: examUserList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/exam/edit',
+      name: 'examEdit',
+      component: examEdit,
       meta: {requiresAuth: requiresAuth}
     }
   ]

@@ -36,7 +36,17 @@
           </el-form>
           <div class="fr hidden mb20">
             <button type="button" class="inf_btn mr20" icon="search" v-on:click="routeByName('courseEdit')" >添加考试</button>
-            <el-button type="button" v-on:click="click" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
+            <el-button type="button" v-on:click="click" :loading="showloading" @click="dialogTableVisible = true" class="inf_btn ml20 export_bor">导  出</el-button>
+            <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+              <div class="tc">
+                <!--<p class="exal">电子表格文件生成成功</p>-->
+                <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+              </div>
+              <div class="tc">
+                <a href="#" download="w3logo" class="inf_btn download" style="display: inline-block;">下  载</a>
+                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
+              </div>
+            </el-dialog>
           </div>
           <el-table  :data="tableData" border style="width: 100%">
             <el-table-column prop="examNo" label="考试编号" width="180">
@@ -85,6 +95,7 @@
         currentPage: 0,
         total: 0,
         showloading: false,
+        dialogTableVisible: false,
         formInline: {
           user: '',
           company: {},
@@ -181,4 +192,29 @@
     animation: rotating 1s linear infinite;
     color: #fff;
   }
+  /*导出样式*/
+  .download {
+    line-height: 38px;
+    display: inline-block;
+  }
+
+  .qx_btn {
+    min-width: 120px;
+    height: 38px;
+    text-align: center;
+    color: #fff;
+    background: #a4a4a4;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    padding: 0 20px;
+  }
+
+  .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
+    color: #fff;
+    background: #c3c3c3;
+    outline: none;
+  }
+  /*导出样式end*/
 </style>
