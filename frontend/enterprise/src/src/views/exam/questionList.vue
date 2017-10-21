@@ -9,65 +9,49 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="f_blue">考试信息管理</span></span>
         </nav>
         <div class="con_tab">
-
-          <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
-            <el-form-item label="考试编号">
-              <el-input v-model="formInline.user" placeholder="考试编号"></el-input>
+          <div>
+            <button type="button" v-on:click="routeByName('userCreate')" class="inf_btn mr15">添加试题</button>
+            <button type="button"  class="inf_btn mr15">试题导入</button>
+            <button type="button" class="inf_btn mr15">下载导入模板</button>
+            <el-button type="button" v-on:click="click" :loading="showloading" class="inf_btn  export_bor">导  出</el-button>
+          </div>
+          <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
+            <!--<el-row>-->
+            <el-form-item label="题目">
+              <el-input v-model="formInLine.user" placeholder="题目"></el-input>
             </el-form-item>
-            <el-form-item label="考试名称">
-              <el-input v-model="formInline.user" placeholder="考试名称"></el-input>
-            </el-form-item>
-            <el-form-item label="管理员">
-              <el-input v-model="formInline.address" placeholder="管理员"></el-input>
+            <el-form-item label="类型">
+              <el-select v-model="value" placeholder="请选择">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="开始时间">
               <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date" style="width: 100%;"></el-date-picker>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="结束时间">
-              <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date1" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.date" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item>
-              <button type="button" class="inf_btn ml20">查  询</button>
+              <button type="button" class="inf_btn mr15">查  询</button>
             </el-form-item>
+            <!--</el-row>-->
           </el-form>
-          <div class="fr hidden mb20">
-            <button type="button" class="inf_btn mr20" v-on:click="routeByName('courseEdit')" >添加课程</button>
-            <el-button type="button" v-on:click="click" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
-          </div>
           <el-table  :data="tableData" border style="width: 100%">
-            <el-table-column prop="" label="课程名称" width="180">
+            <el-table-column prop="examCount" label="试题题目" width="">
             </el-table-column>
-            <el-table-column prop="number" label="课程类别" width="180">
+            <el-table-column prop="examScore" label="试题类型" width="">
             </el-table-column>
-            <el-table-column prop="workNum" label="责任人" width="180">
+            <el-table-column prop="examTime" label="创建时间" width="">
             </el-table-column>
-            <el-table-column prop="email" label="部门" width="180">
-            </el-table-column>
-            <el-table-column prop="department" label="有效期" width="180">
-            </el-table-column>
-            <el-table-column prop="address" label="课程类型" width="180">
-            </el-table-column>
-            <el-table-column prop="timeStart" label="课程状态" width="180">
-            </el-table-column>
-            <el-table-column prop="timeEnd" label="发布日期" width="180">
-            </el-table-column>
-            <el-table-column  prop="appraise" label="查看评价" width="180">
-              <template scope="scope">
-                <el-button  v-on:click="routeByName('courseComment')" type="text" size="small">查看课程评价</el-button>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" class="tc" width="180">
+            <el-table-column label="操作" class="tc" width="">
               <template scope="scope">
                 <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
                 <el-button @click="open2" type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
-
+          <div class="ds_oq_pageF" style="margin:10px 38%">
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="10" layout="total, prev, pager, next" :total="total"></el-pagination>
+          </div>
         </div>
       </section>
     </div>
@@ -83,43 +67,35 @@
   export default {
     data: function () {
       return {
-        showloading: '',
-        formInline: {
-          user: '',
-          company: {},
-          apartment: '',
-          address: '',
-          date: '',
-          date1: ''
+        data: [],
+        take: 20,
+        currentPage: 0,
+        total: 0,
+        showloading: false,
+        formInLine: {
+          department: '',
+          area: '',
+          name: '',
+          mobile: '',
+          date: ''
         },
-        tableData: [{
-          name: '王小虎',
-          number: '12323243222',
-          workNum: '12345644',
-          email: '378999999999@qq.com',
-          department: '378999999999@qq.com',
-          address: '上海市普陀区金沙江路 1518 弄',
-          timeStart: '12345644',
-          timeEnd: '12323243222'
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
         }, {
-          name: '王小虎',
-          number: '12323243222',
-          workNum: '12345644',
-          email: '378999999999@qq.com',
-          department: '378999999999@qq.com',
-          address: '上海市普陀区金沙江路 1518 弄',
-          timeStart: '12345644',
-          timeEnd: '12323243222'
+          value: '选项2',
+          label: '双皮奶'
         }, {
-          name: '王小虎',
-          number: '12323243222',
-          workNum: '12345644',
-          email: '378999999999@qq.com',
-          department: '378999999999@qq.com',
-          address: '上海市普陀区金沙江路 1518 弄',
-          timeStart: '12345644',
-          timeEnd: '12323243222'
-        }]
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value: ''
       }
     },
     components: {
@@ -162,15 +138,25 @@
   }
 </script>
 
-<style scoped>
-  .el-icon-loading{
-    color: #fff;
+<style >
+  .export_bor i{
+    color: #fff!important;
   }
   .export_bor{
     border:none;
     color: #fff;
   }
-  .export_bor:hover, .export_bor:active{
+  .export_bor:hover, .export_bor:active,.export_bor:focus{
     color: #fff;
+  }
+  .el-icon-loading{
+    color: #fff;
+  }
+  .el-icon-loading {
+    animation: rotating 1s linear infinite;
+    color: #fff;
+  }
+  .el-select .el-input__inner:hover,.el-select .el-input__inner:active,.el-select .el-input__inner:focus {
+    border-color: #01b554;
   }
 </style>
