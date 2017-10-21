@@ -26,9 +26,11 @@ public interface AppointmentService {
 
     List<BackAppointment> getBackAppointmentList(int companyId,String title,Date sponsorDate, int skip,int take) throws ParseException;
 
+    int getBackAppointmentCount(int companyId,String title,Date sponsorDate) throws ParseException;
+
     BackAppointmentDetail getBackAppointmentDetail(int appointmentId);
 
-    List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId, int skip,int take);
+    List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId);
 
     void closeAppointment(int appointmentId);
 }

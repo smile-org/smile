@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.ConsoleHandler;
 
 @RestController
 @RequestMapping("/appointment")
@@ -227,9 +228,12 @@ public class AppointmentController {
                 newSponsorDate = sdf.parse(sponsorDate);
             }
 
+            int total = appointmentService.getBackAppointmentCount(companyId, title, newSponsorDate);
+
             List<BackAppointment> backAppointments = appointmentService.getBackAppointmentList(companyId, title, newSponsorDate, skip, take);
 
             result.put(Constant.status, 1);
+            result.put("total", total);
             result.put(Constant.result, backAppointments);
 
         } catch (Exception ex) {
@@ -242,7 +246,7 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/backAppointment", method = RequestMethod.GET)
-    public Map getBackAppointment(@RequestHeader Map header,@RequestParam int appointmentId){
+    public Map getBackAppointment(@RequestHeader Map header, @RequestParam int appointmentId) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -268,7 +272,7 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/backAppointmentFollowers", method = RequestMethod.GET)
-    public Map getBackAppointmentFollowers(@RequestHeader Map header,@RequestParam int appointmentId, @RequestParam int skip, @RequestParam int take){
+    public Map getBackAppointmentFollowers(@RequestHeader Map header, @RequestParam int appointmentId) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -280,7 +284,7 @@ public class AppointmentController {
 
         try {
 
-            List<BackAppointmentFollower> folowers = appointmentService.getBackAppointmentFollowers(appointmentId,skip,take);
+            List<BackAppointmentFollower> folowers = appointmentService.getBackAppointmentFollowers(appointmentId);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, folowers);
@@ -295,7 +299,7 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/closeAppointment", method = RequestMethod.GET)
-    public Map closeAppointment(@RequestHeader Map header, @RequestParam int appointmentId){
+    public Map closeAppointment(@RequestHeader Map header, @RequestParam int appointmentId) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);

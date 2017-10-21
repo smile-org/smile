@@ -36,11 +36,13 @@ public interface AppointmentRepo {
 
     List<BackAppointment> getBackAppointmentList(@Param("companyId") int companyId, @Param("title") String title, @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("skip") int skip, @Param("take") int take);
 
+    int getBackAppointmentCount(@Param("companyId") int companyId, @Param("title") String title, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
     BackAppointmentDetail getBackAppointment(int appointmentId);
 
     List<BackAppointmentDetailItem> getBackAppointmentItem(int appointmentID);
 
-    List<BackAppointmentFollower> getBackAppointmentFollowers(@Param("appointmentId") int appointmentId, @Param("skip") int skip, @Param("take") int take);
+    List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId);
 
     void closeAppointment(int appointmentId);
 }

@@ -77,15 +77,29 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<BackAppointment> getBackAppointmentList(int companyId, String title, Date sponsorDate, int skip, int take) throws ParseException {
         Date startDate = null;
-        Date endDate=null;
-        if(sponsorDate != null){
+        Date endDate = null;
+        if (sponsorDate != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-            startDate = sdf1.parse(sdf.format(sponsorDate)+" 00:00:00");
-            endDate = sdf1.parse(sdf.format(sponsorDate)+" 23:59:59");
+            startDate = sdf1.parse(sdf.format(sponsorDate) + " 00:00:00");
+            endDate = sdf1.parse(sdf.format(sponsorDate) + " 23:59:59");
         }
-        return appointmentRepo.getBackAppointmentList(companyId, title, startDate,endDate, skip, take);
+        return appointmentRepo.getBackAppointmentList(companyId, title, startDate, endDate, skip, take);
+    }
+
+    @Override
+    public int getBackAppointmentCount(int companyId, String title, Date sponsorDate) throws ParseException {
+        Date startDate = null;
+        Date endDate = null;
+        if (sponsorDate != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+            startDate = sdf1.parse(sdf.format(sponsorDate) + " 00:00:00");
+            endDate = sdf1.parse(sdf.format(sponsorDate) + " 23:59:59");
+        }
+        return appointmentRepo.getBackAppointmentCount(companyId, title, startDate, endDate);
     }
 
     @Override
@@ -97,8 +111,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId, int skip, int take) {
-        return appointmentRepo.getBackAppointmentFollowers(appointmentId,skip,take);
+    public List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId) {
+        return appointmentRepo.getBackAppointmentFollowers(appointmentId);
     }
 
     @Override
