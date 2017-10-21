@@ -42,6 +42,7 @@ import adminChangePWD from '@/views/admin/changePWD'
 import examList from '@/views/exam/list'
 import examQuestionList from '@/views/exam/questionList'
 import examUserList from '@/views/exam/userList'
+
 Vue.use(Router)
 var requiresAuth = false
 
@@ -195,6 +196,7 @@ export default new Router({
       name: 'adminList',
       component: adminList,
       meta: {requiresAuth: requiresAuth}
+<<<<<<< Updated upstream
     },
 // 考试管理
     {
@@ -214,6 +216,15 @@ export default new Router({
       name: 'examUserList',
       component: examUserList,
       meta: {requiresAuth: requiresAuth}
+=======
+>>>>>>> Stashed changes
     }
+// // 考试管理
+//     {
+//       path: '/exam/detail',
+//       name: 'examDetail',
+//       component: examDetail,
+//       meta: {requiresAuth: requiresAuth}
+//     }
   ]
 })

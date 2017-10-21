@@ -95,11 +95,9 @@ export default {
     editCategory: '/back/UpdateCourseCategory',
     deleteCategory: '/back/DisableCourseCategory',
     getCategoryByID: '/back/GetCourseCategoryByID',
-    // 课程
-    searchCategory: '',
 
     // 课程信息管理
-    searchCourse: '',
+    searchCourse: '/back/GetCourseList',
     addCourse: '',
     addCourseContent: '',
     editCourseContent: '',
