@@ -115,7 +115,9 @@ export default {
 
     // 报名管理
     getEnrollmentList: '/back/GetEnrollmentList',
-    exportEnrollmentList: '/back/ExportEnrollmentList'
+    exportEnrollmentList: '/back/ExportEnrollmentList',
+    getEnrollmentCommentList: '/back/GetEnrollmentCommentList',
+    deleteEnrollmentPeriod: '/back/DeletePeriod'
   },
   image: {
     category: '/default/cateicon.png'

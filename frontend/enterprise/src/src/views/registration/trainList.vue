@@ -184,49 +184,32 @@
         router.push({name: 'registrationComment', query: {id: row.enrollment_id}})
       },
       addPeriod: function (row) {
-        router.push({name: 'registrationAddPeriod', query: {id: row.enrollment_id}})
+        router.push({name: 'registrationAddPeriod', query: {id: row.period_id}})
       },
       editEnrollment: function (row) {
-        router.push({name: 'registrationEdit', query: {id: row.enrollment_id}})
+        router.push({name: 'registrationEdit', query: {id: row.period_id}})
       },
       deleteEnrollment: function (row) {
         console.log('delete.')
-      },
-      routeByName: function (name) {
-        router.push({name: name})
-      },
-      click: function () {
-        this.dialogTableVisible = !this.dialogTableVisible
-      },
-      open4 () {
-        const h = this.$createElement
-        this.$msgbox({
-          title: '消息',
-          message: h('p', null, [
-            h('span', null, '内容可以是 '),
-            h('i', {style: 'color: teal'}, 'VNode')
-          ]),
-          showCancelButton: true,
+        this.$confirm('此操作将删除该报名培训，是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          beforeClose: (action, instance, done) => {
-            if (action === 'confirm') {
-              instance.confirmButtonLoading = true
-              instance.confirmButtonText = '执行中...'
-              setTimeout(() => {
-                done()
-                setTimeout(() => {
-                  instance.confirmButtonLoading = false
-                }, 300)
-              }, 3000)
-            } else {
-              done()
+          type: 'warning'
+        }).then(() => {
+          api.fetch(api.uri.deleteEnrollmentPeriod, {periodid: row.period_id}).then(data => {
+            if (data.status === 1) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              this.total = data.total
+              this.tableData = data.result
             }
-          }
-        }).then(action => {
+          })
+        }).catch(() => {
           this.$message({
             type: 'info',
-            message: 'action: ' + action
+            message: '已取消删除'
           })
         })
       }
