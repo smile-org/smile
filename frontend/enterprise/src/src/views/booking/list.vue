@@ -97,14 +97,18 @@ eee
 </script>
 
 <style>
-  .el-icon-loading{
-    color: #fff;
-  }
+
   .export_bor{
     border:none;
     color: #fff;
   }
   .export_bor:hover, .export_bor:active{
     color: #fff;
+  }
+  .export_bor i{
+    color: #fff!important;
+  }
+  .el-icon-loading{
+    color: red;
   }
 </style>
