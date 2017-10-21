@@ -572,6 +572,36 @@ public class CourseController {
     }
 
 
+
+
+    @RequestMapping(value = "/back/DisableCourse", method = RequestMethod.GET)
+    public Map backDisableCourse(int courseid, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            courseService.backDisableCourse(courseid);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "课程删除成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
     //coursehtml5prefix=/company-%s/course/html5/%s-
     //courseofficeprefix=/company-%s/course/office/%s-
 
@@ -1153,13 +1183,14 @@ public class CourseController {
 
 
 
-
     @Value("${exportfolder}")
-    private String exportfolder;
+    private  String exportfolder;
+
+
 
     @RequestMapping(value = "/back/ExportCourseList", method = RequestMethod.GET)
     public Map backExportCourseList(String title,  String  priName, int typeid,  String pubdate,
-                                  HttpServletRequest request, HttpServletResponse response,
+                                  //HttpServletRequest request, HttpServletResponse response,
                                   @RequestHeader Map header) {
 
         Map<String, Object> result = new HashMap<String, Object>();
@@ -1220,11 +1251,12 @@ public class CourseController {
                 dataList.add(dataArray);
             }
 
-            Helper.Export( rowNameList, dataList, "CourseList-" ,request, response );
+           String url =  Helper.Export( rowNameList, dataList, "CourseList-" , fileroot, exportfolder );
+
 
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, "导出成功");
+            result.put(Constant.result, url);
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -1282,7 +1314,7 @@ public class CourseController {
 
     @RequestMapping(value = "/back/ExportUserLearnProgressList", method = RequestMethod.GET)
     public Map backExportUserLearnProgressList(String title,  String  fullname, String  department,  String area,
-                                    HttpServletRequest request, HttpServletResponse response,
+                                    //HttpServletRequest request, HttpServletResponse response,
                                     @RequestHeader Map header) {
 
         Map<String, Object> result = new HashMap<String, Object>();
@@ -1305,6 +1337,7 @@ public class CourseController {
             if(! Helper.isNullOrEmpty(area))
                 ulp.setArea(area);
 
+            //ulp.setCompany_id(1);
             ulp.setCompany_id(user.getCompany_id());
             ulp.setSkip(0);
             ulp.setTake(Constant.takeMax);
@@ -1340,13 +1373,11 @@ public class CourseController {
                 dataList.add(dataArray);
             }
 
-            Helper.Export( rowNameList, dataList, "UserLearnProgressList-" ,request, response );
-
-
+            String url= Helper.Export( rowNameList, dataList, "UserLearnProgressList-", fileroot, exportfolder);
 
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, "导出成功");
+            result.put(Constant.result, url);
 
 
 

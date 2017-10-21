@@ -252,7 +252,7 @@ public class UserController {
     @RequestMapping(value = "/back/ExportUserList", method = RequestMethod.GET)
     public Map backExportUserList(@RequestParam String fullname,@RequestParam String cellphone,
                                   @RequestParam String department, @RequestParam String area,
-                                  HttpServletRequest request, HttpServletResponse response,
+                                  //HttpServletRequest request, HttpServletResponse response,
                                   @RequestHeader Map header) {
 
         Map<String, Object> result = new HashMap<String, Object>();
@@ -308,10 +308,10 @@ public class UserController {
                 dataList.add(dataArray);
             }
 
-            Helper.Export( rowNameList, dataList, "UserList-" ,request, response );
+            String  url=  Helper.Export( rowNameList, dataList, "UserList-" , fileroot ,exportfolder );
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, "导出成功");
+            result.put(Constant.result, url);
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());

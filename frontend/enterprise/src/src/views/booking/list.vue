@@ -29,6 +29,9 @@
             <el-table-column prop="sponsorName" label="发起者" width="">
             </el-table-column>
             <el-table-column prop="sponsorDate" label="发起时间" width="">
+              <template scope="scope" >
+                <span >{{scope.row.sponsorDate | formatDate}} </span>
+              </template>
             </el-table-column>
             <el-table-column prop="thisR" label="操作" width="" >
               <template scope="scope" >
@@ -83,6 +86,12 @@
           this.tableData = data.result
         }
       })
+    },
+    filters: {
+      formatDate (time) {
+        var date = new Date(time)
+        return moment(date).format('YYYY-MM-DD HH:mm:ss')
+      }
     },
     methods: {
       routeByName: function (row) {
