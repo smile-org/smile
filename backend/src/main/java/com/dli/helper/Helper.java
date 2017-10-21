@@ -1,12 +1,18 @@
 package com.dli.helper;
 
 import com.dli.entities.User;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class Helper {
 
@@ -118,6 +124,59 @@ public class Helper {
         {
             throw  e;
         }
+    }
+
+    @Value("${fileroot}")
+    private static String fileroot;
+    @Value("${exportfolder}")
+    private static String exportfolder;
+
+    public  static   void    Export(List<String> rowNameList, List<Object[]> dataList, String tempFileName ,
+                                    HttpServletRequest request, HttpServletResponse response)
+            throws  Exception
+    {
+
+        try {
+
+
+        String path =fileroot +  exportfolder;
+        File targetFile = new File(path);
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+
+        String fullPath =   path + tempFileName+ UUID.randomUUID() +".xlsx";
+        OfficeUtil.getInstance().export2excel("sheet1", rowNameList, dataList,fullPath);
+
+        //推流
+        File downloadFile = new File(fullPath);
+        ServletContext context = request.getServletContext();
+
+        // get MIME type of the file
+        String mimeType = context.getMimeType(fullPath);
+        if (mimeType == null) {
+            // set to binary type if MIME mapping not found
+            mimeType = "application/octet-stream";
+        }
+
+        // set content attributes for the response
+        response.setContentType(mimeType);
+        response.setContentLength((int) downloadFile.length());
+
+        // set headers for the response
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"",
+                downloadFile.getName());
+        response.setHeader(headerKey, headerValue);
+
+        InputStream myStream = new FileInputStream(fullPath);
+        IOUtils.copy(myStream, response.getOutputStream());
+        response.flushBuffer();
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+
     }
 
 

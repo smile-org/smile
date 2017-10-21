@@ -19,6 +19,9 @@ public interface UserService {
     List<User>  backGetUserList( int company_id, String full_name,String  cell_phone,
                                 String department, String area ,int skip, int take );
 
+    int  backGetUserListCount( int company_id, String full_name,String  cell_phone,
+                               String department, String area);
+
     void  backDisableUserByID( int userid );
 
 }

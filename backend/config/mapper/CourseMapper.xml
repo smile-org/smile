@@ -137,6 +137,12 @@ join (
             and  course_id=#{courseid}   order by  c.created_at desc;
     </select>
 
+
+    <select id="getCourseCommentListCount" resultType="int">
+        select  count(*) from   course_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
+        and  course_id=#{courseid}
+    </select>
+
     <update id="deleteCommentById"  >
        update   course_comment  set indicator =0    where comment_id = #{id};
     </update>
@@ -436,4 +442,69 @@ where  content_id=#{content_id}
    type_id=#{type_id}
    where course_id=#{course_id}
     </update>
+
+
+    <select id="backGetCourseList"   parameterType="com.dli.entities.backCourse"  resultType="com.dli.entities.backCourse">
+         select * from (
+select   c.course_id,c.title,cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
+ DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  c.type_id   , t.type_name  , c.ispublished  ,
+  DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date   from  course  c
+ join   course_category   cate    on c.category_id =cate.category_id
+join  user    u on c.principal_user_id =u.user_id
+JOIN   course_type t on c.type_id=  t.type_id
+     where c.indicator =1 and c.company_id=#{company_id} )t   where  1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="principal_user_idName!=null">and principal_user_idName like '%${principal_user_idName}%' </if>
+        <if test="type_id!=0">and type_id  = #{type_id}</if>
+        <if test="publish_date!=null">and publish_date = #{publish_date}</if>
+       LIMIT #{skip},#{take};
+    </select>
+
+
+
+    <select id="backGetCourseListCount"   parameterType="com.dli.entities.backCourse"  resultType="int">
+        select count(*) from (
+        select   c.course_id,c.title,cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
+        DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  c.type_id   , t.type_name  , c.ispublished  ,
+        DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date   from  course  c
+        join   course_category   cate    on c.category_id =cate.category_id
+        join  user    u on c.principal_user_id =u.user_id
+        JOIN   course_type t on c.type_id=  t.type_id
+        where c.indicator =1 and c.company_id=#{company_id} )t   where  1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="principal_user_idName!=null">and principal_user_idName like '%${principal_user_idName}%' </if>
+        <if test="type_id!=0">and type_id  = #{type_id}</if>
+        <if test="publish_date!=null">and publish_date = #{publish_date}</if>
+    </select>
+
+
+
+
+    <select id="backGetUserLearnProgressList"   parameterType="com.dli.entities.UserLearnProgress"  resultType="com.dli.entities.UserLearnProgress">
+        select * from (select  u.full_name,   c.title,  u.department, u.area , ct.content_id , ct.content,   DATE_FORMAT(p.learn_at,'%Y-%m-%d')   as learn_at   from learn_progress   p
+join  user u on p.user_id =  u.user_id
+join course_content   ct on p.content_id = ct.content_id
+ join  course c on p.course_id= c.course_id where c.company_id=#{company_id}  and   p.status = 'Finished'
+ )t
+  where  1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="full_name!=null">and full_name like '%${full_name}%' </if>
+        <if test="department!=0">and department  like '%${department}%'</if>
+        <if test="area!=null">and publish_date like '%${area}%'</if>
+ order by full_name  ,  title,  content_id     LIMIT #{skip},#{take};
+    </select>
+
+
+    <select id="backGetUserLearnProgressListCount"   parameterType="com.dli.entities.UserLearnProgress"  resultType="int">
+        select count(*) from (select  u.full_name,   c.title,  u.department, u.area , ct.content_id , ct.content,   DATE_FORMAT(p.learn_at,'%Y-%m-%d')   as learn_at   from learn_progress   p
+        join  user u on p.user_id =  u.user_id
+        join course_content   ct on p.content_id = ct.content_id
+        join  course c on p.course_id= c.course_id where c.company_id=#{company_id}  and   p.status = 'Finished'
+        )t
+        where  1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="full_name!=null">and full_name like '%${full_name}%' </if>
+        <if test="department!=0">and department  like '%${department}%'</if>
+        <if test="area!=null">and publish_date like '%${area}%'</if>
+    </select>
 </mapper>

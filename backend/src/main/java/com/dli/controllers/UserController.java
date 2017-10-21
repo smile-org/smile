@@ -199,9 +199,10 @@ public class UserController {
 
 
             List<User>  lst= userService.backGetUserList(user.getCompany_id(),fullname,cellphone,department,area,skip,take);
-
+            int total =userService.backGetUserListCount(user.getCompany_id(),fullname,cellphone,department,area);
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
+            result.put(Constant.total, total);
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -272,7 +273,7 @@ public class UserController {
                 department=null;
             if(  Helper.isNullOrEmpty(area)  )
                 area=null;
-            List<User>  lst= userService.backGetUserList(user.getCompany_id(),fullname,cellphone,department,area,0,99999999);
+            List<User>  lst= userService.backGetUserList(user.getCompany_id(),fullname,cellphone,department,area,0,Constant.takeMax);
 
             //导出到服务器
             String sheetName = "sheet1";
@@ -307,40 +308,7 @@ public class UserController {
                 dataList.add(dataArray);
             }
 
-            String path =fileroot +  exportfolder;
-            File targetFile = new File(path);
-            if(!targetFile.exists()){
-                targetFile.mkdirs();
-            }
-
-            String fullPath =   path + "UserList-"+ UUID.randomUUID() +".xlsx";
-            OfficeUtil.getInstance().export2excel(sheetName, rowNameList, dataList,fullPath);
-
-            //推流
-            File downloadFile = new File(fullPath);
-            ServletContext context = request.getServletContext();
-
-            // get MIME type of the file
-            String mimeType = context.getMimeType(fullPath);
-            if (mimeType == null) {
-                // set to binary type if MIME mapping not found
-                mimeType = "application/octet-stream";
-            }
-
-            // set content attributes for the response
-            response.setContentType(mimeType);
-            response.setContentLength((int) downloadFile.length());
-
-            // set headers for the response
-            String headerKey = "Content-Disposition";
-            String headerValue = String.format("attachment; filename=\"%s\"",
-                    downloadFile.getName());
-            response.setHeader(headerKey, headerValue);
-
-            InputStream myStream = new FileInputStream(fullPath);
-            IOUtils.copy(myStream, response.getOutputStream());
-            response.flushBuffer();
-
+            Helper.Export( rowNameList, dataList, "UserList-" ,request, response );
 
             result.put(Constant.status, 1);
             result.put(Constant.result, "导出成功");

@@ -17,26 +17,20 @@ public class FileUtil {
         out.close();
     }
 
-   /* public static void renameFile(String file, String toFile) {
+   public static boolean renameFile(String file, String toFile) {
 
         File toBeRenamed = new File(file);
         //检查要重命名的文件是否存在，是否是文件
         if (!toBeRenamed.exists() || toBeRenamed.isDirectory()) {
-
-            System.out.println("File does not exist: " + file);
-            return;
+            return false;
         }
 
         File newFile = new File(toFile);
 
         //修改文件名
-        if (toBeRenamed.renameTo(newFile)) {
-            System.out.println("File has been renamed.");
-        } else {
-            System.out.println("Error renmaing file");
-        }
+     return   toBeRenamed.renameTo(newFile);
 
-    }*/
+    }
 }
 
 

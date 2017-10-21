@@ -38,4 +38,6 @@ public interface LogonRepo {
     void  addLogonHistory(int userid);
 
     List<LogonHistory>  backGetLogonHistoryList(LogonHistory   h);
+
+    int backGetLogonHistoryListCount(LogonHistory   h);
 }
