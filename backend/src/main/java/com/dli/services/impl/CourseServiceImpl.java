@@ -277,5 +277,10 @@ public class CourseServiceImpl implements CourseService {
         return courseRepo.backGetUserLearnProgressListCount(ulp);
     }
 
+    @Override
+    public void backDisableCourse(int courseid) {
+        courseRepo.backDisableCourse(courseid);
+    }
+
 
 }

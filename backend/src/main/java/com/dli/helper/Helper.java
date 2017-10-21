@@ -126,11 +126,32 @@ public class Helper {
         }
     }
 
-    @Value("${fileroot}")
-    private static String fileroot;
-    @Value("${exportfolder}")
-    private static String exportfolder;
 
+    public    static   String    Export(List<String> rowNameList, List<Object[]> dataList, String tempFileName, String  fileroot,String  exportfolder )
+            throws  Exception
+    {
+
+        try {
+
+
+            String path =fileroot +  exportfolder;
+            File targetFile = new File(path);
+            if(!targetFile.exists()){
+                targetFile.mkdirs();
+            }
+
+            String fullPath =   path + tempFileName+ UUID.randomUUID() +".xlsx";
+            OfficeUtil.getInstance().export2excel("sheet1", rowNameList, dataList,fullPath);
+             return   fullPath.replace( fileroot,""  );
+
+        }
+        catch (Exception ex){
+            throw ex;
+        }
+
+    }
+
+    /*
     public  static   void    Export(List<String> rowNameList, List<Object[]> dataList, String tempFileName ,
                                     HttpServletRequest request, HttpServletResponse response)
             throws  Exception
@@ -178,7 +199,7 @@ public class Helper {
         }
 
     }
-
+*/
 
     /*
     * todo

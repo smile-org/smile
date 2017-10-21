@@ -507,4 +507,8 @@ join course_content   ct on p.content_id = ct.content_id
         <if test="department!=0">and department  like '%${department}%'</if>
         <if test="area!=null">and publish_date like '%${area}%'</if>
     </select>
+
+    <update id="backDisableCourse"  >
+         update   course set indicator =0 where course_id = #{courseid}
+    </update>
 </mapper>

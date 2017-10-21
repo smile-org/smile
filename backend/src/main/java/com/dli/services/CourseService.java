@@ -86,4 +86,6 @@ public interface CourseService {
     List<UserLearnProgress> backGetUserLearnProgressList(UserLearnProgress  ulp);
 
     int backGetUserLearnProgressListCount(UserLearnProgress ulp);
+
+    void   backDisableCourse( int   courseid);
 }
