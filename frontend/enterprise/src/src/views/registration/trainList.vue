@@ -11,20 +11,20 @@
         <div class="con_tab">
           <el-form ref="form" :inline="true" :model="form" class="demo-form-inline" label-width="80px">
             <el-form-item label="课程名称">
-              <el-input v-model="title" placeholder="课程名称"></el-input>
+              <el-input v-model="form.title" placeholder="课程名称"></el-input>
             </el-form-item>
             <el-form-item label="讲师" prop="region">
-              <el-input v-model="teacher" placeholder="讲师"></el-input>
+              <el-input v-model="form.teacher" placeholder="讲师"></el-input>
             </el-form-item>
             <el-form-item label="开始时间">
               <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="startDate"
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"
                                 style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item label="结束时间">
               <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="endDate"
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate"
                                 style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
@@ -34,7 +34,7 @@
           </el-form>
           <!--添加报名导出表格-->
           <div class="fr hidden mb20">
-            <button type="button" class="inf_btn mr20" v-on:click="routeByName('registrationEdit')">添加报名</button>
+            <button type="button" class="inf_btn mr20" v-on:click="addEnrollment">添加报名</button>
             <el-button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
             <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
 
@@ -50,29 +50,31 @@
             </el-dialog>
           </div>
           <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="name" label="课程名称" width="">
+            <el-table-column prop="title" label="课程名称" width="">
             </el-table-column>
-            <el-table-column prop="lecturer" label="讲师" width="100">
+            <el-table-column prop="teacher" label="讲师" width="100">
             </el-table-column>
-            <el-table-column prop="timeStart" label="开始时间" width="">
+            <el-table-column prop="start" label="开始时间" width="">
             </el-table-column>
-            <el-table-column prop="timeEnd" label="结束时间" width="">
+            <el-table-column prop="end" label="结束时间" width="">
             </el-table-column>
+              <el-table-column prop="count" label="人数限制" width="">
+              </el-table-column>
             <el-table-column prop="appraise" label="查看评价" width="180">
               <template scope="scope">
-                <el-button v-on:click="routeByName('registrationComment')" type="text" size="small">查看课程评价</el-button>
+                <el-button v-on:click="enrollmentComments(scope.row)" type="text" size="small">查看评价</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="appraise" label="再开一期" width="100">
               <template scope="scope">
-                <el-button v-on:click="routeByName('')" type="text" size="small">再开一期</el-button>
+                <el-button v-on:click="addPeriod(scope.row)" type="text" size="small">再开一期</el-button>
               </template>
             </el-table-column>
 
             <el-table-column label="操作" class="tc" width="180">
               <template scope="scope">
-                <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
-                <el-button @click="checkFail(scope.row.id)" type="text" size="small">删除</el-button>
+                <el-button @click="editEnrollment(scope.row)" type="text" size="small">编辑</el-button>
+                <el-button @click="deleteEnrollment(scope.row)" type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -95,10 +97,12 @@
   export default {
     data: function () {
       return {
-        title: '',
-        teacher: '',
-        startDate: '',
-        endDate: '',
+        form: {
+          title: '',
+          teacher: '',
+          startDate: '',
+          endDate: ''
+        },
         dialogTableVisible: false,
         tableData: [],
         take: 10,
@@ -114,14 +118,14 @@
     },
     created () {
       var date1 = ''
-      if (this.startDate) {
-        date1 = moment(this.startDate).format('YYYY-MM-DD')
+      if (this.form.startDate) {
+        date1 = moment(this.form.startDate).format('YYYY-MM-DD')
       }
       var date2 = ''
-      if (this.endDate) {
-        date2 = moment(this.endDate).format('YYYY-MM-DD')
+      if (this.form.endDate) {
+        date2 = moment(this.form.endDate).format('YYYY-MM-DD')
       }
-      api.fetch(api.uri.getEnrollmentList, {title: this.title, teacher: this.teacher, start: date1, end: date2, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
+      api.fetch(api.uri.getEnrollmentList, {title: this.form.title, teacher: this.form.teacher, start: date1, end: date2, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
         if (data.status === 1) {
           this.tableData = data.result
           this.total = data.total
@@ -137,14 +141,14 @@
     methods: {
       queryEnrollment: function () {
         var date1 = ''
-        if (this.startDate) {
-          date1 = moment(this.startDate).format('YYYY-MM-DD')
+        if (this.form.startDate) {
+          date1 = moment(this.form.startDate).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.endDate) {
-          date2 = moment(this.endDate).format('YYYY-MM-DD')
+        if (this.form.endDate) {
+          date2 = moment(this.form.endDate).format('YYYY-MM-DD')
         }
-        api.fetch(api.uri.getEnrollmentList, {title: this.title, teacher: this.teacher, start: date1, end: date2, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
+        api.fetch(api.uri.getEnrollmentList, {title: this.form.title, teacher: this.form.teacher, start: date1, end: date2, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
           if (data.status === 1) {
             this.tableData = data.result
             this.total = data.total
@@ -153,25 +157,40 @@
       },
       handleCurrentChange (pageNum) {
         this.currentPage = pageNum
-        this.queryAppointment()
+        this.queryEnrollment()
       },
       exportEnrollment: function () {
         this.showloading = true
         var date1 = ''
-        if (this.startDate) {
-          date1 = moment(this.startDate).format('YYYY-MM-DD')
+        if (this.form.startDate) {
+          date1 = moment(this.form.startDate).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.endDate) {
-          date2 = moment(this.endDate).format('YYYY-MM-DD')
+        if (this.form.endDate) {
+          date2 = moment(this.form.endDate).format('YYYY-MM-DD')
         }
-        api.fetch(api.uri.exportEnrollmentList, {title: this.title, teacher: this.teacher, start: date1, end: date2}).then(data => {
+        api.fetch(api.uri.exportEnrollmentList, {title: this.form.title, teacher: this.form.teacher, start: date1, end: date2}).then(data => {
           if (data.status === 1) {
             this.excelUrl = axios.defaults.imageServer + data.result
             this.showloading = false
             this.dialogTableVisible = true
           }
         })
+      },
+      addEnrollment: function () {
+        router.push({name: 'registrationAdd'})
+      },
+      enrollmentComments: function (row) {
+        router.push({name: 'registrationComment', query: {id: row.enrollment_id}})
+      },
+      addPeriod: function (row) {
+        router.push({name: 'registrationAddPeriod', query: {id: row.enrollment_id}})
+      },
+      editEnrollment: function (row) {
+        router.push({name: 'registrationEdit', query: {id: row.enrollment_id}})
+      },
+      deleteEnrollment: function (row) {
+        console.log('delete.')
       },
       routeByName: function (name) {
         router.push({name: name})

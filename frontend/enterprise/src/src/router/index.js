@@ -30,6 +30,7 @@ import registrationEdit from '@/views/registration/edit'
 import registrationRecord from '@/views/registration/record'
 import registrationComment from '@/views/registration/comment'
 import registrationAdd from '@/views/registration/add'
+import registrationAddPeriod from '@/views/registration/addPeriod'
 
 // 约课管理
 import bookingList from '@/views/booking/list'
@@ -177,6 +178,12 @@ export default new Router({
       path: '/registration/add',
       name: 'registrationAdd',
       component: registrationAdd,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/registration/addPeriod',
+      name: 'registrationAddPeriod',
+      component: registrationAddPeriod,
       meta: {requiresAuth: requiresAuth}
     },
     // 约课
