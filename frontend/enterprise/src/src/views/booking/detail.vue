@@ -38,7 +38,7 @@
               <span class="tit">需求列表 :</span>
               <ul class="con">
                 <li v-for="(item, index) in itemList" :key="index">
-                  {{index ++}}.
+                  {{++ index}}.
                   <span>{{item.itemTitle}}</span>
                   <span>{{item.sponsorName}}</span>
                   <span>{{item.sponsorDate | formatDate}}</span>
