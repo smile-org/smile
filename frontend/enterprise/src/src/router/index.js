@@ -149,7 +149,7 @@ export default new Router({
       component: registrationEnrollmentRecord,
       meta: {requiresAuth: requiresAuth}
     }, {
-      path: '/registration/trainlist',
+      path: '/registration/trainList',
       name: 'registrationTrainlist',
       component: registrationTrainlist,
       meta: {requiresAuth: requiresAuth}
