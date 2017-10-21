@@ -32,7 +32,7 @@
           </el-form>
           <div class="fr hidden mb20">
             <button type="button" class="inf_btn mr20" v-on:click="routeByName('courseEdit')" >添加课程</button>
-            <button type="button" class="inf_btn">导  入</button>
+            <button type="button"  class="inf_btn">导  出</button>
           </div>
           <el-table  :data="tableData" border style="width: 100%">
             <el-table-column prop="" label="课程名称" width="180">
@@ -63,6 +63,7 @@
               </template>
             </el-table-column>
           </el-table>
+
         </div>
       </section>
     </div>
@@ -147,7 +148,6 @@
           })
         })
       }
-
     }
   }
 </script>

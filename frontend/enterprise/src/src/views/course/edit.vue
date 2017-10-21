@@ -93,8 +93,17 @@
                 <!--<el-button @click="dialogFormVisible = false">取 消</el-button>-->
                 <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
                 <!--</div>-->
+                <el-upload
+                  class="upload-demo"
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  :file-list="fileList">
+                  <el-button size="small" class="update_btn" type="primary">点击上传</el-button>
+                  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                </el-upload>
                 <div class="tc btn_margin">
-                  <button type="button" class="inf_btn  " v-on:click="routeByName('')">上传课件</button>
+                  <!--<button type="button" class="inf_btn  " v-on:click="routeByName('')">上传课件</button>-->
                   <button type="button" class="inf_btn  ml20" v-on:click="routeByName('')">保  存</button>
                 </div>
               </el-dialog>
@@ -139,7 +148,7 @@
                   <el-input v-model="formInline.department" placeholder="部门"></el-input>
                 </el-form-item>
                 <el-form-item class="wrapper">
-                  <el-button type="success" @click="onSubmit" >查询</el-button>
+                  <el-button type="success" @click="onSubmit">查询</el-button>
                 </el-form-item>
               </el-form>
               <el-table :data="gridData" border>
@@ -152,7 +161,7 @@
                 <el-table-column property="name" label="手机" width=""></el-table-column>
                 <el-table-column property="address" label="部门"></el-table-column>
               </el-table>
-                <el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"> </el-pagination>
+              <el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"></el-pagination>
               <div class="tc">
                 <button type="button" class="inf_btn mt30 mb20" v-on:click="routeByName('informationEdit')">保  存
                 </button>
@@ -184,6 +193,13 @@
         checked: true,
         formInline: {
           user: '',
+          fileList: [{
+            name: 'food.jpeg',
+            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+          }, {
+            name: 'food2.jpeg',
+            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+          }],
           region: ''
         },
 //        白名单标签
@@ -275,6 +291,12 @@
             message: '已取消删除'
           })
         })
+      },
+      handleRemove (file, fileList) {
+        console.log(file, fileList)
+      },
+      handlePreview (file) {
+        console.log(file)
       }
 
     }
@@ -286,15 +308,15 @@
     padding: 10px 20px;
   }
 
-  .el-button--small {
-    font-size: 14px;
-    color: #00b553;
-  }
+  /*.el-button--small {*/
+    /*font-size: 14px;*/
+    /*color: #00b553;*/
+  /*}*/
 
-  .el-button--small:hover, .el-button--small:active, .el-button--small:focus {
-    font-size: 14px;
-    color: #1DB513;
-  }
+  /*.el-button--small:hover, .el-button--small:active, .el-button--small:focus {*/
+    /*font-size: 14px;*/
+    /*color: #1DB513;*/
+  /*}*/
 
   .baiming_list {
     width: 100%;
@@ -323,8 +345,21 @@
     color: #fff;
     cursor: default;
   }
+
   .el-pager li:hover {
     color: #00b553;
+  }
+  .update_btn{
+
+    border-color: #00b553;
+    border:1px solid #00b553;
+    background: none;
+    color: #00b553;
+  }
+  .update_btn:hover, .update_btn:active, .update_btn:focus {
+    color: #fff;
+    background-color: #00b553;
+    border:1px solid #00b553;
   }
 </style>
 

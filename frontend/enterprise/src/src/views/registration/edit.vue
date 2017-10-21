@@ -80,9 +80,17 @@
               <el-col :span="24">
                 <el-form-item label="主题">
                   <el-input v-model="formInline.topic" placeholder="主题" style="width:400px;"></el-input>
-                  <el-button :plain="true" type="success" size="primary" class="ml10">添加主题</el-button>
+                  <el-button :plain="true" type="success" size="primary">添加主题</el-button>
                 </el-form-item>
               </el-col>
+              <ul class="add_topic">
+                <li>
+                  <span>1.</span>
+                  <span>2000-11-10 10:10:00 - 2000-11-11 10:10:00</span>
+                  <span>成功的哲学在于如何去战胜它</span>
+                  <i class="el-icon-delete"></i>
+                </li>
+              </ul>
             </el-form>
           </div>
           <div class="tc btn_margin">
@@ -194,4 +202,19 @@
     color: #1DB513;
   }
 
+  .add_topic li span{
+    /*width:100%;*/
+    /*padding:10px 0;*/
+    /*background: #ededed;*/
+    font-size:14px;
+    color: #666;
+  }
+  .add_topic li i{
+    /*width:100%;*/
+    /*padding:10px 0;*/
+    /*background: #ededed;*/
+    font-size:16px;
+    color: #666;
+    margin-left: 10px;
+  }
 </style>
