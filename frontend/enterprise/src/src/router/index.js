@@ -45,7 +45,6 @@ import examQuestionList from '@/views/exam/questionList'
 import examUserList from '@/views/exam/userList'
 import examEdit from '@/views/exam/edit'
 
-
 Vue.use(Router)
 var requiresAuth = false
 
