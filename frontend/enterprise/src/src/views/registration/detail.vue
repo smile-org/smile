@@ -6,7 +6,7 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="f_blue">员工报名记录</span> ></span>
+          <span class="vm">您的当前位置 : <span class="">报名管理</span> > <span class="f_blue">员工报名记录</span> </span>
         </nav>
         <div class="con_tab">
           <el-form ref="form" :inline="true" :model="form" class="demo-form-inline" label-width="80px">
