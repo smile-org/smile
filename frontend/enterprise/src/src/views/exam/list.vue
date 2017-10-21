@@ -35,7 +35,7 @@
             </el-form-item>
           </el-form>
           <div class="fr hidden mb20">
-            <button type="button" class="inf_btn mr20" v-on:click="routeByName('courseEdit')" >添加考试</button>
+            <button type="button" class="inf_btn mr20" icon="search" v-on:click="routeByName('courseEdit')" >添加考试</button>
             <el-button type="button" v-on:click="click" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
           </div>
           <el-table  :data="tableData" border style="width: 100%">
@@ -163,15 +163,22 @@
   }
 </script>
 
-<style scoped>
-  .el-icon-loading{
-    color: #fff;
+<style >
+  .export_bor i{
+    color: #fff!important;
   }
   .export_bor{
     border:none;
     color: #fff;
   }
-  .export_bor:hover, .export_bor:active{
+  .export_bor:hover, .export_bor:active,.export_bor:focus{
+    color: #fff;
+  }
+  .el-icon-loading{
+    color: #fff;
+  }
+  .el-icon-loading {
+    animation: rotating 1s linear infinite;
     color: #fff;
   }
 </style>
