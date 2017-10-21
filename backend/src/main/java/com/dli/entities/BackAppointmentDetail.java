@@ -62,14 +62,4 @@ public class BackAppointmentDetail {
     private String keyWord;
 
     private List<BackAppointmentDetailItem> itemList;
-
-    private int followerCount;
-
-    public int getFollowerCount() {
-        return followerCount;
-    }
-
-    public void setFollowerCount(int followerCount) {
-        this.followerCount = followerCount;
-    }
 }

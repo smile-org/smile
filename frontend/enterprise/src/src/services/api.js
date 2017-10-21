@@ -4,7 +4,7 @@ import axios from 'axios'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
 
-axios.defaults.baseURL = 'http://192.168.1.111:8888' // 'http://192.168.0.108:3000'
+axios.defaults.baseURL = 'http://123.207.154.226:8888' // 'http://192.168.0.108:3000'
 // axios.defaults.baseURL = 'http://123.207.154.226:8888'
 axios.defaults.imageServer = 'http://192.168.1.111:4001'
 // axios.defaults.imageServer = 'http://123.207.154.226:4001'
@@ -104,7 +104,13 @@ export default {
     uploadCategoryImage: axios.defaults.baseURL + '/back/UploadCourseCategoryIcon',
 
     // 学习记录
-    getCourseLearningRecords: ''
+    getCourseLearningRecords: '',
+
+    // 约课管理
+    getBackAppointmentList: '/appointment/backAppointmentList',
+    closeAppointment: '/appointment/closeAppointment',
+    backAppointment: '/appointment/backAppointment',
+    backAppointmentFollowers: '/appointment/backAppointmentFollowers'
   },
   image: {
     category: '/default/cateicon.png'

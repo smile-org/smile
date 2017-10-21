@@ -69,7 +69,7 @@
           area: ''
         },
         data: [],
-        take: 20,
+        take: 10,
         currentPage: 0,
         total: 0
       }
