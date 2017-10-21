@@ -77,10 +77,10 @@ export default {
         name: '培训报名管理',
         items: [{
           text: '培训报名管理',
-          routeName: 'registrationDetail'
+          routeName: 'registrationTrainlist'
         }, {
           text: '员工报名管理',
-          routeName: 'registrationList'
+          routeName: 'registrationEnrollmentRecord'
         }]
       }
     } else if (this.module === 'booking') {

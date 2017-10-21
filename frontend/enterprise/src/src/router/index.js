@@ -24,10 +24,11 @@ import courseComment from '@/views/course/comment'
 import learningList from '@/views/course/learningList'
 
 // 报名管理
-import registrationDetail from '@/views/registration/detail'
-import registrationList from '@/views/registration/list'
+import registrationEnrollmentRecord from '@/views/registration/enrollmentRecord'
+import registrationTrainlist from '@/views/registration/trainlist'
 import registrationEdit from '@/views/registration/edit'
 import registrationRecord from '@/views/registration/record'
+import registrationComment from '@/views/registration/comment'
 
 // 约课管理
 import bookingList from '@/views/booking/list'
@@ -140,14 +141,14 @@ export default new Router({
     },
     // 报名管理
     {
-      path: '/registration/detail',
-      name: 'registrationDetail',
-      component: registrationDetail,
+      path: '/registration/EnrollmentRecord',
+      name: 'registrationEnrollmentRecord',
+      component: registrationEnrollmentRecord,
       meta: {requiresAuth: requiresAuth}
     }, {
-      path: '/registration/list',
-      name: 'registrationList',
-      component: registrationList,
+      path: '/registration/trainlist',
+      name: 'registrationTrainlist',
+      component: registrationTrainlist,
       meta: {requiresAuth: requiresAuth}
     }, {
       path: '/registration/edit',
@@ -159,6 +160,12 @@ export default new Router({
       path: '/registration/record',
       name: 'registrationRecord',
       component: registrationRecord,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/registration/comment',
+      name: 'registrationComment',
+      component: registrationComment,
       meta: {requiresAuth: requiresAuth}
     },
     // 约课

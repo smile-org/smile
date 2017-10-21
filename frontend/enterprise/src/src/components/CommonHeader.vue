@@ -21,7 +21,7 @@
         <span class="h_icon h_icon04"></span>
         <p>考试管理</p>
       </li>
-      <li v-on:click="routeByName('registrationDetail')">
+      <li v-on:click="routeByName('registrationTrainlist')">
         <span class="h_icon h_icon05"></span>
         <p>报名管理</p>
       </li>

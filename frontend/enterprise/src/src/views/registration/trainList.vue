@@ -17,10 +17,10 @@
               <el-input v-model="form.user" placeholder="讲师"></el-input>
             </el-form-item>
             <el-form-item label="开始时间">
-              <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 100%;"></el-date-picker>
-              </el-col>
-            </el-form-item>
+            <el-col>
+              <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 100%;"></el-date-picker>
+            </el-col>
+          </el-form-item>
             <el-form-item label="结束时间">
               <el-col>
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
@@ -46,7 +46,7 @@
             </el-table-column>
             <el-table-column prop="appraise" label="查看评价" width="180">
               <template scope="scope">
-                <el-button v-on:click="routeByName('courseComment')" type="text" size="small">查看课程评价</el-button>
+                <el-button v-on:click="routeByName('registrationComment')" type="text" size="small">查看课程评价</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="appraise" label="再开一期" width="100">
