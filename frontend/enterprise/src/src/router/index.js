@@ -29,6 +29,7 @@ import registrationTrainlist from '@/views/registration/trainList'
 import registrationEdit from '@/views/registration/edit'
 import registrationRecord from '@/views/registration/record'
 import registrationComment from '@/views/registration/comment'
+import registrationAdd from '@/views/registration/add'
 
 // 约课管理
 import bookingList from '@/views/booking/list'
@@ -169,6 +170,12 @@ export default new Router({
       path: '/registration/comment',
       name: 'registrationComment',
       component: registrationComment,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/registration/add',
+      name: 'registrationAdd',
+      component: registrationAdd,
       meta: {requiresAuth: requiresAuth}
     },
     // 约课

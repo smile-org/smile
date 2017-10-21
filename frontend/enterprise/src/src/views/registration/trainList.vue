@@ -6,36 +6,36 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">报名管理</span> > <span class="f_blue">员工报名记录</span> </span>
+          <span class="vm">您的当前位置 : <span class="">报名管理</span> > <span class="f_blue">培训报名管理</span> </span>
         </nav>
         <div class="con_tab">
           <el-form ref="form" :inline="true" :model="form" class="demo-form-inline" label-width="80px">
             <el-form-item label="课程名称">
-              <el-input v-model="form.name" placeholder="课程名称"></el-input>
+              <el-input v-model="title" placeholder="课程名称"></el-input>
             </el-form-item>
             <el-form-item label="讲师" prop="region">
-              <el-input v-model="form.user" placeholder="讲师"></el-input>
+              <el-input v-model="teacher" placeholder="讲师"></el-input>
             </el-form-item>
             <el-form-item label="开始时间">
               <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.date"
+                <el-date-picker type="date" placeholder="选择日期" v-model="startDate"
                                 style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item label="结束时间">
               <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1"
+                <el-date-picker type="date" placeholder="选择日期" v-model="endDate"
                                 style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item>
-              <button type="button" class="inf_btn ml20">查  询</button>
+              <button type="button" class="inf_btn ml20" v-on:click="queryEnrollment">查  询</button>
             </el-form-item>
           </el-form>
           <!--添加报名导出表格-->
           <div class="fr hidden mb20">
             <button type="button" class="inf_btn mr20" v-on:click="routeByName('registrationEdit')">添加报名</button>
-            <button type="button" @click="dialogTableVisible = true" class="inf_btn">导  出</button>
+            <el-button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
             <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
 
               <div class="tc">
@@ -43,7 +43,7 @@
                 <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
               </div>
               <div class="tc">
-                <a href="#" download="w3logo" class="inf_btn download" style="display: inline-block;">下  载</a>
+                <a v-bind:href="excelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
                 <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
               </div>
 
@@ -76,6 +76,9 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="ds_oq_pageF" style="margin:10px 38%">
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
+          </div>
         </div>
       </section>
     </div>
@@ -87,36 +90,22 @@
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
   import router from '../../router'
+  import moment from 'moment'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
-        close: '',
-        form: {
-          name: '',
-          user: '',
-          company: {},
-          department: '',
-          area: '',
-          date: '',
-          date1: ''
-        },
+        title: '',
+        teacher: '',
+        startDate: '',
+        endDate: '',
         dialogTableVisible: false,
-        tableData: [{
-          name: '成功过心理学',
-          lecturer: '望天有',
-          timeStart: '2017年10月12日',
-          timeEnd: '2017年10月12日'
-        }, {
-          name: '成功过心理学',
-          lecturer: '望天有',
-          timeStart: '2017年10月12日',
-          timeEnd: '2017年10月12日'
-        }, {
-          name: '成功过心理学',
-          lecturer: '望天有',
-          timeStart: '2017年10月12日',
-          timeEnd: '2017年10月12日'
-        }]
+        tableData: [],
+        take: 10,
+        currentPage: 1,
+        total: 0,
+        showloading: false,
+        excelUrl: ''
       }
     },
     components: {
@@ -124,13 +113,66 @@
       navigator
     },
     created () {
-      api.fetch(api.uri.getCompanyInfo).then(data => {
+      var date1 = ''
+      if (this.startDate) {
+        date1 = moment(this.startDate).format('YYYY-MM-DD')
+      }
+      var date2 = ''
+      if (this.endDate) {
+        date2 = moment(this.endDate).format('YYYY-MM-DD')
+      }
+      api.fetch(api.uri.getEnrollmentList, {title: this.title, teacher: this.teacher, start: date1, end: date2, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
         if (data.status === 1) {
-          this.company = data
+          this.tableData = data.result
+          this.total = data.total
         }
       })
     },
+    filters: {
+      formatDate (time) {
+        var date = new Date(time)
+        return moment(date).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
     methods: {
+      queryEnrollment: function () {
+        var date1 = ''
+        if (this.startDate) {
+          date1 = moment(this.startDate).format('YYYY-MM-DD')
+        }
+        var date2 = ''
+        if (this.endDate) {
+          date2 = moment(this.endDate).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.getEnrollmentList, {title: this.title, teacher: this.teacher, start: date1, end: date2, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
+          if (data.status === 1) {
+            this.tableData = data.result
+            this.total = data.total
+          }
+        })
+      },
+      handleCurrentChange (pageNum) {
+        this.currentPage = pageNum
+        this.queryAppointment()
+      },
+      exportEnrollment: function () {
+        this.showloading = true
+        var date1 = ''
+        if (this.startDate) {
+          date1 = moment(this.startDate).format('YYYY-MM-DD')
+        }
+        var date2 = ''
+        if (this.endDate) {
+          date2 = moment(this.endDate).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.exportEnrollmentList, {title: this.title, teacher: this.teacher, start: date1, end: date2}).then(data => {
+          if (data.status === 1) {
+            this.excelUrl = axios.defaults.imageServer + data.result
+            this.showloading = false
+            this.dialogTableVisible = true
+          }
+        })
+      },
       routeByName: function (name) {
         router.push({name: name})
       },
@@ -174,6 +216,17 @@
 </script>
 
 <style scoped="scope">
+  .el-icon-loading{
+    color: #fff;
+  }
+  .export_bor{
+    border:none;
+    color: #fff;
+  }
+  .export_bor:hover, .export_bor:active{
+    color: #fff;
+  }
+
   .download {
     line-height: 38px;
     display: inline-block;
