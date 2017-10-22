@@ -99,9 +99,23 @@ export default {
     // 课程信息管理
     searchCourse: '/back/GetCourseList',
     addCourse: '',
-    addCourseContent: '',
     editCourseContent: '',
+
+    getComments: '/getCourseCommentList',
+    deleteCourse: '/back/DisableCourse',
+
+    // 添加课程内容 + 上传附件
+    // addCourseContent: axios.defaults.baseURL + '/back/AddCourseContent',
+    // 提交课程obj
+    postCourseContent: '/back/AddCourseContent',
+    getCourseContents: '',
+
+    // 获取admin列表 和 课程分类列表
+    getSelectList: '/back/GetCourseEditPageInfo',
+
     uploadCategoryImage: axios.defaults.baseURL + '/back/UploadCourseCategoryIcon',
+    uploadCourseIcon: axios.defaults.baseURL + '/back/UploadCourseIcon',
+    uploadCourseBanner: axios.defaults.baseURL + '/back/UploadCoursePic',
 
     // 学习记录
     getCourseLearningRecords: '',
@@ -120,6 +134,16 @@ export default {
     deleteEnrollmentPeriod: '/back/DeletePeriod'
   },
   image: {
-    category: '/default/cateicon.png'
+    category: '/default/cateicon.png',
+    course: {
+      icon: '/default/course-icon.png',
+      banner: '/default/course-pic.png'
+    }
+  },
+
+  getUploadHeaders: function () {
+    return {
+      token: '666666'
+    }
   }
 }

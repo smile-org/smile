@@ -72,7 +72,7 @@
     },
     created () {
       this.imageSrc = this.image
-      lang.zh.preview = '课程分类'
+      lang.zh.preview = ''
     },
     components: {
       commonHeader,

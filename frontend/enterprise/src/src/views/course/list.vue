@@ -35,7 +35,7 @@
             </el-form-item>
           </el-form>
           <div class="fr hidden mb20">
-            <button type="button" class="inf_btn mr20" v-on:click="routeByName('courseEdit')" >添加课程</button>
+            <button type="button" class="inf_btn mr20" v-on:click="addCourse" >添加课程</button>
             <button type="button"  class="inf_btn">导  出</button>
           </div>
           <el-table :data="tableData" border style="width: 100%">
@@ -60,13 +60,13 @@
             </el-table-column>
             <el-table-column  label="查看评价" width="180">
               <template scope="scope">
-                <el-button  v-on:click="comment(course_id)" type="text" size="small">查看课程评价</el-button>
+                <el-button  v-on:click="getComments(scope.row.course_id)" type="text" size="small">查看课程评价</el-button>
               </template>
             </el-table-column>
             <el-table-column label="操作" class="tc" width="180">
               <template scope="scope">
-                <el-button @click="edit(course_id)" type="text" size="small">编辑</el-button>
-                <el-button @click="del(course_id)" type="text" size="small">删除</el-button>
+                <el-button @click="edit(scope.row.course_id)" type="text" size="small">编辑</el-button>
+                <el-button @click="del(scope.row.course_id)" type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -85,6 +85,7 @@
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
   import moment from 'moment'
+  import router from '../../router'
   export default {
     data: function () {
       return {
@@ -133,11 +134,37 @@
       })
     },
     methods: {
+      addCourse: function () {
+        router.push({name: 'courseCreate'})
+      },
       handleCurrentChange: function (val) {
         this.currentPage = val
         this.search()
       },
-
+      getComments: function (id) {
+        router.push({name: 'courseComment', query: {id: id}})
+      },
+      edit: function (id) {
+        router.push({name: 'courseEdit', query: {id: id}})
+      },
+      del: function (id) {
+        this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.fetch(api.uri.deleteCourse, {courseid: id}).then(data => {
+            this.search()
+          }).catch(error => {
+            alert(error.message)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
       search: function () {
         var pubDate = ''
         if (this.formInline.date) {
