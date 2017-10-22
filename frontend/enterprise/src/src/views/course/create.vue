@@ -86,7 +86,7 @@
 
           <div class="mt30">
             <p>课程内容
-              <el-button type="text" @click="dialogFormVisible=true">添加课程内容</el-button>
+              <el-button type="text" @click="addContent">添加课程内容</el-button>
             </p>
             <template>
               <el-dialog title="添加/编辑课程内容" :visible.sync="dialogFormVisible">
@@ -103,7 +103,7 @@
                 </el-form>
                 <el-upload class="upload-demo"
                   ref="uploadContent"
-                  action="http://192.168.1.111:8888/back/UploadCourseContentAttachment"
+                  :action="uploadContentAction"
                   :on-success="onContentSuccess"
                   :before-upload="beforeContentUpload"
                   :auto-upload="true"
@@ -113,41 +113,8 @@
                   <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
                   <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过100M</div>
                 </el-upload>
-                <div v-if="formInline.name">{{formInline.name}}</div>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
-                </div>
-              </el-dialog>
-            </template>
-
-            <template>
-              <el-dialog title="添加/编辑课程内容" :visible.sync="editDialogFormVisible">
-                <el-form :rules="contentRules" ref="editFormInline" :inline="true" :model="editFormInline" class="demo-form-inline mt20" label-width="50px">
-                  <el-form-item label="序号" prop="num">
-                    <el-input v-model.number="editFormInline.num" placeholder="序号"></el-input>
-                  </el-form-item>
-                  <el-form-item label="章节" prop="title">
-                    <el-input v-model="editFormInline.title" placeholder="章节"></el-input>
-                  </el-form-item>
-                  <el-form-item label="标题" prop="content">
-                    <el-input v-model="editFormInline.content" placeholder="标题" style="width: 300px;"></el-input>
-                  </el-form-item>
-                </el-form>
-                <el-upload class="upload-demo"
-                  ref="uploadContent"
-                  action="http://192.168.1.111:8888/back/UploadCourseContentAttachment"
-                  :on-success="onContentSuccess"
-                  :before-upload="beforeContentUpload"
-                  :auto-upload="true"
-                  :on-change="changeContentUpload"
-                  :file-list="fileList"
-                  :headers="headers">
-                  <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
-                  <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过100M</div>
-                </el-upload>
-                <div v-if="editFormInline.name">{{editFormInline.name}}</div>
-                <div class="tc btn_margin">
-                  <el-button type="success" class="inf_btn  ml20" @click="submitEditContent">保 存</el-button>
                 </div>
               </el-dialog>
             </template>
@@ -174,30 +141,30 @@
             </template>
 
           </div>
-          <!--<div class="mt30">
+          <div class="mt30">
             <p>
               <template>
-                <el-checkbox v-model="checked">备选项</el-checkbox>
+                <el-checkbox v-model="useWhiteList">备选项</el-checkbox>
               </template>
               白名单
-              <el-button type="text" @click="dialogTableVisible = true">导入白名单</el-button>
+              <el-button type="text" :disabled="!useWhiteList"  @click="dialogWhiteListVisible = true">导入白名单</el-button>
             </p>
-            <el-dialog title="导入白名单" :visible.sync="dialogTableVisible">
-              <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
+            <el-dialog title="导入白名单" :visible.sync="dialogWhiteListVisible">
+              <el-form :inline="true" :model="formWhiteList" class="demo-form-inline mt20">
                 <el-form-item label="姓名">
-                  <el-input v-model="formInline.user" placeholder="姓名"></el-input>
+                  <el-input v-model="formWhiteList.username" placeholder="姓名"></el-input>
                 </el-form-item>
                 <el-form-item label="部门">
-                  <el-input v-model="formInline.department" placeholder="部门"></el-input>
+                  <el-input v-model="formWhiteList.department" placeholder="部门"></el-input>
                 </el-form-item>
                 <el-form-item class="wrapper">
-                  <el-button type="success" @click="onSubmit">查询</el-button>
+                  <el-button type="success" @click="searchUser">查询</el-button>
                 </el-form-item>
               </el-form>
-              <el-table :data="gridData" border>
+              <el-table :data="userData" border>
                 <el-table-column property="" label="" width="100">
                   <template scope="scope">
-                    <el-checkbox v-model="checked"></el-checkbox>
+                    <el-checkbox v-model="scope.row.isSelected"></el-checkbox>
                   </template>
                 </el-table-column>
                 <el-table-column property="date" label="姓名" width=""></el-table-column>
@@ -206,15 +173,15 @@
               </el-table>
               <el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"></el-pagination>
               <div class="tc">
-                <button type="button" class="inf_btn mt30 mb20" v-on:click="routeByName('informationEdit')">保 存
+                <button type="button" class="inf_btn mt30 mb20" v-on:click="saveUserToWhiteList">保 存
                 </button>
               </div>
             </el-dialog>
-            <div class="baiming_list">
-              <el-tag v-for="tag in tags" :key="tag.name" :closable="true" :type="tag.type">{{tag.name}}</el-tag>
-
+            <div class="baiming_list" v-show="useWhiteList">
+              <el-tag v-for="tag in whiteList" :key="tag.name" :closable="true" :type="tag.type">{{tag.name}}</el-tag>
             </div>
-          </div>-->
+          </div>
+
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " v-on:click="submit">保 存</button>
             <button type="button" class="inf_btn  ml20" v-on:click="routeByName('')">发布/隐藏</button>
@@ -248,14 +215,17 @@ export default {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
-
       // 是否显示content添加pupup
       dialogFormVisible: false,
-      editDialogFormVisible: false,
+      dialogWhiteListVisible: false,
+      // 是否启用白名单
+      useWhiteList: false,
       // 是否显示icon上传
       showIcon: false,
       // 是否显示banner 上传
       showBanner: false,
+      // 添加课程未完成
+      addContentInProgress: false,
       // image url 或者 二进制流
       bannerData: '',
       iconData: '',
@@ -268,20 +238,19 @@ export default {
       // 图片上传地址
       uploadIconUrl: api.uri.uploadCourseIcon,
       uploadBannerUrl: api.uri.uploadCourseBanner,
+      uploadContentAction: api.uri.uploadContentAction,
       // uploadContentFile: api.uri.addCourseContent,
       // 下拉框数据
       adminList: [],
       categoryList: [],
       // 课程内容上传列表， 里面只有一个附件， 第二个会替换第一个
       fileList: [],
-      // 新添加的课程内容附件， 后台返回的地址
-      newContentUrl: '',
       // 课程内容列表
       contentList: [],
-      // 白名单内容列表
-      formWriteList: {
-
-      },
+      // 用户搜索结果
+      userData: [],
+      // 白名单列表
+      whiteList: [],
       // 课程基本内容
       form: {
         title: '',
@@ -293,15 +262,16 @@ export default {
       },
       // 课程内容obj
       formInline: {
-        num: '',
-        title: '',
-        content: ''
-      },
-      editFormInline: {
+        id: '',
         num: '',
         title: '',
         content: '',
-        name: ''
+        name: '',
+        url: ''
+      },
+      formWhiteList: {
+        username: '',
+        department: ''
       },
       contentRules: {
         num: [
@@ -357,61 +327,122 @@ export default {
     })
   },
   methods: {
+    searchUser () {
+
+    },
+    saveUserToWhiteList () {
+
+    },
+    resetFormInline () {
+      this.formInline = {
+        num: '',
+        id: '',
+        title: '',
+        content: '',
+        name: '',
+        url: ''
+      }
+      this.fileList = []
+      this.addContentInProgress = false
+    },
+    addContent () {
+      if (!this.addContentInProgress) {
+        this.resetFormInline()
+        this.addContentInProgress = true
+      }
+      this.dialogFormVisible = true
+    },
     editContent (id) {
-      this.editDialogFormVisible = true
-      this.editFormInline = _.find(this.contentList, function (item) {
+      this.resetFormInline()
+      this.dialogFormVisible = true
+      this.formInline = _.find(this.contentList, function (item) {
         return item.id === id
+      })
+      this.fileList.push({
+        name: this.formInline.name
       })
     },
     delContent (id) {
-      this.contentList = _.filter(this.contentList, function (item) {
-        return item.id !== id
+      this.$confirm('此操作将永久删除该课程内容, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.contentList = _.filter(this.contentList, function (item) {
+          return item.id !== id
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
-    },
-    submitEditContent () {
-
     },
     submitUploadContent () {
       this.$refs['formInline'].validate((valid) => {
         if (valid) {
-          if (!this.newContentUrl) {
+          if (!this.formInline.url) {
             this.$message({
               type: 'info',
               message: '请提供附件'
             })
             return
           }
-          api.fetch(api.uri.postCourseContent, {
-            num: parseInt(this.formInline.num),
-            title: this.formInline.title,
-            content: this.formInline.content,
-            attachmentUrl: this.newContentUrl
-          }).then(data => {
-            if (data.status === 1) {
+          // 编辑
+          if (this.formInline.id) {
+            api.fetch(api.uri.updateCourseContent, {
+              contentid: parseInt(this.formInline.id),
+              num: this.formInline.num,
+              title: this.formInline.title,
+              content: this.formInline.content,
+              attachmentUrl: this.formInline.url
+            }).then(data => {
               this.dialogFormVisible = false
-              this.contentList.push({
-                id: data.result,
-                num: this.formInline.num,
-                title: this.formInline.title,
-                content: this.formInline.content,
-                name: this.fileList[0].name,
-                url: this.newContentUrl
-              })
-              this.$refs['formInline'].resetFields()
-              this.newContentUrl = ''
-              this.fileList = []
-            }
-          })
+              // 更新contentList
+              for (var i = 0; i < this.contentList.length; i++) {
+                if (this.contentList[i].id === this.formInline.id) {
+                  this.contentList[i].num = this.formInline.num
+                  this.contentList[i].title = this.formInline.title
+                  this.contentList[i].content = this.formInline.content
+                  this.contentList[i].name = this.formInline.name
+                  this.contentList[i].url = this.formInline.url
+                }
+              }
+              this.addContentInProgress = false
+            })
+          } else {
+            api.fetch(api.uri.postCourseContent, {
+              num: parseInt(this.formInline.num),
+              title: this.formInline.title,
+              content: this.formInline.content,
+              attachmentUrl: this.formInline.url
+            }).then(data => {
+              if (data.status === 1) {
+                this.dialogFormVisible = false
+                this.contentList.push({
+                  id: data.result,
+                  num: this.formInline.num,
+                  title: this.formInline.title,
+                  content: this.formInline.content,
+                  name: this.fileList[0].name,
+                  url: this.formInline.url
+                })
+                this.addContentInProgress = false
+              }
+            })
+          }
         } else {
           return false
         }
       })
     },
     onContentSuccess (response, file, fileList) {
-      this.newContentUrl = response.result
-      console.log(this.newContentUrl)
+      // 上传成功保存两个属性， 保存课程时，判断是否有附件的依据
+      this.formInline.url = response.result
+      this.formInline.name = file.name
     },
     changeContentUpload (file, fileList) {
+      // 保证页面显示一个附件
       if (fileList.length > 0) {
         this.fileList = [file]
       }
@@ -484,29 +515,12 @@ export default {
     },
     setDefault (currentImage) {
       if (currentImage === 1) {
-        this.iconSrc = this.api.image.course.icon
+        this.iconSrc = api.image.course.icon
         this.iconData = this.iconSrcDefault
       } else {
-        this.bannerSrc = this.api.image.course.banner
+        this.bannerSrc = api.image.course.banner
         this.bannerData = this.bannerSrcDefault
       }
-    },
-    open2 () {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
     }
   }
 }
