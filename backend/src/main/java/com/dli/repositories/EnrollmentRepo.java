@@ -39,4 +39,12 @@ public interface EnrollmentRepo {
 
       List<SearchResult>  searchEnrollment(@Param("companyid") int companyid,  @Param("keyword")String keyword,   @Param("skip") int skip,@Param("take")  int take);
 
+      List< backEnrollment>  backGetEnrollmentList(backEnrollment  be);
+
+      int backGetEnrollmentListCount(backEnrollment  be);
+
+    List<EnrollmentComment>   backGetEnrollmentCommentList(  @Param("enrollmentid")  int enrollmentid,  @Param("skip") int skip , @Param("take") int take);
+
+    int   backGetEnrollmentCommentListCount(  int  enrollmentid );
+
 }

@@ -135,4 +135,24 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public List<SearchResult> searchEnrollment(int companyid, String keyword, int skip, int take) {
         return   enrollmentRepo.searchEnrollment(companyid, keyword, skip, take);
     }
+
+    @Override
+    public List<backEnrollment> backGetEnrollmentList(backEnrollment be) {
+        return      enrollmentRepo. backGetEnrollmentList(be);
+    }
+
+    @Override
+    public int backGetEnrollmentListCount(backEnrollment be) {
+        return   enrollmentRepo. backGetEnrollmentListCount(be) ;
+    }
+
+    @Override
+    public List<EnrollmentComment> backGetEnrollmentCommentList(int enrollmentid, int skip, int take) {
+        return  enrollmentRepo.backGetEnrollmentCommentList(enrollmentid, skip, take);
+    }
+
+    @Override
+    public int backGetEnrollmentCommentListCount(int enrollmentid) {
+        return   enrollmentRepo.backGetEnrollmentCommentListCount(enrollmentid);
+    }
 }

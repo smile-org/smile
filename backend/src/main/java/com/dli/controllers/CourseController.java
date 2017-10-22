@@ -270,11 +270,11 @@ public class CourseController {
 
         try {
             List<CourseComment> lst = courseService.getCourseCommentList(courseid);
-            int total = courseService.getCourseCommentListCount(courseid);
+           // int total = courseService.getCourseCommentListCount(courseid);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
-            result.put(Constant.total, total);
+           // result.put(Constant.total, total);
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -312,8 +312,6 @@ public class CourseController {
     }
 
 
-
-
     @Value("${fileroot}")
     private String fileroot;
 
@@ -325,7 +323,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/UploadCourseCategoryIcon", method = RequestMethod.POST)
-    public Map backUploadCourseCategoryIcon( @RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
+    public Map backUploadCourseCategoryIcon(@RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -336,11 +334,11 @@ public class CourseController {
         }
 
         try {
-            String  guid = UUID.randomUUID().toString();
-                String fileName = String.format("%s-cateicon.png",guid );
-                String path = String.format(coursecategoryicon, user.getCompany_id(), guid).replace(fileName, "");
-                FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
-               // courseService.backUpdateCourseCategoryIcon(path + fileName, cate.getCategory_id());
+            String guid = UUID.randomUUID().toString();
+            String fileName = String.format("%s-cateicon.png", guid);
+            String path = String.format(coursecategoryicon, user.getCompany_id(), guid).replace(fileName, "");
+            FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
+            // courseService.backUpdateCourseCategoryIcon(path + fileName, cate.getCategory_id());
 
 
             result.put(Constant.status, 1);
@@ -355,9 +353,8 @@ public class CourseController {
     }
 
 
-
     @RequestMapping(value = "/back/AddCourseCategory", method = RequestMethod.GET)
-    public Map backAddCourseCategory(String catename,  String  iconPath , @RequestHeader Map header) {
+    public Map backAddCourseCategory(String catename, String iconPath, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -369,7 +366,7 @@ public class CourseController {
 
         try {
 
-           CourseCategory cate = new CourseCategory();
+            CourseCategory cate = new CourseCategory();
             cate.setCompany_id(user.getCompany_id());
             cate.setCategory_name(catename);
             cate.setIcon(iconPath);
@@ -379,10 +376,9 @@ public class CourseController {
                 String fileName = String.format("%s-cateicon.png", cate.getCategory_id());
                 String path = String.format(coursecategoryicon, user.getCompany_id(), cate.getCategory_id()).replace(fileName, "");
 
-                FileUtil.renameFile(fileroot +iconPath ,   fileroot + path +fileName);
+                FileUtil.renameFile(fileroot + iconPath, fileroot + path + fileName);
                 courseService.backUpdateCourseCategoryIcon(path + fileName, cate.getCategory_id());
             }
-
 
 
             result.put(Constant.status, 1);
@@ -468,9 +464,8 @@ public class CourseController {
     }
 
 
-
     @RequestMapping(value = "/back/UpdateCourseCategory", method = RequestMethod.GET)
-    public Map backUpdateCourseCategory(int cateid, String catename,  String  iconPath, @RequestHeader Map header) {
+    public Map backUpdateCourseCategory(int cateid, String catename, String iconPath, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -483,20 +478,17 @@ public class CourseController {
         try {
 
             courseService.backUpdateCourseCategoryName(catename, cateid);
-            courseService.backUpdateCourseCategoryIcon(iconPath,cateid);
+            courseService.backUpdateCourseCategoryIcon(iconPath, cateid);
 
             if (!iconPath.startsWith("/default")) {
                 String fileName = String.format("%s-cateicon.png", cateid);
                 String path = String.format(coursecategoryicon, user.getCompany_id(), cateid).replace(fileName, "");
 
-                if( ! iconPath.equals( path + fileName)  ) {
+                if (!iconPath.equals(path + fileName)) {
                     FileUtil.renameFile(fileroot + iconPath, fileroot + path + fileName);
                     courseService.backUpdateCourseCategoryIcon(path + fileName, cateid);
                 }
             }
-
-
-
 
 
             result.put(Constant.status, 1);
@@ -572,8 +564,6 @@ public class CourseController {
     }
 
 
-
-
     @RequestMapping(value = "/back/DisableCourse", method = RequestMethod.GET)
     public Map backDisableCourse(int courseid, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
@@ -601,7 +591,6 @@ public class CourseController {
     }
 
 
-
     //coursehtml5prefix=/company-%s/course/html5/%s-
     //courseofficeprefix=/company-%s/course/office/%s-
 
@@ -613,8 +602,8 @@ public class CourseController {
     private String coursehtml5prefix;
 
 
-    @RequestMapping(value = "/back/AddCourseContent", method = RequestMethod.POST)
-    public Map backAddCourseContent(int num, String title, String content, @RequestParam("file") MultipartFile file, @RequestHeader Map header) {
+    @RequestMapping(value = "/back/UploadCourseContentAttachment", method = RequestMethod.POST)
+    public Map backUploadCourseContentAttachment(@RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -625,53 +614,22 @@ public class CourseController {
         }
 
         try {
+            // fullName = String.format(coursehtml5prefix + file.getOriginalFilename().replace(ext, "html"), user.getCompany_id(), c.getContent_id());
+            //  String  guid = UUID.randomUUID().toString();
+            //  String fileName = String.format("%s-icon.png",guid );
+            // String path = String.format(courseicon, user.getCompany_id(), guid).replace(fileName, "");
+            // FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
 
-            String ext = Helper.getFileNameExtension(file.getOriginalFilename());
-            CourseContent c = new CourseContent();
-            c.setSequnce_num(num);
-            c.setSequnce_title(title);
-            c.setContent(content);
-            c.setContent_type(ext);
-            courseService.backAddCourseContent(c);
 
-            String fullName = String.format(courseofficeprefix + file.getOriginalFilename(), user.getCompany_id(), c.getContent_id());
+            String guid = UUID.randomUUID().toString();
+            String fullName = String.format(courseofficeprefix + file.getOriginalFilename(), user.getCompany_id(), guid);
             int lastSlashIndex = fullName.lastIndexOf("/");
             String fileName = fullName.substring(lastSlashIndex + 1);
             String path = fullName.substring(0, lastSlashIndex + 1);
             FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
-            courseService.backUpdateCourseContentPath(path + fileName, c.getContent_id());
-
-            //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.doc",htmlPath);
-            //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.docx",htmlPath);
-            //OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.ppt",htmlPath);
-            //OfficeUtil.getInstance().ppt2html("/root/smile/files/course/office/ETL调度设计.pptx",htmlPath);
-
-            if (ext.equals("doc") || ext.equals("docx") || ext.equals("ppt") || ext.equals("pptx")) {
-
-                fullName = String.format(coursehtml5prefix + file.getOriginalFilename().replace(ext, "html"), user.getCompany_id(), c.getContent_id());
-                lastSlashIndex = fullName.lastIndexOf("/");
-                String fileName1 = fullName.substring(lastSlashIndex + 1);
-                String path1 = fullName.substring(0, lastSlashIndex + 1);
-
-                File targetFile = new File(fileroot + path1);
-                if (!targetFile.exists()) {
-                    targetFile.mkdirs();
-                }
-
-                if (ext.equals("doc") || ext.equals("docx")) {
-                    OfficeUtil.getInstance().word2html(fileroot + path + fileName, fileroot + path1);
-                }
-
-                if (ext.equals("ppt") || ext.equals("pptx")) {
-                    OfficeUtil.getInstance().ppt2html(fileroot + path + fileName, fileroot + path1);
-                }
-
-                courseService.backUpdateCourseContentLink(path1 + fileName1, c.getContent_id());
-
-            }
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, c.getContent_id());
+            result.put(Constant.result, path + fileName);
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -682,8 +640,8 @@ public class CourseController {
     }
 
 
-    @RequestMapping(value = "/back/UpdateCourseContent", method = RequestMethod.POST)
-    public Map backUpdateCourseContent(int contentid, int num, String title, String content, @RequestParam(value = "file", required = false) MultipartFile file, @RequestHeader Map header) {
+    @RequestMapping(value = "/back/AddCourseContent", method = RequestMethod.GET)
+    public Map backAddCourseContent(int num, String title, String content, String attachmentUrl, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -694,40 +652,103 @@ public class CourseController {
         }
 
         try {
+            int lastSlashIndex = attachmentUrl.lastIndexOf("/");
+            String fileName = attachmentUrl.substring(lastSlashIndex + 38);
+            String ext = Helper.getFileNameExtension(fileName);
 
-            String ext = "";
+            CourseContent c = new CourseContent();
+            c.setSequnce_num(num);
+            c.setSequnce_title(title);
+            c.setContent(content);
+            c.setFilename(fileName);
+            c.setContent_type(ext);
+            courseService.backAddCourseContent(c);
+
+            // 1. 重命名 office 课件
+            // 2. update original path
+            // 3. 转html5,
+            //4. update link
+
+
+            String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
+            FileUtil.renameFile(fileroot + attachmentUrl, fileroot + fullName);
+            courseService.backUpdateCourseContentPath(fullName, c.getContent_id());
+
+            if (ext.equals("doc") || ext.equals("docx") || ext.equals("ppt") || ext.equals("pptx")) {
+                String path1 = String.format(coursehtml5prefix.replace("%s-", ""), user.getCompany_id());
+
+                File targetFile = new File(fileroot + path1);
+                if (!targetFile.exists()) {
+                    targetFile.mkdirs();
+                }
+
+                if (ext.equals("doc") || ext.equals("docx")) {
+                    OfficeUtil.getInstance().word2html(fileroot + fullName, fileroot + path1);
+                }
+
+                if (ext.equals("ppt") || ext.equals("pptx")) {
+                    OfficeUtil.getInstance().ppt2html(fileroot + fullName, fileroot + path1);
+                }
+
+                courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
+            }
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, c.getContent_id());
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+    @RequestMapping(value = "/back/UpdateCourseContent", method = RequestMethod.GET)
+    public Map backUpdateCourseContent(int contentid, int num, String title, String content, String attachmentUrl, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            int lastSlashIndex;
+            String fileName = null;
+            String ext = null;
+
             CourseContent c = new CourseContent();
             c.setContent_id(contentid);
             c.setSequnce_num(num);
             c.setSequnce_title(title);
             c.setContent(content);
-            if (file != null) {
-                ext = Helper.getFileNameExtension(file.getOriginalFilename());
+
+            if (!Helper.isNullOrEmpty(attachmentUrl)) {
+                lastSlashIndex = attachmentUrl.lastIndexOf("/");
+                fileName = attachmentUrl.substring(lastSlashIndex + 38);
+                ext = Helper.getFileNameExtension(fileName);
+
+                c.setFilename(fileName);
                 c.setContent_type(ext);
             }
 
             courseService.backUpdateCourseContent(c);
 
 
-            if (file != null) {
-                String fullName = String.format(courseofficeprefix + file.getOriginalFilename(), user.getCompany_id(), c.getContent_id());
-                int lastSlashIndex = fullName.lastIndexOf("/");
-                String fileName = fullName.substring(lastSlashIndex + 1);
-                String path = fullName.substring(0, lastSlashIndex + 1);
-                FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
-                courseService.backUpdateCourseContentPath(path + fileName, c.getContent_id());
+            if (!Helper.isNullOrEmpty(attachmentUrl)) {
 
-                //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.doc",htmlPath);
-                //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.docx",htmlPath);
-                //OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.ppt",htmlPath);
-                //OfficeUtil.getInstance().ppt2html("/root/smile/files/course/office/ETL调度设计.pptx",htmlPath);
+
+                String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
+                FileUtil.renameFile(fileroot + attachmentUrl, fileroot + fullName);
+                courseService.backUpdateCourseContentPath(fullName, c.getContent_id());
 
                 if (ext.equals("doc") || ext.equals("docx") || ext.equals("ppt") || ext.equals("pptx")) {
-
-                    fullName = String.format(coursehtml5prefix + file.getOriginalFilename().replace(ext, "html"), user.getCompany_id(), c.getContent_id());
-                    lastSlashIndex = fullName.lastIndexOf("/");
-                    String fileName1 = fullName.substring(lastSlashIndex + 1);
-                    String path1 = fullName.substring(0, lastSlashIndex + 1);
+                    String path1 = String.format(coursehtml5prefix.replace("%s-", ""), user.getCompany_id());
 
                     File targetFile = new File(fileroot + path1);
                     if (!targetFile.exists()) {
@@ -735,16 +756,16 @@ public class CourseController {
                     }
 
                     if (ext.equals("doc") || ext.equals("docx")) {
-                        OfficeUtil.getInstance().word2html(fileroot + path + fileName, fileroot + path1);
+                        OfficeUtil.getInstance().word2html(fileroot + fullName, fileroot + path1);
                     }
 
                     if (ext.equals("ppt") || ext.equals("pptx")) {
-                        OfficeUtil.getInstance().ppt2html(fileroot + path + fileName, fileroot + path1);
+                        OfficeUtil.getInstance().ppt2html(fileroot + fullName, fileroot + path1);
                     }
 
-                    courseService.backUpdateCourseContentLink(path1 + fileName1, c.getContent_id());
-
-                } else {
+                    courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
+                }
+                else {
                     courseService.backUpdateCourseContentLink(null, c.getContent_id());
                 }
             }
@@ -852,9 +873,8 @@ public class CourseController {
     //  coursepic=/company-%s/course/%s-pic.png
 
 
-
     @RequestMapping(value = "/back/UploadCourseIcon", method = RequestMethod.POST)
-    public Map backUploadCourseIcon( @RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
+    public Map backUploadCourseIcon(@RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -865,8 +885,8 @@ public class CourseController {
         }
 
         try {
-            String  guid = UUID.randomUUID().toString();
-            String fileName = String.format("%s-icon.png",guid );
+            String guid = UUID.randomUUID().toString();
+            String fileName = String.format("%s-icon.png", guid);
             String path = String.format(courseicon, user.getCompany_id(), guid).replace(fileName, "");
             FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
 
@@ -883,7 +903,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/UploadCoursePic", method = RequestMethod.POST)
-    public Map backUploadCoursePic( @RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
+    public Map backUploadCoursePic(@RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -894,8 +914,8 @@ public class CourseController {
         }
 
         try {
-            String  guid = UUID.randomUUID().toString();
-            String fileName = String.format("%s-pic.png",guid );
+            String guid = UUID.randomUUID().toString();
+            String fileName = String.format("%s-pic.png", guid);
             String path = String.format(coursepic, user.getCompany_id(), guid).replace(fileName, "");
             FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
 
@@ -911,12 +931,11 @@ public class CourseController {
     }
 
 
-
     @RequestMapping(value = "/back/AddCourse", method = RequestMethod.POST)
     public Map backAddCourse(int cateid, String title, int adminid, String depart, String expdate, String intro,
-                             String  iconPath, String picPath, int typeid, String contentids, String whitelsituserids,
-                            // @RequestParam(value = "icon", required = false) MultipartFile icon,
-                            // @RequestParam(value = "pic", required = false) MultipartFile pic,
+                             String iconPath, String picPath, int typeid, String contentids, String whitelsituserids,
+                             // @RequestParam(value = "icon", required = false) MultipartFile icon,
+                             // @RequestParam(value = "pic", required = false) MultipartFile pic,
                              @RequestHeader Map header) {
 
 
@@ -936,7 +955,7 @@ public class CourseController {
             c.setTitle(title);
             c.setPrincipal_user_id(adminid);
             c.setDepartment(depart);
-            c.setExpiration_date( Helper.dateParse(expdate)  );
+            c.setExpiration_date(Helper.dateParse(expdate));
             c.setIntro(intro);
 
             c.setPic(picPath);
@@ -952,7 +971,7 @@ public class CourseController {
                 String fileName = String.format("%s-icon.png", c.getCourse_id());
                 String path = String.format(courseicon, user.getCompany_id(), c.getCourse_id()).replace(fileName, "");
 
-                FileUtil.renameFile(fileroot +iconPath ,   fileroot + path +fileName);
+                FileUtil.renameFile(fileroot + iconPath, fileroot + path + fileName);
                 c.setIcon(path + fileName);
                 c.setPic(null);
                 courseService.backUpdateCourseIconAndPic(c);
@@ -962,7 +981,7 @@ public class CourseController {
                 String fileName = String.format("%s-pic.png", c.getCourse_id());
                 String path = String.format(coursepic, user.getCompany_id(), c.getCourse_id()).replace(fileName, "");
 
-                FileUtil.renameFile(fileroot +picPath ,   fileroot + path +fileName);
+                FileUtil.renameFile(fileroot + picPath, fileroot + path + fileName);
                 c.setIcon(null);
                 c.setPic(path + fileName);
                 courseService.backUpdateCourseIconAndPic(c);
@@ -1007,7 +1026,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/UpdateCoursePublishStatus", method = RequestMethod.GET)
-    public Map backUpdateCoursePublishStatus( int courseid, int publish, @RequestHeader Map header) {
+    public Map backUpdateCoursePublishStatus(int courseid, int publish, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -1019,7 +1038,7 @@ public class CourseController {
 
         try {
 
-             courseService.backUpdateCoursePublishStatus(publish,courseid);
+            courseService.backUpdateCoursePublishStatus(publish, courseid);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, "状态更新成功");
@@ -1033,14 +1052,12 @@ public class CourseController {
     }
 
 
-
-
     @RequestMapping(value = "/back/UpdateCourse", method = RequestMethod.POST)
-    public Map backUpdateCourse( int courseid, int cateid, String title, int adminid, String depart, String expdate, String intro,
-                             String  iconPath, String picPath, int typeid, String contentids, String whitelsituserids,
-                            // @RequestParam(value = "icon", required = false) MultipartFile icon,
-                            // @RequestParam(value = "pic", required = false) MultipartFile pic,
-                                 @RequestHeader Map header) {
+    public Map backUpdateCourse(int courseid, int cateid, String title, int adminid, String depart, String expdate, String intro,
+                                String iconPath, String picPath, int typeid, String contentids, String whitelsituserids,
+                                // @RequestParam(value = "icon", required = false) MultipartFile icon,
+                                // @RequestParam(value = "pic", required = false) MultipartFile pic,
+                                @RequestHeader Map header) {
 
 
         Map<String, Object> result = new HashMap<String, Object>();
@@ -1060,7 +1077,7 @@ public class CourseController {
             c.setTitle(title);
             c.setPrincipal_user_id(adminid);
             c.setDepartment(depart);
-            c.setExpiration_date( Helper.dateParse(expdate)  );
+            c.setExpiration_date(Helper.dateParse(expdate));
             c.setIntro(intro);
 
             c.setPic(picPath);
@@ -1073,7 +1090,7 @@ public class CourseController {
                 String fileName = String.format("%s-icon.png", courseid);
                 String path = String.format(courseicon, user.getCompany_id(), courseid).replace(fileName, "");
 
-                if( ! iconPath.equals( path + fileName)  ) {
+                if (!iconPath.equals(path + fileName)) {
                     FileUtil.renameFile(fileroot + iconPath, fileroot + path + fileName);
                     c.setIcon(path + fileName);
                     c.setPic(null);
@@ -1086,7 +1103,7 @@ public class CourseController {
                 String fileName = String.format("%s-pic.png", courseid);
                 String path = String.format(coursepic, user.getCompany_id(), courseid).replace(fileName, "");
 
-                if( ! picPath.equals( path + fileName)  ) {
+                if (!picPath.equals(path + fileName)) {
                     FileUtil.renameFile(fileroot + picPath, fileroot + path + fileName);
                     c.setIcon(null);
                     c.setPic(path + fileName);
@@ -1117,8 +1134,8 @@ public class CourseController {
             String[] contengidList = contentids.split("\\,");
             for (String contentid : contengidList) {
 
-                if( courseService.backGetCourseContentByID(Integer.parseInt(contentid)).getCourse_id()==0  )
-                courseService.backUpdateCourseContentCourseID(c.getCourse_id(), Integer.parseInt(contentid));
+                if (courseService.backGetCourseContentByID(Integer.parseInt(contentid)).getCourse_id() == 0)
+                    courseService.backUpdateCourseContentCourseID(c.getCourse_id(), Integer.parseInt(contentid));
             }
 
             courseService.backSaveCourseWhilteList(c.getCourse_id(), whitelsituserids.split("\\,"));
@@ -1136,11 +1153,8 @@ public class CourseController {
     }
 
 
-
-
-
     @RequestMapping(value = "/back/GetCourseList", method = RequestMethod.GET)
-    public Map backGetCourseList(String title,  String  priName, int typeid,  String pubdate, int skip, int take,   @RequestHeader Map header) {
+    public Map backGetCourseList(String title, String priName, int typeid, String pubdate, int skip, int take, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -1151,22 +1165,22 @@ public class CourseController {
         }
 
         try {
-            backCourse  c =new    backCourse();
-            if(! Helper.isNullOrEmpty(title))
-            c.setTitle(title);
-            if(! Helper.isNullOrEmpty(priName))
-            c.setPrincipal_user_idName(priName);
-            if(  typeid !=0   )
-            c.setType_id(typeid);
-            if(! Helper.isNullOrEmpty(pubdate))
-            c.setPublish_date(pubdate);
+            backCourse c = new backCourse();
+            if (!Helper.isNullOrEmpty(title))
+                c.setTitle(title);
+            if (!Helper.isNullOrEmpty(priName))
+                c.setPrincipal_user_idName(priName);
+            if (typeid != 0)
+                c.setType_id(typeid);
+            if (!Helper.isNullOrEmpty(pubdate))
+                c.setPublish_date(pubdate);
 
             c.setCompany_id(user.getCompany_id());
             c.setSkip(skip);
             c.setTake(take);
 
-            List<backCourse>   lst=  courseService.backGetCourseList(c);
-            int total=  courseService.backGetCourseListCount(c);
+            List<backCourse> lst = courseService.backGetCourseList(c);
+            int total = courseService.backGetCourseListCount(c);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
@@ -1181,17 +1195,14 @@ public class CourseController {
     }
 
 
-
-
     @Value("${exportfolder}")
-    private  String exportfolder;
-
+    private String exportfolder;
 
 
     @RequestMapping(value = "/back/ExportCourseList", method = RequestMethod.GET)
-    public Map backExportCourseList(String title,  String  priName, int typeid,  String pubdate,
-                                  //HttpServletRequest request, HttpServletResponse response,
-                                  @RequestHeader Map header) {
+    public Map backExportCourseList(String title, String priName, int typeid, String pubdate,
+                                    //HttpServletRequest request, HttpServletResponse response,
+                                    @RequestHeader Map header) {
 
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
@@ -1203,21 +1214,21 @@ public class CourseController {
         }
         try {
             //获取数据
-            backCourse  c =new    backCourse();
-            if(! Helper.isNullOrEmpty(title))
+            backCourse c = new backCourse();
+            if (!Helper.isNullOrEmpty(title))
                 c.setTitle(title);
-            if(! Helper.isNullOrEmpty(priName))
+            if (!Helper.isNullOrEmpty(priName))
                 c.setPrincipal_user_idName(priName);
-            if(  typeid !=0   )
+            if (typeid != 0)
                 c.setType_id(typeid);
-            if(! Helper.isNullOrEmpty(pubdate))
+            if (!Helper.isNullOrEmpty(pubdate))
                 c.setPublish_date(pubdate);
 
             c.setCompany_id(user.getCompany_id());
             c.setSkip(0);
             c.setTake(Constant.takeMax);
 
-            List<backCourse>  lst= courseService.backGetCourseList(c);
+            List<backCourse> lst = courseService.backGetCourseList(c);
 
             //导出到服务器
             List<String> rowNameList = new ArrayList<>();
@@ -1234,25 +1245,23 @@ public class CourseController {
 
             List<Object[]> dataList = new ArrayList<>();
 
-            for(  backCourse u : lst  )
-            {
+            for (backCourse u : lst) {
                 Object[] dataArray = new Object[8];
 
-                dataArray[0] =  u.getTitle();
+                dataArray[0] = u.getTitle();
                 dataArray[1] = u.getCategory_name();
-                dataArray[2] =  u.getPrincipal_user_idName();
-                dataArray[3] =   u.getDepartment();
+                dataArray[2] = u.getPrincipal_user_idName();
+                dataArray[3] = u.getDepartment();
 
-                dataArray[4] =   u.getExpiration_date();
-                dataArray[5] =   u.getType_name();
-                dataArray[6] =   u.isIspublished()?"已发布":"隐藏";
-                dataArray[7] =   u.getPublish_date();
+                dataArray[4] = u.getExpiration_date();
+                dataArray[5] = u.getType_name();
+                dataArray[6] = u.isIspublished() ? "已发布" : "隐藏";
+                dataArray[7] = u.getPublish_date();
 
                 dataList.add(dataArray);
             }
 
-           String url =  Helper.Export( rowNameList, dataList, "CourseList-" , fileroot, exportfolder );
-
+            String url = Helper.Export(rowNameList, dataList, "CourseList-", fileroot, exportfolder);
 
 
             result.put(Constant.status, 1);
@@ -1267,9 +1276,8 @@ public class CourseController {
     }
 
 
-
     @RequestMapping(value = "/back/GetUserLearnProgressList", method = RequestMethod.GET)
-    public Map backGetUserLearnProgressList(String title,  String  fullname, String  department,  String area, int skip, int take,   @RequestHeader Map header) {
+    public Map backGetUserLearnProgressList(String title, String fullname, String department, String area, int skip, int take, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -1280,22 +1288,22 @@ public class CourseController {
         }
 
         try {
-            UserLearnProgress  ulp =new    UserLearnProgress();
-            if(! Helper.isNullOrEmpty(title))
+            UserLearnProgress ulp = new UserLearnProgress();
+            if (!Helper.isNullOrEmpty(title))
                 ulp.setTitle(title);
-            if(! Helper.isNullOrEmpty(fullname))
+            if (!Helper.isNullOrEmpty(fullname))
                 ulp.setFull_name(fullname);
-            if(! Helper.isNullOrEmpty(department))
+            if (!Helper.isNullOrEmpty(department))
                 ulp.setDepartment(department);
-            if(! Helper.isNullOrEmpty(area))
+            if (!Helper.isNullOrEmpty(area))
                 ulp.setArea(area);
 
             ulp.setCompany_id(user.getCompany_id());
             ulp.setSkip(skip);
             ulp.setTake(take);
 
-            List<UserLearnProgress>   lst=  courseService.backGetUserLearnProgressList(ulp);
-            int total= courseService.backGetUserLearnProgressListCount(ulp);
+            List<UserLearnProgress> lst = courseService.backGetUserLearnProgressList(ulp);
+            int total = courseService.backGetUserLearnProgressListCount(ulp);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
@@ -1310,12 +1318,10 @@ public class CourseController {
     }
 
 
-
-
     @RequestMapping(value = "/back/ExportUserLearnProgressList", method = RequestMethod.GET)
-    public Map backExportUserLearnProgressList(String title,  String  fullname, String  department,  String area,
-                                    //HttpServletRequest request, HttpServletResponse response,
-                                    @RequestHeader Map header) {
+    public Map backExportUserLearnProgressList(String title, String fullname, String department, String area,
+                                               //HttpServletRequest request, HttpServletResponse response,
+                                               @RequestHeader Map header) {
 
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
@@ -1327,14 +1333,14 @@ public class CourseController {
         }
         try {
             //获取数据
-            UserLearnProgress  ulp =new    UserLearnProgress();
-            if(! Helper.isNullOrEmpty(title))
+            UserLearnProgress ulp = new UserLearnProgress();
+            if (!Helper.isNullOrEmpty(title))
                 ulp.setTitle(title);
-            if(! Helper.isNullOrEmpty(fullname))
+            if (!Helper.isNullOrEmpty(fullname))
                 ulp.setFull_name(fullname);
-            if(! Helper.isNullOrEmpty(department))
+            if (!Helper.isNullOrEmpty(department))
                 ulp.setDepartment(department);
-            if(! Helper.isNullOrEmpty(area))
+            if (!Helper.isNullOrEmpty(area))
                 ulp.setArea(area);
 
             //ulp.setCompany_id(1);
@@ -1342,7 +1348,7 @@ public class CourseController {
             ulp.setSkip(0);
             ulp.setTake(Constant.takeMax);
 
-            List<UserLearnProgress>   lst=  courseService.backGetUserLearnProgressList(ulp);
+            List<UserLearnProgress> lst = courseService.backGetUserLearnProgressList(ulp);
 
             //导出到服务器
             List<String> rowNameList = new ArrayList<>();
@@ -1358,27 +1364,25 @@ public class CourseController {
 
             List<Object[]> dataList = new ArrayList<>();
 
-            for(  UserLearnProgress u : lst  )
-            {
+            for (UserLearnProgress u : lst) {
                 Object[] dataArray = new Object[6];
 
-                dataArray[0] =  u.getFull_name();
+                dataArray[0] = u.getFull_name();
                 dataArray[1] = u.getTitle();
-                dataArray[2] =  u.getDepartment();
-                dataArray[3] =   u.getArea();
+                dataArray[2] = u.getDepartment();
+                dataArray[3] = u.getArea();
 
-                dataArray[4] =   u.getContent();
-                dataArray[5] =   u.getLearn_at();
+                dataArray[4] = u.getContent();
+                dataArray[5] = u.getLearn_at();
 
                 dataList.add(dataArray);
             }
 
-            String url= Helper.Export( rowNameList, dataList, "UserLearnProgressList-", fileroot, exportfolder);
+            String url = Helper.Export(rowNameList, dataList, "UserLearnProgressList-", fileroot, exportfolder);
 
 
             result.put(Constant.status, 1);
             result.put(Constant.result, url);
-
 
 
         } catch (Exception ex) {
@@ -1388,6 +1392,38 @@ public class CourseController {
         }
         return result;
     }
+
+
+
+
+    @RequestMapping(value = "/back/GetCourseCommentList", method = RequestMethod.GET)
+    public Map backgetCourseCommentList(  int courseid,  int skip,  int take,   @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            List<CourseComment> lst = courseService.backgetCourseCommentList(courseid, skip, take);
+            int total = courseService.backGetCourseCommentListCount(courseid);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+            result.put(Constant.total, total);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
 
 
 

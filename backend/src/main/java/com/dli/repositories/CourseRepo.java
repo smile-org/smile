@@ -22,8 +22,6 @@ public interface CourseRepo {
 
     List<CourseComment> getCourseCommentList(  @Param("courseid" ) int courseid  );
 
-    int  getCourseCommentListCount(int courseid );
-
     void  deleteCommentById( @Param("id")int id );
 
     List<CourseContent>   getCourseContentListByID(int id);
@@ -103,4 +101,8 @@ public interface CourseRepo {
     int backGetUserLearnProgressListCount(UserLearnProgress ulp);
 
     void   backDisableCourse( int   courseid);
+
+    List<CourseComment> backgetCourseCommentList(  @Param("courseid" ) int courseid  ,  @Param("skip" )int skip,  @Param("take" )int take );
+
+    int  backGetCourseCommentListCount(int courseid );
 }

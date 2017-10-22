@@ -17,6 +17,16 @@ public class CourseContent {
     private Date created_at;
     private Date updated_at;
 
+    private  String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public int getContent_id() {
         return content_id;
     }

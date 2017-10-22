@@ -10,12 +10,10 @@ import com.dli.services.LogonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/")
@@ -406,5 +404,176 @@ public class EnrollmentController {
             }
             return result;
         }
+
+
+
+
+
+    @RequestMapping(value = "/back/GetEnrollmentList", method = RequestMethod.GET)
+    public Map backGetEnrollmentList( String title, String   teacher, String  start, String   end , int skip ,int take, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            backEnrollment  e= new   backEnrollment();
+
+
+
+            if( !Helper.isNullOrEmpty(title))
+                e.setTitle(title);
+
+            if( !Helper.isNullOrEmpty(teacher))
+                e.setTeacher(teacher);
+
+            if( !Helper.isNullOrEmpty(start))
+                e.setStart(start);
+
+            if( !Helper.isNullOrEmpty(end))
+                e.setEnd(end);
+
+            e.setCompany_id(user.getCompany_id());
+            e.setSkip(skip);
+            e.setTake(take);
+
+            List<backEnrollment> lst = enrollmentService.backGetEnrollmentList(e);
+            int total =enrollmentService.backGetEnrollmentListCount(e);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+            result.put( Constant.total   ,total    );
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+    @Value("${fileroot}")
+    private String fileroot;
+
+    @Value("${exportfolder}")
+    private  String exportfolder;
+
+
+    @RequestMapping(value = "/back/ExportEnrollmentList", method = RequestMethod.GET)
+    public Map backExportEnrollmentList(String title, String   teacher, String  start, String   end ,
+                                               @RequestHeader Map header) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+        try {
+            //获取数据
+
+            backEnrollment  e= new   backEnrollment();
+
+            if( !Helper.isNullOrEmpty(title))
+                e.setTitle(title);
+
+            if( !Helper.isNullOrEmpty(teacher))
+                e.setTeacher(teacher);
+
+            if( !Helper.isNullOrEmpty(start))
+                e.setStart(start);
+
+            if( !Helper.isNullOrEmpty(end))
+                e.setEnd(end);
+
+            e.setCompany_id(user.getCompany_id());
+            e.setSkip(0);
+            e.setTake(Constant.takeMax);
+
+            List<backEnrollment>   lst=  enrollmentService.backGetEnrollmentList(e);
+
+            //导出到服务器
+            List<String> rowNameList = new ArrayList<>();
+
+            rowNameList.add("课程名称");
+            rowNameList.add("讲师");
+            rowNameList.add("开始时间");
+            rowNameList.add("结束时间");
+            rowNameList.add("人数限制");
+
+
+            List<Object[]> dataList = new ArrayList<>();
+
+            for(  backEnrollment  be : lst  )
+            {
+                Object[] dataArray = new Object[5];
+
+                dataArray[0] =  be.getTitle();
+                dataArray[1] = be.getTeacher();
+                dataArray[2] =  be.getStart();
+                dataArray[3] =   be.getEnd();
+                dataArray[4] =   be.getCount();
+
+
+                dataList.add(dataArray);
+            }
+
+            String url= Helper.Export( rowNameList, dataList, "EnrollmentList-", fileroot, exportfolder);
+
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, url);
+
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+    @RequestMapping(value = "/back/GetEnrollmentCommentList", method = RequestMethod.GET)
+    public Map backGetEnrollmentCommentList(int enrollmentid, int skip, int take, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            List<EnrollmentComment> lst = enrollmentService.backGetEnrollmentCommentList(enrollmentid, skip, take);
+            int total =  enrollmentService.backGetEnrollmentCommentListCount(enrollmentid);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+            result.put(Constant.total, total);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+
+
 
 }

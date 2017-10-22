@@ -20,8 +20,6 @@ public interface CourseService {
 
     List<CourseComment> getCourseCommentList(int courseid);
 
-    int  getCourseCommentListCount(int courseid );
-
     void deleteCommentById(int id);
 
     List<CourseContent> getCourseContentListByID(int id);
@@ -88,4 +86,8 @@ public interface CourseService {
     int backGetUserLearnProgressListCount(UserLearnProgress ulp);
 
     void   backDisableCourse( int   courseid);
+
+    List<CourseComment> backgetCourseCommentList(   int courseid  ,  int skip,  int take );
+
+    int  backGetCourseCommentListCount(int courseid );
 }

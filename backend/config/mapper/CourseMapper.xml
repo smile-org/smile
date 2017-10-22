@@ -62,6 +62,7 @@
         <result column="indicator" property="indicator"/>
         <result column="created_at" property="created_at"/>
         <result column="updated_at" property="updated_at"/>
+        <result column="filename" property="filename"/>
     </resultMap>
 
 
@@ -135,12 +136,6 @@ join (
     <select id="getCourseCommentList" resultMap="CommentMap">
         select  c.*  , u.full_name as user_idName, u.avatar as   user_idAvatar from   course_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
             and  course_id=#{courseid}   order by  c.created_at desc;
-    </select>
-
-
-    <select id="getCourseCommentListCount" resultType="int">
-        select  count(*) from   course_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
-        and  course_id=#{courseid}
     </select>
 
     <update id="deleteCommentById"  >
@@ -366,7 +361,7 @@ where created_at
 
 
     <insert id="backAddCourseContent"   parameterType="com.dli.entities.CourseContent"   useGeneratedKeys="true"   keyProperty="content_id">
-        insert course_content  values ( null, #{sequnce_num}, #{sequnce_title},  #{content} , null, null , #{content_type}, null, 1, now(),now()   )
+        insert course_content  values ( null, #{sequnce_num}, #{sequnce_title},  #{content} , null, null ,#{filename}, #{content_type}, null, 1, now(),now()   )
     </insert>
 
     <update id="backUpdateCourseContentPath">
@@ -388,6 +383,7 @@ where created_at
         <if test="sequnce_num!=null">sequnce_num=#{sequnce_num},</if>
         <if test="sequnce_title!=null">sequnce_title=#{sequnce_title},</if>
         <if test="content!=null">content=#{content},</if>
+       <if test="filename!=null">filename=#{filename},</if>
        <if test="content_type!=null">content_type= #{content_type}</if>
        </set>
 where  content_id=#{content_id}
@@ -511,4 +507,18 @@ join course_content   ct on p.content_id = ct.content_id
     <update id="backDisableCourse"  >
          update   course set indicator =0 where course_id = #{courseid}
     </update>
+
+
+
+
+    <select id="backgetCourseCommentList" resultMap="CommentMap">
+        select  c.*  , u.full_name as user_idName, u.avatar as   user_idAvatar from   course_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
+        and  course_id=#{courseid}   order by  c.created_at desc     LIMIT #{skip},#{take};
+    </select>
+
+
+    <select id="backGetCourseCommentListCount" resultType="int">
+        select  count(*) from   course_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
+        and  course_id=#{courseid}
+    </select>
 </mapper>

@@ -32,4 +32,12 @@ public interface EnrollmentService {
     void   updateReadReminder(   int periodid,    int userid  );
 
     List<SearchResult>  searchEnrollment(int companyid,  String keyword,    int skip,  int take);
+
+    List< backEnrollment>  backGetEnrollmentList(backEnrollment  be);
+
+    int backGetEnrollmentListCount(backEnrollment  be);
+
+    List<EnrollmentComment>   backGetEnrollmentCommentList(  int enrollmentid, int skip ,int take);
+
+    int   backGetEnrollmentCommentListCount(  int  enrollmentid );
 }

@@ -50,10 +50,7 @@ public class CourseServiceImpl implements CourseService {
         return courseRepo.getCourseCommentList(courseid);
     }
 
-    @Override
-    public int getCourseCommentListCount(int courseid) {
-       return   courseRepo.getCourseCommentListCount(courseid);
-    }
+
 
     @Override
     public void deleteCommentById(int id) {
@@ -281,6 +278,22 @@ public class CourseServiceImpl implements CourseService {
     public void backDisableCourse(int courseid) {
         courseRepo.backDisableCourse(courseid);
     }
+
+    @Override
+    public List<CourseComment> backgetCourseCommentList(int courseid, int skip, int take) {
+        return   courseRepo.backgetCourseCommentList(courseid,skip,take);
+    }
+
+    @Override
+    public int backGetCourseCommentListCount(int courseid) {
+        return    courseRepo.backGetCourseCommentListCount(courseid);
+    }
+
+
+    // @Override
+  //  public int getCourseCommentListCount(int courseid) {
+   //     return   courseRepo.getCourseCommentListCount(courseid);
+   // }
 
 
 }
