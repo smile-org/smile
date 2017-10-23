@@ -10,7 +10,7 @@
         </nav>
         <div class="con_tab">
           <div>
-            <button type="button" v-on:click="routeByName('userCreate')" class="inf_btn mr15">添加试题</button>
+            <button type="button" v-on:click="routeByName('examCreate')" class="inf_btn mr15">添加试题</button>
             <button type="button" @click="dialogTableVisibles = true" class="inf_btn mr15">试题导入</button>
             <el-dialog title="试题导入" :visible.sync="dialogTableVisibles">
               <div class="tc">
@@ -50,8 +50,8 @@
                 <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.date" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
-            <el-form-item>
-              <button type="button" class="inf_btn mr15">查  询</button>
+            <el-form-item class="fr">
+              <button type="button" class="line-btn ">查  询</button>
             </el-form-item>
             <!--</el-row>-->
           </el-form>

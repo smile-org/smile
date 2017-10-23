@@ -30,8 +30,8 @@
                 <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date1" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
-            <el-form-item>
-              <button type="button" class="inf_btn ml20">查  询</button>
+            <el-form-item class="fr">
+              <button type="button" class="line-btn ml20">查  询</button>
               <el-button type="button" v-on:click="click" :loading="showloading" @click="dialogTableVisible = true" class="inf_btn ml20 export_bor">导  出</el-button>
               <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                 <div class="tc">

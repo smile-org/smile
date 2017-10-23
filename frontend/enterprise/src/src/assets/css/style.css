@@ -471,7 +471,26 @@ table {
 .inf_btn:focus {
   outline: none;
 }
+.line-btn{
+  min-width: 120px;
+  height: 38px;
+  text-align: center;
+  color: #00b553;
+  border:1px solid  #00b553;
+  border-radius: 4px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 0 20px;
+  background: none;
+}
+.line-btn:hover,.line-btn:active,.line-btn:focus{
+  background:#00b553;
+  color: #fff;
+  /*border-color:;*/
+  outline: none;
 
+}
 /*表格分页*/
 .pagination-footer .el-pagination {
   text-align: center;

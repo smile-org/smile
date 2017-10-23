@@ -31,7 +31,7 @@
               </el-col>
             </el-form-item>
             <el-form-item>
-              <button type="button" class="inf_btn ml20">查  询</button>
+              <button type="button" class="line-btn ml20">查  询</button>
             </el-form-item>
           </el-form>
           <div class="fr hidden mb20">
