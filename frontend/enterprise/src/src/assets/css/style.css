@@ -14,7 +14,7 @@ header {
 
 header .logo {
   margin-left: 40px;
-  line-height: 38px;
+  line-height: 58px;
   width: 190px;
   flex: 1; /*这里设置为占比1，填充满剩余空间*/
 }

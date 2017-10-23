@@ -6,7 +6,7 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="f_blue">考试信息管理</span></span>
+          <span class="vm">您的当前位置 : <span class="">考试管理</span> > span class="">编辑考试</span> > <span class="f_blue">考试信息管理</span></span>
         </nav>
         <div class="con_tab">
 
@@ -17,7 +17,7 @@
             <el-form-item label="考试名称">
               <el-input v-model="formInline.user" placeholder="考试名称"></el-input>
             </el-form-item>
-            <el-form-item label="管理员">
+            <el-form-item label="次数限制">
               <el-input v-model="formInline.address" placeholder="管理员"></el-input>
             </el-form-item>
             <el-form-item label="开始时间">
@@ -35,7 +35,7 @@
             </el-form-item>
           </el-form>
           <div class="fr hidden mb20">
-            <button type="button" class="inf_btn mr20" icon="search" v-on:click="routeByName('courseEdit')" >添加考试</button>
+            <button type="button" class="inf_btn mr20" icon="search" v-on:click="routeByName('examEdit')" >添加考试</button>
             <el-button type="button" v-on:click="click" :loading="showloading" @click="dialogTableVisible = true" class="inf_btn ml20 export_bor">导  出</el-button>
             <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
               <div class="tc">

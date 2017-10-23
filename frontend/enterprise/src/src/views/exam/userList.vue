@@ -103,9 +103,6 @@
         }
       }
     },
-//    click: function () {
-//      this.dialogTableVisible = !this.dialogTableVisible
-//    },
     components: {
       commonHeader,
       navigator
