@@ -6,7 +6,7 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">考试管理</span> > span class="">编辑考试</span> > <span class="f_blue">考试信息管理</span></span>
+          <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">编辑考试</span> > <span class="f_blue">考试信息管理</span></span>
         </nav>
         <div class="con_tab">
 
