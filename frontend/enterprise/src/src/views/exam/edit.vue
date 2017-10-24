@@ -10,51 +10,51 @@
         </nav>
         <div class="con_tab">
           <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="考试编号">
                 <el-input v-model="form.name" placeholder="考试编号"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="考试名称">
                 <el-input v-model="form.department" placeholder="考试名称"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="次数限制">
                 <el-input v-model="form.name" placeholder="责任人"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="通过分数">
                 <el-input v-model="form.name" placeholder="通过分数"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="管理员">
                 <el-input v-model="form.department" placeholder="管理员"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="时间限制">
                 <el-input v-model="form.department" placeholder="时间限制"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="开始时间">
                 <el-col>
                   <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date" style="width: 100%;"></el-date-picker>
                 </el-col>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="结束时间">
                 <el-col>
                   <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date1" style="width: 100%;"></el-date-picker>
                 </el-col>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-form-item label="考试简介">
                 <el-input v-model="form.department" placeholder="考试简介"></el-input>
               </el-form-item>
