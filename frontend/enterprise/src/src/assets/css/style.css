@@ -36,7 +36,7 @@ header ul li {
   height: 60px;
   min-width: 87px;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   padding: 10px 10px 0px 10px;
   margin-left: 10px;
@@ -60,7 +60,7 @@ header ul li:hover > .h_icon {
 
 header ul li p {
   color: #fff;
-  margin-top: -3px;
+  margin-top: -2px;
 }
 
 header ul li .name_e {
@@ -195,9 +195,9 @@ header ul li .name_e {
 
 aside {
 
-  width: 210px;
-  box-shadow: 0 6px 17px 6px rgba(197, 195, 195, 0.5);
-  min-width: 210px;
+  width: 200px;
+  /*box-shadow: 0 6px 17px 6px rgba(197, 195, 195, 0.5);*/
+  min-width: 200px;
   min-height: -moz-calc(100vh - 60px);
   min-height: -webkit-calc(100vh - 60px);
   min-height: calc(100vh - 60px);
@@ -207,12 +207,13 @@ aside {
 }
 
 aside .a_tit {
-  width: 210px;
+  width: 200px;
   height: 70px;
   line-height: 70px;
   font-size: 16px;
   color: #333;
-  box-shadow: 0 3px 17px 0px rgba(197, 195, 195, 0.5);
+  /*box-shadow: 0 3px 17px 0px rgba(197, 195, 195, 0.5);*/
+  border-bottom:1px solid #eaeaea;
 }
 
 aside .a_tit span {
@@ -224,7 +225,7 @@ aside .a_tit span {
 }
 
 aside ul li {
-  width: 210px;
+  width: 200px;
   height: 70px;
   line-height: 70px;
   font-size: 16px;
@@ -271,8 +272,8 @@ nav span .f_blue {
   padding: 30px 40px 20px;
   background: #fff;
   max-width: 1600px;
-  max-width: -webkit-calc(100vw - 250px);
-  max-width: calc(100vw - 250px);
+  max-width: -webkit-calc(100vw - 240px);
+  max-width: calc(100vw - 240px);
   min-width: 1005px;
 }
 

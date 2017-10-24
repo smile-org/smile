@@ -46,6 +46,7 @@ import examQuestionList from '@/views/exam/questionList'
 import examUserList from '@/views/exam/userList'
 import examEdit from '@/views/exam/edit'
 import examCreate from '@/views/exam/create'
+import examDetail from '@/views/exam/detail'
 
 Vue.use(Router)
 var requiresAuth = false
@@ -242,6 +243,12 @@ export default new Router({
       path: '/exam/create',
       name: 'examCreate',
       component: examCreate,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/exam/detail',
+      name: 'examDetail',
+      component: examDetail,
       meta: {requiresAuth: requiresAuth}
     }
   ]
