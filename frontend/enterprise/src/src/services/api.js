@@ -134,7 +134,7 @@ export default {
     getEnrollmentList: '/back/GetEnrollmentList',
     exportEnrollmentList: '/back/ExportEnrollmentList',
     getEnrollmentCommentList: '/back/GetEnrollmentCommentList',
-    deleteEnrollmentPeriod: '/back/DeletePeriod',
+    deleteEnrollmentPeriod: '/back/DisableEnrollment',
     getEnrollmentResultList: '/back/GetEnrollmentResultList',
     exportEnrollmentResultList: '/back/ExportEnrollmentResultList',
     getUserListThisPeriod: '/back/GetUserListThisEnrollmentPeriod',
