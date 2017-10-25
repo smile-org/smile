@@ -134,7 +134,9 @@ export default {
     getEnrollmentList: '/back/GetEnrollmentList',
     exportEnrollmentList: '/back/ExportEnrollmentList',
     getEnrollmentCommentList: '/back/GetEnrollmentCommentList',
-    deleteEnrollmentPeriod: '/back/DeletePeriod'
+    deleteEnrollmentPeriod: '/back/DeletePeriod',
+    getEnrollmentResultList: '/back/GetEnrollmentResultList',
+    exportEnrollmentResultList: '/back/ExportEnrollmentResultList'
   },
   image: {
     category: '/default/cateicon.png',
