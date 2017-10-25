@@ -27,7 +27,8 @@ import learningList from '@/views/course/learningList'
 import registrationEnrollmentRecord from '@/views/registration/enrollmentRecord'
 import registrationTrainlist from '@/views/registration/trainList'
 import registrationEdit from '@/views/registration/edit'
-import registrationRecord from '@/views/registration/record'
+import registrationThisPeriod from '@/views/registration/thisPeriod'
+import registrationNextPeriod from '@/views/registration/nextPeriod'
 import registrationComment from '@/views/registration/comment'
 import registrationAdd from '@/views/registration/add'
 import registrationAddPeriod from '@/views/registration/addPeriod'
@@ -149,25 +150,15 @@ export default new Router({
     },
     // 报名管理
     {
-      path: '/registration/EnrollmentRecord',
-      name: 'registrationEnrollmentRecord',
-      component: registrationEnrollmentRecord,
-      meta: {requiresAuth: requiresAuth}
-    }, {
       path: '/registration/trainList',
       name: 'registrationTrainlist',
       component: registrationTrainlist,
       meta: {requiresAuth: requiresAuth}
-    }, {
+    },
+    {
       path: '/registration/edit',
       name: 'registrationEdit',
       component: registrationEdit,
-      meta: {requiresAuth: requiresAuth}
-    },
-    {
-      path: '/registration/record',
-      name: 'registrationRecord',
-      component: registrationRecord,
       meta: {requiresAuth: requiresAuth}
     },
     {
@@ -186,6 +177,24 @@ export default new Router({
       path: '/registration/addPeriod',
       name: 'registrationAddPeriod',
       component: registrationAddPeriod,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/registration/EnrollmentRecord',
+      name: 'registrationEnrollmentRecord',
+      component: registrationEnrollmentRecord,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/registration/thisPeriod',
+      name: 'registrationThisPeriod',
+      component: registrationThisPeriod,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/registration/nextPeriod',
+      name: 'registrationNextPeriod',
+      component: registrationNextPeriod,
       meta: {requiresAuth: requiresAuth}
     },
     // 约课
