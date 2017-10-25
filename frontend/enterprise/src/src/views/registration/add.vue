@@ -88,20 +88,23 @@
                 </el-col>
               </el-form>
             </template>
-            <ul class="add_topic">
-              <li>
-                <span>1.</span>
-                <span>2000-11-10 10:10:00 - 2000-11-11 10:10:00</span>
-                <span>成功的哲学在于如何去战胜它</span>
-                <i class="el-icon-delete delate_img"></i>
-              </li>
-            </ul>
+            <template>
+              <el-table :data="tableData" border style="width: 100%">
+                <el-table-column prop="number" label="序号" width="100"></el-table-column>
+                <el-table-column prop="topic" label="主题" width=""></el-table-column>
+                <el-table-column prop="timeAll" label="起止时间"></el-table-column>
+                <el-table-column prop="" label="操作" width="">
+                  <template scope="scope">
+                    <el-button @click="open2" type="text" size="small">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
           </div>
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " @click="submitForm('ruleForm')" v-on:click="routeByName('')">保  存
             </button>
           </div>
-
         </div>
       </section>
     </div>
@@ -133,29 +136,32 @@
           resource: '',
           desc: ''
         },
-        rules: {
-          name: [
-            {required: true, message: '请输入活动名称', trigger: 'blur'},
-            {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-          ],
-          region: [
-            {required: true, message: '请选择活动区域', trigger: 'change'}
-          ],
-          date1: [
-            {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
-          ],
-          date2: [
-            {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
-          ],
-          type: [
-            {type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change'}
-          ],
-          resource: [
-            {required: true, message: '请选择活动资源', trigger: 'change'}
-          ],
-          desc: [
-            {required: true, message: '请填写活动形式', trigger: 'blur'}
-          ]
+        value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+        tableData: [{
+          number: '1',
+          topic: '王小虎王小虎王小虎王小虎王小虎王小虎',
+          timeAll: '2000-11-10 10:10:00 - 2000-11-11 10:10:00'
+        }, {
+          number: '1',
+          topic: '王小虎王小虎王小虎王小虎王小虎王小虎',
+          timeAll: '2000-11-10 10:10:00 - 2000-11-11 10:10:00'
+        }],
+        open2 () {
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
         }
       }
     },
