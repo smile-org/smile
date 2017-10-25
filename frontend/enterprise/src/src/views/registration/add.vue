@@ -93,8 +93,8 @@
                 <el-table-column prop="number" label="序号" width="100"></el-table-column>
                 <el-table-column prop="topic" label="主题" width=""></el-table-column>
                 <el-table-column prop="timeAll" label="起止时间"></el-table-column>
-                <el-table-column prop="" label="操作" width="">
-                  <template scope="scope">
+                <el-table-column prop="" label="操作" width="100">
+                  <template scope="scope" >
                     <el-button @click="open2" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
