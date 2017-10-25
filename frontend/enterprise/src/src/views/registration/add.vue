@@ -69,17 +69,28 @@
             <p>培训内容</p>
             <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
               <!--<el-col :span="12">-->
-              <el-form-item label="序号">
-                <el-input v-model="formInline.mum" placeholder="序号"></el-input>
-              </el-form-item>
+              <el-col :span="8">
+                <el-form-item label="序号">
+                  <el-input v-model="formInline.mum" placeholder="序号"></el-input>
+                </el-form-item>
+              </el-col>
               <!--</el-col>-->
-              <el-form-item label="章节">
-                <el-input v-model="formInline.section" placeholder="章节"></el-input>
-              </el-form-item>
+              <el-col :span="8">
+                <el-form-item label="开始时间">
+                  <el-date-picker prop="date3" type="date" placeholder="选择日期" v-model="form.date3"
+                                  style="width: 100%;"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="结束时间">
+                  <el-date-picker prop="date4" type="date" placeholder="选择日期" v-model="form.date4"
+                                  style="width: 100%;"></el-date-picker>
+                </el-form-item>
+              </el-col>
               <el-col :span="24">
                 <el-form-item label="主题">
                   <el-input v-model="formInline.topic" placeholder="主题" style="width:400px;"></el-input>
-                  <el-button :plain="true" type="success" size="primary">添加主题</el-button>
+                  <el-button :plain="true" type="success" class="ml20" size="primary">添加主题</el-button>
                 </el-form-item>
               </el-col>
               <ul class="add_topic">
@@ -87,7 +98,7 @@
                   <span>1.</span>
                   <span>2000-11-10 10:10:00 - 2000-11-11 10:10:00</span>
                   <span>成功的哲学在于如何去战胜它</span>
-                  <i class="el-icon-delete"></i>
+                  <i class="el-icon-delete delate_img"></i>
                 </li>
               </ul>
             </el-form>
@@ -123,6 +134,8 @@
           region: '',
           date1: '',
           date2: '',
+          date3: '',
+          date4: '',
           delivery: false,
           type: [],
           resource: '',
@@ -201,19 +214,24 @@
     color: #1DB513;
   }
 
-  .add_topic li span{
+  .add_topic li span {
     /*width:100%;*/
     /*padding:10px 0;*/
     /*background: #ededed;*/
-    font-size:14px;
+    font-size: 14px;
     color: #666;
   }
-  .add_topic li i{
+
+  .add_topic li i {
     /*width:100%;*/
     /*padding:10px 0;*/
     /*background: #ededed;*/
-    font-size:16px;
+    font-size: 16px;
     color: #666;
     margin-left: 10px;
+    cursor: pointer;
+  }
+  .add_topic li i:hover{
+    color: #f93d1f;
   }
 </style>

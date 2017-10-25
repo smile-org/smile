@@ -594,3 +594,10 @@ table {
   padding: 5px;
   /*background: #ededed;*/
 }
+
+
+/*全局样式*/
+.el-table__body-wrapper{
+  min-height:440px;
+}
+
