@@ -72,7 +72,7 @@
               </template>
             </el-table-column>
           </el-table>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="tc mt20">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="10" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
