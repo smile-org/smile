@@ -55,7 +55,7 @@
   export default {
     data: function () {
       return {
-        currentPage: 0,
+        currentPage: 1,
         take: 10,
         total: 0,
         formInline: {
@@ -64,8 +64,7 @@
           date: '',
           categoryId: ''
         },
-        tableData: [],
-        categoryList: []
+        tableData: []
       }
     },
     components: {

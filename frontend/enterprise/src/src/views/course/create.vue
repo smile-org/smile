@@ -161,29 +161,26 @@
                   <el-button type="success" @click="searchUser">查询</el-button>
                 </el-form-item>
               </el-form>
-              <el-table :data="userData" border>
-                <el-table-column property="" label="" width="100">
-                  <template scope="scope">
-                    <el-checkbox v-model="scope.row.isSelected"></el-checkbox>
-                  </template>
+              <el-table :data="userData" border ref="multipleTable"  @selection-change="changeFun">
+                <el-table-column property="user_id" width="100" type="selection" @selection-change="changeFun">
                 </el-table-column>
-                <el-table-column property="date" label="姓名" width=""></el-table-column>
-                <el-table-column property="name" label="手机" width=""></el-table-column>
-                <el-table-column property="address" label="部门"></el-table-column>
+                <el-table-column property="full_name" label="姓名" width=""></el-table-column>
+                <el-table-column property="cell_phone" label="手机" width=""></el-table-column>
+                <el-table-column property="department" label="部门"></el-table-column>
               </el-table>
-              <el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"></el-pagination>
+              <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleWhiteListCurrentChange" :current-page="currentPage"  :page-size="take" :total="total"></el-pagination>
               <div class="tc">
                 <button type="button" class="inf_btn mt30 mb20" v-on:click="saveUserToWhiteList">保 存
                 </button>
               </div>
             </el-dialog>
             <div class="baiming_list" v-show="useWhiteList">
-              <el-tag v-for="tag in whiteList" :key="tag.name" :closable="true" :type="tag.type">{{tag.name}}</el-tag>
+              <el-tag v-for="tag in whiteList" :key="tag.user_id" :closable="true" @close="handleWhiteListClose(tag)">{{tag.full_name}}</el-tag>
             </div>
           </div>
 
           <div class="tc btn_margin">
-            <button type="button" class="inf_btn  " v-on:click="submit">保 存</button>
+            <button type="button" class="inf_btn  " v-on:click="submitCourse">保 存</button>
             <button type="button" class="inf_btn  ml20" v-on:click="routeByName('')">发布/隐藏</button>
           </div>
           <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
@@ -207,6 +204,8 @@ import axios from 'axios'
 import lang from 'vue-image-crop-upload/utils/language'
 import myUpload from 'vue-image-crop-upload'
 import _ from 'lodash'
+import moment from 'moment'
+import router from '../../router'
 export default {
   data: function () {
     return {
@@ -251,6 +250,8 @@ export default {
       userData: [],
       // 白名单列表
       whiteList: [],
+      // 搜索用户的user_id
+      multipleTable: [],
       // 课程基本内容
       form: {
         title: '',
@@ -305,7 +306,12 @@ export default {
           { required: true, message: '请输入简介', trigger: 'blur' }
         ]
       },
-      headers: {}
+      headers: {},
+
+      // whitelist 分页
+      take: 10,
+      currentPage: 1,
+      total: 0
     }
   },
   components: {
@@ -316,8 +322,8 @@ export default {
   },
   created () {
     this.headers = api.getUploadHeaders()
-    this.iconSrc = this.iconSrcDefault
-    this.bannerSrc = this.bannerSrcDefault
+    this.iconSrc = api.image.course.icon // this.iconSrcDefault
+    this.bannerSrc = api.image.course.banner // this.bannerSrcDefault
     lang.zh.preview = ''
     api.fetch(api.uri.getSelectList, { courseid: 0 }).then(data => {
       if (data.status === 1) {
@@ -327,11 +333,48 @@ export default {
     })
   },
   methods: {
+    changeFun (val) {
+      this.multipleTable = val
+    },
+    handleWhiteListClose (item) {
+      this.whiteList = _.remove(this.whiteList, function (_item) {
+        return _item.user_id !== item.user_id
+      })
+    },
+    handleWhiteListCurrentChange (val) {
+      this.currentPage = val
+      this.searchUser()
+    },
     searchUser () {
-
+      api.fetch(api.uri.searchWhiteList, {
+        cellphone: '',
+        area: '',
+        fullname: this.formWhiteList.username,
+        department: this.formWhiteList.department,
+        take: this.take,
+        skip: this.take * (this.currentPage - 1)
+      }).then(data => {
+        if (data.status === 1) {
+          // this.multipleTable = []
+          this.userData = data.result
+          // for (var i = 0; i < this.userData.length; i++) {
+          //   if (_.some(this.whiteList, {user_id: this.userData[i].user_id})) {
+          //     this.multipleTable.push(this.userData[i])
+          //   }
+          // }
+          // console.log(this.multipleTable)
+          this.total = data.total
+        }
+      })
     },
     saveUserToWhiteList () {
-
+      console.log(this.multipleTable)
+      for (var i = 0; i < this.multipleTable.length; i++) {
+        if (!_.some(this.whiteList, {user_id: this.multipleTable[i].user_id})) {
+          this.whiteList.push(this.multipleTable[i])
+        }
+      }
+      this.dialogWhiteListVisible = false
     },
     resetFormInline () {
       this.formInline = {
@@ -457,15 +500,42 @@ export default {
         return false
       }
     },
-    submit () {
+    submitCourse () {
       this.$refs['form'].validate((valid) => {
         console.log(this.form)
         console.log(this.iconSrc)
         console.log(this.bannerSrc)
         if (valid) {
-          this.$message({
-            type: 'info',
-            message: '通过了'
+          var submitObj = {
+            cateid: this.form.cateid,
+            title: this.form.title,
+            adminid: this.form.adminid,
+            depart: this.form.depart,
+            expdate: moment(this.form.expdate).format('YYYY-MM-DD'),
+            intro: this.form.intro,
+            iconPath: this.iconSrc,
+            picPath: this.bannerSrc
+          }
+          var contentIds = []
+          for (var ci = 0; ci < this.contentList.length; ci++) {
+            contentIds.push(this.contentList[ci].id)
+          }
+          submitObj.contentids = contentIds.join(',')
+          if (this.useWhiteList) {
+            submitObj.typeid = 2
+            var whiteListIds = []
+            for (var i = 0; i < this.whiteList.length; i++) {
+              whiteListIds.push(this.whiteList[i].user_id)
+            }
+            submitObj.whitelsituserids = whiteListIds.join(',')
+          } else {
+            submitObj.typeid = 1
+          }
+          console.log(submitObj)
+          api.post(api.uri.addCourse, submitObj).then(data => {
+            if (data.status === 1) {
+              router.push({name: 'courseList'})
+            }
           })
         } else {
           return false

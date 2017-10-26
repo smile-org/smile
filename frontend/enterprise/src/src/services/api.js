@@ -98,10 +98,10 @@ export default {
 
     // 课程信息管理
     searchCourse: '/back/GetCourseList',
-    addCourse: '',
+    addCourse: '/back/AddCourse',
     editCourseContent: '',
 
-    getComments: '/getCourseCommentList',
+    getComments: '/back/GetCourseCommentList',
     deleteCourse: '/back/DisableCourse',
 
     // 添加课程内容 + 上传附件
@@ -110,6 +110,7 @@ export default {
     postCourseContent: '/back/AddCourseContent',
     updateCourseContent: '/back/UpdateCourseContent',
     getCourseContents: '',
+    searchWhiteList: '/back/GetUserList',
 
     // 获取admin列表 和 课程分类列表
     getSelectList: '/back/GetCourseEditPageInfo',
@@ -117,7 +118,6 @@ export default {
     uploadCategoryImage: axios.defaults.baseURL + '/back/UploadCourseCategoryIcon',
     uploadCourseIcon: axios.defaults.baseURL + '/back/UploadCourseIcon',
     uploadCourseBanner: axios.defaults.baseURL + '/back/UploadCoursePic',
-
     uploadContentAction: axios.defaults.baseURL + '/back/UploadCourseContentAttachment',
 
     // 学习记录
