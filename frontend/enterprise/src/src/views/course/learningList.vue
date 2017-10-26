@@ -11,9 +11,9 @@
         <div class="con_tab">
           <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
             <el-form-item label="课程名称">
-              <el-input v-model="formInline.name" placeholder="课程名称"></el-input>
+              <el-input v-model="formInline.title" placeholder="课程名称"></el-input>
             </el-form-item>
-            <el-form-item label="员工姓名" prop="region">
+            <el-form-item label="员工姓名">
               <el-input v-model="formInline.user" placeholder="员工姓名"></el-input>
             </el-form-item>
             <el-form-item label="部门">
@@ -23,14 +23,14 @@
               <el-input v-model="formInline.area" placeholder="区域"></el-input>
             </el-form-item>
             <el-form-item>
-              <button type="button" class="inf_btn ml20">查  询</button>
-              <button type="button" class="inf_btn ml20">导  出</button>
+              <button type="button" class="inf_btn ml20" v-on:click="search">查  询</button>
+              <button type="button" class="inf_btn ml20" v-on:click="exportList">导  出</button>
             </el-form-item>
           </el-form>
           <el-table :data="tableData"  border style="width: 100%">
-            <el-table-column prop="user" label="员工姓名">
+            <el-table-column prop="full_name" label="员工姓名">
             </el-table-column>
-            <el-table-column prop="name" label="课程名称">
+            <el-table-column prop="title" label="课程名称">
             </el-table-column>
             <el-table-column prop="department" label="部门">
             </el-table-column>
@@ -38,9 +38,15 @@
             </el-table-column>
             <el-table-column prop="content" label="课程内容">
             </el-table-column>
-            <el-table-column prop="study" label="学习时间">
+            <el-table-column label="学习时间">
+              <template scope="scope">
+                {{scope.row.learn_at|formatDate}}
+              </template>
             </el-table-column>
           </el-table>
+          <div class="ds_oq_pageF" style="margin:10px 38%">
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
+          </div>
         </div>
       </section>
     </div>
@@ -52,6 +58,7 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
+  import moment from 'moment'
   export default {
     data: function () {
       return {
@@ -60,9 +67,9 @@
         total: 0,
         formInline: {
           name: '',
-          user: '',
-          date: '',
-          categoryId: ''
+          title: '',
+          department: '',
+          area: ''
         },
         tableData: []
       }
@@ -71,30 +78,41 @@
       commonHeader,
       navigator
     },
-    created () {
-      api.fetch(api.uri.searchCourse, {
-        title: this.formInline.name,
-        priName: this.formInline.user,
-        typeid: this.formInline.categoryId,
-        pubdate: this.formInline.date,
-        skip: 0,
-        take: this.take
-      }).then(data => {
-        if (data.status === 1) {
-          this.tableData = data.result
-          api.fetch(api.uri.getCategory).then(data1 => {
-            if (data1.status === 1) {
-              this.categoryList = data1.result
-            }
-          }).catch(err => {
-            this.$message(err.message)
-          })
-        }
-      }).catch(error => {
-        this.$message(error.message)
-      })
+    filters: {
+      formatDate: function (time) {
+        var date = new Date(time)
+        return moment(date).format('YYYY-MM-DD hh:mm:ss')
+      }
     },
-    methods: {}
+    created () {
+      this.search()
+    },
+    methods: {
+      exportList () {
+        this.$message('coming soon by 大拿')
+      },
+      search () {
+        api.fetch(api.uri.getCourseLearningRecords, {
+          title: this.formInline.title,
+          fullname: this.formInline.name,
+          department: this.formInline.department,
+          area: this.formInline.area,
+          skip: (this.currentPage - 1) * this.take,
+          take: this.take
+        }).then(data => {
+          if (data.status === 1) {
+            this.tableData = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      handleCurrentChange (val) {
+        this.currentPage = val
+        this.search()
+      }
+    }
   }
 </script>
 

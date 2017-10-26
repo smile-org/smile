@@ -121,7 +121,7 @@ export default {
     uploadContentAction: axios.defaults.baseURL + '/back/UploadCourseContentAttachment',
 
     // 学习记录
-    getCourseLearningRecords: '',
+    getCourseLearningRecords: '/back/GetUserLearnProgressList',
 
     // 约课管理
     getBackAppointmentList: '/appointment/backAppointmentList',
