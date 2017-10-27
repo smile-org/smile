@@ -56,12 +56,12 @@
             </el-table-column>
             <el-table-column prop="countThisPeriod" label="本期报名" width="">
               <template scope="scope">
-                <el-button v-on:click="thisPeriod(scope.row)" type="text" size="small">40</el-button>
+                <el-button v-on:click="thisPeriod(scope.row)" type="text" size="small">{{scope.row.countThisPeriod}}</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="dateCountNextPeriod" label="预约下期" width="">
               <template scope="scope">
-                <el-button v-on:click="nextPeriod(scope.row)" type="text" size="small">40</el-button>
+                <el-button v-on:click="nextPeriod(scope.row)" type="text" size="small">{{scope.row.dateCountNextPeriod}}</el-button>
               </template>
             </el-table-column>
           </el-table>

@@ -99,9 +99,7 @@ export default {
     // 课程信息管理
     searchCourse: '/back/GetCourseList',
     addCourse: '/back/AddCourse',
-    editCourse: '/back/UpdateCourse',
     editCourseContent: '',
-    publishCourse: '/back/UpdateCoursePublishStatus',
 
     getComments: '/back/GetCourseCommentList',
     deleteCourse: '/back/DisableCourse',
@@ -114,7 +112,7 @@ export default {
     getCourseContents: '',
     searchWhiteList: '/back/GetUserList',
 
-    // 获取admin列表 和 课程分类列表, 编辑课程api， 和骚哥误会了， 写成这个了。
+    // 获取admin列表 和 课程分类列表
     getSelectList: '/back/GetCourseEditPageInfo',
 
     uploadCategoryImage: axios.defaults.baseURL + '/back/UploadCourseCategoryIcon',
@@ -132,7 +130,7 @@ export default {
     backAppointmentFollowers: '/appointment/backAppointmentFollowers',
     exportAppointment: '/appointment/exportAppointment',
 
-    // ******* 报名管理 ********
+    // 报名管理
     getEnrollmentList: '/back/GetEnrollmentList',
     exportEnrollmentList: '/back/ExportEnrollmentList',
     getEnrollmentCommentList: '/back/GetEnrollmentCommentList',
@@ -151,7 +149,6 @@ export default {
   },
 
   getUploadHeaders: function () {
-    // get from session storage
     return {
       token: '666666'
     }
