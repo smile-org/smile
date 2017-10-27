@@ -52,22 +52,20 @@
     },
     created () {
       this.id = parseInt(this.$route.query.id)
-      api.fetch(api.uri.getUserListThisPeriod, {periodid: this.id, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
-        if (data.status === 1) {
-          this.tableData = data.result
-          this.total = data.total
-        }
-      })
+      this.queryPeriodResult()
     },
     methods: {
-      handleCurrentChange (pageNum) {
-        this.currentPage = pageNum
+      queryPeriodResult () {
         api.fetch(api.uri.getUserListThisPeriod, {periodid: this.id, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
           if (data.status === 1) {
             this.tableData = data.result
             this.total = data.total
           }
         })
+      },
+      handleCurrentChange (pageNum) {
+        this.currentPage = pageNum
+        this.queryPeriodResult()
       }
     }
   }

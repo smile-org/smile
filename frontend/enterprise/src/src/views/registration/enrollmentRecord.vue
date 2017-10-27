@@ -109,20 +109,7 @@
       }
     },
     created () {
-      var date1 = ''
-      if (this.form.startDate) {
-        date1 = moment(this.form.startDate).format('YYYY-MM-DD')
-      }
-      var date2 = ''
-      if (this.form.endDate) {
-        date2 = moment(this.form.endDate).format('YYYY-MM-DD')
-      }
-      api.fetch(api.uri.getEnrollmentResultList, {title: this.form.title, teacher: this.form.teacher, start: date1, end: date2, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
-        if (data.status === 1) {
-          this.tableData = data.result
-          this.total = data.total
-        }
-      })
+      this.queryEnrollmentResult()
     },
     methods: {
       queryEnrollmentResult: function () {

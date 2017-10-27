@@ -88,17 +88,7 @@
       navigator
     },
     created () {
-      var date = ''
-      if (this.form.date1) {
-        date = moment(this.form.date1).format('YYYY-MM-DD')
-      }
-      console.log(this.currentPage)
-      api.fetch(api.uri.getBackAppointmentList, {title: this.form.name, sponsorDate: date, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
-        if (data.status === 1) {
-          this.total = data.total
-          this.tableData = data.result
-        }
-      })
+      this.queryAppointment()
     },
     filters: {
       formatDate (time) {
