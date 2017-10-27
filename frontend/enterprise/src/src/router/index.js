@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+// 登录
+import login from '@/views/login'
 // 公司信息管理
 import informationDetail from '@/views/information/detail'
 import informationEdit from '@/views/information/edit'
@@ -55,6 +56,13 @@ var requiresAuth = false
 export default new Router({
   mode: 'history',
   routes: [
+    // 登录
+    {
+      path: '/login',
+      name: 'login',
+      component: login,
+      meta: {requiresAuth: requiresAuth}
+    },
     // 公司信息管理
     {
       path: '/',

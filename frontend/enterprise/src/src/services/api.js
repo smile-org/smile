@@ -59,8 +59,7 @@ export default {
 
   uri: {
     // *** 登录 ***
-    // 登录
-    login: '/logon',
+    login: '/back/logon',
 
     // *** 公司信息管理 ***
     // 获取公司信息
