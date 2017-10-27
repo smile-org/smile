@@ -47,4 +47,47 @@ public interface EnrollmentRepo {
 
     int   backGetEnrollmentCommentListCount(  int  enrollmentid );
 
+    List< backEnrollment>   backGetEnrollmentResultList(backEnrollment  be);
+
+     int backGetEnrollmentResultListCount(backEnrollment  be);
+
+
+    List<User>   backGetUserListThisEnrollmentPeriod(  @Param("periodid") int periodid ,  @Param("skip")int skip,  @Param("take")int take);
+
+    int backGetUserListThisEnrollmentPeriodCount(int periodid);
+
+
+    List<User>   backGetUserListNextEnrollmentPeriod(  @Param("periodid") int periodid ,  @Param("skip")int skip,  @Param("take")int take);
+
+    int backGetUserListNextEnrollmentPeriodCount(int periodid);
+
+
+     void    backDisableEnrollmentPeriod(int periodid);
+
+
+    Enrollment  backGetEnrollment(int  enrollmentid );
+
+
+    EnrollmentPeriod  backGetEnrollmentPeriod(int periodid);
+
+    List<EnrollmentContent>  backGetEnrollmentContent(int   enrollmentid);
+
+    void  backAddEnrollment( Enrollment     e);
+
+    void   backAddEnrollmentPeriod(EnrollmentPeriod   ep);
+
+     void   backAddEnrollmentContent(   EnrollmentContent ec);
+
+     void   backUpdateEnrollmentIconAndPic( Enrollment  e );
+
+
+      void  backUpdateEnrollment(Enrollment e);
+
+
+      void   backUpdateEnrollmentPeriod( EnrollmentPeriod  ep);
+
+    void   backUpdateEnrollmentContent(EnrollmentContent  ec);
+
+    void   backDisableEnrollmentContent(int  contentid);
+
 }

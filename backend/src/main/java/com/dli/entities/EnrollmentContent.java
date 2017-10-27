@@ -81,4 +81,22 @@ public class EnrollmentContent {
 
 
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EnrollmentContent that = (EnrollmentContent) o;
+
+        return content_id == that.content_id;
+    }
+
+    @Override
+    public int hashCode() {
+        return content_id;
+    }
+
+
+
 }

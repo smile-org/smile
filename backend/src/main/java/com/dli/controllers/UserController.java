@@ -321,4 +321,148 @@ public class UserController {
         return result;
     }
 
+
+
+
+
+    @RequestMapping(value = "/back/GetCompanyAdminList", method = RequestMethod.GET)
+    public Map backGetCompanyAdminList(int skip, int take, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            List<User> lst =   userService.backGetCompanyAdminList( user.getCompany_id(), skip,take);
+
+            int total = userService.backGetCompanyAdminListCount(user.getCompany_id());
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+            result.put(Constant.total, total);
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/back/SetAdminToEmployee", method = RequestMethod.GET)
+    public Map backSetAdminToEmployee( int userid,  @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+             userService.backUpdateUserRole( 1, userid  );
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "更新成功");
+;
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+
+    @RequestMapping(value = "/back/GetCompanyEmployeeList", method = RequestMethod.GET)
+    public Map backGetCompanyEmployeeList( String fullname,  int skip, int take, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+             if(Helper.isNullOrEmpty(fullname))
+                 fullname=null;
+
+            List<User> lst =  userService.backGetCompanyEmployeeList(fullname,user.getCompany_id() ,skip,take);
+
+            int total = userService.backGetCompanyEmployeeListCount(fullname,user.getCompany_id());
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+            result.put(Constant.total, total);
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+
+    @RequestMapping(value = "/back/AddAdminList", method = RequestMethod.GET)
+    public Map backAddAdminList( String  userids ,  @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+             String[]  idArr=  userids.split("\\,");
+
+
+             for(  String   id:idArr )
+             {
+                 userService.backUpdateUserRole(2,  Integer.valueOf(id)  );
+             }
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "管理员添加成功");
+
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
 }

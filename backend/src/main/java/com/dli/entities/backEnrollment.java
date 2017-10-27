@@ -6,15 +6,33 @@ public class backEnrollment {
     private int enrollment_id;
     private String title;
 
-
     private String teacher;
     private String start;
     private String end;
     private int count;
 
+    private   int  countThisPeriod;
+    private   int   dateCountNextPeriod;
+
     private   int   company_id;
     private   int skip;
     private  int take;
+
+    public int getCountThisPeriod() {
+        return countThisPeriod;
+    }
+
+    public void setCountThisPeriod(int countThisPeriod) {
+        this.countThisPeriod = countThisPeriod;
+    }
+
+    public int getDateCountNextPeriod() {
+        return dateCountNextPeriod;
+    }
+
+    public void setDateCountNextPeriod(int dateCountNextPeriod) {
+        this.dateCountNextPeriod = dateCountNextPeriod;
+    }
 
     public String getStart() {
         return start;

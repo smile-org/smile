@@ -706,6 +706,7 @@ public class CourseController {
     }
 
 
+    // 如果没有上传新文件，则attachmentUrl 是空
     @RequestMapping(value = "/back/UpdateCourseContent", method = RequestMethod.GET)
     public Map backUpdateCourseContent(int contentid, int num, String title, String content, String attachmentUrl, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
@@ -932,11 +933,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/AddCourse", method = RequestMethod.POST)
-    public Map backAddCourse(int cateid, String title, int adminid, String depart, String expdate, String intro,
-                             String iconPath, String picPath, int typeid, String contentids, String whitelsituserids,
-                             // @RequestParam(value = "icon", required = false) MultipartFile icon,
-                             // @RequestParam(value = "pic", required = false) MultipartFile pic,
-                             @RequestHeader Map header) {
+    public Map backAddCourse( @RequestBody Map body, @RequestHeader Map header) {
 
 
         Map<String, Object> result = new HashMap<String, Object>();
@@ -949,6 +946,21 @@ public class CourseController {
         }
 
         try {
+
+            int cateid =(int ) body.get("cateid");
+            String title =(String ) body.get("title");
+
+            int adminid =(int ) body.get("adminid");
+            String depart =(String ) body.get("depart");
+            String expdate =(String ) body.get("expdate");
+
+            String intro =(String ) body.get("intro");
+            String iconPath =(String ) body.get("iconPath");
+            String picPath =(String ) body.get("picPath");
+
+            int typeid =(int ) body.get("typeid");
+            String contentids =(String ) body.get("contentids");
+            String whitelsituserids =(String ) body.get("whitelsituserids");
 
             Course c = new Course();
             c.setCategory_id(cateid);
@@ -1051,15 +1063,10 @@ public class CourseController {
         return result;
     }
 
+    //   iconPath  picPath始终要传值  无论新的旧的
 
     @RequestMapping(value = "/back/UpdateCourse", method = RequestMethod.POST)
-    public Map backUpdateCourse(int courseid, int cateid, String title, int adminid, String depart, String expdate, String intro,
-                                String iconPath, String picPath, int typeid, String contentids, String whitelsituserids,
-                                // @RequestParam(value = "icon", required = false) MultipartFile icon,
-                                // @RequestParam(value = "pic", required = false) MultipartFile pic,
-                                @RequestHeader Map header) {
-
-
+    public Map backUpdateCourse(@RequestBody Map body, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -1070,6 +1077,22 @@ public class CourseController {
         }
 
         try {
+
+            int courseid =(int ) body.get("courseid");
+            int cateid =(int ) body.get("cateid");
+            String title =(String ) body.get("title");
+
+            int adminid =(int ) body.get("adminid");
+            String depart =(String ) body.get("depart");
+            String expdate =(String ) body.get("expdate");
+
+            String intro =(String ) body.get("intro");
+            String iconPath =(String ) body.get("iconPath");
+            String picPath =(String ) body.get("picPath");
+
+            int typeid =(int ) body.get("typeid");
+            String contentids =(String ) body.get("contentids");
+            String whitelsituserids =(String ) body.get("whitelsituserids");
 
             Course c = new Course();
             c.setCourse_id(courseid);

@@ -343,4 +343,115 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
         select    count(*) from   enrollment_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
         and  enrollment_id=#{enrollmentid}
     </select>
+
+
+
+    <select id="backGetEnrollmentResultList"  parameterType="com.dli.entities.backEnrollment"  resultType="com.dli.entities.backEnrollment">
+        select  t.* ,
+        case   when   m1.countThisPeriod  is not null then    m1.countThisPeriod    else 0  end   as  countThisPeriod ,
+        case when  m2.dateCountNextPeriod  is not null then  m2.dateCountNextPeriod   else 0   end as  dateCountNextPeriod
+        from (
+        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
+        where  p.indicator=1 and e.indicator =1 and   e.company_id=#{company_id})t
+        left JOIN
+        (select   m.period_id,   count(*)  as countThisPeriod   from   enrollment_period  p join     user_enrollment  m on p.period_id=  m.period_id  group by  m.period_id)m1
+        on t.period_id =   m1.period_id
+        left join
+        ( select   m.period_id,   count(*)  as   dateCountNextPeriod     from   enrollment_period  p join     user_enrollment_reminder  m on p.period_id=  m.period_id  group by  m.period_id)m2
+        on t.period_id =   m2.period_id
+        where  1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="teacher!=null">and teacher like '%${teacher}%' </if>
+        <if test="start!=null">and start =#{start}</if>
+        <if test="end!=null">and end =#{end}</if>
+        order by    start desc    limit #{skip}, #{take}
+    </select>
+
+    <select id="backGetEnrollmentResultListCount"  parameterType="com.dli.entities.backEnrollment"  resultType="int">
+        select  count(*)
+        from (
+        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
+        where  p.indicator=1 and e.indicator =1 and   e.company_id=#{company_id})t
+        left JOIN
+        (select   m.period_id,   count(*)  as countThisPeriod   from   enrollment_period  p join     user_enrollment  m on p.period_id=  m.period_id  group by  m.period_id)m1
+        on t.period_id =   m1.period_id
+        left join
+        ( select   m.period_id,   count(*)  as   dateCountNextPeriod     from   enrollment_period  p join     user_enrollment_reminder  m on p.period_id=  m.period_id  group by  m.period_id)m2
+        on t.period_id =   m2.period_id
+        where  1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="teacher!=null">and teacher like '%${teacher}%' </if>
+        <if test="start!=null">and start =#{start}</if>
+        <if test="end!=null">and end =#{end}</if>
+    </select>
+
+      <select id="backGetUserListThisEnrollmentPeriod"  resultType="com.dli.entities.User">
+          select   u.*  from    user_enrollment  m join user  u on m.user_id = u.user_id    where  m.period_id= #{periodid}    limit   #{skip},#{take};
+      </select>
+
+
+    <select id="backGetUserListThisEnrollmentPeriodCount"  resultType="int">
+        select  count(*)  from    user_enrollment     where  period_id= #{periodid}
+    </select>
+
+
+    <select id="backGetUserListNextEnrollmentPeriod"  resultType="com.dli.entities.User">
+        select   u.*  from    user_enrollment_reminder  m join user  u on m.user_id = u.user_id    where  m.period_id= #{periodid}    limit   #{skip},#{take};
+    </select>
+
+
+    <select id="backGetUserListNextEnrollmentPeriodCount"  resultType="int">
+        select  count(*)  from    user_enrollment_reminder     where  period_id= #{periodid}
+    </select>
+    
+    <update id="backDisableEnrollmentPeriod">
+        update enrollment_period set  indicator =0 where period_id=#{periodid}
+    </update>
+
+    <select id="backGetEnrollment"  resultType="com.dli.entities.Enrollment">
+            select * from enrollment where enrollment_id=#{enrollmentid}
+    </select>
+
+    <select id="backGetEnrollmentPeriod"  resultType="com.dli.entities.EnrollmentPeriod">
+  select * from    enrollment_period  where period_id=#{periodid}
+    </select>
+
+
+    <select id="backGetEnrollmentContent"   resultType="com.dli.entities.EnrollmentContent">
+    select * from enrollment_content where    indicator=1      and    enrollment_id=#{enrollmentid}
+    </select>
+
+    <insert id="backAddEnrollment"   parameterType="com.dli.entities.EnrollmentContent"    useGeneratedKeys="true"   keyProperty="enrollment_id">
+        insert  enrollment values(   null ,  #{title},  #{intro},  #{icon}, #{pic} ,  #{company_id} ,  1    , now(),  now()   )
+    </insert>
+
+    <insert id="backAddEnrollmentPeriod"  parameterType="com.dli.entities.EnrollmentPeriod"    useGeneratedKeys="true"   keyProperty="period_id">
+        insert   enrollment_period values(  0,  #{enrollment_id},  #{teacher} ,  #{count}  ,   #{start_date}, #{end_date},   #{location} ,1   ,  now(), now() )
+    </insert>
+
+    <insert id="backAddEnrollmentContent"  parameterType="com.dli.entities.EnrollmentContent"    useGeneratedKeys="true"   keyProperty="content_id">
+        insert enrollment_content values(  0,  #{sequnce_num},  #{sequnce_title}, #{content},  #{enrollment_id}, 1 ,now(), now() )
+    </insert>
+
+    <update id="backUpdateEnrollmentIconAndPic"  parameterType="com.dli.entities.Enrollment">
+        update   enrollment    <set>    <if test="icon!=null">icon = #{icon},</if>   <if test="pic!=null"> pic =#{pic}</if>  </set>  where enrollment_id =#{enrollment_id}
+    </update>
+
+    <update id="backUpdateEnrollment"   parameterType="com.dli.entities.Enrollment">
+        update  enrollment set title = #{title}, intro = #{intro}, icon= #{icon}, pic= #{pic}, updated_at =now()  where enrollment_id= #{enrollment_id}
+    </update>
+
+    <update id="backUpdateEnrollmentPeriod"    parameterType="com.dli.entities.EnrollmentPeriod">
+
+        update  enrollment_period   set  teacher= #{teacher}, count= #{count},  start_date=#{start_date}, end_date= #{end_date},location=#{location}, updated_at=now()
+where period_id=#{period_id}
+    </update>
+
+    <update id="backUpdateEnrollmentContent"  parameterType="com.dli.entities.EnrollmentContent">
+        update   enrollment_content  set  sequnce_num=#{sequnce_num}, sequnce_title=#{sequnce_title}, content= #{content}  , updated_at=now() where content_id=#{content_id}
+    </update>
+
+    <update id="backDisableEnrollmentContent">
+        update enrollment_content set  indicator =0 where content_id=#{contentid}
+    </update>
 </mapper>

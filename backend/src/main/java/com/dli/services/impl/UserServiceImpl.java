@@ -49,6 +49,31 @@ public class UserServiceImpl implements UserService {
         userRepo.backDisableUserByID(userid);
     }
 
+    @Override
+    public List<User> backGetCompanyAdminList(int companyid, int skip, int take) {
+        return   userRepo.backGetCompanyAdminList(companyid, skip, take);
+    }
+
+    @Override
+    public int backGetCompanyAdminListCount(int companyid) {
+        return  userRepo.backGetCompanyAdminListCount(companyid);
+    }
+
+    @Override
+    public void backUpdateUserRole(int roleid, int userid) {
+        userRepo.backUpdateUserRole(roleid, userid);
+    }
+
+    @Override
+    public List<User> backGetCompanyEmployeeList( String fullname, int companyid, int skip, int take) {
+        return userRepo.backGetCompanyEmployeeList(fullname,companyid, skip, take);
+    }
+
+    @Override
+    public int backGetCompanyEmployeeListCount( String fullname,  int companyid) {
+        return userRepo.backGetCompanyEmployeeListCount(fullname,companyid);
+    }
+
    /* @Override
     public List<User> backGetUserList(User u) {
         return userRepo.backGetUserList(u);

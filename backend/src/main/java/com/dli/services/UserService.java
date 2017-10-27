@@ -24,4 +24,15 @@ public interface UserService {
 
     void  backDisableUserByID( int userid );
 
+    List<User>  backGetCompanyAdminList(  int companyid  , int skip , int take);
+
+
+    int  backGetCompanyAdminListCount( int companyid);
+
+    void   backUpdateUserRole(int roleid,  int userid);
+
+    List<User>   backGetCompanyEmployeeList ( String fullname, int companyid  ,int skip , int take);
+
+    int   backGetCompanyEmployeeListCount ( String fullname,  int companyid);
+
 }

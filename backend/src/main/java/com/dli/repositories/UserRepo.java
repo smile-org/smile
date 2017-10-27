@@ -31,5 +31,13 @@ public interface UserRepo {
 
     void  backDisableUserByID( int userid );
 
-    List<User>  backGetCompanyAdminList(  int companyid);
+    List<User>  backGetCompanyAdminList( @Param("companyid") int companyid  ,@Param("skip") int skip ,@Param("take") int take);
+
+    int  backGetCompanyAdminListCount( int companyid);
+
+    void   backUpdateUserRole(@Param("roleid")int roleid, @Param("userid") int userid);
+
+    List<User>   backGetCompanyEmployeeList ( @Param("fullname") String fullname,  @Param("companyid") int companyid  ,@Param("skip") int skip ,@Param("take") int take);
+
+   int   backGetCompanyEmployeeListCount (  @Param("fullname") String fullname,  @Param("companyid") int companyid);
 }

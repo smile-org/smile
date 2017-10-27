@@ -40,4 +40,38 @@ public interface EnrollmentService {
     List<EnrollmentComment>   backGetEnrollmentCommentList(  int enrollmentid, int skip ,int take);
 
     int   backGetEnrollmentCommentListCount(  int  enrollmentid );
+
+    List< backEnrollment>   backGetEnrollmentResultList(backEnrollment  be);
+
+    int   backGetEnrollmentResultListCount(backEnrollment  be);
+
+    List<User>   backGetUserListThisEnrollmentPeriod(   int periodid , int skip,  int take);
+
+    int backGetUserListThisEnrollmentPeriodCount(int periodid);
+
+
+    List<User>   backGetUserListNextEnrollmentPeriod(   int periodid ,  int skip,  int take);
+
+    int backGetUserListNextEnrollmentPeriodCount(int periodid);
+
+    void    backDisableEnrollmentPeriod(int periodid);
+
+    EnrollmentEditPageInfo  backGetEnrollmentEditPageInfoByEnrollmentID(int enrollmentid);
+
+    EnrollmentEditPageInfo  backGetEnrollmentEditPageInfoByPeriodID(int   periodid);
+
+    void  backAddEnrollment( Enrollment     e);
+
+    void   backAddEnrollmentPeriod(EnrollmentPeriod   ep);
+
+    void   backAddEnrollmentContent(  EnrollmentContent   ec );
+
+    void   backUpdateEnrollmentIconAndPic( Enrollment  e );
+
+    void  backUpdateEnrollment(Enrollment e);
+
+    void   backUpdateEnrollmentPeriod( EnrollmentPeriod  ep);
+
+
+    void  backSaveContentList(int  enrollmentid,   List<EnrollmentContent>   contentList);
 }
