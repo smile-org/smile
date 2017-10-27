@@ -13,47 +13,47 @@
           </span>
         </nav>
         <div class="con_tab">
-          <el-form :rules="formRules" ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
+          <el-form :rules="formRules" ref="form" :inline="true" :model="currentCourse" class="demo-form-inline mt20 hidden" label-width="80px">
             <el-col :span="8">
               <el-form-item label="课程名称" prop="title">
-                <el-input v-model="form.title" placeholder="课程名称"></el-input>
+                <el-input v-model="currentCourse.title" placeholder="课程名称"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="课程类别" prop="cateid">
-                <el-select v-model="form.cateid" placeholder="请选择课程类别">
+              <el-form-item label="课程类别" prop="category_id">
+                <el-select v-model="currentCourse.category_id" placeholder="请选择课程类别">
                   <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
                   </el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="部门" prop="depart">
-                <el-input v-model="form.depart" placeholder="部门"></el-input>
+              <el-form-item label="部门" prop="department">
+                <el-input v-model="currentCourse.department" placeholder="部门"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="责任人" prop="adminid">
-                <el-select v-model="form.adminid" placeholder="请选择责任人">
+              <el-form-item label="责任人" prop="principal_user_id">
+                <el-select v-model="currentCourse.principal_user_id" placeholder="请选择责任人">
                   <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
                   </el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="有效期" prop="expdate">
+              <el-form-item label="有效期" prop="expiration_date">
                 <el-date-picker
-                  v-model="form.expdate"
+                  v-model="currentCourse.expiration_date"
                   type="date"
                   placeholder="选择日期"
                   style="width: 100%;"
-                  :picker-options="pickerOptions0">
+                  >
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="简介"></el-input>
+                <el-input v-model="currentCourse.intro" placeholder="简介"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -91,11 +91,11 @@
             <template>
               <el-dialog title="添加/编辑课程内容" :visible.sync="dialogFormVisible">
                 <el-form :rules="contentRules" ref="formInline" :inline="true" :model="formInline" class="demo-form-inline mt20" label-width="50px">
-                  <el-form-item label="序号" prop="num">
-                    <el-input v-model.number="formInline.num" placeholder="序号"></el-input>
+                  <el-form-item label="序号" prop="sequnce_num">
+                    <el-input v-model.number="formInline.sequnce_num" placeholder="序号"></el-input>
                   </el-form-item>
-                  <el-form-item label="章节" prop="title">
-                    <el-input v-model="formInline.title" placeholder="章节"></el-input>
+                  <el-form-item label="章节" prop="sequnce_title">
+                    <el-input v-model="formInline.sequnce_title" placeholder="章节"></el-input>
                   </el-form-item>
                   <el-form-item label="标题" prop="content">
                     <el-input v-model="formInline.content" placeholder="标题" style="width: 300px;"></el-input>
@@ -123,18 +123,18 @@
           <div class="mt20">
             <template>
               <el-table :data="contentList" border class="mt20" style="width: 100%">
-                <el-table-column prop="num" label="序号" width="100">
+                <el-table-column prop="sequnce_num" label="序号" width="100">
                 </el-table-column>
-                <el-table-column prop="title" label="章节">
+                <el-table-column prop="sequnce_title" label="章节">
                 </el-table-column>
                 <el-table-column prop="content" label="标题">
                 </el-table-column>
-                <el-table-column prop="name" label="课件">
+                <el-table-column prop="filename" label="课件">
                 </el-table-column>
                 <el-table-column label="操作" class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="editContent(scope.row.id)" type="text" size="small">编辑</el-button>
-                    <el-button @click="delContent(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="editContent(scope.row.content_id)" type="text" size="small">编辑</el-button>
+                    <el-button @click="delContent(scope.row.content_id)" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -181,7 +181,7 @@
 
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " v-on:click="submitCourse">保 存</button>
-            <button type="button" class="inf_btn  ml20" v-on:click="routeByName('')">发布/隐藏</button>
+            <button type="button" class="inf_btn  ml20" v-on:click="publish">{{currentCourse.ispublished ? "隐藏": "发布"}}</button>
           </div>
           <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
@@ -200,7 +200,6 @@ import commonHeader from '../../components/CommonHeader'
 import navigator from '../../components/Navigator'
 import api from '../../services/api'
 import axios from 'axios'
-// import router from '../../router'
 import lang from 'vue-image-crop-upload/utils/language'
 import myUpload from 'vue-image-crop-upload'
 import _ from 'lodash'
@@ -263,23 +262,23 @@ export default {
       },
       // 课程内容obj
       formInline: {
-        id: '',
-        num: '',
-        title: '',
+        content_id: '',
+        sequnce_num: '',
+        sequnce_title: '',
         content: '',
-        name: '',
-        url: ''
+        filename: '',
+        orignal_path: ''
       },
       formWhiteList: {
         username: '',
         department: ''
       },
       contentRules: {
-        num: [
+        sequnce_num: [
           { required: true, message: '请输入合法序号' },
           { type: 'number', message: '请输入合法序号' }
         ],
-        title: [
+        sequnce_title: [
           { required: true, message: '请输入章节', trigger: 'blur' }
         ],
         content: [
@@ -290,16 +289,16 @@ export default {
         title: [
           { required: true, message: '请输入课程名称', trigger: 'blur' }
         ],
-        cateid: [
+        category_id: [
           { type: 'number', required: true, message: '请选择课程分类', trigger: 'change' }
         ],
-        adminid: [
+        principal_user_id: [
           { type: 'number', required: true, message: '请选择责任人', trigger: 'change' }
         ],
-        depart: [
+        department: [
           { required: true, message: '请选择部门', trigger: 'blur' }
         ],
-        expdate: [
+        expiration_date: [
           { type: 'date', required: true, message: '请选择有效时间', trigger: 'change' }
         ],
         intro: [
@@ -311,7 +310,11 @@ export default {
       // whitelist 分页
       take: 10,
       currentPage: 1,
-      total: 0
+      total: 0,
+
+      // id
+      id: 0,
+      currentCourse: {}
     }
   },
   components: {
@@ -321,18 +324,47 @@ export default {
     FileUpload
   },
   created () {
+    this.id = parseInt(this.$route.query.id)
     this.headers = api.getUploadHeaders()
-    this.iconSrc = api.image.course.icon // this.iconSrcDefault
-    this.bannerSrc = api.image.course.banner // this.bannerSrcDefault
     lang.zh.preview = ''
-    api.fetch(api.uri.getSelectList, { courseid: 0 }).then(data => {
+    api.fetch(api.uri.getSelectList, { courseid: this.id }).then(data => {
       if (data.status === 1) {
         this.categoryList = data.result.CategoryList
         this.adminList = data.result.AdminList
+        this.currentCourse = data.result.CourseTobeEdit
+        this.currentCourse.expiration_date = new Date(data.result.CourseTobeEdit.expiration_date)
+        this.contentList = data.result.ContentList
+        this.whiteList = data.result.UserWhiteList
+        this.useWhiteList = this.whiteList.length > 0
+        this.iconSrc = axios.defaults.imageServer + data.result.CourseTobeEdit.icon
+        this.iconData = axios.defaults.imageServer + data.result.CourseTobeEdit.icon
+        this.bannerSrc = axios.defaults.imageServer + data.result.CourseTobeEdit.pic
+        this.bannerData = axios.defaults.imageServer + data.result.CourseTobeEdit.pic
       }
+    }).catch(error => {
+      this.$message(error.message)
     })
   },
   methods: {
+    publish () {
+      // 隐藏传0， 发布传1
+      var _type = 0
+      if (this.currentCourse.ispublished === true) {
+        _type = 0
+      } else {
+        _type = 1
+      }
+      api.fetch(api.uri.publishCourse, {
+        courseid: this.id,
+        publish: _type
+      }).then(data => {
+        if (data.status === 1) {
+          router.push({name: 'courseList'})
+        }
+      }).catch(error => {
+        this.$message(error.message)
+      })
+    },
     changeFun (val) {
       this.multipleTable = val
     },
@@ -378,12 +410,12 @@ export default {
     },
     resetFormInline () {
       this.formInline = {
-        num: '',
-        id: '',
-        title: '',
+        content_id: '',
+        sequnce_num: '',
+        sequnce_title: '',
         content: '',
-        name: '',
-        url: ''
+        filename: '',
+        orignal_path: ''
       }
       this.fileList = []
       this.addContentInProgress = false
@@ -399,10 +431,10 @@ export default {
       this.resetFormInline()
       this.dialogFormVisible = true
       this.formInline = _.find(this.contentList, function (item) {
-        return item.id === id
+        return item.content_id === id
       })
       this.fileList.push({
-        name: this.formInline.name
+        name: this.formInline.filename
       })
     },
     delContent (id) {
@@ -412,7 +444,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.contentList = _.filter(this.contentList, function (item) {
-          return item.id !== id
+          return item.content_id !== id
         })
       }).catch(() => {
         this.$message({
@@ -424,7 +456,7 @@ export default {
     submitUploadContent () {
       this.$refs['formInline'].validate((valid) => {
         if (valid) {
-          if (!this.formInline.url) {
+          if (!this.formInline.orignal_path) {
             this.$message({
               type: 'info',
               message: '请提供附件'
@@ -432,43 +464,43 @@ export default {
             return
           }
           // 编辑
-          if (this.formInline.id) {
+          if (this.formInline.content_id) {
             api.fetch(api.uri.updateCourseContent, {
-              contentid: parseInt(this.formInline.id),
-              num: this.formInline.num,
-              title: this.formInline.title,
+              contentid: parseInt(this.formInline.content_id),
+              num: this.formInline.sequnce_num,
+              title: this.formInline.sequnce_title,
               content: this.formInline.content,
-              attachmentUrl: this.formInline.url
+              attachmentUrl: this.formInline.orignal_path
             }).then(data => {
               this.dialogFormVisible = false
               // 更新contentList
               for (var i = 0; i < this.contentList.length; i++) {
-                if (this.contentList[i].id === this.formInline.id) {
-                  this.contentList[i].num = this.formInline.num
-                  this.contentList[i].title = this.formInline.title
+                if (this.contentList[i].content_id === this.formInline.content_id) {
+                  this.contentList[i].sequnce_num = this.formInline.sequnce_num
+                  this.contentList[i].sequnce_title = this.formInline.sequnce_title
                   this.contentList[i].content = this.formInline.content
-                  this.contentList[i].name = this.formInline.name
-                  this.contentList[i].url = this.formInline.url
+                  this.contentList[i].filename = this.formInline.filename
+                  this.contentList[i].orignal_path = this.formInline.orignal_path
                 }
               }
               this.addContentInProgress = false
             })
           } else {
             api.fetch(api.uri.postCourseContent, {
-              num: parseInt(this.formInline.num),
-              title: this.formInline.title,
+              num: parseInt(this.formInline.sequnce_num),
+              title: this.formInline.sequnce_title,
               content: this.formInline.content,
-              attachmentUrl: this.formInline.url
+              attachmentUrl: this.formInline.orignal_path
             }).then(data => {
               if (data.status === 1) {
                 this.dialogFormVisible = false
                 this.contentList.push({
-                  id: data.result,
-                  num: this.formInline.num,
-                  title: this.formInline.title,
+                  content_id: data.result,
+                  sequnce_num: this.formInline.sequnce_num,
+                  sequnce_title: this.formInline.sequnce_title,
                   content: this.formInline.content,
-                  name: this.fileList[0].name,
-                  url: this.formInline.url
+                  filename: this.fileList[0].name,
+                  orignal_path: this.formInline.orignal_path
                 })
                 this.addContentInProgress = false
               }
@@ -481,8 +513,8 @@ export default {
     },
     onContentSuccess (response, file, fileList) {
       // 上传成功保存两个属性， 保存课程时，判断是否有附件的依据
-      this.formInline.url = response.result
-      this.formInline.name = file.name
+      this.formInline.orignal_path = response.result
+      this.formInline.filename = file.name
     },
     changeContentUpload (file, fileList) {
       // 保证页面显示一个附件
@@ -502,23 +534,21 @@ export default {
     },
     submitCourse () {
       this.$refs['form'].validate((valid) => {
-        console.log(this.form)
-        console.log(this.iconSrc)
-        console.log(this.bannerSrc)
         if (valid) {
           var submitObj = {
-            cateid: this.form.cateid,
-            title: this.form.title,
-            adminid: this.form.adminid,
-            depart: this.form.depart,
-            expdate: moment(this.form.expdate).format('YYYY-MM-DD'),
-            intro: this.form.intro,
+            courseid: this.id,
+            cateid: this.currentCourse.category_id,
+            title: this.currentCourse.title,
+            adminid: this.currentCourse.principal_user_id,
+            depart: this.currentCourse.department,
+            expdate: moment(this.currentCourse.expdate).format('YYYY-MM-DD'),
+            intro: this.currentCourse.intro,
             iconPath: this.iconSrc,
             picPath: this.bannerSrc
           }
           var contentIds = []
           for (var ci = 0; ci < this.contentList.length; ci++) {
-            contentIds.push(this.contentList[ci].id)
+            contentIds.push(this.contentList[ci].content_id)
           }
           submitObj.contentids = contentIds.join(',')
           if (this.useWhiteList) {
@@ -532,7 +562,7 @@ export default {
             submitObj.typeid = 1
           }
           console.log(submitObj)
-          api.post(api.uri.addCourse, submitObj).then(data => {
+          api.post(api.uri.editCourse, submitObj).then(data => {
             if (data.status === 1) {
               router.push({name: 'courseList'})
             }

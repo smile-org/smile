@@ -181,7 +181,7 @@
 
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " v-on:click="submitCourse">保 存</button>
-            <button type="button" class="inf_btn  ml20" v-on:click="routeByName('')">发布/隐藏</button>
+            <!--<button type="button" class="inf_btn  ml20" v-on:click="publish">发布</button>-->
           </div>
           <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
