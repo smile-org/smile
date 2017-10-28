@@ -151,7 +151,10 @@ export default {
     setEmployee: '/back/SetAdminToEmployee',
     deleteAdmin: '/back/DisableUserByID',
     addAdminList: '/back/AddAdminList',
-    getCompanyEmployeeList: '/back/GetCompanyEmployeeList'
+    getCompanyEmployeeList: '/back/GetCompanyEmployeeList',
+
+    // 考试管理
+    getQuestionList: '/back/GetQuestionList'
   },
   image: {
     category: '/default/cateicon.png',
