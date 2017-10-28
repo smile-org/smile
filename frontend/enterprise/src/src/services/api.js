@@ -154,7 +154,10 @@ export default {
     getCompanyEmployeeList: '/back/GetCompanyEmployeeList',
 
     // 考试管理
-    getQuestionList: '/back/GetQuestionList'
+    getQuestionList: '/back/GetQuestionList',
+    getExamList: '/back/GetExamList',
+    exportExamList: '/back/ExportExamList',
+    deleteExam: '/back/DisableExam'
   },
   image: {
     category: '/default/cateicon.png',
