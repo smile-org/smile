@@ -13,7 +13,7 @@
           <div>
             <button v-on:click="routeByName('userCreate')" class="inf_btn mr15">添加员工</button>
             <button class="inf_btn mr15">批量导入</button>
-            <button class="inf_btn mr15">下载导入模板</button>
+            <a v-bind:href="excelUrl" style="display: inline-block"  class="inf_btn mr15">下载导入模板</a>
             <button class="inf_btn mr15">导  出</button>
           </div>
           <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
@@ -79,6 +79,7 @@
   import api from '../../services/api'
   import router from '../../router'
   import moment from 'moment'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
@@ -92,7 +93,8 @@
         data: [],
         take: 20,
         currentPage: 0,
-        total: 0
+        total: 0,
+        excelUrl: axios.defaults.imageServer + '/import/template/User.xlsx'
       }
     },
     components: {
