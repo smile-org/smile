@@ -149,7 +149,9 @@ export default {
     updatePassword: 'updatePassword',
     getCompanyAdminList: '/back/GetCompanyAdminList',
     setEmployee: '/back/SetAdminToEmployee',
-    deleteAdmin: '/back/DisableUserByID'
+    deleteAdmin: '/back/DisableUserByID',
+    addAdminList: '/back/AddAdminList',
+    getCompanyEmployeeList: '/back/GetCompanyEmployeeList'
   },
   image: {
     category: '/default/cateicon.png',
