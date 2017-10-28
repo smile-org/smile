@@ -11,7 +11,7 @@
 <style >
 @import './assets/css/common.css';
 @import './assets/css/style.css';
-.el-input__inner:focus{
+.el-input__inner:focus,el-input:focus{
   border-color: #01b554;
 }
 .el-icon-loading {
