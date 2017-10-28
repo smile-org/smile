@@ -32,7 +32,7 @@
                         <p class="form_warning" style="display: block;">
                             <img src="" class="warnning_img">{{msg}}
                         </p>
-                        <button type="button" class="inf_btn btn_margin" v-on:click="updatePassword()">修  改</button>
+                        <button type="button" class="inf_btn mt20" v-on:click="updatePassword()">修  改</button>
                     </form>
                 </div>
             </section>

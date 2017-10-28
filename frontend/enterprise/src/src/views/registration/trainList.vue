@@ -18,75 +18,64 @@
                         </el-form-item>
                         <el-form-item label="开始时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"
-                                                style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                         <el-form-item label="结束时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate"
-                                                style="width: 100%;"></el-date-picker>
+                                <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
-                        <el-form-item>
-                            <button type="button" class="inf_btn ml20" v-on:click="queryEnrollment">查  询</button>
+                        <el-form-item class="fr">
+                          <button type="button" class="line-btn ml20" v-on:click="queryEnrollment">查  询</button>
+                          <el-button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml10  mr10 export_bor">导  出</el-button>
+                          <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                            <div class="tc">
+                              <!--<p class="exal">电子表格文件生成成功</p>-->
+                              <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+                            </div>
+                            <div class="tc">
+                              <a v-bind:href="excelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                              <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
+                            </div>
+                          </el-dialog>
+                          <button type="button" class="inf_btn " v-on:click="addEnrollment">添加报名</button>
                         </el-form-item>
                     </el-form>
+                   <hr class="hr_line">
                     <!--添加报名导出表格-->
-                    <div class="fr hidden mb20">
-                        <button type="button" class="inf_btn mr20" v-on:click="addEnrollment">添加报名</button>
-                        <el-button type="button" v-on:click="exportEnrollment" :loading="showloading"
-                                   class="inf_btn ml20 export_bor">导  出
-                        </el-button>
-                        <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
-
-                            <div class="tc">
-                                <!--<p class="exal">电子表格文件生成成功</p>-->
-                                <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
-                            </div>
-                            <div class="tc">
-                                <a v-bind:href="excelUrl" class="inf_btn download"
-                                   style="display: inline-block;">下  载</a>
-                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
-                                </button>
-                            </div>
-
-                        </el-dialog>
-                    </div>
-                    <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="title" label="课程名称" width="">
+                    <el-table :data="tableData" border class="table_minheight" style="width: 100%">
+                        <el-table-column prop="title"  align="center" label="课程名称" width="">
                         </el-table-column>
-                        <el-table-column prop="teacher" label="讲师" width="100">
+                        <el-table-column prop="teacher"  align="center" label="讲师" width="100">
                         </el-table-column>
-                        <el-table-column prop="start" label="开始时间" width="">
+                        <el-table-column prop="start"   align="center"label="开始时间" width="140">
                         </el-table-column>
-                        <el-table-column prop="end" label="结束时间" width="">
+                        <el-table-column prop="end"  align="center" label="结束时间" width="140">
                         </el-table-column>
-                        <el-table-column prop="count" label="人数限制" width="">
+                        <el-table-column prop="count"  align="center" label="人数限制" width="100">
                         </el-table-column>
-                        <el-table-column prop="appraise" label="查看评价" width="180">
+                        <el-table-column prop="appraise"  width="100" align="center" label="查看评价" >
                             <template scope="scope">
                                 <el-button v-on:click="enrollmentComments(scope.row)" type="text" size="small">查看评价
                                 </el-button>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="appraise" label="再开一期" width="100">
+                        <el-table-column prop="appraise"  align="center" label="再开一期" width="100">
                             <template scope="scope">
-                                <el-button v-on:click="addPeriod(scope.row)" type="text" size="small">再开一期</el-button>
+                                <el-button v-on:click="addPeriod(scope.row)" class="green_font" type="text" size="small">再开一期</el-button>
                             </template>
                         </el-table-column>
 
-                        <el-table-column label="操作" class="tc" width="180">
+                        <el-table-column label="操作"  align="center" class="tc" width="100">
                             <template scope="scope">
                                 <el-button @click="editEnrollment(scope.row)" type="text" size="small">编辑</el-button>
-                                <el-button @click="deleteEnrollment(scope.row)" type="text" size="small">删除</el-button>
+                                <el-button @click="deleteEnrollment(scope.row)" class="red_font" type="text" size="small">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
-                    <div class="ds_oq_pageF" style="margin:10px 38%">
-                        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"
-                                       :page-size="take" layout="total, prev, pager, next"
-                                       :total="total"></el-pagination>
+                    <div class="ds_oq_pageF">
+                        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
                     </div>
                 </div>
             </section>

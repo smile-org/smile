@@ -25,8 +25,8 @@
               </td>
               <td>
                 <div class="cell">
-                  <button type="button" class="el-button el-button--text el-button--small mr20" v-on:click="edit(item.category_id)">编辑</button>
-                  <button type="button" class="el-button el-button--text el-button--small" v-on:click="del(item.category_id)">删除</button>
+                  <button type="text" class="el-button el-button--text  mr20" v-on:click="edit(item.category_id)">编辑</button>
+                  <button type="text" class="el-button el-button--text  red_font" v-on:click="del(item.category_id)">删除</button>
                 </div>
               </td>
             </tr>

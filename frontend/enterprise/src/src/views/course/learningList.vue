@@ -27,24 +27,25 @@
               <button type="button" class="inf_btn ml20" v-on:click="exportList">导  出</button>
             </el-form-item>
           </el-form>
+          <hr class="hr_line">
           <el-table :data="tableData"  border style="width: 100%">
-            <el-table-column prop="full_name" label="员工姓名">
+            <el-table-column prop="full_name" align="center" label="员工姓名" width="120">
             </el-table-column>
-            <el-table-column prop="title" label="课程名称">
+            <el-table-column prop="title" align="center" label="课程名称">
             </el-table-column>
-            <el-table-column prop="department" label="部门">
+            <el-table-column prop="department" align="center" label="部门" width="120">
             </el-table-column>
-            <el-table-column prop="area" label="区域">
+            <el-table-column prop="area" align="center" label="区域" width="120">
             </el-table-column>
-            <el-table-column prop="content" label="课程内容">
+            <el-table-column prop="content" align="center" label="课程内容">
             </el-table-column>
-            <el-table-column label="学习时间">
+            <el-table-column align="center" label="学习时间">
               <template scope="scope">
                 {{scope.row.learn_at|formatDate}}
               </template>
             </el-table-column>
           </el-table>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="ds_oq_pageF">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>

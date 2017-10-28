@@ -12,8 +12,8 @@
           <div class="el-form-item el-form--label-left mt20">
             <label class="el-form-item__label" style="width: 100px;">课程图片</label>
             <img :src="image" class="course_header" />
-            <a v-on:click="toggleShow">上传</a>
-            <a v-on:click="setDefault">使用默认</a>
+            <a class="el-button--text cur ml20" v-on:click="toggleShow">上传</a>
+            <a class="el-button--text cur ml20" v-on:click="setDefault">使用默认</a>
             <my-upload @input="closeMyUpload" field="file"
               @crop-success="cropSuccess"
               @crop-upload-success="cropUploadSuccess"

@@ -11,14 +11,14 @@
         <div class="con_tab">
           <template>
             <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="user_idName" label="员工姓名" width="180"></el-table-column>
-              <el-table-column prop="star" label="星级" width="">
+              <el-table-column prop="user_idName" label="员工姓名" align="center" width="180"></el-table-column>
+              <el-table-column prop="star" label="星级"  align="center" width="">
                 <template scope="scope">
                   <el-rate v-model="scope.row.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                 </template>
               </el-table-column>
-              <el-table-column prop="comments" label="评价"></el-table-column>
-              <el-table-column prop="created_at" label="评价日期" width="180">
+              <el-table-column prop="comments"  align="center" label="评价"></el-table-column>
+              <el-table-column prop="created_at"  align="center" label="评价日期" width="180">
                 <template scope="scope" >
                   <span >{{scope.row.created_at | formatDate}} </span>
                 </template>

@@ -20,8 +20,7 @@
                             </el-form-item>
                         </el-form>
                         <el-table :data="userData" border ref="multipleTable" @selection-change="changeFun">
-                            <el-table-column property="user_id" width="100" type="selection"
-                                             @selection-change="changeFun">
+                            <el-table-column property="user_id" width="100" type="selection" @selection-change="changeFun">
                             </el-table-column>
                             <el-table-column property="full_name" label="姓名" width=""></el-table-column>
                             <el-table-column property="cell_phone" label="手机" width=""></el-table-column>
@@ -36,30 +35,28 @@
                         </div>
                     </el-dialog>
                     <el-table :data="tableData" border class="mt20" style="width: 100%">
-                        <el-table-column prop="full_name" label="姓名" width="">
+                        <el-table-column prop="full_name" align="center" label="姓名" width="">
                         </el-table-column>
-                        <el-table-column prop="cell_phone" label="手机" width="">
+                        <el-table-column prop="cell_phone" align="center" label="手机" width="">
                         </el-table-column>
-                        <el-table-column prop="job_number" label="工号" width="">
+                        <el-table-column prop="job_number" align="center" label="工号" width="">
                         </el-table-column>
-                        <el-table-column prop="email" label="邮箱" width="">
+                        <el-table-column prop="email" align="center" label="邮箱" width="">
                         </el-table-column>
-                        <el-table-column prop="set" label="设置" width="">
+                        <el-table-column prop="set" align="center" label="设置" width="">
                             <template scope="scope">
                                 <el-button type="text" size="small" v-on:click="setEmployee(scope.row.user_id)">置为普通员工
-
-
                                 </el-button>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="operate" label="操作" width="">
+                        <el-table-column prop="operate" align="center" label="操作" width="80">
                             <template scope="scope">
                                 <el-button type="text" size="small" v-on:click="deleteEmployee(scope.row.user_id)">删除
                                 </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
-                    <div class="ds_oq_pageF" style="margin:10px 38%">
+                    <div class="ds_oq_pageF">
                         <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"
                                        :page-size="take" layout="total, prev, pager, next"
                                        :total="total"></el-pagination>

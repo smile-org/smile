@@ -10,20 +10,20 @@
         </nav>
         <div class="con_tab">
           <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="full_name" label="姓名" width="">
+            <el-table-column prop="full_name" align="center" label="姓名" width="">
             </el-table-column>
-            <el-table-column prop="department" label="部门" width="100">
+            <el-table-column prop="department" align="center" label="部门" width="100">
             </el-table-column>
-            <el-table-column prop="area" label="区域" width="">
+            <el-table-column prop="area" align="center" label="区域" width="">
             </el-table-column>
-            <el-table-column prop="cell_phone" label="手机" width="">
+            <el-table-column prop="cell_phone" align="center" label="手机" width="">
             </el-table-column>
-            <el-table-column prop="job_number" label="工号" width="">
+            <el-table-column prop="job_number" align="center" label="工号" width="">
             </el-table-column>
-            <el-table-column prop="email" label="邮箱" width="">
+            <el-table-column prop="email" align="center"label="邮箱" width="200">
             </el-table-column>
           </el-table>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="ds_oq_pageF">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>

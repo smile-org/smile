@@ -16,7 +16,7 @@
             <a v-bind:href="excelUrl"   class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
             <button class="inf_btn mr15 vm">导  出</button>
           </div>
-          <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
+          <el-form :inline="true" :model="formInLine"  class="demo-form-inline mt20">
             <!--<el-row>-->
             <el-form-item label="姓名">
               <el-input v-model="formInLine.user" placeholder="姓名"></el-input>
@@ -33,43 +33,44 @@
               <el-input v-model="formInLine.area" placeholder="区域"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">查询</el-button>
+              <el-button type="primary"  @click="onSubmit">查询</el-button>
             </el-form-item>
             <!--</el-row>-->
           </el-form>
+          <hr class="hr_line">
           <template>
             <el-table :data="data" border style="width: 100%">
-              <el-table-column prop="full_name" label="姓名" width="100">
+              <el-table-column prop="full_name" align="center" label="姓名" width="100">
               </el-table-column>
-              <el-table-column prop="cell_phone" label="手机" width="180">
+              <el-table-column prop="cell_phone" align="center" label="手机" width="180">
               </el-table-column>
-              <el-table-column prop="job_number" label="工号"  width="180">
+              <el-table-column prop="job_number" align="center" label="工号"  width="180">
               </el-table-column>
-              <el-table-column prop="email" label="邮箱" width="180">
+              <el-table-column prop="email" align="center" label="邮箱" width="180">
               </el-table-column>
-              <el-table-column prop="department" label="部门" width="180">
+              <el-table-column prop="department" align="center" label="部门" width="120">
               </el-table-column>
-              <el-table-column prop="area" label="区域"  width="180" >
+              <el-table-column prop="area" label="区域" align="center"  width="140" >
               </el-table-column>
-              <el-table-column prop="created_at" label="创建时间" width="180">
+              <el-table-column prop="created_at" align="center" label="创建时间" width="180">
                 <template scope="scope">
                   {{scope.row.created_at | formatDate}}
                 </template>
               </el-table-column>
-              <el-table-column prop="updated_at" label="最后修改时间" width="180">
+              <el-table-column prop="updated_at" align="center" label="最后修改时间" width="180">
                 <template scope="scope">
                   {{scope.row.updated_at | formatDate}}
                 </template>
               </el-table-column>
-              <el-table-column  label="操作" class="tc" width="150">
+              <el-table-column  label="操作" align="center" class="tc" width="120">
                 <template scope="scope"  >
                   <el-button @click="editUser(scope.row.user_id)" type="text" size="small">编辑</el-button>
-                  <el-button @click="delUser(scope.row.user_id)" type="text" size="small">删除</el-button>
+                  <el-button @click="delUser(scope.row.user_id)" class="red_font" type="text" size="small">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </template>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="ds_oq_pageF">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
@@ -196,9 +197,7 @@
 </script>
 
 <style scoped>
-  .el-input {
-    width: 150px;
-  }
+
 
   .el-button--primary {
     color: #fff;
@@ -210,8 +209,5 @@
   .el-button--primary:hover, .el-button--primary:active {
     background: rgba(0, 181, 83, 0.75);
   }
-  .el-button--small {
-    font-size: 14px;
-    color: #00b553;
-  }
+
 </style>

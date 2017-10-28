@@ -63,6 +63,7 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .mb10{margin-bottom:10px;}
 .mb15{margin-bottom:15px;}
 .mb20{margin-bottom:20px;}
+.mb30{margin-bottom:30px;}
 
 .mt0{ margin-top:0px;}
 .mt2{ margin-top:2px;}
@@ -123,7 +124,37 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .dis_in_block{
   display: inline-block;
 }
+.green_font{
+  color: #55b761;
+}
+.green_font:hover,.green_font:active{
+  color: #55b761;
+}
 
 .cur {
   cursor: pointer;
 }
+.el-button--text {
+  color: #55b761;
+}
+.el-button--text:active {
+  color: #55b761;
+}
+.el-button--text:focus, .el-button--text:hover {
+  color: #55b761;
+}
+.el-button:active {
+  color: #55b761;
+  border-color: #55b761;
+  outline: 0;
+}
+.red_font{
+  color: #FF4949;
+}
+.red_font:hover,.red_font:active{
+  color: #e83131
+}
+.tr{
+  text-align: right;
+}
+

@@ -57,7 +57,8 @@
               </el-form-item>
             </el-col>
           </el-form>
-          <table class="page_m mt30" cellspacing="0" cellpadding="0" border="0">
+          <hr class="hr_line">
+          <table class="page_m mt30 mb30" cellspacing="0" cellpadding="0" border="0">
             <tr>
               <td class="page_m_a">
                 课程图标
@@ -83,14 +84,14 @@
               </td>
             </tr>
           </table>
-
+          <hr class="hr_line">
           <div class="mt30">
             <p>课程内容
               <el-button type="text" @click="addContent">添加课程内容</el-button>
             </p>
             <template>
               <el-dialog title="添加/编辑课程内容" :visible.sync="dialogFormVisible">
-                <el-form :rules="contentRules" ref="formInline" :inline="true" :model="formInline" class="demo-form-inline mt20" label-width="50px">
+                <el-form :rules="contentRules" ref="formInline" :inline="true" :model="formInline" class="demo-form-inline mt20" >
                   <el-form-item label="序号" prop="sequnce_num">
                     <el-input v-model.number="formInline.sequnce_num" placeholder="序号"></el-input>
                   </el-form-item>
@@ -122,7 +123,7 @@
           </div>
           <div class="mt20">
             <template>
-              <el-table :data="contentList" border class="mt20" style="width: 100%">
+              <el-table :data="contentList" border class="mt20 mb30" style="width: 100%">
                 <el-table-column prop="sequnce_num" label="序号" width="100">
                 </el-table-column>
                 <el-table-column prop="sequnce_title" label="章节">
@@ -139,14 +140,13 @@
                 </el-table-column>
               </el-table>
             </template>
-
           </div>
+          <hr class="hr_line">
           <div class="mt30">
             <p>
               <template>
-                <el-checkbox v-model="useWhiteList">备选项</el-checkbox>
+                <el-checkbox v-model="useWhiteList">白名单</el-checkbox>
               </template>
-              白名单
               <el-button type="text" :disabled="!useWhiteList"  @click="dialogWhiteListVisible = true">导入白名单</el-button>
             </p>
             <el-dialog title="导入白名单" :visible.sync="dialogWhiteListVisible">

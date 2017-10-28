@@ -26,8 +26,8 @@
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
-            <el-form-item>
-              <button type="button" class="inf_btn ml20" v-on:click="queryEnrollmentResult">查  询</button>
+            <el-form-item class="fr">
+              <button type="button" class="line-btn ml20" v-on:click="queryEnrollmentResult">查  询</button>
               <el-button type="button" v-on:click="exportEnrollmentResult" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
             </el-form-item>
           </el-form>
@@ -44,28 +44,28 @@
 
           </el-dialog>
           <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="title" label="课程名称" width="">
+            <el-table-column prop="title" align="center" label="课程名称" width="">
             </el-table-column>
-            <el-table-column prop="teacher" label="讲师" width="100">
+            <el-table-column prop="teacher" align="center" label="讲师" width="100">
             </el-table-column>
-            <el-table-column prop="start" label="开始时间" width="">
+            <el-table-column prop="start" align="center" label="开始时间" width="">
             </el-table-column>
-            <el-table-column prop="end" label="结束时间" width="">
+            <el-table-column prop="end" align="center" label="结束时间" width="">
             </el-table-column>
-            <el-table-column prop="count" label="人数限制" width="">
+            <el-table-column prop="count" align="center" label="人数限制" width="">
             </el-table-column>
-            <el-table-column prop="countThisPeriod" label="本期报名" width="">
+            <el-table-column prop="countThisPeriod" align="center" label="本期报名" width="">
               <template scope="scope">
-                <el-button v-on:click="thisPeriod(scope.row)" type="text" size="small">{{scope.row.countThisPeriod}}</el-button>
+                <el-button v-on:click="thisPeriod(scope.row)" class="green_font" type="text" size="small">{{scope.row.countThisPeriod}}</el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="dateCountNextPeriod" label="预约下期" width="">
+            <el-table-column prop="dateCountNextPeriod" align="center" label="预约下期" width="">
               <template scope="scope">
-                <el-button v-on:click="nextPeriod(scope.row)" type="text" size="small">{{scope.row.dateCountNextPeriod}}</el-button>
+                <el-button v-on:click="nextPeriod(scope.row)" class="green_font" type="text" size="small">{{scope.row.dateCountNextPeriod}}</el-button>
               </template>
             </el-table-column>
           </el-table>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="ds_oq_pageF">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>

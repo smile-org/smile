@@ -57,7 +57,8 @@
               </el-form-item>
             </el-col>
           </el-form>
-          <table class="page_m mt30" cellspacing="0" cellpadding="0" border="0">
+          <hr class="hr_line">
+          <table class="page_m mt30 mb30" cellspacing="0" cellpadding="0" border="0">
             <tr>
               <td class="page_m_a">
                 课程图标
@@ -83,14 +84,14 @@
               </td>
             </tr>
           </table>
-
+          <hr class="hr_line">
           <div class="mt30">
             <p>课程内容
               <el-button type="text" @click="addContent">添加课程内容</el-button>
             </p>
             <template>
               <el-dialog title="添加/编辑课程内容" :visible.sync="dialogFormVisible">
-                <el-form :rules="contentRules" ref="formInline" :inline="true" :model="formInline" class="demo-form-inline mt20" label-width="50px">
+                <el-form :rules="contentRules" ref="formInline" :inline="true" :model="formInline" class="demo-form-inline mt20" >
                   <el-form-item label="序号" prop="num">
                     <el-input v-model.number="formInline.num" placeholder="序号"></el-input>
                   </el-form-item>
@@ -122,16 +123,16 @@
           </div>
           <div class="mt20">
             <template>
-              <el-table :data="contentList" border class="mt20" style="width: 100%">
-                <el-table-column prop="num" label="序号" width="100">
+              <el-table :data="contentList" border class="mt20 mb30" style="width: 100%">
+                <el-table-column prop="num" align="center" label="序号" width="100">
                 </el-table-column>
-                <el-table-column prop="title" label="章节">
+                <el-table-column prop="title" align="center" label="章节">
                 </el-table-column>
-                <el-table-column prop="content" label="标题">
+                <el-table-column prop="content" align="center" label="标题">
                 </el-table-column>
-                <el-table-column prop="name" label="课件">
+                <el-table-column prop="name" ali gn="center"label="课件">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作" align="center"  class="tc" width="100">
                   <template scope="scope">
                     <el-button @click="editContent(scope.row.id)" type="text" size="small">编辑</el-button>
                     <el-button @click="delContent(scope.row.id)" type="text" size="small">删除</el-button>
@@ -139,8 +140,8 @@
                 </el-table-column>
               </el-table>
             </template>
-
           </div>
+          <hr class="hr_line">
           <div class="mt30">
             <p>
               <template>
@@ -162,11 +163,11 @@
                 </el-form-item>
               </el-form>
               <el-table :data="userData" border ref="multipleTable"  @selection-change="changeFun">
-                <el-table-column property="user_id" width="100" type="selection" @selection-change="changeFun">
+                <el-table-column property="user_id" align="center" width="100" type="selection" @selection-change="changeFun">
                 </el-table-column>
-                <el-table-column property="full_name" label="姓名" width=""></el-table-column>
-                <el-table-column property="cell_phone" label="手机" width=""></el-table-column>
-                <el-table-column property="department" label="部门"></el-table-column>
+                <el-table-column property="full_name" align="center" label="姓名" width=""></el-table-column>
+                <el-table-column property="cell_phone" align="center" label="手机" width=""></el-table-column>
+                <el-table-column property="department" align="center" label="部门"></el-table-column>
               </el-table>
               <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleWhiteListCurrentChange" :current-page="currentPage"  :page-size="take" :total="total"></el-pagination>
               <div class="tc">

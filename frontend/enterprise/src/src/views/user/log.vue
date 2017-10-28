@@ -18,7 +18,7 @@
               <el-col :span="11">
                 <el-date-picker type="date" @change="changeDateFrom" placeholder="选择日期" v-model="dateFrom" style="width: 100%;"></el-date-picker>
               </el-col>
-              <el-col class="line tc" :span="2">—</el-col>
+              <el-col class="line tc ml_10style" :span="2"> —</el-col>
               <el-col :span="11">
                 <el-date-picker type="date" @change="changeDateTo" placeholder="选择日期" v-model="dateTo" style="width: 100%;"></el-date-picker>
               </el-col>
@@ -35,17 +35,17 @@
           </el-form>
           <template>
             <el-table :data="data" border style="width: 100%">
-              <el-table-column prop="full_name" label="员工姓名" width="180"></el-table-column>
-              <el-table-column prop="department" label="部门" width="180"></el-table-column>
-              <el-table-column prop="area" label="区域"></el-table-column>
-              <el-table-column prop="logon_at" label="登陆时间">
+              <el-table-column prop="full_name" align="center" label="员工姓名" width="180"></el-table-column>
+              <el-table-column prop="department" align="center" label="部门" width="180"></el-table-column>
+              <el-table-column prop="area" align="center" label="区域"></el-table-column>
+              <el-table-column prop="logon_at" align="center" label="登陆时间">
                 <template scope="scope">
                   {{scope.row.logon_at | formatDate}}
                 </template>
               </el-table-column>
             </el-table>
           </template>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="ds_oq_pageF">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
@@ -166,12 +166,12 @@
 </script>
 
 <style scoped>
-  element.style {
-    width: 146.063px;
-    transform-origin: center top 0px;
-    z-index: 2007;
-    position: absolute;
-    top: 177px;
-    left: 580px;
-  }
+  /*element.style {*/
+    /*width: 146.063px;*/
+    /*transform-origin: center top 0px;*/
+    /*z-index: 2007;*/
+    /*position: absolute;*/
+    /*top: 177px;*/
+    /*left: 580px;*/
+  /*}*/
 </style>

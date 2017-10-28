@@ -38,39 +38,40 @@
             <button type="button" class="inf_btn mr20" v-on:click="addCourse" >添加课程</button>
             <button type="button"  class="inf_btn">导  出</button>
           </div>
+          <hr class="hr_line">
           <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="title" label="课程名称" width="180">
+            <el-table-column prop="title" align="center" label="课程名称" width="180">
             </el-table-column>
-            <el-table-column prop="category_name" label="课程类别" width="180">
+            <el-table-column prop="category_name" align="center" label="课程类别" width="180">
             </el-table-column>
-            <el-table-column prop="principal_user_idName" label="责任人" width="180">
+            <el-table-column prop="principal_user_idName" align="center" label="责任人" width="120">
             </el-table-column>
-            <el-table-column prop="department" label="部门" width="180">
+            <el-table-column prop="department" label="部门" align="center" width="120">
             </el-table-column>
-            <el-table-column prop="expiration_date" label="有效期" width="180">
+            <el-table-column prop="expiration_date" label="有效期" align="center" width="120">
             </el-table-column>
-            <el-table-column prop="type_name" label="课程类型" width="180">
+            <el-table-column prop="type_name" label="课程类型" align="center" width="180">
             </el-table-column>
-            <el-table-column prop="ispublished" label="课程状态" width="180">
+            <el-table-column prop="ispublished" label="课程状态" align="center" width="100">
               <template scope="scope" >
                 {{scope.row.ispublished ? "已发布" : "未发布"}}
               </template>
             </el-table-column>
-            <el-table-column prop="publish_date" label="发布日期" width="180">
+            <el-table-column prop="publish_date" label="发布日期" align="center" width="120">
             </el-table-column>
-            <el-table-column  label="查看评价" width="180">
+            <el-table-column  label="查看评价" width="100">
               <template scope="scope">
                 <el-button  v-on:click="getComments(scope.row.course_id)" type="text" size="small">查看课程评价</el-button>
               </template>
             </el-table-column>
-            <el-table-column label="操作" class="tc" width="180">
+            <el-table-column label="操作" class="tc" width="100" align="center">
               <template scope="scope">
                 <el-button @click="edit(scope.row.course_id)" type="text" size="small">编辑</el-button>
-                <el-button @click="del(scope.row.course_id)" type="text" size="small">删除</el-button>
+                <el-button @click="del(scope.row.course_id)" class="red_font" type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="ds_oq_pageF">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
@@ -191,5 +192,7 @@
 </script>
 
 <style scoped>
-
+  .el-input {
+    width: 100%;
+  }
 </style>
