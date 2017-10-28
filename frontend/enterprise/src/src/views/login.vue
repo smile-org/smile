@@ -15,18 +15,14 @@
             <span class="img_loack"></span>
             <input type="password" id="PassWord"   placeholder="请输入密码"  errormsg="密码长度为6-16位" autocomplete="off" required/>
           </div>
-          <!--<div>-->
-          <!--<input type="checkbox" name="memberPass" class="" checked="checked"/>-->
-          <!--<label>保持我的登录状态</label>-->
-          <!--</div>-->
           <ul class="hidden">
             <li class="fl">
               <input type="checkbox" name="memberPass" class="" checked="checked"/>
               <label>保持我的登录状态</label>
             </li>
-            <li class="fr">
-              <span class="">忘记密码</span>
-            </li>
+            <!--<li class="fr">-->
+              <!--<span class="">忘记密码</span>-->
+            <!--</li>-->
           </ul>
           <div>
             <button>登  录</button>
