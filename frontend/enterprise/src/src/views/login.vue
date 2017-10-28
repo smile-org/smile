@@ -25,7 +25,7 @@
             <!--</li>-->
           </ul>
           <div>
-            <button>登  录</button>
+            <button type="button">登  录</button>
           </div>
         </form>
 
