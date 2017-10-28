@@ -138,7 +138,7 @@
                                 <el-table-column prop="sequnce_title" label="起止时间"></el-table-column>
                                 <el-table-column prop="" label="操作" width="100">
                                     <template scope="scope">
-                                        <el-button @click="deleteContent(scope.row.num)" type="text" size="small">删除
+                                        <el-button @click="deleteContent(scope.row.sequnce_num)" type="text" size="small">删除
 
 
                                         </el-button>
@@ -226,14 +226,14 @@
           this.numErrMsg = '序号不能为空'
         }
         for (var i in this.tableData) {
-          if (this.tableData[i].num === this.formInline.num) {
+          if (this.tableData[i].sequnce_num === this.formInline.num) {
             this.numErrMsg = '序号不能重复'
           }
         }
         if (!this.formInline.topic) {
           this.topicErrMsg = '主题不能为空'
         }
-        if (!this.formInline.dateRange) {
+        if (!this.formInline.dateRange[0]) {
           this.dateRangeErrMsg = '日期范围不能为空'
         }
         if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.dateRangeErrMsg !== '') {
@@ -262,7 +262,7 @@
       },
       deleteContent: function (num) {
         this.tableData = _.remove(this.tableData, function (_item) {
-          return _item.num !== num
+          return _item.sequnce_num !== num
         })
       },
       add: function () {

@@ -141,7 +141,9 @@ export default {
     getUserListThisPeriod: '/back/GetUserListThisEnrollmentPeriod',
     getUserListNextPeriod: '/back/GetUserListNextEnrollmentPeriod',
     getEnrollmentEditPageInfo: '/back/GetEnrollmentEditPageInfoByPeriodID',
-    addEnrollment: '/back/AddEnrollment'
+    addEnrollment: '/back/AddEnrollment',
+    updateEnrollment: '/back/UpdateEnrollment',
+    openEnrollment: '/back/OpenEnrollment'
   },
   image: {
     category: '/default/cateicon.png',

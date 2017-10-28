@@ -71,6 +71,7 @@
 
 
 
+
                             </td>
                             <td class="page_m_b">
                                 <img :src="iconSrc | formatImage" width="20%"/>
@@ -83,6 +84,7 @@
                         <tr>
                             <td class="page_m_a">
                                 课程主图
+
 
 
 
@@ -107,6 +109,7 @@
                                     <el-form-item class="mb10" label="序号">
                                         <!--<el-input v-model="formInline.num" placeholder="序号"></el-input>-->
                                         <el-input-number v-model="formInline.num" :min="1" label="序号"></el-input-number>
+                                        <div class="el-form-item__error"> {{numErrMsg}}</div>
                                     </el-form-item>
 
                                 </el-col>
@@ -126,6 +129,7 @@
 
 
 
+
                                         </el-button>
                                         <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
 
@@ -140,7 +144,8 @@
                                 <el-table-column prop="sequnce_title" label="起止时间"></el-table-column>
                                 <el-table-column prop="" label="操作" width="100">
                                     <template scope="scope">
-                                        <el-button @click="deleteContent(scope.row.num)" type="text" size="small">删除
+                                        <el-button @click="deleteContent(scope.row.sequnce_num)" type="text" size="small">删除
+
 
 
 
@@ -153,6 +158,7 @@
                     <div class="tc btn_margin">
                         <el-button type="button" v-on:click="add()" :loading="showloading"
                                    class="inf_btn ml20 export_bor">保  存
+
 
 
                         </el-button>
@@ -249,14 +255,14 @@
           this.numErrMsg = '序号不能为空'
         }
         for (var i in this.tableData) {
-          if (this.tableData[i].num === this.formInline.num) {
+          if (this.tableData[i].sequnce_num === this.formInline.num) {
             this.numErrMsg = '序号不能重复'
           }
         }
         if (!this.formInline.topic) {
           this.topicErrMsg = '主题不能为空'
         }
-        if (!this.formInline.dateRange) {
+        if (!this.formInline.dateRange[0]) {
           this.dateRangeErrMsg = '日期范围不能为空'
         }
         if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.dateRangeErrMsg !== '') {
@@ -273,6 +279,7 @@
 
         var dateRangeString = date1 + ' - ' + date2
         var content = {
+          content_id: 0,
           sequnce_num: parseInt(this.formInline.num),
           sequnce_title: dateRangeString,
           content: this.formInline.topic
@@ -285,7 +292,7 @@
       },
       deleteContent: function (num) {
         this.tableData = _.remove(this.tableData, function (_item) {
-          return _item.num !== num
+          return _item.sequnce_num !== num
         })
       },
       add: function () {
@@ -326,7 +333,8 @@
           return
         }
         this.showloading = true
-        api.post(api.uri.addEnrollment, {
+        api.post(api.uri.openEnrollment, {
+          enrollment_id: this.enrollment_id,
           title: this.form.title,
           intro: this.form.intro,
           icon: this.iconSrc,
@@ -341,16 +349,16 @@
           if (data.status === 1) {
             this.$message({
               type: 'success',
-              message: '添加成功!'
+              message: '再开一期成功!'
             })
-            this.form.title = ''
-            this.form.teacher = ''
-            this.form.count = 1
-            this.form.startDate = ''
-            this.form.endDate = ''
-            this.form.intro = ''
-            this.form.location = ''
-            this.tableData = []
+//            this.form.title = ''
+//            this.form.teacher = ''
+//            this.form.count = 1
+//            this.form.startDate = ''
+//            this.form.endDate = ''
+//            this.form.intro = ''
+//            this.form.location = ''
+//            this.tableData = []
             this.showloading = false
           }
         })
