@@ -12,51 +12,54 @@
                 <div class="con_tab">
                     <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden"
                              label-width="80px">
+                      <el-row>
                         <el-col :span="8">
-                            <el-form-item label="课程名称">
-                                <el-input v-model="form.title" placeholder="课程名称"></el-input>
-                                <span style="display:block;">{{titleErrMsg}}</span>
-                            </el-form-item>
+                          <el-form-item label="课程名称">
+                            <el-input v-model="form.title" placeholder="课程名称"></el-input>
+                            <div class="el-form-item__error">{{titleErrMsg}}</div>
+                          </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="讲师">
-                                <el-input v-model="form.teacher" placeholder="讲师"></el-input>
-                                <span style="display:block;">{{teacherErrMsg}}</span>
-                            </el-form-item>
+                          <el-form-item label="讲师">
+                            <el-input v-model="form.teacher" placeholder="讲师"></el-input>
+                            <div class="el-form-item__error">{{teacherErrMsg}}</div>
+                          </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="人数限制">
-                                <!--<el-input v-model="form.count" placeholder="人数限制"></el-input>-->
-                                <el-input-number v-model="form.count" :min="1" label="人数限制"></el-input-number>
-                                <span style="display:block;">{{countErrMsg}}</span>
-                            </el-form-item>
+                          <el-form-item label="人数限制">
+                            <!--<el-input v-model="form.count" placeholder="人数限制"></el-input>-->
+                            <el-input-number v-model="form.count" :min="1" label="人数限制"></el-input-number>
+                            <div class="el-form-item__error">{{countErrMsg}}</div>
+                          </el-form-item>
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="8">
+                          <el-form-item label="开始时间">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"
+                                            style="width: 100%;"></el-date-picker>
+                            <div class="el-form-item__error">{{startDateErrMsg}}</div>
+                          </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="开始时间">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"
-                                                style="width: 100%;"></el-date-picker>
-                                <span style="display:block;">{{startDateErrMsg}}</span>
-                            </el-form-item>
+                          <el-form-item label="结束时间">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
+                            <div class="el-form-item__error">{{endDateErrMsg}}</div>
+                          </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="结束时间">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate"
-                                                style="width: 100%;"></el-date-picker>
-                                <span style="display:block;">{{endDateErrMsg}}</span>
-                            </el-form-item>
+                          <el-form-item label="课程简介">
+                            <el-input v-model="form.intro" placeholder="课程简介"></el-input>
+                            <div class="el-form-item__error">{{introErrMsg}}</div>
+                          </el-form-item>
                         </el-col>
-                        <el-col :span="8">
-                            <el-form-item label="课程简介">
-                                <el-input v-model="form.intro" placeholder="课程简介"></el-input>
-                                <span style="display:block;">{{introErrMsg}}</span>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="8">
-                            <el-form-item label="地址">
-                                <el-input v-model="form.location" placeholder="地址"></el-input>
-                                <span style="display:block;">{{locationErrMsg}}</span>
-                            </el-form-item>
-                        </el-col>
+                      </el-row>
+                      <el-col :span="8">
+                          <el-form-item label="地址">
+                              <el-input v-model="form.location" placeholder="地址"></el-input>
+                              <div class="el-form-item__error">{{locationErrMsg}}</div>
+                          </el-form-item>
+                      </el-col>
 
                     </el-form>
                     <table class="page_m mt30" cellspacing="0" cellpadding="0" border="0">
@@ -87,17 +90,16 @@
                             </td>
                         </tr>
                     </table>
-                    <div class="mt30">
-                        <p>培训内容</p>
-                        <span style="display:block;">{{contentErrMsg}}</span>
+                    <div class="mt30 ">
+                        <p class="pos_re">培训内容   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
+
                         <template class="hidden">
                             <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
                                 <!--<el-col :span="12">-->
                                 <el-col :span="12">
-                                    <el-form-item label="序号">
+                                    <el-form-item class="mb10" label="序号">
                                         <!--<el-input v-model="formInline.num" placeholder="序号"></el-input>-->
                                         <el-input-number v-model="formInline.num" :min="1" label="序号"></el-input-number>
-                                        <span style="display:block;">{{numErrMsg}}</span>
                                     </el-form-item>
 
                                 </el-col>
@@ -105,23 +107,24 @@
                                     <el-form-item label="起止时间">
                                         <el-date-picker v-model="formInline.dateRange" type="datetimerange"
                                                         placeholder="选择时间范围"></el-date-picker>
-                                        <span style="display:block;">{{dateRangeErrMsg}}</span>
+                                        <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="24">
                                     <el-form-item label="主题">
                                         <el-input v-model="formInline.topic" placeholder="主题"
                                                   style="width:400px;"></el-input>
-                                        <span style="display:block;">{{topicErrMsg}}</span>
                                         <el-button :plain="true" type="success" class="ml20" size="primary"
                                                    v-on:click="addContent()">添加主题
                                         </el-button>
+                                      <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
+
                                     </el-form-item>
                                 </el-col>
                             </el-form>
                         </template>
                         <template>
-                            <el-table :data="tableData" border style="width: 100%">
+                            <el-table :data="tableData" class="mt20" border style="width: 100%">
                                 <el-table-column prop="sequnce_num" label="序号" width="100"></el-table-column>
                                 <el-table-column prop="content" label="主题" width=""></el-table-column>
                                 <el-table-column prop="sequnce_title" label="起止时间"></el-table-column>
@@ -380,4 +383,10 @@
         background: #c3c3c3;
         outline: none;
     }
+  /*文字错误提示*/
+  .error_font{
+    color: #ff4949;
+    font-size: 12px;
+    margin-left:10px;
+  }
 </style>

@@ -118,7 +118,9 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .bold{font-weight:bold;}
 
 
-
+.pos_re{
+  position: relative;
+}
 .cur {
   cursor: pointer;
 }
