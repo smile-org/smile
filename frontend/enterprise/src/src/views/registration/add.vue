@@ -69,6 +69,7 @@
                                 课程图标
 
 
+
                             </td>
                             <td class="page_m_b">
                                 <img :src="iconSrc | formatImage" width="20%"/>
@@ -81,6 +82,7 @@
                         <tr>
                             <td class="page_m_a">
                                 课程主图
+
 
 
                             </td>
@@ -120,6 +122,7 @@
                                         <el-button :plain="true" type="success" class="ml20" size="primary"
                                                    v-on:click="addContent()">添加主题
 
+
                                         </el-button>
                                         <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
 
@@ -136,6 +139,7 @@
                                     <template scope="scope">
                                         <el-button @click="deleteContent(scope.row.num)" type="text" size="small">删除
 
+
                                         </el-button>
                                     </template>
                                 </el-table-column>
@@ -145,6 +149,7 @@
                     <div class="tc btn_margin">
                         <el-button type="button" v-on:click="add()" :loading="showloading"
                                    class="inf_btn ml20 export_bor">保  存
+
                         </el-button>
                     </div>
                 </div>
@@ -173,7 +178,9 @@
           teacher: '',
           count: '',
           startDate: '',
-          endDate: ''
+          endDate: '',
+          intro: '',
+          location: ''
         },
         tableData: [],
         iconSrc: '',
@@ -307,6 +314,7 @@
           location: this.form.location,
           contentList: this.tableData
         }).then(data => {
+          console.log(data)
           if (data.status === 1) {
             this.$message({
               type: 'success',
