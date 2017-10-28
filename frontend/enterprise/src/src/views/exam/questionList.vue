@@ -12,8 +12,20 @@
                     <div>
                         <button type="button" v-on:click="addQuestion()" class="inf_btn mr15">添加试题</button>
                         <button type="button" class="inf_btn mr15">试题导入</button>
-                        <a v-bind:href="excelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
-                        <el-button type="button" class="inf_btn  export_bor">导  出</el-button>
+                        <a v-bind:href="templateExcelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
+                        <el-button type="button" v-on:click="exportQuestionList()" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
+                        <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                            <div class="tc">
+                                <!--<p class="exal">电子表格文件生成成功</p>-->
+                                <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+                            </div>
+                            <div class="tc">
+                                <a v-bind:href="excelUrl" v-on:click="dialogTableVisible = false"
+                                   class="inf_btn download" style="display: inline-block;">下  载</a>
+                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
+                                </button>
+                            </div>
+                        </el-dialog>
                     </div>
                     <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
                         <!--<el-row>-->
@@ -41,15 +53,15 @@
                         <el-table-column prop="title" label="试题题目" width="">
                         </el-table-column>
                         <el-table-column prop="type_id" label="试题类型" width="">
-                            <template scope="scope" >
+                            <template scope="scope">
                                 <span v-if="scope.row.type_id === 1">单选题</span>
                                 <span v-else-if="scope.row.type_id === 2">多选题</span>
                                 <span v-else>是非题</span>
                             </template>
                         </el-table-column>
                         <el-table-column prop="created_at" label="创建时间" width="">
-                            <template scope="scope" >
-                                <span >{{scope.row.created_at | formatDate}} </span>
+                            <template scope="scope">
+                                <span>{{scope.row.created_at | formatDate}} </span>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" class="tc" width="">
@@ -60,7 +72,8 @@
                         </el-table-column>
                     </el-table>
                     <div class="tc mt20">
-                        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="take"
+                        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"
+                                       :page-size="take"
                                        layout="total, prev, pager, next" :total="total"></el-pagination>
                     </div>
                 </div>
@@ -80,7 +93,7 @@
   export default {
     data: function () {
       return {
-        excelUrl: axios.defaults.imageServer + '/import/template/Question.xlsx',
+        templateExcelUrl: axios.defaults.imageServer + '/import/template/Question.xlsx',
         tableData: [],
         take: 10,
         currentPage: 1,
@@ -99,7 +112,10 @@
           value: '3',
           label: '是非题'
         }],
-        value: ''
+        value: '',
+        excelUrl: '',
+        dialogTableVisible: false,
+        showloading: false
       }
     },
     components: {
@@ -145,6 +161,29 @@
       handleCurrentChange (pageNum) {
         this.currentPage = pageNum
         this.queryQuestionList()
+      },
+      exportQuestionList: function () {
+        this.showloading = true
+        var typeId = 0
+        if (this.value !== '') {
+          typeId = parseInt(this.value)
+        }
+        var date = ''
+        if (this.formInLine.createdat) {
+          date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.exportQuestionList, {
+          title: this.formInLine.title,
+          typeid: typeId,
+          createdat: date
+        }).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.excelUrl = axios.defaults.imageServer + data.result
+            this.showloading = false
+            this.dialogTableVisible = true
+          }
+        })
       }
     }
   }

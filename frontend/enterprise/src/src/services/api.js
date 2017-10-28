@@ -157,7 +157,8 @@ export default {
     getQuestionList: '/back/GetQuestionList',
     getExamList: '/back/GetExamList',
     exportExamList: '/back/ExportExamList',
-    deleteExam: '/back/DisableExam'
+    deleteExam: '/back/DisableExam',
+    exportQuestionList: '/back/ExportQuestionList'
   },
   image: {
     category: '/default/cateicon.png',
