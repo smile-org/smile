@@ -146,7 +146,10 @@ export default {
     openEnrollment: '/back/OpenEnrollment',
 
     // 公司管理员
-    updatePassword: 'updatePassword'
+    updatePassword: 'updatePassword',
+    getCompanyAdminList: '/back/GetCompanyAdminList',
+    setEmployee: '/back/SetAdminToEmployee',
+    deleteAdmin: '/back/DisableUserByID'
   },
   image: {
     category: '/default/cateicon.png',
