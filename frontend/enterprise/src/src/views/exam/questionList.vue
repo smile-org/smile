@@ -22,7 +22,7 @@
                 <button v-on:click="dialogTableVisibles = false" type="button" class="qx_btn ml20">取 消</button>
               </div>
             </el-dialog>
-            <button type="button" class="inf_btn mr15">下载导入模板</button>
+            <a v-bind:href="excelUrl"   class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
             <el-button type="button" v-on:click="click" :loading="showloading" @click="dialogTableVisible = true" class="inf_btn  export_bor">导  出</el-button>
             <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
               <div class="tc">
@@ -84,9 +84,11 @@
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
   import router from '../../router'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
+        excelUrl: axios.defaults.imageServer + '/import/template/Question.xlsx',
         data: [],
         take: 20,
         currentPage: 0,
