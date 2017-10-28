@@ -18,25 +18,27 @@
                         <button class="inf_btn fr" v-on:click="routeByName('informationEdit')">返  回</button>
                     </div>
                     <ul>
-                        <li class="single_title"></li>
-                        <li>1/{{total}}(单选题)</li>
-                        <li class="tit_con">
-                            <p>公司企业文化的需求是什么 <span class="false_n"> 正确答案：AC</span></p>
-                            <ul>
-                                <li>
-                                    <el-radio class="radio" v-model="radio" label="1">A.选项A在这里可以选择</el-radio>
-                                </li>
-                                <li>
-                                    <el-radio class="radio" v-model="radio" label="2">A.选项A在这里可以选择</el-radio>
-                                </li>
-                                <li>
-                                    <el-radio class="radio" v-model="radio" label="3">A.选项A在这里可以选择</el-radio>
-                                </li>
-                                <li>
-                                    <el-radio class="radio" v-model="radio" label="4">A.选项A在这里可以选择</el-radio>
-                                </li>
-                            </ul>
+                        <li class="single_title">
+                          <ul>
+                            <li>1/{{total}}(单选题)</li>
+                            <li class="tit_con">
+                              <p>公司企业文化的需求是什么 <span class="false_n"> 正确答案：AC</span></p>
+                                <p>
+                                  <el-radio class="radio" v-model="radio" label="1">A.选项A在这里可以选择</el-radio>
+                                </p>
+                                <p>
+                                  <el-radio class="radio" v-model="radio" label="2">A.选项A在这里可以选择</el-radio>
+                                </p>
+                                <p>
+                                  <el-radio class="radio" v-model="radio" label="3">A.选项A在这里可以选择</el-radio>
+                                </p>
+                                <p>
+                                  <el-radio class="radio" v-model="radio" label="4">A.选项A在这里可以选择</el-radio>
+                                </p>
+                            </li>
+                          </ul>
                         </li>
+
                     </ul>
                 </div>
             </section>
