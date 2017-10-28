@@ -105,6 +105,7 @@
                                     <el-form-item class="mb10" label="序号">
                                         <!--<el-input v-model="formInline.num" placeholder="序号"></el-input>-->
                                         <el-input-number v-model="formInline.num" :min="1" label="序号"></el-input-number>
+                                      <div class="el-form-item__error"> {{numErrMsg}}</div>
                                     </el-form-item>
 
                                 </el-col>
