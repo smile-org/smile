@@ -121,6 +121,10 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .pos_re{
   position: relative;
 }
+.dis_in_block{
+  display: inline-block;
+}
+
 .cur {
   cursor: pointer;
 }

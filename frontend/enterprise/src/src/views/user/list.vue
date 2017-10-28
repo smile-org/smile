@@ -11,10 +11,10 @@
         </nav>
         <div class="con_tab">
           <div>
-            <button v-on:click="routeByName('userCreate')" class="inf_btn mr15">添加员工</button>
-            <button class="inf_btn mr15">批量导入</button>
-            <a v-bind:href="excelUrl" style="display: inline-block"  class="inf_btn mr15">下载导入模板</a>
-            <button class="inf_btn mr15">导  出</button>
+            <button v-on:click="routeByName('userCreate')" class="inf_btn mr15 vm">添加员工</button>
+            <button class="inf_btn mr15 vm dis_in_block">批量导入</button>
+            <a v-bind:href="excelUrl" style="display: inline-block"  class="inf_btn mr15 vm">下载导入模板</a>
+            <button class="inf_btn mr15 vm">导  出</button>
           </div>
           <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
             <!--<el-row>-->
