@@ -160,7 +160,9 @@ export default {
     deleteExam: '/back/DisableExam',
     exportQuestionList: '/back/ExportQuestionList',
     getExamHistoryList: '/back/GetExamHistoryList',
-    exportExamHistoryList: '/back/ExportExamHistoryList'
+    exportExamHistoryList: '/back/ExportExamHistoryList',
+    getExamHistoryDetail: '/back/GetExamHistoryDetail',
+    getExamDetailQuestionList: '/back/GetExamDetailQuestionList'
   },
   image: {
     category: '/default/cateicon.png',
