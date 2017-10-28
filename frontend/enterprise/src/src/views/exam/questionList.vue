@@ -66,7 +66,7 @@
                         </el-table-column>
                         <el-table-column label="操作" class="tc" width="">
                             <template scope="scope">
-                                <el-button type="text" size="small">编辑</el-button>
+                                <el-button type="text" size="small" @click="editQuestion(scope.row.question_id)">编辑</el-button>
                                 <el-button type="text" size="small">删除</el-button>
                             </template>
                         </el-table-column>
@@ -133,7 +133,7 @@
     },
     methods: {
       addQuestion: function () {
-        router.push({name: 'examCreate'})
+        router.push({name: 'examQuestionCreate'})
       },
       queryQuestionList: function () {
         console.log(this.formInLine.title, this.formInLine.createdat, this.value)
@@ -184,6 +184,9 @@
             this.dialogTableVisible = true
           }
         })
+      },
+      editQuestion: function (id) {
+        router.push({name: 'examQuestionEdit', query: {id: id}})
       }
     }
   }

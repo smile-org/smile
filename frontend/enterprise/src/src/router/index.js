@@ -47,7 +47,8 @@ import examList from '@/views/exam/list'
 import examQuestionList from '@/views/exam/questionList'
 import examUserList from '@/views/exam/userList'
 import examEdit from '@/views/exam/edit'
-import examCreate from '@/views/exam/create'
+import examQuestionCreate from '@/views/exam/questionCreate'
+import examQuestionEdit from '@/views/exam/questionEdit'
 import examDetail from '@/views/exam/detail'
 
 Vue.use(Router)
@@ -257,9 +258,15 @@ export default new Router({
       meta: {requiresAuth: requiresAuth}
     },
     {
-      path: '/exam/create',
-      name: 'examCreate',
-      component: examCreate,
+      path: '/exam/question/create',
+      name: 'examQuestionCreate',
+      component: examQuestionCreate,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/exam/question/edit',
+      name: 'examQuestionEdit',
+      component: examQuestionEdit,
       meta: {requiresAuth: requiresAuth}
     },
     {

@@ -153,6 +153,7 @@ export default {
     addAdminList: '/back/AddAdminList',
     getCompanyEmployeeList: '/back/GetCompanyEmployeeList',
 
+    // ********* 考试管理 ********
     // 考试管理
     getQuestionList: '/back/GetQuestionList',
     getExamList: '/back/GetExamList',
@@ -162,7 +163,13 @@ export default {
     getExamHistoryList: '/back/GetExamHistoryList',
     exportExamHistoryList: '/back/ExportExamHistoryList',
     getExamHistoryDetail: '/back/GetExamHistoryDetail',
-    getExamDetailQuestionList: '/back/GetExamDetailQuestionList'
+    getExamDetailQuestionList: '/back/GetExamDetailQuestionList',
+    // 添加试题
+    addQuestion: '/back/AddQuestion',
+    // 编辑试题
+    editQuestion: '/back/UpdateQuestion',
+    // 获取试题
+    getQuestion: '/back/GetQuestionEditPageInfo'
   },
   image: {
     category: '/default/cateicon.png',

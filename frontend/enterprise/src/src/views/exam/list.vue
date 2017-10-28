@@ -77,7 +77,7 @@
                         </el-table-column>
                         <el-table-column label="操作" class="tc" width="180">
                             <template scope="scope">
-                                <el-button type="text" size="small">编辑</el-button>
+                                <el-button type="text" size="small" >编辑</el-button>
                                 <el-button @click="deleteExam(scope.row.exam_id)" type="text" size="small">删除</el-button>
                             </template>
                         </el-table-column>
