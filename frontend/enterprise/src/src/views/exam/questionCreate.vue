@@ -108,6 +108,7 @@
             obj.num = this.anwserList.length + 1
             obj.option = this.optionList[this.anwserList.length]
             obj.content = ''
+            obj.isRight = false
             this.anwserList.push(obj)
           }
           return
