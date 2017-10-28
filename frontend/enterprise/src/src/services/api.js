@@ -98,7 +98,9 @@ export default {
     // 课程信息管理
     searchCourse: '/back/GetCourseList',
     addCourse: '/back/AddCourse',
+    editCourse: '/back/UpdateCourse',
     editCourseContent: '',
+    publishCourse: '/back/UpdateCoursePublishStatus',
 
     getComments: '/back/GetCourseCommentList',
     deleteCourse: '/back/DisableCourse',
@@ -144,6 +146,10 @@ export default {
     course: {
       icon: '/default/course-icon.png',
       banner: '/default/course-pic.png'
+    },
+    enrollment: {
+      icon: '/default/enrollment-icon.png',
+      banner: '/default/enrollment-pic.png'
     }
   },
 
