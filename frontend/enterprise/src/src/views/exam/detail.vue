@@ -15,7 +15,7 @@
                         <span>{{startDate}} — {{endDate}}</span>
                         <span>{{score}}分</span>
                         <span>{{fullname}}</span>
-                        <button class="inf_btn fr" v-on:click="routeByName('informationEdit')">返  回</button>
+                        <button class="inf_btn fr" v-on:click="back()">返  回</button>
                     </div>
                     <ul>
                         <li class="single_title" v-for="item in tableData" :key="item.question_id">
@@ -82,6 +82,7 @@
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
   import moment from 'moment'
+  import router from '../../router'
   export default {
     data: function () {
       return {
@@ -179,6 +180,9 @@
       handleCurrentChange (pageNum) {
         this.currentPage = pageNum
         this.getQuestionList()
+      },
+      back: function () {
+        router.push({name: 'examUserList'})
       }
     }
   }
