@@ -13,10 +13,10 @@
           <table class="approve_tab" cellspacing="0" cellpadding="0" border="0">
             <tr>
               <th>
-                <span class="bold">课程类别</span><span></span>
+                <span class="">课程类别</span><span></span>
               </th>
               <th>
-                <span class="bold">操作</span><span></span>
+                <span class="">操作</span><span></span>
               </th>
             </tr>
             <tr v-for="item in data" :key="item.category_id">
@@ -108,9 +108,9 @@
   }
 
   .approve_tab tr td {
-    border-left: 1px solid #dcdcdc;
-    border-top: 1px solid #dcdcdc;
-    padding: 20px;
+    border-left: 1px solid #dfe6ec;
+    border-top: 1px solid #dfe6ec;
+    padding: 5px;
   }
 
   .approve_tab tr {
@@ -118,10 +118,11 @@
   }
 
   .approve_tab tr th {
-    border-left: 1px solid #dcdcdc;
-    border-top: 1px solid #dcdcdc;
-    background: #f1efee;
-    padding: 20px;
+    border-left: 1px solid #dfe6ec;
+    border-top: 1px solid #dfe6ec;
+    background: #eef1f6;
+    font-weight:normal;
+    padding: 10px;
   }
 
   .approve_sfz .s_sfz img {

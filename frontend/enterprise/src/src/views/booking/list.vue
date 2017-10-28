@@ -18,11 +18,10 @@
                 <el-date-picker type="date" placeholder="发起时间" v-model="form.date1" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="fr">
               <button type="button" class="inf_btn ml20" v-on:click="queryAppointment">查  询</button>
               <el-button type="button" v-on:click="exportAppointment" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
               <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
-
                 <div class="tc">
                   <!--<p class="exal">电子表格文件生成成功</p>-->
                   <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
@@ -34,24 +33,23 @@
               </el-dialog>
             </el-form-item>
           </el-form>
+          <hr class="hr_line">
           <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="appointmentTitle" label="约课主题" width="">
-            </el-table-column>
-            <el-table-column prop="sponsorName" label="发起者" width="">
-            </el-table-column>
-            <el-table-column prop="sponsorDate" label="发起时间" width="">
+            <el-table-column prop="appointmentTitle" align="center" label="约课主题" width=""></el-table-column>
+            <el-table-column prop="sponsorName" align="center" label="发起者" width=""></el-table-column>
+            <el-table-column prop="sponsorDate" align="center" label="发起时间" width="">
               <template scope="scope" >
                 <span >{{scope.row.sponsorDate | formatDate}} </span>
               </template>
             </el-table-column>
-            <el-table-column prop="thisR" label="操作" width="" >
+            <el-table-column prop="thisR" align="center" label="操作" width="" >
               <template scope="scope" >
                 <el-button v-on:click="routeByName(scope.row)" type="text" size="small">查看</el-button>
                 <el-button  type="text" size="small" @click="closeAppointment(scope.row)">关闭约课</el-button>
               </template>
             </el-table-column>
           </el-table>
-          <div class="ds_oq_pageF" style="margin:10px 38%">
+          <div class="ds_oq_pageF" >
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>

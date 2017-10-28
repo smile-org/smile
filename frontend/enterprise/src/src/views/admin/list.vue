@@ -51,7 +51,7 @@
                         </el-table-column>
                         <el-table-column prop="operate" align="center" label="操作" width="80">
                             <template scope="scope">
-                                <el-button type="text" size="small" v-on:click="deleteEmployee(scope.row.user_id)">删除
+                                <el-button type="text" size="small" class="red_font" v-on:click="deleteEmployee(scope.row.user_id)">删除
                                 </el-button>
                             </template>
                         </el-table-column>
