@@ -7,7 +7,7 @@
                 <nav>
                     <img src="../../assets/img/house.png" class="vm">
                     <span class="vm">您的当前位置 :<span class="">报名管理</span> > <span class=""> 培训报名管理</span> > <span
-                            class="f_blue">添加报名</span></span>
+                            class="f_blue">再开一期</span></span>
                 </nav>
                 <div class="con_tab">
                     <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden"
@@ -334,7 +334,7 @@
         }
         this.showloading = true
         api.post(api.uri.openEnrollment, {
-          enrollment_id: this.enrollment_id,
+          enrollmentid: parseInt(this.enrollment_id),
           title: this.form.title,
           intro: this.form.intro,
           icon: this.iconSrc,

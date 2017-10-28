@@ -196,7 +196,7 @@
         })
       },
       editEnrollment: function (row) {
-        router.push({name: 'registrationEdit', query: {id: row.period_id}})
+        router.push({name: 'registrationEdit', query: {period_id: row.period_id}})
       },
       deleteEnrollment: function (row) {
         console.log('delete.')
