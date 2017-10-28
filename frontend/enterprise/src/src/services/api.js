@@ -4,9 +4,9 @@ import axios from 'axios'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
 
-axios.defaults.baseURL = 'http://192.168.1.102:8888' // 'http://192.168.0.108:3000'
+axios.defaults.baseURL = 'http://192.168.1.106:8888' // 'http://192.168.0.108:3000'
 // axios.defaults.baseURL = 'http://123.207.154.226:8888'
-axios.defaults.imageServer = 'http://192.168.1.102:4001'
+axios.defaults.imageServer = 'http://192.168.1.106:4001'
 // axios.defaults.imageServer = 'http://123.207.154.226:4001'
 
 /**
@@ -98,7 +98,9 @@ export default {
     // 课程信息管理
     searchCourse: '/back/GetCourseList',
     addCourse: '/back/AddCourse',
+    editCourse: '/back/UpdateCourse',
     editCourseContent: '',
+    publishCourse: '/back/UpdateCoursePublishStatus',
 
     getComments: '/back/GetCourseCommentList',
     deleteCourse: '/back/DisableCourse',
@@ -137,13 +139,19 @@ export default {
     getEnrollmentResultList: '/back/GetEnrollmentResultList',
     exportEnrollmentResultList: '/back/ExportEnrollmentResultList',
     getUserListThisPeriod: '/back/GetUserListThisEnrollmentPeriod',
-    getUserListNextPeriod: '/back/GetUserListNextEnrollmentPeriod'
+    getUserListNextPeriod: '/back/GetUserListNextEnrollmentPeriod',
+    getEnrollmentEditPageInfo: '/back/GetEnrollmentEditPageInfoByPeriodID',
+    addEnrollment: '/back/AddEnrollment'
   },
   image: {
     category: '/default/cateicon.png',
     course: {
       icon: '/default/course-icon.png',
       banner: '/default/course-pic.png'
+    },
+    enrollment: {
+      icon: '/default/enrollment-icon.png',
+      banner: '/default/enrollment-pic.png'
     }
   },
 
