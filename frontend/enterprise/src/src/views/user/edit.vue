@@ -10,14 +10,14 @@
         </nav>
         <div class="con_tab">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
+            <el-form-item label="姓名" prop="full_name">
+              <el-input v-model="ruleForm.full_name"></el-input>
             </el-form-item>
-            <el-form-item label="手机号" prop="mobile">
-              <el-input v-model="ruleForm.mobile"></el-input>
+            <el-form-item label="手机号" prop="cell_phone">
+              <el-input v-model="ruleForm.cell_phone"></el-input>
             </el-form-item>
-            <el-form-item label="工号" prop="employeeNo">
-              <el-input v-model="ruleForm.employeeNo"></el-input>
+            <el-form-item label="工号" prop="job_number">
+              <el-input v-model="ruleForm.job_number"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="ruleForm.email"></el-input>
@@ -49,19 +49,19 @@
       return {
         id: 0,
         ruleForm: {
-          name: '',
-          mobile: '',
-          employeeNo: '',
+          full_name: '',
+          cell_phone: '',
+          job_number: '',
           email: '',
           department: '',
           area: ''
         },
         rules: {
-          name: [
+          full_name: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
             { min: 2, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
-          mobile: [
+          cell_phone: [
             { required: true, message: '请输入手机号', trigger: 'change' },
             { len: 11, message: '请输入正确格式的手机号码', trigger: 'blur' },
             { validator: (rule, value, callback) => {
@@ -84,29 +84,32 @@
       navigator
     },
     created () {
-      this.id = this.$route.query.id
-      api.fetch(api.uri.getUser, {id: this.id}).then(data => {
+      this.id = parseInt(this.$route.query.id)
+      console.log(this.id)
+      api.fetch(api.uri.getUser, {userid: this.id}).then(data => {
         if (data.status === 1) {
-          this.ruleForm = data
+          this.ruleForm = data.result
         }
       }).catch(error => {
-        alert(error.message)
+        this.$message(error.message)
       })
     },
     methods: {
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            api.post(api.uri.createUser, {
-              name: this.ruleForm.name,
-              mobile: this.ruleForm.mobile,
-              employeeNo: this.ruleForm.employeeNo,
+            api.fetch(api.uri.editUser, {
+              userid: this.id,
+              fullname: this.ruleForm.full_name,
+              cellphone: this.ruleForm.cell_phone,
+              jobnumber: this.ruleForm.job_number,
               email: this.ruleForm.email,
               department: this.ruleForm.department,
               area: this.ruleForm.area
             }).then(data => {
-              alert('保存成功')
-              router.push({name: 'userList'})
+              if (data.status === 1) {
+                router.push({name: 'userList'})
+              }
             })
           } else {
             return false

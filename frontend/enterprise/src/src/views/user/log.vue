@@ -27,7 +27,7 @@
               <el-input v-model="criteria.department" placeholder="部门"></el-input>
             </el-form-item>
             <el-form-item label="区域">
-              <el-input v-model="criteria.address" placeholder="区域"></el-input>
+              <el-input v-model="criteria.area" placeholder="区域"></el-input>
             </el-form-item>
             <el-form-item>
               <button class="inf_btn ml20" type="button"  @click="onSubmit">查  询</button>
@@ -35,14 +35,18 @@
           </el-form>
           <template>
             <el-table :data="data" border style="width: 100%">
-              <el-table-column prop="name" label="员工姓名" width="180"></el-table-column>
+              <el-table-column prop="full_name" label="员工姓名" width="180"></el-table-column>
               <el-table-column prop="department" label="部门" width="180"></el-table-column>
               <el-table-column prop="area" label="区域"></el-table-column>
-              <el-table-column prop="loginTime | formatDate" label="登陆时间"></el-table-column>
+              <el-table-column prop="logon_at" label="登陆时间">
+                <template scope="scope">
+                  {{scope.row.logon_at | formatDate}}
+                </template>
+              </el-table-column>
             </el-table>
           </template>
           <div class="ds_oq_pageF" style="margin:10px 38%">
-            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="10" layout="total, prev, pager, next" :total="total"></el-pagination>
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
       </section>
@@ -70,7 +74,7 @@
         },
         data: [],
         take: 10,
-        currentPage: 0,
+        currentPage: 1,
         total: 0
       }
     },
@@ -86,16 +90,22 @@
     },
     created () {
       api.fetch(api.uri.searchUserLog, {
-        area: this.criteria.area,
-        skip: this.currentPage * this.take
+        fullname: '',
+        area: '',
+        department: '',
+        start: '',
+        end: '',
+        take: this.take,
+        skip: 0
       }).then(data => {
         if (data.status === 1) {
           this.data = data.result
+          this.total = data.total
         } else {
-          // alert()
+
         }
       }).catch(error => {
-        alert(error.message)
+        this.$message(error.message)
       })
     },
     methods: {
@@ -116,12 +126,12 @@
         var _dateFrom = moment(this.criteria.dateFrom).format('YYYY-MM-DD')
         var _dateTo = moment(this.criteria.dateTo).format('YYYY-MM-DD')
         api.fetch(api.uri.searchUserLog, {
-          username: this.criteria.name,
-          dateFrom: _dateFrom,
-          dateTo: _dateTo,
+          fullname: this.criteria.name,
+          start: _dateFrom,
+          end: _dateTo,
           department: this.criteria.department,
           area: this.criteria.area,
-          skip: this.currentPage * this.take,
+          skip: (this.currentPage - 1) * this.take,
           take: this.take
         }).then(data => {
           if (data.status === 1) {
@@ -129,17 +139,18 @@
             this.total = data.total
           }
         }).catch(error => {
-          alert(error.message)
+          this.$message(error.message)
         })
       },
       handleCurrentChange (val) {
+        this.currentPage = val
         api.fetch(api.uri.searchUserLog, {
-          username: this.criteria.name,
-          dateFrom: this.criteria.dateFrom,
-          dateTo: this.criteria.dateTo,
+          fullname: this.criteria.name,
+          start: this.criteria.dateFrom,
+          end: this.criteria.dateTo,
           department: this.criteria.department,
           area: this.criteria.area,
-          skip: this.currentPage * this.take,
+          skip: (this.currentPage - 1) * this.take,
           take: this.take
         }).then(data => {
           if (data.status === 1) {
@@ -147,7 +158,7 @@
             this.total = data.total
           }
         }).catch(error => {
-          alert(error.message)
+          this.$message(error.message)
         })
       }
     }

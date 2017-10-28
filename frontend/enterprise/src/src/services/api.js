@@ -63,29 +63,29 @@ export default {
 
     // *** 公司信息管理 ***
     // 获取公司信息
-    getCompanyInfo: '',
+    getCompanyInfo: '/back/GetCompanyByID',
 
     // 使用默认图片
-    setDefaultImage: '',
-
-    // 上传公司图片
-    uploadCompanyImage: '',
+    setDefaultImage: '/back/SetDefaultCompanyPic',
+    uploadCompanyPic: axios.defaults.baseURL + '/back/UploadCompanyPic',
 
     // *** 用户 ***
     // 搜索日志
-    searchUserLog: '',
+    searchUserLog: '/back/GetLogonHistoryList',
 
     // 获取用户列表
-    searchUserList: '',
+    searchUserList: '/back/GetUserList',
 
     // 创建用户
-    createUser: '',
+    createUser: '/back/AddEmployee',
 
     // 编辑用户
-    editUser: '',
+    editUser: '/back/UpdateEmployee',
 
     // 获取用户
-    getUser: '',
+    getUser: '/back/getUserByID',
+
+    deleteUser: '/back/DisableUserByID',
 
     // *** 课程管理 ***
     // 课程分类

@@ -12,13 +12,13 @@
           <!--此部分为信息列表-->
           <ul class="basic_inf">
             <li>
-              <span>公司名称：</span> <span>{{company.name}}</span>
+              <span>公司名称：</span> <span>{{company.company_name}}</span>
             </li>
             <li>
-              <span>联系人：</span> <span>{{company.username}}</span>
+              <span>联系人：</span> <span>{{company.contact_person}}</span>
             </li>
             <li>
-              <span>联系电话：</span> <span>{{company.userMobile}}</span>
+              <span>联系电话：</span> <span>{{company.phone_number}}</span>
             </li>
             <li>
               <span>所在省份：</span> <span>{{company.province}}</span>
@@ -53,7 +53,7 @@
     created () {
       api.fetch(api.uri.getCompanyInfo).then(data => {
         if (data.status === 1) {
-          this.company = data
+          this.company = data.result
         }
       })
     },

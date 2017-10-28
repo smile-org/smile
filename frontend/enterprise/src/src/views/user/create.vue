@@ -43,6 +43,7 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
+  import router from '../../router'
   export default {
     data: function () {
       return {
@@ -87,16 +88,15 @@
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            api.post(api.uri.createUser, {
-              name: this.ruleForm.name,
-              mobile: this.ruleForm.mobile,
-              employeeNo: this.ruleForm.employeeNo,
+            api.fetch(api.uri.createUser, {
+              fullname: this.ruleForm.name,
+              cellphone: this.ruleForm.mobile,
+              jobnumber: this.ruleForm.employeeNo,
               email: this.ruleForm.email,
               department: this.ruleForm.department,
               area: this.ruleForm.area
             }).then(data => {
-              alert('保存成功')
-              this.resetForm(formName)
+              router.push({name: 'userList'})
             })
           } else {
             return false

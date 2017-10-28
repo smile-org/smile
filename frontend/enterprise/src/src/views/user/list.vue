@@ -39,11 +39,11 @@
           </el-form>
           <template>
             <el-table :data="data" border style="width: 100%">
-              <el-table-column prop="name" label="姓名" width="100">
+              <el-table-column prop="full_name" label="姓名" width="100">
               </el-table-column>
-              <el-table-column prop="mobile" label="手机" width="180">
+              <el-table-column prop="cell_phone" label="手机" width="180">
               </el-table-column>
-              <el-table-column prop="employeeNo" label="工号"  width="180">
+              <el-table-column prop="job_number" label="工号"  width="180">
               </el-table-column>
               <el-table-column prop="email" label="邮箱" width="180">
               </el-table-column>
@@ -51,20 +51,26 @@
               </el-table-column>
               <el-table-column prop="area" label="区域"  width="180" >
               </el-table-column>
-              <el-table-column prop="createdTime | formatDate" label="创建时间" width="180">
+              <el-table-column prop="created_at" label="创建时间" width="180">
+                <template scope="scope">
+                  {{scope.row.created_at | formatDate}}
+                </template>
               </el-table-column>
-              <el-table-column prop="updatedTime | formatDate" label="最后修改时间" width="180">
+              <el-table-column prop="updated_at" label="最后修改时间" width="180">
+                <template scope="scope">
+                  {{scope.row.updated_at | formatDate}}
+                </template>
               </el-table-column>
               <el-table-column  label="操作" class="tc" width="150">
                 <template scope="scope"  >
-                  <el-button @click="checkPass(scope.row.id)" type="text" size="small">编辑</el-button>
-                  <el-button @click="checkFail(scope.row.id)" type="text" size="small">删除</el-button>
+                  <el-button @click="editUser(scope.row.user_id)" type="text" size="small">编辑</el-button>
+                  <el-button @click="delUser(scope.row.user_id)" type="text" size="small">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </template>
           <div class="ds_oq_pageF" style="margin:10px 38%">
-            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  :page-size="1" layout="total, prev, pager, next" :total="total"></el-pagination>
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"  layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
       </section>
@@ -91,7 +97,7 @@
           mobile: ''
         },
         data: [],
-        take: 20,
+        take: 10,
         currentPage: 0,
         total: 0,
         excelUrl: axios.defaults.imageServer + '/import/template/User.xlsx'
@@ -102,12 +108,13 @@
       navigator
     },
     created () {
+      console.log(this.formInLine)
       api.fetch(api.uri.searchUserList, {
-        name: this.formInLine.name,
-        area: this.formInLine.area,
+        fullname: this.formInLine.name,
+        cellphone: this.formInLine.mobile,
         department: this.formInLine.department,
-        mobile: this.formInLine.mobile,
-        skip: this.currentPage * this.take,
+        area: this.formInLine.area,
+        skip: 0,
         take: this.take
       }).then(data => {
         if (data.status === 1) {
@@ -118,20 +125,42 @@
         alert(error.message)
       })
     },
-    filter: {
+    filters: {
       formatDate: function (time) {
         var date = new Date(time)
         return moment(date).format('YYYY-MM-DD hh:mm:ss')
       }
     },
     methods: {
+      editUser: function (id) {
+        router.push({name: 'userEdit', query: {id: id}})
+      },
+      delUser: function (id) {
+        this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.fetch(api.uri.deleteUser, {userid: id}).then(data => {
+            this.onSubmit()
+          }).catch(error => {
+            alert(error.message)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
       handleCurrentChange: function (value) {
+        this.currentPage = value
         api.fetch(api.uri.searchUserList, {
-          name: this.formInLine.name,
+          fullname: this.formInLine.name,
           area: this.formInLine.area,
           department: this.formInLine.department,
-          mobile: this.formInLine.mobile,
-          skip: this.currentPage * this.take,
+          cellphone: this.formInLine.mobile,
+          skip: (this.currentPage - 1) * this.take,
           take: this.take
         }).then(data => {
           if (data.status === 1) {
@@ -144,11 +173,11 @@
       },
       onSubmit: function () {
         api.fetch(api.uri.searchUserList, {
-          name: this.formInLine.name,
+          fullname: this.formInLine.name,
           area: this.formInLine.area,
           department: this.formInLine.department,
-          mobile: this.formInLine.mobile,
-          skip: this.currentPage * this.take,
+          cellphone: this.formInLine.mobile,
+          skip: (this.currentPage - 1) * this.take,
           take: this.take
         }).then(data => {
           if (data.status === 1) {
@@ -156,11 +185,11 @@
             this.total = data.total
           }
         }).catch(error => {
-          alert(error.message)
+          this.$message(error.message)
         })
       },
       routeByName: function (name) {
-        router.push({ name: name })
+        router.push({name: name})
       }
     }
   }

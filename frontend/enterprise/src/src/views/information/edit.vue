@@ -5,7 +5,7 @@
      <navigator module="information"></navigator>
       <section class="con_main_r">
         <nav>
-          <img :src="logoSrc" class="vm">
+          <img src="../../assets/img/house.png" class="vm">
           <span class="vm">您的当前位置 : <span class="f_blue">基本信息</span></span>
         </nav>
         <div class="con_tab">
@@ -16,11 +16,11 @@
                 logo
               </td>
               <td class="page_m_b">
-                <img :src="bannerSrc | formatImage" width="20%"/>
+                <img :src="logoSrc | formatImage" width="20%"/>
               </td>
               <td class="page_m_c">
-                <a v-on:click="setDefault(1)">使用默认</a>
-                <a v-on:click="toggleShow(1)">上传</a>
+                <a v-on:click="setDefault('logo')">使用默认</a>
+                <a v-on:click="toggleShow('logo')">上传</a>
               </td>
             </tr>
             <tr>
@@ -28,12 +28,11 @@
                 banner
               </td>
               <td class="page_m_b">
-                <img v-if="bannerSrc" :src="bannerSrc" v-show="true" style="display: none;">
                 <img :src="bannerSrc | formatImage" width="100%"/>
               </td>
               <td class="page_m_c">
-                <a v-on:click="setDefault(2)">使用默认</a>
-                <a v-on:click="toggleShow(2)">上传</a>
+                <a v-on:click="setDefault('banner')">使用默认</a>
+                <a v-on:click="toggleShow('banner')">上传</a>
               </td>
             </tr>
           </table>
@@ -43,7 +42,7 @@
         </div>
       </section>
     </div>
-    <my-upload @input="closeMyUpload" field="img"
+    <my-upload @input="closeMyUpload" field="file"
     @crop-success="cropSuccess"
     @crop-upload-success="cropUploadSuccess"
     @crop-upload-fail="cropUploadFail"
@@ -53,7 +52,7 @@
     :headers="headers"
     :value.sync="show"
     :no-circle=true
-    url="/upload"
+    :url="uploadUrl"
     img-format="png"></my-upload>
   </div>
 </template>
@@ -68,7 +67,7 @@
   export default {
     filters: {
       formatImage: function (uri) {
-        return axios.defaults.imageServer + uri
+        return axios.defaults.imageServer + uri + '?t=' + Math.random()
       }
     },
     data: function () {
@@ -78,8 +77,10 @@
 
         show: false,
         params: {
-          type: 1
-        }
+          pictype: ''
+        },
+        headers: {},
+        uploadUrl: api.uri.uploadCompanyPic
       }
     },
     components: {
@@ -88,28 +89,42 @@
       myUpload
     },
     created () {
+      this.headers = api.getUploadHeaders()
       api.fetch(api.uri.getCompanyInfo).then(data => {
         if (data.status === 1) {
-          this.logoSrc = data.logo
-          this.bannerSrc = data.banner
+          this.logoSrc = data.result.logo
+          this.bannerSrc = data.result.banner
         }
       })
     },
     methods: {
+      setDefault: function (type) {
+        api.fetch(api.uri.setDefaultImage, {
+          pictype: type
+        }).then(data => {
+          if (data.status === 1) {
+            if (type === 'logo') {
+              this.logoSrc = data.result
+            } else {
+              this.bannerSrc = data.result
+            }
+          }
+        })
+      },
       closeMyUpload: function (value) {
         this.show = value
       },
       // 1: 上传logo; 2: 上传banner
       toggleShow: function (type) {
-        this.params.type = type
+        this.params.pictype = type
         this.show = !this.show
       },
       cropSuccess (data, field) {
-        console.log(data)
-        this.bannerSrc = data
-        // console.log('-------- crop success --------')
-        // this.imgDataUrl = imgDataUrl
-        // this.logoSrc = imgDataUrl
+        // if (this.params.pictype === 'logo') {
+        //   this.iconSrc = data
+        // } else {
+        //   this.bannerSrc = data
+        // }
       },
       /**
       * upload success
@@ -118,10 +133,10 @@
       * [param] field
       */
       cropUploadSuccess (jsonData, field) {
-        if (this.params.type === 1) {
-          this.logoSrc = jsonData.imagePath
+        if (this.params.pictype === 'logo') {
+          this.logoSrc = jsonData.result
         } else {
-          this.bannerSrc = jsonData.imagePath
+          this.bannerSrc = jsonData.result
         }
       },
       /**
@@ -132,9 +147,6 @@
       */
       cropUploadFail (status, field) {
         alert(status)
-        // console.log('-------- upload fail --------')
-        // console.log(status)
-        // console.log('field: ' + field)
       }
     }
   }
