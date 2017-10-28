@@ -143,7 +143,10 @@ export default {
     getEnrollmentEditPageInfo: '/back/GetEnrollmentEditPageInfoByPeriodID',
     addEnrollment: '/back/AddEnrollment',
     updateEnrollment: '/back/UpdateEnrollment',
-    openEnrollment: '/back/OpenEnrollment'
+    openEnrollment: '/back/OpenEnrollment',
+
+    // 公司管理员
+    updatePassword: 'updatePassword'
   },
   image: {
     category: '/default/cateicon.png',
