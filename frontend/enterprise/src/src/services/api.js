@@ -169,7 +169,10 @@ export default {
     // 编辑试题
     editQuestion: '/back/UpdateQuestion',
     // 获取试题
-    getQuestion: '/back/GetQuestionEditPageInfo'
+    getQuestion: '/back/GetQuestionEditPageInfo',
+    uploadExamIcon: axios.defaults.baseURL + '/back/UploadExamIcon',
+    uploadExamBanner: axios.defaults.baseURL + '/back/UploadExamPic',
+    addExam: '/back/AddExam'
   },
   image: {
     category: '/default/cateicon.png',
@@ -180,6 +183,10 @@ export default {
     enrollment: {
       icon: '/default/enrollment-icon.png',
       banner: '/default/enrollment-pic.png'
+    },
+    exam: {
+      icon: '/default/exam-icon.png',
+      banner: '/default/exam-pic.png'
     }
   },
 
