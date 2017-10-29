@@ -6,57 +6,69 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">课程管理</span> > <span class="">课程信息管理</span> > <span class="f_blue">编辑课程</span></span>
+          <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">考试信息管理</span> > <span class="f_blue">添加考试</span></span>
         </nav>
         <div class="con_tab">
-          <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
+          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
             <el-col :span="8">
-              <el-form-item label="考试编号">
-                <el-input v-model="form.name" placeholder="考试编号"></el-input>
+              <el-form-item label="考试名称" prop="name">
+                <el-input v-model="form.name" placeholder="考试名称"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="考试名称">
-                <el-input v-model="form.department" placeholder="考试名称"></el-input>
+              <el-form-item label="次数限制" prop="times">
+                <el-input-number v-model="form.times" :min="1" label="次数限制"></el-input-number>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" >
+              <el-form-item label="通过分数" prop="score">
+                <el-input-number v-model="form.score" :min="1" label="通过分数"></el-input-number>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="次数限制">
-                <el-input v-model="form.name" placeholder="责任人"></el-input>
+              <el-form-item label="责任人" prop="admin">
+                <el-select v-model="form.admin" placeholder="请选择责任人">
+                  <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" >
+              <el-form-item label="时间限制" prop="minutes" >
+                <el-input-number v-model="form.minutes" :min="1" label="通过分数"></el-input-number>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="通过分数">
-                <el-input v-model="form.name" placeholder="通过分数"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="管理员">
-                <el-input v-model="form.department" placeholder="管理员"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="时间限制">
-                <el-input v-model="form.department" placeholder="时间限制"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="开始时间">
+              <el-form-item label="开始时间" prop="dateStart">
                 <el-col>
-                  <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date" style="width: 100%;"></el-date-picker>
+                  <el-date-picker
+                    type="date"
+                    :picker-options="pickerOptions0"
+                    @change="changeDateStart"
+                    placeholder="选择日期"
+                    v-model="form.dateStart"
+                    style="width: 100%;">
+                  </el-date-picker>
                 </el-col>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间">
+              <el-form-item label="结束时间" prop="dateEnd">
                 <el-col>
-                  <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date1" style="width: 100%;"></el-date-picker>
+                  <el-date-picker
+                    type="date"
+                    :picker-options="pickerOptions0"
+                    @change="changeDateEnd"
+                    placeholder="选择日期"
+                    v-model="form.dateEnd"
+                    style="width: 100%;">
+                  </el-date-picker>
                 </el-col>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="考试简介">
-                <el-input v-model="form.department" placeholder="考试简介"></el-input>
+              <el-form-item label="考试简介" prop="intro">
+                <el-input v-model="form.intro" placeholder="考试简介"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -66,7 +78,7 @@
                 课程图标
               </td>
               <td class="page_m_b">
-                <img :src="bannerSrc | formatImage" width="20%"/>
+                <img :src="iconSrc | formatImage" width="20%"/>
               </td>
               <td class="page_m_c">
                 <a v-on:click="setDefault(1)">使用默认</a>
@@ -89,163 +101,112 @@
 
           <div class="mt30">
             <p>复习资料
-              <el-button type="text" @click="dialogTableVisible = true">添加复习资料</el-button>
+              <el-button type="text" @click="dialogMaterialVisible = true">添加复习资料</el-button>
             </p>
             <template>
-              <!--<el-dialog title="添加/编辑课程内容" :visible.sync="dialogFormVisible">-->
-                <!--<el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline mt20" label-width="50px">-->
-                  <!--<el-form-item label="序号">-->
-                    <!--<el-input v-model="formInline.user" placeholder="序号"></el-input>-->
-                  <!--</el-form-item>-->
-                  <!--<el-form-item label="章节">-->
-                    <!--<el-input v-model="formInline.user" placeholder="章节"></el-input>-->
-                  <!--</el-form-item>-->
-                  <!--<el-form-item label="标题">-->
-                    <!--<el-input v-model="formInline.address" placeholder="标题" style="width: 300px;"></el-input>-->
-                  <!--</el-form-item>-->
-                <!--</el-form>-->
-                <!--<el-upload-->
-                  <!--class="upload-demo"-->
-                  <!--action="https://jsonplaceholder.typicode.com/posts/"-->
-                  <!--:on-preview="handlePreview"-->
-                  <!--:on-remove="handleRemove"-->
-                  <!--:file-list="fileList">-->
-                  <!--<el-button size="small" class="update_btn" type="primary">点击上传</el-button>-->
-                  <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
-                <!--</el-upload>-->
-                <!--<div class="tc btn_margin">-->
-                  <!--&lt;!&ndash;<button type="button" class="inf_btn  " v-on:click="routeByName('')">上传课件</button>&ndash;&gt;-->
-                  <!--<button type="button" class="inf_btn  ml20" v-on:click="routeByName('')">保  存</button>-->
-                <!--</div>-->
-              <!--</el-dialog>-->
-              <el-dialog title="添加复习资料" :visible.sync="dialogTableVisible">
-                <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
+              <el-dialog title="添加复习资料" :visible.sync="dialogMaterialVisible">
+                <el-form :inline="true" :model="formMaterial" class="demo-form-inline mt20">
                   <el-form-item label="课程名称">
-                    <el-input v-model="formInline.user" placeholder="姓名"></el-input>
+                    <el-input v-model="formMaterial.name" placeholder="课程名称"></el-input>
                   </el-form-item>
                   <el-form-item class="wrapper">
-                    <el-button class="update_btn" @click="onSubmit">查询</el-button>
+                    <el-button class="update_btn" @click="searchMaterial">查询</el-button>
                   </el-form-item>
                 </el-form>
-                <el-table :data="gridData" border>
-                  <el-table-column property="" label="" width="100">
-                    <template scope="scope">
-                      <el-checkbox v-model="checked"></el-checkbox>
-                    </template>
+                <el-table :data="materialList" border ref="materialListChecked" @selection-change="materialListCheckedChange">
+                  <el-table-column property="id" align="center" width="100" type="selection" @selection-change="materialListCheckedChange">
                   </el-table-column>
-                  <el-table-column property="courseName" label="课程名称" width=""></el-table-column>
-
+                  <el-table-column prop="name" label="课程名称" width=""></el-table-column>
                 </el-table>
-                <el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"></el-pagination>
+                <el-pagination class="tc mt20" small @current-change="handleMaterialCurrentChange" :current-page="materialCurrentPage"
+                    :page-size="materialTake" layout="total, prev, pager, next"
+                    :total="materialTotal"></el-pagination>
                 <div class="tc">
-                  <button type="button" class="inf_btn mt30 mb20" v-on:click="routeByName('informationEdit')">保  存
+                  <button type="button" class="inf_btn mt30 mb20" v-on:click="saveMaterial">保  存
                   </button>
                 </div>
               </el-dialog>
-
             </template>
           </div>
           <div class="mt20">
             <template>
-              <el-table :data="tableData" border class="mt20" style="width: 100%">
-                <el-table-column prop="courseName" label="课程名称" width="">
+              <el-table :data="materialSelected" border class="mt20" style="width: 100%">
+                <el-table-column prop="name" label="课程名称" width="">
                 </el-table-column>
                 <el-table-column label="操作" class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="open2" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedMaterial(scope.row.id)" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
             </template>
-
           </div>
           <div class="mt30">
             <p>
               试题
-              <el-button type="text" @click="dialogFormVisible = true">添加试题</el-button>
+              <el-button type="text" @click="dialogExamVisible = true">添加试题</el-button>
             </p>
-            <el-dialog title="添加复习资料" :visible.sync="dialogFormVisible">
-              <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
+            <el-dialog title="添加试题" :visible.sync="dialogExamVisible">
+              <el-form :inline="true" :model="formExam" class="demo-form-inline mt20">
                 <!--<el-col :span="12">-->
-                  <el-form-item label="课程名称">
-                    <el-input v-model="formInline.user" placeholder="课程名称"></el-input>
+                  <el-form-item label="试题名称">
+                    <el-input v-model="formExam.name" placeholder="试题名称"></el-input>
                   </el-form-item>
                 <!--</el-col>-->
                 <!--<el-col :span="12">-->
                   <el-form-item label="开始时间">
                     <el-col>
-                      <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date" class="date_input" style="width: 100%;"></el-date-picker>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.date" class="date_input" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                 <!--</el-col>-->
                 <!--<el-col :span="4">-->
                   <el-form-item class="wrapper">
-                  <el-button class="update_btn" @click="onSubmit">查询</el-button>
+                  <el-button class="update_btn" @click="searchExam">查询</el-button>
                   </el-form-item>
                 <!--</el-col>-->
               </el-form>
-              <el-table :data="gridData" border>
-                <el-table-column property="" label="" width="100">
+              <el-table :data="examList" border ref="examListChecked" @selection-change="examListCheckedChange">
+                <el-table-column property="id" align="center" width="100" type="selection" @selection-change="examListCheckedChange">
+                </el-table-column>
+                <el-table-column property="num" label="序号" width=""></el-table-column>
+                <el-table-column property="name" label="试题名称" width=""></el-table-column>
+                <el-table-column property="type" label="试题类型" width="">
                   <template scope="scope">
-                    <el-checkbox v-model="checked"></el-checkbox>
+                    {{scope.row.type | formatExamType}}
                   </template>
                 </el-table-column>
-                <el-table-column property="courseName" label="课程名称" width=""></el-table-column>
-                <el-table-column property="number" label="序号" width=""></el-table-column>
-                <el-table-column property="name" label="试题名称" width=""></el-table-column>
-                <el-table-column property="timeStart" label="创建时间" width=""></el-table-column>
+                <el-table-column property="date" label="创建时间" width=""></el-table-column>
               </el-table>
-              <el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"></el-pagination>
+              <el-pagination class="tc mt20" small @current-change="handleExamCurrentChange" :current-page="examCurrentPage"
+                                       :page-size="examTake" layout="total, prev, pager, next"
+                                       :total="examTotal"></el-pagination>
+
               <div class="tc">
-                <button type="button" class="inf_btn mt30 mb20" v-on:click="routeByName('informationEdit')">保  存
+                <button type="button" class="inf_btn mt30 mb20" v-on:click="saveExam">保  存
                 </button>
               </div>
             </el-dialog>
-            <!--<el-dialog title="导入白名单" :visible.sync="dialogTableVisible">-->
-              <!--<el-form :inline="true" :model="formInline" class="demo-form-inline mt20">-->
-                <!--<el-form-item label="姓名">-->
-                  <!--<el-input v-model="formInline.user" placeholder="姓名"></el-input>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item label="部门">-->
-                  <!--<el-input v-model="formInline.department" placeholder="部门"></el-input>-->
-                <!--</el-form-item>-->
-                <!--<el-form-item class="wrapper">-->
-                  <!--<el-button type="success" @click="onSubmit">查询</el-button>-->
-                <!--</el-form-item>-->
-              <!--</el-form>-->
-              <!--<el-table :data="gridData" border>-->
-                <!--<el-table-column property="" label="" width="100">-->
-                  <!--<template scope="scope">-->
-                    <!--<el-checkbox v-model="checked"></el-checkbox>-->
-                  <!--</template>-->
-                <!--</el-table-column>-->
-                <!--<el-table-column property="date" label="姓名" width=""></el-table-column>-->
-                <!--<el-table-column property="name" label="手机" width=""></el-table-column>-->
-                <!--<el-table-column property="address" label="部门"></el-table-column>-->
-              <!--</el-table>-->
-              <!--<el-pagination class="tc mt20" small layout="prev, pager, next" :total="50"></el-pagination>-->
-              <!--<div class="tc">-->
-                <!--<button type="button" class="inf_btn mt30 mb20" v-on:click="routeByName('informationEdit')">保  存-->
-                <!--</button>-->
-              <!--</div>-->
-            <!--</el-dialog>-->
             <template>
-              <el-table :data="tableData" border class="mt20" style="width: 100%">
-                <el-table-column prop="examName" label="试题名称" width="">
+              <el-table :data="examSelected" border class="mt20" style="width: 100%">
+                <el-table-column prop="name" label="试题名称" width="">
                 </el-table-column>
                 <el-table-column label="操作" class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="open2" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedExam(scope.row.id)" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
             </template>
           </div>
           <div class="tc btn_margin">
-            <button type="button" class="inf_btn  " v-on:click="routeByName('')">保  存</button>
-            <button type="button" class="inf_btn  ml20" v-on:click="routeByName('')">发布/隐藏</button>
+            <button type="button" class="inf_btn  " v-on:click="save">保  存</button>
           </div>
+          <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
+          </my-upload>
 
+          <my-upload @input="closeBanner" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="120" :value.sync="showBanner" :no-circle=true img-format="png">
+          </my-upload>
         </div>
       </section>
     </div>
@@ -256,92 +217,252 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
+  import axios from 'axios'
+  import myUpload from 'vue-image-crop-upload'
+  import _ from 'lodash'
+  import moment from 'moment'
+  import lang from 'vue-image-crop-upload/utils/language'
+  import router from '../../router'
   export default {
+    filters: {
+      formatImage: function (uri) {
+        return axios.defaults.imageServer + uri
+      },
+      formatExamType: function (type) {
+        if (type === 1) {
+          return '单选题'
+        } else if (type === 2) {
+          return '多选题'
+        } else {
+          return '是非题'
+        }
+      }
+    },
     data: function () {
       return {
-        checked: true,
-        formInline: {
-          user: '',
-          fileList: [{
-            name: 'food.jpeg',
-            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-          }, {
-            name: 'food2.jpeg',
-            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-          }],
-          region: ''
+        pickerOptions0: {
+          disabledDate (time) {
+            return time.getTime() < Date.now() - 8.64e7
+          }
         },
-        company: {},
+        uploadIconUrl: api.uri.uploadExamIcon,
+        uploadBannerUrl: api.uri.uploadExamBanner,
+        // 是否显示icon上传
+        showIcon: false,
+        // 是否显示banner 上传
+        showBanner: false,
+        headers: {},
+
+        // 基本信息
         form: {
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          // 次数限制
+          times: 10,
+          // 通过分数
+          score: 60,
+          // 责任人
+          admin: '',
+          // 时间限制
+          minutes: 60,
+          dateStart: '',
+          dateEnd: '',
+          intro: ''
         },
-        gridData: [{
-          courseName: '设计师技术核定单好多活',
-          number: '设计师技术核定单好多活',
-          name: '设计师技术核定单好多活',
-          timeStart: '设计师技术核定单好多活'
+        formRules: {
+          name: [
+            { required: true, message: '请输入考试名称', trigger: 'blur' }
+          ],
+          times: [
+            { type: 'number', required: true, message: '请输入考试次数', trigger: 'blur' }
+          ],
+          score: [
+            { type: 'number', required: true, message: '请输入分数', trigger: 'blur' }
+          ],
+          minutes: [
+            { type: 'number', required: true, message: '请输入时间限制', trigger: 'blur' }
+          ],
+          admin: [
+            { type: 'number', required: true, message: '请选择责任人', trigger: 'change' }
+          ],
+          dateStart: [
+            { required: true, message: '请选择开始时间', trigger: 'change' }
+          ],
+          dateEnd: [
+            { required: true, message: '请选择结束时间', trigger: 'change' }
+          ],
+          intro: [
+            { required: true, message: '请添加考试简介', trigger: 'blur' }
+          ]
+        },
+        // 复习资料
+        formMaterial: {
+          name
+        },
+        // 复习资料查询列表 ---- id, name
+        materialList: [],
+        // 复习资料选择的列表 ---- id, name
+        materialSelected: [],
+        // 选中的
+        materialListChecked: [],
 
-        }, {
-          courseName: '设计师技术核定单好多活',
-          number: '设计师技术核定单好多活',
-          name: '设计师技术核定单好多活',
-          timeStart: '设计师技术核定单好多活'
-        }, {
-          courseName: '设计师技术核定单好多活',
-          number: '设计师技术核定单好多活',
-          name: '设计师技术核定单好多活',
-          timeStart: '设计师技术核定单好多活'
-        }, {
-          courseName: '设s单好多活',
-          number: '233234343',
-          name: '设好多活',
-          timeStart: '20100908'
-        }],
-        dialogTableVisible: false,
-        dialogFormVisible: false,
-        tableData: [{
-          courseName: '01',
-          examName: '第一章'
-        }, {
-          courseName: '01',
-          examName: '第一章'
-        }, {
-          courseName: '01',
-          examName: '第一章'
-        }]
+        // 试题
+        formExam: {
+          name: '',
+          date: ''
+        },
+
+        // 试题查询列表 --- num, name, type, date
+        examList: [],
+        // 试题选择列表  --- name
+        examSelected: [],
+        // 选中的
+        examListChecked: [],
+
+        // 责任人列表
+        adminList: [],
+
+        iconSrc: '',
+        iconDefault: api.image.exam.icon,
+        bannerSrc: '',
+        bannerDefault: api.image.exam.banner,
+
+        // pagination material
+        materialTake: 10,
+        materialCurrentPage: 1,
+        materialTotal: 0,
+
+        // pagination exam
+        examTake: 10,
+        examCurrentPage: 1,
+        examTotal: 0,
+
+        dialogMaterialVisible: false,
+        dialogExamVisible: false,
+
+        id: 0
       }
     },
     components: {
       commonHeader,
-      navigator
+      navigator,
+      myUpload
     },
     created () {
-      api.fetch(api.uri.getCompanyInfo).then(data => {
+      this.id = parseInt(this.$route.query.id)
+      // 给默认图标
+      this.iconSrc = this.iconDefault
+      this.bannerSrc = this.bannerDefault
+      this.headers = api.getUploadHeaders()
+      lang.zh.preview = ''
+      api.fetch(api.uri.getExam, {examid: this.id}).then(data => {
         if (data.status === 1) {
-          this.company = data
+          console.log(data.result)
+          this.adminList = data.result.AdminList
+          var currentExam = data.result.ExamToBeEdit
+          this.form = {
+            name: currentExam.exam_title,
+            // 次数限制
+            times: currentExam.tries_limit,
+            // 通过分数
+            score: currentExam.pass_score,
+            // 责任人
+            admin: currentExam.manager_id,
+            // 时间限制
+            minutes: currentExam.time_limit,
+            dateStart: moment(currentExam.start_date).format('YYYY-MM-DD'),
+            dateEnd: moment(currentExam.end_date).format('YYYY-MM-DD'),
+            intro: currentExam.intro
+          }
+          this.iconSrc = currentExam.icon
+          this.bannerSrc = currentExam.pic
+          var currentCourseList = data.result.CourseList
+          var materialListCheckedArray = []
+          for (var i = 0; i < currentCourseList.length; i++) {
+            this.materialSelected.push({
+              id: currentCourseList[i].course_id,
+              name: currentCourseList[i].title
+            })
+            materialListCheckedArray.push(currentCourseList[i].course_id)
+          }
+          this.materialListChecked = materialListCheckedArray.join(',')
+          var questionList = data.result.QuestionList
+          var examListCheckedArray = []
+          for (var j = 0; j < questionList.length; j++) {
+            this.examSelected.push({
+              id: questionList[j].question_id,
+              name: questionList[j].title,
+              num: questionList[j].question_num
+            })
+            examListCheckedArray.push(questionList[j].question_id)
+          }
+          this.examListChecked = examListCheckedArray.join(',')
         }
       })
     },
     methods: {
-      onSubmit: function () {
-        console.log('submit!')
+      materialListCheckedChange (val) {
+        this.materialListChecked = val
       },
-      open2 () {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+      examListCheckedChange (val) {
+        this.examListChecked = val
+      },
+      changeDateStart (dateStr) {
+        this.form.dateStart = dateStr
+        if (this.form.dateEnd && this.form.dateEnd < dateStr) {
+          this.form.dateEnd = dateStr
+        }
+      },
+      changeDateEnd (dateStr) {
+        this.form.dateEnd = dateStr
+        if (this.form.dateStart && this.form.dateStart > dateStr) {
+          this.form.dateStart = dateStr
+        }
+      },
+      searchMaterial: function () {
+        api.fetch(api.uri.searchCourse, {
+          title: this.formMaterial.name,
+          priName: '',
+          typeid: 0,
+          pubdate: '',
+          take: this.materialTake,
+          skip: this.materialTake * (this.materialCurrentPage - 1)
+        }).then(data => {
+          if (data.status === 1) {
+            var result = data.result
+            this.materialList = []
+            for (var i = 0; i < result.length; i++) {
+              this.materialList.push({
+                id: result[i].course_id,
+                name: result[i].title
+              })
+            }
+            this.materialTotal = data.total
+          }
+        })
+      },
+      handleMaterialCurrentChange: function (val) {
+        this.materialCurrentPage = val
+        this.searchMaterial()
+      },
+      saveMaterial: function () {
+        for (var i = 0; i < this.materialListChecked.length; i++) {
+          var spec = this.materialListChecked[i]
+          if (!_.some(this.materialSelected, {id: spec.id})) {
+            this.materialSelected.push({
+              id: spec.id,
+              name: spec.name
+            })
+          }
+        }
+      },
+      deleteSelectedMaterial (id) {
+        this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
+          this.materialSelected = _.filter(this.materialSelected, function (item) {
+            return item.id !== id
           })
         }).catch(() => {
           this.$message({
@@ -350,13 +471,154 @@
           })
         })
       },
-      handleRemove (file, fileList) {
-        console.log(file, fileList)
+      searchExam: function () {
+        api.fetch(api.uri.getQuestionList, {
+          title: this.formExam.name,
+          typeid: 0,
+          createdat: this.formExam.date ? moment(this.formExam.date).format('YYYY-MM-DD') : '',
+          take: this.examTake,
+          skip: this.examTake * (this.examCurrentPage - 1)
+        }).then(data => {
+          if (data.status === 1) {
+            var result = data.result
+            this.examList = []
+            for (var i = 0; i < result.length; i++) {
+              this.examList.push({
+                id: result[i].question_id,
+                name: result[i].title,
+                type: result[i].type_id,
+                date: moment(result[i].created_at).format('YYYY-MM-DD'),
+                num: result[i].question_num
+              })
+            }
+            this.examTotal = data.total
+          }
+        })
       },
-      handlePreview (file) {
-        console.log(file)
-      }
+      handleExamCurrentChange: function (val) {
+        this.examCurrentPage = val
+        this.searchExam()
+      },
+      saveExam: function () {
+        for (var i = 0; i < this.examListChecked.length; i++) {
+          var spec = this.examListChecked[i]
+          if (!_.some(this.examSelected, {id: spec.id})) {
+            this.examSelected.push({
+              id: spec.id,
+              name: spec.name,
+              num: spec.num
+            })
+          }
+        }
+      },
+      deleteSelectedExam (id) {
+        this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.examSelected = _.filter(this.examSelected, function (item) {
+            return item.id !== id
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
 
+      // 保存考试
+      save () {
+        this.$refs['form'].validate((valid) => {
+          console.log(this.form)
+          if (valid) {
+            var obj = {
+              examid: this.id,
+              managerid: this.form.admin,
+              title: this.form.name,
+              start: this.form.dateStart,
+              end: this.form.dateEnd,
+              trieslimit: this.form.times,
+              passscore: this.form.score,
+              timelimit: this.form.minutes,
+              intro: this.form.intro,
+              icon: this.iconSrc,
+              pic: this.bannerSrc,
+              courseids: '',
+              questionList: []
+            }
+            var courseArray = []
+            for (var i = 0; i < this.materialSelected.length; i++) {
+              var spec = this.materialSelected[i]
+              courseArray.push(spec.id)
+            }
+            obj.courseids = courseArray.join(',')
+            for (var j = 0; j < this.examSelected.length; j++) {
+              var spec1 = this.examSelected[j]
+              obj.questionList.push({
+                question_id: spec1.id,
+                question_num: spec1.num
+              })
+            }
+            api.post(api.uri.addExam, obj).then(data => {
+              if (data.status === 1) {
+                router.push({name: 'examList'})
+              }
+            })
+          } else {
+            this.$message('invalid')
+          }
+        })
+      },
+      closeIcon () {
+        this.showIcon = !this.showIcon
+      },
+      closeBanner () {
+        this.showBanner = !this.showBanner
+      },
+      cropIconSuccess (data, field) {
+        // this.iconData = data
+      },
+      cropBannerSuccess (data, field) {
+        // this.bannerData = data
+      },
+      cropIconUploadSuccess (jsonData, field) {
+        if (jsonData.status === 1) {
+          this.iconSrc = jsonData.result
+        }
+      },
+      cropBannerUploadSuccess (jsonData, field) {
+        if (jsonData.status === 1) {
+          this.bannerSrc = jsonData.result
+        }
+      },
+      cropIconUploadFail (status, field) {
+        this.$message({
+          type: 'info',
+          message: status
+        })
+      },
+      cropBannerUploadFail (status, field) {
+        this.$message({
+          type: 'info',
+          message: status
+        })
+      },
+      toggleShow (currentImage) {
+        if (currentImage === 1) {
+          this.showIcon = !this.showIcon
+        } else {
+          this.showBanner = !this.showBanner
+        }
+      },
+      setDefault (currentImage) {
+        if (currentImage === 1) {
+          this.iconSrc = api.image.exam.icon
+        } else {
+          this.bannerSrc = api.image.exam.banner
+        }
+      }
     }
   }
 </script>
