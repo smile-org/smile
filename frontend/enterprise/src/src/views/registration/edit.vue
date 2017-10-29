@@ -135,11 +135,39 @@
           <div class="tc btn_margin">
             <el-button type="button" v-on:click="add()" :loading="showloading"
                        class="inf_btn ml20 export_bor">保  存
-
-
-
-                        </el-button>
+            </el-button>
           </div>
+          <my-upload
+            @input="closeIcon"
+            field="file"
+            :params="params"
+            @crop-success="cropIconSuccess"
+            @crop-upload-success="cropIconUploadSuccess"
+            @crop-upload-fail="cropIconUploadFail"
+            :url="uploadUrl"
+            :width="280"
+            :headers="headers"
+            :height="194"
+            :value.sync="showIcon"
+            :no-circle=true
+            img-format="png">
+          </my-upload>
+
+          <my-upload
+            @input="closeBanner"
+            field="file"
+            :params="params"
+            @crop-success="cropBannerSuccess"
+            @crop-upload-success="cropBannerUploadSuccess"
+            @crop-upload-fail="cropBannerUploadFail"
+            :url="uploadUrl"
+            :width="375"
+            :headers="headers"
+            :height="120"
+            :value.sync="showBanner"
+            :no-circle=true
+            img-format="png">
+          </my-upload>
         </div>
       </section>
     </div>
@@ -153,6 +181,9 @@
   import moment from 'moment'
   import axios from 'axios'
   import _ from 'lodash'
+  import myUpload from 'vue-image-crop-upload'
+  import lang from 'vue-image-crop-upload/utils/language'
+  import router from '../../router'
   export default {
     data: function () {
       return {
@@ -186,12 +217,23 @@
         contentErrMsg: '',
         showloading: false,
         period_id: '',
-        enrollment_id: ''
+        enrollment_id: '',
+
+        showIcon: false,
+        showBanner: false,
+        headers: {},
+        uploadIconUrl: api.uri.uploadEnrollmentIcon,
+        uploadBannerUrl: api.uri.uploadEnrollmentBanner,
+        uploadUrl: '',
+        params: {
+          pictype: ''
+        }
       }
     },
     components: {
       commonHeader,
-      navigator
+      navigator,
+      myUpload
     },
     filters: {
       formatDate (time) {
@@ -203,6 +245,10 @@
       }
     },
     created () {
+      this.iconSrc = api.image.enrollment.icon
+      this.bannerSrc = api.image.enrollment.banner
+      lang.zh.preview = ''
+      this.headers = api.getUploadHeaders()
       this.period_id = parseInt(this.$route.query.period_id)
       api.fetch(api.uri.getEnrollmentEditPageInfo, {
         periodid: this.period_id
@@ -325,10 +371,7 @@
           contentList: this.tableData
         }).then(data => {
           if (data.status === 1) {
-            this.$message({
-              type: 'success',
-              message: '编辑成功!'
-            })
+            router.push({name: 'registrationTrainlist'})
 //            this.form.title = ''
 //            this.form.teacher = ''
 //            this.form.count = 1
@@ -341,6 +384,7 @@
           }
         })
       },
+
       setDefaultImage: function (number) {
         if (number === 1) {
           this.iconSrc = api.image.enrollment.icon
@@ -348,8 +392,41 @@
           this.bannerSrc = api.image.enrollment.banner
         }
       },
+      // 1: 上传logo; 2: 上传banner
       uploadImage: function (number) {
-        alert('ddd')
+        if (number === 1) {
+          this.uploadUrl = axios.defaults.baseURL + this.uploadIconUrl
+          this.params.pictype = 'logo'
+          this.showIcon = !this.showIcon
+        } else {
+          this.uploadUrl = axios.defaults.baseURL + this.uploadBannerUrl
+          this.params.pictype = 'banner'
+          this.showBanner = !this.showBanner
+        }
+      },
+      closeIcon: function (value) {
+        this.showIcon = value
+      },
+      closeBanner: function (value) {
+        this.showBanner = value
+      },
+      cropIconSuccess (data, field) {
+
+      },
+      cropIconUploadSuccess (jsonData, field) {
+        this.iconSrc = jsonData.result
+      },
+      cropIconUploadFail (status, field) {
+
+      },
+      cropBannerSuccess (data, field) {
+
+      },
+      cropBannerUploadSuccess (jsonData, field) {
+        this.bannerSrc = jsonData.result
+      },
+      cropBannerUploadFail (status, field) {
+
       }
     }
   }

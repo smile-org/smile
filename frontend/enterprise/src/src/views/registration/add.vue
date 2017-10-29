@@ -134,18 +134,50 @@
                 </div>
             </section>
         </div>
-        <my-upload @input="closeMyUpload" field="file"
-                   @crop-success="cropSuccess"
-                   @crop-upload-success="cropUploadSuccess"
-                   @crop-upload-fail="cropUploadFail"
-                   :width="width"
-                   :height="height"
-                   :params="params"
-                   :headers="headers"
-                   :value.sync="show"
-                   :no-circle=true
-                   :url="uploadUrl"
-                   img-format="png"></my-upload>
+        <!--<my-upload @input="closeMyUpload" field="file"
+          @crop-success="cropSuccess"
+          @crop-upload-success="cropUploadSuccess"
+          @crop-upload-fail="cropUploadFail"
+          :width="width"
+          :height="height"
+          :params="params"
+          :headers="headers"
+          :value.sync="show"
+          :no-circle=true
+          :url="uploadUrl"
+          img-format="png">
+        </my-upload>-->
+        <my-upload
+          @input="closeIcon"
+          field="file"
+          :params="params"
+          @crop-success="cropIconSuccess"
+          @crop-upload-success="cropIconUploadSuccess"
+          @crop-upload-fail="cropIconUploadFail"
+          :url="uploadUrl"
+          :width="280"
+          :headers="headers"
+          :height="194"
+          :value.sync="showIcon"
+          :no-circle=true
+          img-format="png">
+        </my-upload>
+
+        <my-upload
+          @input="closeBanner"
+          field="file"
+          :params="params"
+          @crop-success="cropBannerSuccess"
+          @crop-upload-success="cropBannerUploadSuccess"
+          @crop-upload-fail="cropBannerUploadFail"
+          :url="uploadUrl"
+          :width="375"
+          :headers="headers"
+          :height="120"
+          :value.sync="showBanner"
+          :no-circle=true
+          img-format="png">
+        </my-upload>
     </div>
 </template>
 
@@ -157,6 +189,8 @@
   import axios from 'axios'
   import _ from 'lodash'
   import myUpload from 'vue-image-crop-upload'
+  import lang from 'vue-image-crop-upload/utils/language'
+  import router from '../../router'
   export default {
     data: function () {
       return {
@@ -190,16 +224,16 @@
         contentErrMsg: '',
         showloading: false,
 
-        show: false,
+        // show: false,
+        showIcon: false,
+        showBanner: false,
         headers: {},
         uploadIconUrl: api.uri.uploadEnrollmentIcon,
         uploadBannerUrl: api.uri.uploadEnrollmentBanner,
         uploadUrl: '',
         params: {
           pictype: ''
-        },
-        width: 0,
-        height: 0
+        }
       }
     },
     components: {
@@ -219,6 +253,7 @@
     created () {
       this.iconSrc = api.image.enrollment.icon
       this.bannerSrc = api.image.enrollment.banner
+      lang.zh.preview = ''
       this.headers = api.getUploadHeaders()
       console.log(this.headers.token)
     },
@@ -322,19 +357,20 @@
         }).then(data => {
           console.log(data)
           if (data.status === 1) {
-            this.$message({
-              type: 'success',
-              message: '添加成功!'
-            })
-            this.form.title = ''
-            this.form.teacher = ''
-            this.form.count = 1
-            this.form.startDate = ''
-            this.form.endDate = ''
-            this.form.intro = ''
-            this.form.location = ''
-            this.tableData = []
-            this.showloading = false
+            router.push({name: 'registrationTrainlist'})
+            // this.$message({
+            //   type: 'success',
+            //   message: '添加成功!'
+            // })
+            // this.form.title = ''
+            // this.form.teacher = ''
+            // this.form.count = 1
+            // this.form.startDate = ''
+            // this.form.endDate = ''
+            // this.form.intro = ''
+            // this.form.location = ''
+            // this.tableData = []
+            // this.showloading = false
           }
         })
       },
@@ -350,52 +386,71 @@
         if (number === 1) {
           this.uploadUrl = axios.defaults.baseURL + this.uploadIconUrl
           this.params.pictype = 'logo'
-          this.width = 281
-          this.height = 195
+          this.showIcon = !this.showIcon
         } else {
           this.uploadUrl = axios.defaults.baseURL + this.uploadBannerUrl
           this.params.pictype = 'banner'
-          this.width = 375
-          this.height = 120
-        }
-        this.show = true
-      },
-      closeMyUpload: function (value) {
-        this.show = value
-      },
-      cropSuccess (data, field) {
-        // if (this.params.pictype === 'logo') {
-        //   this.iconSrc = data
-        // } else {
-        //   this.bannerSrc = data
-        // }
-      },
-      /**
-       * upload success
-       *
-       * [param] jsonData   服务器返回数据，已进行json转码
-       * [param] field
-       */
-      cropUploadSuccess (jsonData, field) {
-        if (this.params.pictype === 'logo') {
-          this.iconSrc = jsonData.result
-          console.log(this.logoSrc)
-        } else {
-          this.bannerSrc = jsonData.result
-          console.log(this.bannerSrc)
+          this.showBanner = !this.showBanner
         }
       },
-      /**
-       * upload fail
-       *
-       * [param] status    server api return error status, like 500
-       * [param] field
-       */
-      cropUploadFail (status, field) {
-        this.$message({
-          message: status
-        })
+      closeIcon: function (value) {
+        this.showIcon = value
+      },
+      closeBanner: function (value) {
+        this.showBanner = value
+      },
+      cropIconSuccess (data, field) {
+
+      },
+      cropIconUploadSuccess (jsonData, field) {
+        this.iconSrc = jsonData.result
+      },
+      cropIconUploadFail (status, field) {
+
+      },
+      cropBannerSuccess (data, field) {
+
+      },
+      cropBannerUploadSuccess (jsonData, field) {
+        this.bannerSrc = jsonData.result
+      },
+      cropBannerUploadFail (status, field) {
+
       }
+
+      // cropSuccess (data, field) {
+      //   // if (this.params.pictype === 'logo') {
+      //   //   this.iconSrc = data
+      //   // } else {
+      //   //   this.bannerSrc = data
+      //   // }
+      // },
+      // /**
+      //  * upload success
+      //  *
+      //  * [param] jsonData   服务器返回数据，已进行json转码
+      //  * [param] field
+      //  */
+      // cropUploadSuccess (jsonData, field) {
+      //   if (this.params.pictype === 'logo') {
+      //     this.iconSrc = jsonData.result
+      //     console.log(this.logoSrc)
+      //   } else {
+      //     this.bannerSrc = jsonData.result
+      //     console.log(this.bannerSrc)
+      //   }
+      // },
+      // /**
+      //  * upload fail
+      //  *
+      //  * [param] status    server api return error status, like 500
+      //  * [param] field
+      //  */
+      // cropUploadFail (status, field) {
+      //   this.$message({
+      //     message: status
+      //   })
+      // }
     }
   }
 </script>
