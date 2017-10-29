@@ -6,31 +6,31 @@
       <span class="vm">企业管理后台</span>
     </div>
     <ul class="fr">
-      <li v-on:click="routeByName('informationDetail')">
+      <li v-on:click="routeByName('informationDetail')" v-bind:class="{active: type==='information'}">
         <span class="h_icon h_icon01"></span>
         <p>基本信息</p>
       </li>
-      <li v-on:click="routeByName('userList')">
+      <li v-on:click="routeByName('userList')" v-bind:class="{active: type==='user'}">
         <span class="h_icon h_icon02"></span>
         <p>员工管理</p>
       </li>
-      <li v-on:click="routeByName('courseCategoryList')">
+      <li v-on:click="routeByName('courseCategoryList')" v-bind:class="{active: type==='course'}">
         <span class="h_icon h_icon03"></span>
         <p>课程管理</p>
       </li>
-      <li  v-on:click="routeByName('examList')">
+      <li  v-on:click="routeByName('examList')" v-bind:class="{active: type==='exam'}">
         <span class="h_icon h_icon04"></span>
         <p>考试管理</p>
       </li>
-      <li v-on:click="routeByName('registrationTrainlist')">
+      <li v-on:click="routeByName('registrationTrainlist')" v-bind:class="{active: type==='registration'}">
         <span class="h_icon h_icon05"></span>
         <p>报名管理</p>
       </li>
-      <li v-on:click="routeByName('bookingList')">
+      <li v-on:click="routeByName('bookingList')" v-bind:class="{active: type==='booking'}">
         <span class="h_icon h_icon06"></span>
         <p>约课管理</p>
       </li>
-      <li v-on:click="routeByName('adminList')">
+      <li v-on:click="routeByName('adminList')" v-bind:class="{active: type==='admin'}">
         <span class="h_icon h_icon07"></span>
         <p class="name_e">公司管理员</p>
       </li>
@@ -50,6 +50,7 @@ export default {
       companyLogo: ''
     }
   },
+  props: ['type'],
   created () {
     // retrieve logo from session storage
 //    this.companyLogo = 'http://ww2.sinaimg.cn/thumb180/8892b46egw1f319hyl0juj20iz0sgq4v.jpg'

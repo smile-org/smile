@@ -5,7 +5,9 @@
       <span class="vm">{{navigator.name}}</span>
     </div>
     <ul class="tc">
-      <li v-for="item in navigator.items" :key="item.routeName" v-on:click="routeByName(item.routeName)">
+      <li v-for="item in navigator.items" :key="item.routeName"
+      v-bind:class="{active: item.name===menu}"
+      v-on:click="routeByName(item.routeName)">
         <span class="vm">{{item.text}}</span>
       </li>
     </ul>
@@ -16,7 +18,8 @@
 import router from '../router'
 export default {
   props: {
-    module: ''
+    module: '',
+    menu: ''
   },
   created () {
     if (!this.module) {
@@ -27,10 +30,12 @@ export default {
         name: '公司基本信息',
         items: [{
           text: '公司基本信息',
-          routeName: 'informationDetail'
+          routeName: 'informationDetail',
+          name: 'detail'
         }, {
           text: '页面定制管理',
-          routeName: 'informationEdit'
+          routeName: 'informationEdit',
+          name: 'edit'
         }]
       }
     } else if (this.module === 'user') {
@@ -38,10 +43,12 @@ export default {
         name: '员工管理',
         items: [{
           text: '员工信息管理',
-          routeName: 'userList'
+          routeName: 'userList',
+          name: 'list'
         }, {
           text: '员工登录日志',
-          routeName: 'userLog'
+          routeName: 'userLog',
+          name: 'log'
         }]
       }
     } else if (this.module === 'course') {
@@ -49,13 +56,16 @@ export default {
         name: '课程管理',
         items: [{
           text: '课程类别管理',
-          routeName: 'courseCategoryList'
+          routeName: 'courseCategoryList',
+          name: 'categorylist'
         }, {
           text: '课程信息管理',
-          routeName: 'courseList'
+          routeName: 'courseList',
+          name: 'list'
         }, {
           text: '员工学习记录',
-          routeName: 'learningList'
+          routeName: 'learningList',
+          name: 'learnlist'
         }]
       }
     } else if (this.module === 'exam') {

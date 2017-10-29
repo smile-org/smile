@@ -1,8 +1,8 @@
 <template>
   <div>
-    <common-header></common-header>
+    <common-header type="user"></common-header>
     <div class="con_main">
-      <navigator module="user"></navigator>
+      <navigator module="user" menu="log"></navigator>
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">

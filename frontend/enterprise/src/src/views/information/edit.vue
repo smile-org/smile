@@ -1,8 +1,8 @@
 <template>
     <div>
-        <common-header></common-header>
+        <common-header type="information"></common-header>
         <div class="con_main">
-            <navigator module="information"></navigator>
+            <navigator module="information" menu="edit"></navigator>
             <section class="con_main_r">
                 <nav>
                     <img src="../../assets/img/house.png" class="vm">

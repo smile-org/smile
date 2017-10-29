@@ -1,60 +1,8 @@
 <template>
   <div>
-    <header>
-      <div class="logo">
-        <img class="vm" src="../../assets/img/small_logo.png"/>
-        <span class="vm">企业管理后台</span>
-      </div>
-      <ul class="fr">
-        <li v-on:click="routeByName('informationDetail')">
-          <span class="h_icon h_icon01"></span>
-          <p>基本信息</p>
-        </li>
-        <li v-on:click="routeByName('userList')">
-          <span class="h_icon h_icon02"></span>
-          <p>员工管理</p>
-        </li>
-        <li>
-          <span class="h_icon h_icon03"></span>
-          <p>课程类别</p>
-        </li>
-        <li>
-          <span class="h_icon h_icon04"></span>
-          <p>考试管理</p>
-        </li>
-        <li>
-          <span class="h_icon h_icon05"></span>
-          <p>报名管理</p>
-        </li>
-        <li>
-          <span class="h_icon h_icon06"></span>
-          <p>约课管理</p>
-        </li>
-        <li>
-          <span class="h_icon h_icon07"></span>
-          <p class="name_e">公司管理员</p>
-        </li>
-        <li>
-          <span class="h_icon h_icon08"></span>
-          <p>退出</p>
-        </li>
-      </ul>
-    </header>
+    <common-header type="information"></common-header>
     <div class="con_main">
-      <aside>
-        <div class="a_tit">
-          <span class="h_icon aside_icon01 vm"></span>
-          <span class="vm">基本信息</span>
-        </div>
-        <ul class="tc">
-          <li v-on:click="routeByName('informationDetail')">
-            <span class="vm">公司基本信息</span>
-          </li>
-          <li v-on:click="routeByName('informationEdit')">
-            <span class="vm">页面定置管理</span>
-          </li>
-        </ul>
-      </aside>
+      <navigator module="information" menu="edit"></navigator>
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
@@ -81,12 +29,17 @@
 
 <script>
   import router from '../../router'
+  import commonHeader from '../../components/CommonHeader'
+  import navigator from '../../components/Navigator'
   // var counter = 0
   export default {
     data: function () {
       return { a: 1 }
     },
-
+    components: {
+      navigator,
+      commonHeader
+    },
     created () {
       console.log('created')
     },

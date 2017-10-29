@@ -55,7 +55,9 @@ header ul li:after {
 header ul li:hover {
   background: rgba(255, 255, 255, 0.15);
 }
-
+header ul .active{
+   background: rgba(255, 255, 255, 0.15);
+}
 header ul li:hover > .h_icon {
   opacity: 1;
 }
