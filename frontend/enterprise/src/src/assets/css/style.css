@@ -282,9 +282,10 @@ nav span .f_blue {
 
 .con_main_r .con_tab {
   font-size: 14px;
-  min-height: -moz-calc(100vh - 155px);
-  min-height: -webkit-calc(100vh - 155px);
-  min-height: calc(100vh - 155px);
+  /*min-height: -moz-calc(100vh - 155px);*/
+  /*min-height: -webkit-calc(100vh - 155px);*/
+  /*min-height: calc(100vh - 155px);*/
+  min-height:500px;
   margin:20px auto;
   padding: 30px 40px 20px;
   background: #fff;

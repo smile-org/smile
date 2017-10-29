@@ -226,5 +226,7 @@
 </script>
 
 <style>
-
+.el-dialog--small {
+  width: auto;
+}
 </style>
