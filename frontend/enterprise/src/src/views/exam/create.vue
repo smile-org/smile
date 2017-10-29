@@ -158,7 +158,7 @@
               <el-table :data="examList" border ref="examListChecked" @selection-change="examListCheckedChange">
                 <el-table-column property="id" align="center" width="100" type="selection" @selection-change="examListCheckedChange">
                 </el-table-column>
-                <el-table-column property="num" align="center" label="序号" width="80"></el-table-column>
+                <!--<el-table-column property="num" align="center" label="序号" width="80"></el-table-column>-->
                 <el-table-column property="name" align="center" label="试题名称" width=""></el-table-column>
                 <el-table-column property="type" align="center" label="试题类型" width="">
                   <template scope="scope">
@@ -178,6 +178,8 @@
             </el-dialog>
             <template>
               <el-table :data="examSelected" border class="mt20" style="width: 100%">
+                <el-table-column type="index" width="50">
+                </el-table-column>
                 <el-table-column  align="center"  prop="name" label="试题名称" width="">
                 </el-table-column>
                 <el-table-column   align="center"  label="操作" class="tc" width="">
@@ -504,7 +506,7 @@
               var spec1 = this.examSelected[j]
               obj.questionList.push({
                 question_id: spec1.id,
-                question_num: spec1.num
+                question_num: j + 1
               })
             }
             api.post(api.uri.addExam, obj).then(data => {
