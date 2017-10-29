@@ -58,18 +58,50 @@
                 </div>
             </section>
         </div>
-        <my-upload @input="closeMyUpload" field="file"
+        <!--<my-upload @input="closeMyUpload" field="file"
                    @crop-success="cropSuccess"
                    @crop-upload-success="cropUploadSuccess"
                    @crop-upload-fail="cropUploadFail"
-                   :width="300"
-                   :height="300"
+                   :width="width"
+                   :height="height"
                    :params="params"
                    :headers="headers"
                    :value.sync="show"
                    :no-circle=true
                    :url="uploadUrl"
-                   img-format="png"></my-upload>
+                   img-format="png"></my-upload>-->
+
+        <my-upload
+          @input="closeIcon"
+          field="file"
+          :params="params"
+          @crop-success="cropIconSuccess"
+          @crop-upload-success="cropIconUploadSuccess"
+          @crop-upload-fail="cropIconUploadFail"
+          :url="uploadUrl"
+          :width="280"
+          :headers="headers"
+          :height="194"
+          :value.sync="showIcon"
+          :no-circle=true
+          img-format="png">
+        </my-upload>
+
+        <my-upload
+          @input="closeBanner"
+          field="file"
+          :params="params"
+          @crop-success="cropBannerSuccess"
+          @crop-upload-success="cropBannerUploadSuccess"
+          @crop-upload-fail="cropBannerUploadFail"
+          :url="uploadUrl"
+          :width="375"
+          :headers="headers"
+          :height="120"
+          :value.sync="showBanner"
+          :no-circle=true
+          img-format="png">
+        </my-upload>
     </div>
 </template>
 
@@ -91,7 +123,8 @@
         logoSrc: '',
         bannerSrc: '',
 
-        show: false,
+        showIcon: false,
+        showBanner: false,
         params: {
           pictype: ''
         },
@@ -128,43 +161,66 @@
           }
         })
       },
-      closeMyUpload: function (value) {
-        this.show = value
+      // closeMyUpload: function (value) {
+      //   this.show = value
+      // },
+      closeIcon: function (value) {
+        this.showIcon = value
       },
-      // 1: 上传logo; 2: 上传banner
+      closeBanner: function (value) {
+        this.showBanner = value
+      },
+      // logo: 上传logo; banner: 上传banner
       toggleShow: function (type) {
-        this.params.pictype = type
-        this.show = !this.show
-      },
-      cropSuccess (data, field) {
-        // if (this.params.pictype === 'logo') {
-        //   this.iconSrc = data
-        // } else {
-        //   this.bannerSrc = data
-        // }
-      },
-      /**
-       * upload success
-       *
-       * [param] jsonData   服务器返回数据，已进行json转码
-       * [param] field
-       */
-      cropUploadSuccess (jsonData, field) {
-        if (this.params.pictype === 'logo') {
-          this.logoSrc = jsonData.result
+        if (type === 'logo') {
+          this.showIcon = !this.showIcon
         } else {
-          this.bannerSrc = jsonData.result
+          this.showBanner = !this.showBanner
         }
+        this.params.pictype = type
       },
-      /**
-       * upload fail
-       *
-       * [param] status    server api return error status, like 500
-       * [param] field
-       */
-      cropUploadFail (status, field) {
-        alert(status)
+      cropIconSuccess (data, field) {
+
+      },
+      cropIconUploadSuccess (jsonData, field) {
+        this.logoSrc = jsonData.result
+      },
+      cropIconUploadFail (status, field) {
+
+      },
+      cropBannerSuccess (data, field) {
+
+      },
+      cropBannerUploadSuccess (jsonData, field) {
+        this.bannerSrc = jsonData.result
+      },
+      cropBannerUploadFail (status, field) {
+
       }
+      // cropSuccess (data, field) {
+      // },
+      // /**
+      //  * upload success
+      //  *
+      //  * [param] jsonData   服务器返回数据，已进行json转码
+      //  * [param] field
+      //  */
+      // cropUploadSuccess (jsonData, field) {
+      //   if (this.params.pictype === 'logo') {
+      //     this.logoSrc = jsonData.result
+      //   } else {
+      //     this.bannerSrc = jsonData.result
+      //   }
+      // },
+      // /**
+      //  * upload fail
+      //  *
+      //  * [param] status    server api return error status, like 500
+      //  * [param] field
+      //  */
+      // cropUploadFail (status, field) {
+      //   alert(status)
+      // }
     }
   }
 </script>
