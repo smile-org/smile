@@ -22,13 +22,13 @@
                         </el-form-item>
                         <el-form-item label="开始时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="formInline.start_date"
+                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.start_date"
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                         <el-form-item label="结束时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="formInline.end_date"
+                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
@@ -55,36 +55,37 @@
                             </el-dialog>
                         </el-form-item>
                     </el-form>
+                   <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="exam_num" label="考试编号" width="180">
+                        <el-table-column align="center" prop="exam_num" label="考试编号" width="180">
                         </el-table-column>
-                        <el-table-column prop="exam_title" label="考试编号" width="180">
+                        <el-table-column align="center" prop="exam_title" label="考试编号" width="180">
                         </el-table-column>
-                        <el-table-column prop="full_name" label="考试人" width="180">
+                        <el-table-column align="center" prop="full_name" label="考试人" width="180">
                         </el-table-column>
-                        <el-table-column prop="department" label="部门" width="180">
+                        <el-table-column align="center" prop="department" label="部门" width="180">
                         </el-table-column>
-                        <el-table-column prop="area" label="区域" width="180">
+                        <el-table-column align="center" prop="area" label="区域" width="180">
                         </el-table-column>
-                        <el-table-column prop="score" label="分数" width="180">
+                        <el-table-column align="center" prop="score" label="分数" width="100">
                         </el-table-column>
-                        <el-table-column prop="status" label="是否通过" width="180">
+                        <el-table-column align="center" prop="status" label="是否通过" width="120">
                             <template scope="scope">
                                 <span v-if="scope.row.status === 'pass'">通过</span>
                                 <span v-else>未通过</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="start_date" label="开始时间" width="180">
+                        <el-table-column align="center" prop="start_date" label="开始时间" width="180">
                             <template scope="scope">
                                 <span>{{scope.row.start_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="end_date" label="结束时间" width="180">
+                        <el-table-column align="center" prop="end_date" label="结束时间" width="180">
                             <template scope="scope">
                                 <span>{{scope.row.end_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作" class="tc" width="180">
+                        <el-table-column  align="center" label="操作" class="tc" width="100">
                             <template scope="scope">
                                 <el-button v-on:click="viewDetail(scope.row.history_id)" type="text" size="small">查看
                                 </el-button>

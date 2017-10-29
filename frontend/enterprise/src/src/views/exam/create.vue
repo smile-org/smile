@@ -27,7 +27,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="责任人" prop="admin">
-                <el-select v-model="form.admin" placeholder="请选择责任人">
+                <el-select  class="dateTab_width" v-model="form.admin" placeholder="请选择责任人">
                   <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
                   </el-option>
                 </el-select>
@@ -41,27 +41,14 @@
             <el-col :span="8">
               <el-form-item label="开始时间" prop="dateStart">
                 <el-col>
-                  <el-date-picker
-                    type="date"
-                    :picker-options="pickerOptions0"
-                    @change="changeDateStart"
-                    placeholder="选择日期"
-                    v-model="form.dateStart"
-                    style="width: 100%;">
-                  </el-date-picker>
+                  <el-date-picker class="dateTab_width" type="date" :picker-options="pickerOptions0" @change="changeDateStart" placeholder="选择日期" v-model="form.dateStart" style="width: 100%;"></el-date-picker>
                 </el-col>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="结束时间" prop="dateEnd">
                 <el-col>
-                  <el-date-picker
-                    type="date"
-                    :picker-options="pickerOptions0"
-                    @change="changeDateEnd"
-                    placeholder="选择日期"
-                    v-model="form.dateEnd"
-                    style="width: 100%;">
+                  <el-date-picker class="dateTab_width" type="date" :picker-options="pickerOptions0" @change="changeDateEnd" placeholder="选择日期" v-model="form.dateEnd" style="width: 100%;">
                   </el-date-picker>
                 </el-col>
               </el-form-item>
@@ -72,7 +59,8 @@
               </el-form-item>
             </el-col>
           </el-form>
-          <table class="page_m mt30" cellspacing="0" cellpadding="0" border="0">
+          <hr class="hr_line">
+          <table class="page_m mb30 " cellspacing="0" cellpadding="0" border="0">
             <tr>
               <td class="page_m_a">
                 课程图标
@@ -98,8 +86,8 @@
               </td>
             </tr>
           </table>
-
-          <div class="mt30">
+          <hr class="hr_line">
+          <div>
             <p>复习资料
               <el-button type="text" @click="dialogMaterialVisible = true">添加复习资料</el-button>
             </p>
@@ -107,7 +95,7 @@
               <el-dialog title="添加复习资料" :visible.sync="dialogMaterialVisible">
                 <el-form :inline="true" :model="formMaterial" class="demo-form-inline mt20">
                   <el-form-item label="课程名称">
-                    <el-input v-model="formMaterial.name" placeholder="课程名称"></el-input>
+                    <el-input v-model="formMaterial.name"  placeholder="课程名称"></el-input>
                   </el-form-item>
                   <el-form-item class="wrapper">
                     <el-button class="update_btn" @click="searchMaterial">查询</el-button>
@@ -116,7 +104,7 @@
                 <el-table :data="materialList" border ref="materialListChecked" @selection-change="materialListCheckedChange">
                   <el-table-column property="id" align="center" width="100" type="selection" @selection-change="materialListCheckedChange">
                   </el-table-column>
-                  <el-table-column prop="name" label="课程名称" width=""></el-table-column>
+                  <el-table-column prop="name" align="center" label="课程名称" width=""></el-table-column>
                 </el-table>
                 <el-pagination class="tc mt20" small @current-change="handleMaterialCurrentChange" :current-page="materialCurrentPage"
                     :page-size="materialTake" layout="total, prev, pager, next"
@@ -128,20 +116,21 @@
               </el-dialog>
             </template>
           </div>
-          <div class="mt20">
+          <div class="mt20 mb30">
             <template>
               <el-table :data="materialSelected" border class="mt20" style="width: 100%">
-                <el-table-column prop="name" label="课程名称" width="">
+                <el-table-column prop="name" align="center" label="课程名称" width="">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作"  align="center"  class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="deleteSelectedMaterial(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedMaterial(scope.row.id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
             </template>
           </div>
-          <div class="mt30">
+          <hr class="hr_line">
+          <div>
             <p>
               试题
               <el-button type="text" @click="dialogExamVisible = true">添加试题</el-button>
@@ -169,14 +158,14 @@
               <el-table :data="examList" border ref="examListChecked" @selection-change="examListCheckedChange">
                 <el-table-column property="id" align="center" width="100" type="selection" @selection-change="examListCheckedChange">
                 </el-table-column>
-                <el-table-column property="num" label="序号" width=""></el-table-column>
-                <el-table-column property="name" label="试题名称" width=""></el-table-column>
-                <el-table-column property="type" label="试题类型" width="">
+                <el-table-column property="num" align="center" label="序号" width="80"></el-table-column>
+                <el-table-column property="name" align="center" label="试题名称" width=""></el-table-column>
+                <el-table-column property="type" align="center" label="试题类型" width="">
                   <template scope="scope">
                     {{scope.row.type | formatExamType}}
                   </template>
                 </el-table-column>
-                <el-table-column property="date" label="创建时间" width=""></el-table-column>
+                <el-table-column property="date" align="center" label="创建时间" width=""></el-table-column>
               </el-table>
               <el-pagination class="tc mt20" small @current-change="handleExamCurrentChange" :current-page="examCurrentPage"
                                        :page-size="examTake" layout="total, prev, pager, next"
@@ -189,11 +178,11 @@
             </el-dialog>
             <template>
               <el-table :data="examSelected" border class="mt20" style="width: 100%">
-                <el-table-column prop="name" label="试题名称" width="">
+                <el-table-column  align="center"  prop="name" label="试题名称" width="">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column   align="center"  label="操作" class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="deleteSelectedExam(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedExam(scope.row.id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>

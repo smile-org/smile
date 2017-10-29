@@ -1,8 +1,8 @@
 <template>
   <header>
     <div class="logo">
-      <img class="vm" :src="companyLogo" />
-      <!--<img class="vm" src="../../assets/img/small_logo.png"/>-->
+      <!--<img class="vm" :src="companyLogo" />-->
+      <img class="vm" src="../assets/img/small_logo.png"/>
       <span class="vm">企业管理后台</span>
     </div>
     <ul class="fr">
@@ -52,7 +52,7 @@ export default {
   },
   created () {
     // retrieve logo from session storage
-    this.companyLogo = 'http://ww2.sinaimg.cn/thumb180/8892b46egw1f319hyl0juj20iz0sgq4v.jpg'
+//    this.companyLogo = 'http://ww2.sinaimg.cn/thumb180/8892b46egw1f319hyl0juj20iz0sgq4v.jpg'
   },
   methods: {
     routeByName: function (name) {

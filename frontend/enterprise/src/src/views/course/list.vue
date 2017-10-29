@@ -9,7 +9,6 @@
                     <span class="vm">您的当前位置 : <span class="">课程管理</span> > <span class="f_blue">课程信息管理</span></span>
                 </nav>
                 <div class="con_tab">
-
                     <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
                         <el-form-item label="课程名称">
                             <el-input v-model="formInline.name" placeholder="课程名称"></el-input>
