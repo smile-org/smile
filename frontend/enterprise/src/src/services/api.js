@@ -177,7 +177,13 @@ export default {
     // 员工导入
     uploadEmployeeExcel: axios.defaults.baseURL + '/back/ImportUserList',
     // 试题导入
-    uploadQuestionExcel: axios.defaults.baseURL + '/back/ImportQuestionList'
+    uploadQuestionExcel: axios.defaults.baseURL + '/back/ImportQuestionList',
+    // 员工导出
+    exportUserList: '/back/ExportUserList',
+    // 课程导出
+    exportCourseList: '/back/ExportCourseList',
+    // 学习记录导出
+    exportUserLearnProgressList: '/back/ExportUserLearnProgressList'
   },
   image: {
     category: '/default/cateicon.png',

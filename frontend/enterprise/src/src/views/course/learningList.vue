@@ -24,7 +24,21 @@
             </el-form-item>
             <el-form-item>
               <button type="button" class="inf_btn ml20" v-on:click="search">查  询</button>
-              <button type="button" class="inf_btn ml20" v-on:click="exportList">导  出</button>
+              <el-button type="button" v-on:click="exportList()" :loading="showloading"
+                         class="inf_btn ml20 export_bor">导  出
+                        </el-button>
+              <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                <div class="tc">
+                  <!--<p class="exal">电子表格文件生成成功</p>-->
+                  <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+                </div>
+                <div class="tc">
+                  <a v-bind:href="exportExcelUrl" class="inf_btn download"
+                     style="display: inline-block;">下  载</a>
+                  <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
+                                </button>
+                </div>
+              </el-dialog>
             </el-form-item>
           </el-form>
           <hr class="hr_line">
@@ -60,6 +74,7 @@
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
   import moment from 'moment'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
@@ -72,7 +87,10 @@
           department: '',
           area: ''
         },
-        tableData: []
+        tableData: [],
+        showloading: false,
+        dialogTableVisible: false,
+        exportExcelUrl: ''
       }
     },
     components: {
@@ -90,7 +108,20 @@
     },
     methods: {
       exportList () {
-        this.$message('coming soon by 大拿')
+        this.showloading = true
+        api.fetch(api.uri.exportUserLearnProgressList, {
+          title: this.formInline.title,
+          fullname: this.formInline.name,
+          department: this.formInline.department,
+          area: this.formInline.area
+        }).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.exportExcelUrl = axios.defaults.imageServer + data.result
+            this.showloading = false
+            this.dialogTableVisible = true
+          }
+        })
       },
       search () {
         api.fetch(api.uri.getCourseLearningRecords, {

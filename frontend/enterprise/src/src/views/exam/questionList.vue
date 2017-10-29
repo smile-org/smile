@@ -129,7 +129,7 @@
         dialogTableVisible: false,
         showloading: false,
         dialogUploadVisible: false,
-        uploadContentAction: api.uri.uploadEmployeeExcel,
+        uploadContentAction: api.uri.uploadQuestionExcel,
         headers: {}
       }
     },
