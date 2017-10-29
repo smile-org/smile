@@ -16,7 +16,7 @@
               <img class="person_header fl" :src="data.avatar | formatImage">
               <div class="bm_con">
                 <div class="hidden bm_font ml2">
-                  <h3 class="fl ">{{data.appointmentTitle}}</h3>
+                  <h3 class="">{{data.appointmentTitle}}</h3>
                   <p>发起者：{{data.sponsorName}}
                     <span class="ml2">{{data.sponsorDate | formatDate}}</span>
                   </p>
@@ -55,13 +55,14 @@
                 </el-col>
                 <el-col :span="12" class="fr">
                   <ul class="small_icon fr">
-                    <li class="fl">
-                      <span class="icon icon1"></span>
-                      <span class="green00b">{{item.followCount}}</span>
-                    </li>
-                    <li class="fl">
+                    <!--<li class="fl">-->
+                      <!--<span class="icon icon1"></span>-->
+                      <!--<span class="green00b">{{item.followCount}}</span>-->
+                    <!--</li>-->
+                    <li class="">
                       <span v-show="item.isFollow" class="icon icon6" id="c_save"></span>
                       <span v-show="!item.isFollow" @click="like(item)" class="icon icon7" id="c_save"></span>
+                      <span class="greybob">{{item.followCount}}</span>
                     </li>
                   </ul>
                 </el-col>
@@ -81,6 +82,11 @@
       <div class="booking_input">
         <input v-model="newRequirement" type="text">
         <span class="add_img"></span>
+        <div class="mt2">
+          <p class="addBook_list"><span>1. </span>sssssssss</p>
+          <p class="addBook_list"><span>1. </span>sssssssss</p>
+        </div>
+
         <div class="el-row dio_btn yk">
           <div class="el-col el-col-12">
             <button type="button" class="c_g btn fr mr2" v-on:click="subNewRequirement">确定</button>

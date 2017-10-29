@@ -16,7 +16,7 @@
               <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
-                  <div class="hidden">
+                  <div class="hidden effect_right ">
                     <h3 class="fl">{{item.title}}</h3>
                     <ul class="small_icon fr">
                       <li class="fl">
@@ -43,7 +43,7 @@
               <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
-                  <div class="hidden">
+                  <div class="hidden effect_right ">
                     <h3 class="fl">{{item.title}}</h3>
                     <ul class="small_icon fr">
                       <li class="fl">

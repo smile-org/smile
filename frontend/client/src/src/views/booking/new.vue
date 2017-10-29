@@ -15,7 +15,7 @@
           <hr>
           <div class="w_p3">
             <img class="add_input" src="../../assets/img/icon9.png" />
-            <input class="w_yueke" type="text" v-model="title" placeholder="输入列表需求" maxlength=200 minlength=1>
+            <input class="w_yueke" type="text" v-model="title" placeholder="请输入约课主题" maxlength=200 minlength=1>
           </div>
         </div>
         <div class="add_bg">

@@ -316,6 +316,7 @@ section .form_list input{
   border-radius: 50%;
   vertical-align: middle;
   margin-bottom: .1rem;
+  overflow: hidden;
 }
 /*此处为各种小的icon*/
 .icon{
@@ -615,20 +616,39 @@ section .form_list input{
   vertical-align: middle;
 }
 .person_header{
-  width:.7rem;
+  width:.9rem;
+  height: .9rem;
+  max-width:.9rem;
+  max-height: .9rem;
+  border-radius: .9rem;
+}
+.person_header1{
+  width: .7rem;
   height: .7rem;
-  max-width:.7rem;
+  max-width: .7rem;
   max-height: .7rem;
   border-radius: .7rem;
 }
 .person_header2{
-  width: 1.19rem;
-  height: .9rem;
-  max-width: 1.19rem;
-  max-height: .9rem;
+  width: 1.9rem;
+  height: 1.44rem;
+  max-width: 1.9rem;
+  max-height: 1.44rem;
 }
 .bm_time{
+  position: absolute;
+  bottom: .3rem;
+}
 
+
+.star_time{
+  position: absolute;
+  bottom: .65rem;
+}
+.effect_right .small_icon{
+  position: absolute;
+  bottom: .3rem;
+  right:.3rem;
 }
 /*这里是我要评价页面*/
 .appraise_w{
@@ -739,7 +759,7 @@ section .form_list input{
   flex: 1;
   -webkit-box-orient: vertical;
   -webkit-box-pack: justify;
-  margin-left: 1.4rem;
+  margin-left: 2.2rem;
   padding-right: .3rem;
 }
 .course_cen h3{
@@ -750,7 +770,8 @@ section .form_list input{
   white-space: nowrap;/*不换行*/
   text-overflow:ellipsis;/*超出部分文字以...显示*/
   margin-top: -.05rem;
-  max-width:3.2rem;
+  padding-right: .3rem;
+  max-width:4.2rem;
   /*max-width:-moz-calc(100% - (3.5rem ));
   max-width:-webkit-calc(100% - (3.5rem ));
   max-width: calc(100% - (3.5rem ))*/
@@ -760,21 +781,24 @@ section .form_list input{
   right: .3rem;
 }
 .img_bg{
-  width:1.19rem;
-  height:.9rem;
-  max-width:1.19rem;
-  max-height:.9rem;
+  width:1.9rem;
+  height:1.44rem;
+  max-width:1.9rem;
+  max-height:1.44rem;
+  overflow: hidden;
+  background: #dcdcdc;
 }
 .exam_explain{
   font-size: .22rem;
   color: #666;
-  margin-top: .03rem;
+  margin-top: .1rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
   max-width: 70%;
-  margin-left:1.4rem;
+  margin-left:2.2rem;
+  padding-right:.3rem;
   /*max-width:-moz-calc(100% - (2.1rem ));
   max-width:-webkit-calc(100% - (2.1rem ));
   max-width: calc(100% - (2.1rem ))*/
@@ -1016,11 +1040,25 @@ footer .exam_b .btn span:nth-child(2){
   flex: 1;
   -webkit-box-orient: vertical;
   -webkit-box-pack: justify;
-  margin-left: .75rem;
+  margin-left: .95rem;
+  padding-right: .2rem;
+}
+.bm_con .bm_font p{
+  margin-top:.2rem;
+}
+.bm_con_bm{
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: justify;
+  margin-left: 1.6rem;
   padding-right: .3rem;
 }
 .bm_font{
   /*margin-left:.2rem;*/
+
 }
 .bm_font h3 {
   font-size: .28rem;
@@ -1035,7 +1073,7 @@ footer .exam_b .btn span:nth-child(2){
 .bm_font p{
   font-size: .22rem;
   color: #999;
-  margin-top:.15rem;
+  margin-top:.1rem;
 
 }
 
@@ -1111,7 +1149,7 @@ footer .exam_b .btn span:nth-child(2){
   color: #00b553;
   position: absolute;
   right:.3rem;
-  top:.7rem;
+  top:.8rem;
 }
 .see_student a{
   color: #00b553;
@@ -1208,6 +1246,11 @@ footer .exam_b .btn span:nth-child(2){
   padding:.3rem 0;
   background: #fff;
   margin:.3rem 0;
+}
+.addBook_list{
+  margin:.1rem 0;
+  padding-bottom:.05rem;
+  border-bottom:1px dashed #eaeaea;
 }
 .w_p3 p{
   font-size:.22rem;
@@ -1368,7 +1411,8 @@ footer .exam_b .btn span:nth-child(2){
   -webkit-box-shadow: #666 0px 0px .1rem;
   -moz-box-shadow: #666 0px 0px .1rem;
   box-shadow: #666 0px 0px .1rem;
-  margin-top:.5rem
+  margin-top:.5rem;
+  overflow: hidden;
 
 }
 .personal_name{
@@ -1425,23 +1469,23 @@ footer .exam_b .btn span:nth-child(2){
   padding-top:.35rem;
   position: relative;
 }
-.home_more:after {
-  transition: all .3s 0s ease-in-out;
-  position: absolute;
-  content: "";
-  display: block;
-  border-top: 0.02rem solid #999;
-  border-left: 0.02rem solid #999;
-  -webkit-transform-origin: 50%;
-  transform-origin: 50%;
-  -webkit-transform: rotate(135deg);
-  transform: rotate(135deg);
-  left: .5rem;
-  width: 0.13rem;
-  height: 0.13rem;
-  bottom: .09rem;
-  /*top:.42rem;*/
-}
+/*.home_more:after {*/
+  /*transition: all .3s 0s ease-in-out;*/
+  /*position: absolute;*/
+  /*content: "";*/
+  /*display: block;*/
+  /*border-top: 0.02rem solid #999;*/
+  /*border-left: 0.02rem solid #999;*/
+  /*-webkit-transform-origin: 50%;*/
+  /*transform-origin: 50%;*/
+  /*-webkit-transform: rotate(135deg);*/
+  /*transform: rotate(135deg);*/
+  /*left: .5rem;*/
+  /*width: 0.13rem;*/
+  /*height: 0.13rem;*/
+  /*bottom: .09rem;*/
+  /*!*top:.42rem;*!*/
+/*}*/
 .home_person{
   position: absolute;
   right: .3rem;
@@ -1653,4 +1697,20 @@ footer .exam_b .btn span:nth-child(2){
 .quyu_click{
   width: 100%;
   display: inline-block;
+}
+/*星星大小*/{}
+.show_star .el-rate__icon{
+  font-size: 0.18rem;
+  margin-right: 6px;
+  color: #bfcbd9;
+  transition: .3s;
+}
+/*评价时间*/
+.course_con li .time_comment{
+  font-size: .22rem;
+  color: #999;
+  margin-bottom:.05rem;
+  margin-top:-.05rem;
+ text-align: right;
+
 }

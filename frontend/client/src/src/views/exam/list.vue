@@ -18,7 +18,7 @@
           <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
             <img :src="item.icon | formatImage" class="fl img_bg">
             <div class="course_cen">
-              <div class="hidden">
+              <div class="hidden effect_right">
                 <h3 class="fl">{{item.exam_title}}</h3>
                 <ul class="small_icon fr">
                   <li class="fl">

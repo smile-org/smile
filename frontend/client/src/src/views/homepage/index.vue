@@ -45,17 +45,17 @@
         <div class="hidden">
           <h3 class="list_need fl">热门约课</h3>
           <router-link v-bind:to="{name: 'getBookingList'}" class="home_more">
-            更多
+           <span class="vm">更多</span>  <img src="../../assets/img/go02.png" class="vm" style="width: .125rem;">
           </router-link>
         </div>
         <ul class=" list_border course_line reg_nohover">
           <li class="course_list  line_only" v-for="item in booking" :key="item.appointmentId">
-            <router-link v-bind:to="{name: 'getBooking', query: {id: item.appointmentId}}">
+            <router-link v-bind:to="{name: 'getBooking', query: {id: item.appointmentId}}" class=" wid100">
               <div class="p3_line wid100 hidden">
                 <img class="person_header fl" :src="item.avatar | formatImage">
                 <div class="bm_con">
                   <div class="hidden bm_font ml2">
-                    <h3 class="fl ">{{item.appointmentTitle}}</h3>
+                    <h3 class="">{{item.appointmentTitle}}</h3>
                     <div class="hidden wid100">
                       <p class="fl">主讲：{{item.sponsorName}}</p>
                       <p class="fr">{{item.sponsorDate | formatDate}}</p>
@@ -75,7 +75,7 @@
         <div class="hidden">
           <h3 class="list_need fl">课程排行</h3>
           <router-link v-bind:to="{name: 'courseCategories'}" class="home_more">
-            更多
+            <span class="vm">更多</span>  <img src="../../assets/img/go02.png" class="vm" style="width: .125rem;">
           </router-link>
         </div>
         <div class="f_con">
@@ -85,9 +85,10 @@
                 <li class="course_list  line_only" v-for="item in courseWeek" :key="item.course_id">
                   <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
                     <img :src="item.icon | formatImage" class="fl img_bg">
-                    <div class="course_cen">
-                      <div class="hidden">
+                    <div class="course_cen show_star">
+                      <div class="hidden effect_right">
                         <h3 class="fl">{{item.title}}</h3>
+                        <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                         <ul class="small_icon fr">
                           <li class="fl">
                             <span class="icon icon1"></span>
@@ -112,9 +113,10 @@
                 <li class="course_list  line_only" v-for="item in courseMonth" :key="item.course_id">
                   <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
                     <img :src="item.icon | formatImage" class="fl img_bg">
-                    <div class="course_cen">
-                      <div class="hidden">
+                    <div class="course_cen show_star">
+                      <div class="hidden effect_right">
                         <h3 class="fl">{{item.title}}</h3>
+                        <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                         <ul class="small_icon fr">
                           <li class="fl">
                             <span class="icon icon1"></span>
@@ -139,9 +141,10 @@
                 <li class="course_list  line_only" v-for="item in courseTotal" :key="item.course_id">
                   <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
                     <img :src="item.icon | formatImage" class="fl img_bg">
-                    <div class="course_cen">
-                      <div class="hidden">
+                    <div class="course_cen show_star">
+                      <div class="hidden effect_right">
                         <h3 class="fl">{{item.title}}</h3>
+                        <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                         <ul class="small_icon fr">
                           <li class="fl">
                             <span class="icon icon1"></span>
@@ -168,7 +171,7 @@
         <div class="hidden">
           <h3 class="list_need fl">近期考试</h3>
           <router-link v-bind:to="{name: 'getExamList'}" class="home_more">
-            更多
+            <span class="vm">更多</span>  <img src="../../assets/img/go02.png" class="vm" style="width: .125rem;">
           </router-link>
         </div>
         <ul class="list_border course_line">
@@ -176,7 +179,7 @@
             <router-link v-bind:to="{path: '/getExamInfo', query: {id: item.exam_id}}">
               <img :src="item.icon|formatImage" class="fl img_bg">
               <div class="course_cen">
-                <div class="hidden">
+                <div class="hidden effect_right ">
                   <h3 class="fl">{{item.exam_title}}</h3>
                   <ul class="small_icon fr">
                     <li class="fl">
@@ -189,32 +192,31 @@
                     </li>
                   </ul>
                 </div>
-
               </div>
               <p class="exam_explain">
                 {{item.intro}}
               </p>
             </router-link>
           </li>
-
         </ul>
       </div>
       <div class="home_five">
         <div class="hidden">
           <h3 class="list_need fl">培训报名</h3>
           <router-link v-bind:to="{name: 'getEnrollList'}" class="home_more">
-            更多
+            <span class="vm">更多</span>  <img src="../../assets/img/go02.png" class="vm" style="width: .125rem;">
           </router-link>
         </div>
         <ul class=" list_border course_line reg_nohover">
           <li class="course_list  line_only"  v-for="item in enroll" :key="item.period_id">
             <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
               <img class="person_header2 fl" :src="item.icon | formatImage">
-              <div class="bm_con">
+              <div class="bm_con_bm show_star">
                 <div class="hidden bm_font ml6">
-                  <h3 class="fl mb15">{{item.title}}</h3>
+                  <h3 class=" mb10">{{item.title}}</h3>
                   <p class="">主讲：{{item.teacher}}</p>
-                  <p class="bm_time">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
+                  <p class="" style="">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
+                  <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -225,7 +227,7 @@
                       <span class="redff7">{{item.collect_count}}</span>
                     </li>
                   </ul>
-                  <span class="surplus_num s_num" v-if="item.left_count > 0">
+                  <span class="surplus_num s_num" style="right:0.05rem;top:.65rem;" v-if="item.left_count > 0">
                     剩余{{item.left_count}}人
                   </span>
                   <!--<span class="surplus_num red_full" v-else-if="item.left_count === 0">
@@ -287,6 +289,7 @@ export default {
       visible: false,
       nav1: false,
       username: '',
+      value5: 3.7,
       userAvatar: ''
     }
   },

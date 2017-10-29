@@ -16,7 +16,7 @@
               <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
-                  <div class="hidden">
+                  <div class="hidden effect_right">
                     <h3 class="fl">{{item.title}}</h3>
                     <ul class="small_icon fr">
                       <li class="fl">
@@ -43,11 +43,11 @@
             <li class="course_list  line_only" v-for="item in dataEnroll" :key="item.enrollment_id">
               <router-link v-bind:to="{name: 'getEnroll', query: {id: item.period_id}}">
                 <img class="person_header2 fl" :src="item.icon | formatImage">
-                <div class="bm_con">
+                <div class="bm_con_bm show_star">
                   <div class="hidden bm_font ml6">
                     <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
-                    <p>{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
+                    <p class="star_time" style="bottom: .3rem;">{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
                     <ul class="small_icon fr">
                       <li class="fl">
                         <span class="icon icon1"></span>
@@ -70,7 +70,7 @@
               <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
                 <img :src="item.icon | formatImage" class="fl img_bg">
                 <div class="course_cen">
-                  <div class="hidden">
+                  <div class="hidden effect_right">
                     <h3 class="fl">{{item.exam_title}}</h3>
                     <ul class="small_icon fr">
                       <li class="fl">

@@ -10,7 +10,7 @@
               <img class="person_header fl" :src="item.avatar | formatImage">
               <div class="bm_con">
                 <div class="hidden bm_font ml2">
-                  <h3 class="fl ">{{item.appointmentTitle}}</h3>
+                  <h3 class="">{{item.appointmentTitle}}</h3>
                   <p>发起者：{{item.sponsorName}}
                     <span class="ml2">{{item.sponsorDate | formatDate}}</span>
                   </p>

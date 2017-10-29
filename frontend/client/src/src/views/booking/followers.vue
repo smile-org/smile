@@ -9,7 +9,7 @@
     <!--</header>-->
     <common-header></common-header>
     <section>
-      <ul class="b_header">
+      <ul class="b_header hidden">
         <li v-for="item in data" :key="item.followerId">
           <img class="person_header" :src="item.avatar | formatImage">
           <div>

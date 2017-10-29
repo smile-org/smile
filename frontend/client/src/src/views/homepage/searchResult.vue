@@ -25,9 +25,29 @@
       </div>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.id">
-          <a v-on:click="goDetail(item.id)">
+          <a  v-if="type===4" v-on:click="goDetail(item.id)">
           <!--<router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">-->
-            <img :src="item.icon | formatImage" class="fl img_bg">
+            <div class="p3_line wid100 hidden">
+              <img class="person_header fl" :src="item.icon | formatImage">
+              <div class="bm_con">
+                <div class="hidden bm_font ml2">
+                  <h3 class="">{{item.title}}</h3>
+                  <!--<div class="hidden wid100">-->
+                    <!--<p class="fl">主讲：{{item.sponsorName}}</p>-->
+                    <!--<p class="fr">{{item.sponsorDate | formatDate}}</p>-->
+                  <!--</div>-->
+                  <!--<div class="home_person">-->
+                    <!--<span class="icon icon1 vm"></span>-->
+                    <!--<span class="vm">{{item.followerCount}}</span>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+          </a>
+          <a  v-else v-on:click="goDetail(item.id)">
+            <!--<router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">-->
+            <img  :src="item.icon | formatImage" class="fl img_bg">
+            <!--<img v-else :src="item.icon | formatImage" class="fl img_bg">-->
             <div class="course_cen">
               <div class="hidden">
                 <h3 class="fl">{{item.title}}</h3>
@@ -42,10 +62,10 @@
                   </li>
                 </ul>-->
               </div>
-          </div>
-          <p class="exam_explain">
-            {{item.intro}}
-          </p>
+            </div>
+            <p class="exam_explain">
+              {{item.intro}}
+            </p>
           </a>
           <!--</router-link>-->
         </li>

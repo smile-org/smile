@@ -60,21 +60,23 @@
         <el-tab-pane label="课程目录" name="second">
           <ul class="list_border course_con mb3hafe">
             <li v-for="item in courseContent" :key="item.content_id">
-              {{item.sequnce_title}} {{item.content}}
+              <p>{{item.content}}</p>
+              <p>{{item.sequnce_title}} </p>
             </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane label="课程评价" name="third">
           <ul class="list_border course_con mb3hafe">
             <li v-for="item in courseComment" :key="item.comment_id">
+              <p class="time_comment">2012-08-03</p>
               <el-row class="font22">
-                <el-col :span="4"><img class="person_header" :src="item.user_idAvatar | formatImage"></el-col>
-                <el-col :span="6" class="">
+                <el-col :span="4"><img class="person_header1" :src="item.user_idAvatar | formatImage"></el-col>
+                <el-col :span="6" class="vm">
                   <p>{{item.user_idName}}</p>
                   <el-rate v-model="item.star" disabled text-color="#ff9900" text-template="{value}">
                   </el-rate>
                 </el-col>
-                <el-col :span="14">{{item.comments}}</el-col>
+                <el-col :span="14" class="vm">{{item.comments}}</el-col>
               </el-row>
             </li>
           </ul>
