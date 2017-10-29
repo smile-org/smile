@@ -134,6 +134,18 @@
                 </div>
             </section>
         </div>
+        <my-upload @input="closeMyUpload" field="file"
+                   @crop-success="cropSuccess"
+                   @crop-upload-success="cropUploadSuccess"
+                   @crop-upload-fail="cropUploadFail"
+                   :width="width"
+                   :height="height"
+                   :params="params"
+                   :headers="headers"
+                   :value.sync="show"
+                   :no-circle=true
+                   :url="uploadUrl"
+                   img-format="png"></my-upload>
     </div>
 </template>
 
@@ -144,6 +156,7 @@
   import moment from 'moment'
   import axios from 'axios'
   import _ from 'lodash'
+  import myUpload from 'vue-image-crop-upload'
   export default {
     data: function () {
       return {
@@ -175,12 +188,24 @@
         introErrMsg: '',
         locationErrMsg: '',
         contentErrMsg: '',
-        showloading: false
+        showloading: false,
+
+        show: false,
+        headers: {},
+        uploadIconUrl: api.uri.uploadEnrollmentIcon,
+        uploadBannerUrl: api.uri.uploadEnrollmentBanner,
+        uploadUrl: '',
+        params: {
+          pictype: ''
+        },
+        width: 0,
+        height: 0
       }
     },
     components: {
       commonHeader,
-      navigator
+      navigator,
+      myUpload
     },
     filters: {
       formatDate (time) {
@@ -194,6 +219,8 @@
     created () {
       this.iconSrc = api.image.enrollment.icon
       this.bannerSrc = api.image.enrollment.banner
+      this.headers = api.getUploadHeaders()
+      console.log(this.headers.token)
     },
     methods: {
       addContent: function () {
@@ -318,8 +345,56 @@
           this.bannerSrc = api.image.enrollment.banner
         }
       },
+      // 1: 上传logo; 2: 上传banner
       uploadImage: function (number) {
-        alert('ddd')
+        if (number === 1) {
+          this.uploadUrl = axios.defaults.baseURL + this.uploadIconUrl
+          this.params.pictype = 'logo'
+          this.width = 281
+          this.height = 195
+        } else {
+          this.uploadUrl = axios.defaults.baseURL + this.uploadBannerUrl
+          this.params.pictype = 'banner'
+          this.width = 375
+          this.height = 120
+        }
+        this.show = true
+      },
+      closeMyUpload: function (value) {
+        this.show = value
+      },
+      cropSuccess (data, field) {
+        // if (this.params.pictype === 'logo') {
+        //   this.iconSrc = data
+        // } else {
+        //   this.bannerSrc = data
+        // }
+      },
+      /**
+       * upload success
+       *
+       * [param] jsonData   服务器返回数据，已进行json转码
+       * [param] field
+       */
+      cropUploadSuccess (jsonData, field) {
+        if (this.params.pictype === 'logo') {
+          this.iconSrc = jsonData.result
+          console.log(this.logoSrc)
+        } else {
+          this.bannerSrc = jsonData.result
+          console.log(this.bannerSrc)
+        }
+      },
+      /**
+       * upload fail
+       *
+       * [param] status    server api return error status, like 500
+       * [param] field
+       */
+      cropUploadFail (status, field) {
+        this.$message({
+          message: status
+        })
       }
     }
   }
