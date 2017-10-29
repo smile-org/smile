@@ -208,7 +208,7 @@
   }
 </script>
 
-<style>
+<style scoped="scope">
     .export_bor i {
         color: #fff !important;
     }

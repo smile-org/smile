@@ -611,7 +611,7 @@
   }
 </script>
 
-<style>
+<style scoped="scope">
   .el-dialog__body {
     padding: 10px 20px;
   }

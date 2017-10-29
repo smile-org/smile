@@ -166,12 +166,4 @@
 </script>
 
 <style scoped>
-  /*element.style {*/
-    /*width: 146.063px;*/
-    /*transform-origin: center top 0px;*/
-    /*z-index: 2007;*/
-    /*position: absolute;*/
-    /*top: 177px;*/
-    /*left: 580px;*/
-  /*}*/
 </style>

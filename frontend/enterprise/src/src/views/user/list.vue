@@ -274,19 +274,14 @@
 </script>
 
 <style scoped>
-
-
     .el-button--primary {
         color: #fff;
         background-color: #00b553;
         border-color: #00b553;
         width: 80px;
     }
-
     .el-button--primary:hover, .el-button--primary:active {
         background: rgba(0, 181, 83, 0.75);
     }
-
-    
 
 </style>

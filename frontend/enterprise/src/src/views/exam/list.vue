@@ -54,9 +54,9 @@
                     </div>
                    <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="exam_num" align="center" label="考试编号" width="180">
+                        <el-table-column prop="exam_num" align="center" label="考试编号" width="200">
                         </el-table-column>
-                        <el-table-column prop="exam_title" align="center" label="考试名称" width="180">
+                        <el-table-column prop="exam_title" align="center" label="考试名称" width="">
                         </el-table-column>
                         <el-table-column prop="manager_idName" align="center" label="管理员" width="180">
                         </el-table-column>

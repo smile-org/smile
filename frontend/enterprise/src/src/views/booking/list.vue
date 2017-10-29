@@ -161,7 +161,7 @@
   }
 </script>
 
-<style>
+<style scoped="scope">
   .el-icon-loading{
     color: #fff;
   }
