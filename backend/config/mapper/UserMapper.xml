@@ -27,6 +27,12 @@
         update   user  set   password =#{password}  where user_id=#{userid}
     </update>
 
+
+    <update id="UpdateUserPic"  >
+        update   user set   avatar  = #{avatar} where user_id= #{userid}
+    </update>
+
+
     <insert id="backAddUser"    parameterType="com.dli.entities.User"   useGeneratedKeys="true"   keyProperty="user_id" >
         insert  user values(  0, #{cell_phone}, null,#{email}, #{job_number}, #{avatar},#{full_name}, #{department} ,#{area},null,#{company_id},1,now(),now())
     </insert>
@@ -70,12 +76,12 @@ where user_id=#{user_id}
     </update>
 
     <select id="backGetCompanyAdminList"   resultMap="UserMap">
-        select u.* from user  u join user_role   m on u.user_id = m.user_id where m.role_id =2 and u.company_id =#{companyid}     limit #{skip}, #{take}
+        select u.* from user  u join user_role   m on u.user_id = m.user_id where m.role_id =2 and u.company_id =#{companyid}    and  indicator=1   limit #{skip}, #{take}
     </select>
 
 
     <select id="backGetCompanyAdminListCount"    resultType="int">
-        select  count(*) from user  u join user_role   m on u.user_id = m.user_id where m.role_id =2 and u.company_id =#{companyid}
+        select  count(*) from user  u join user_role   m on u.user_id = m.user_id where m.role_id =2 and u.company_id =#{companyid}   and  indicator=1
     </select>
 
     <update id="backUpdateUserRole" >
@@ -85,15 +91,17 @@ where user_id=#{user_id}
 
 
     <select id="backGetCompanyEmployeeList"   resultMap="UserMap">
-        select u.* from user  u join user_role   m on u.user_id = m.user_id where m.role_id =1 and u.company_id =#{companyid}
+        select u.* from user  u join user_role   m on u.user_id = m.user_id where m.role_id =1 and u.company_id =#{companyid}   and  indicator=1
         <if test="fullname!=null">   and u.full_name like '%${fullname}%'</if>
            limit #{skip}, #{take}
     </select>
 
 
     <select id="backGetCompanyEmployeeListCount"    resultType="int">
-        select  count(*) from user  u join user_role   m on u.user_id = m.user_id where m.role_id =1 and u.company_id =#{companyid}
+        select  count(*) from user  u join user_role   m on u.user_id = m.user_id where m.role_id =1 and u.company_id =#{companyid}  and  indicator=1
 
         <if test="fullname!=null">   and u.full_name like '%${fullname}%'</if>
     </select>
+
+
 </mapper>

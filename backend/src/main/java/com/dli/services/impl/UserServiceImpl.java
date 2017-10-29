@@ -74,6 +74,11 @@ public class UserServiceImpl implements UserService {
         return userRepo.backGetCompanyEmployeeListCount(fullname,companyid);
     }
 
+    @Override
+    public void UpdateUserPic(String avatar, int userid) {
+        userRepo. UpdateUserPic(avatar,userid);
+    }
+
    /* @Override
     public List<User> backGetUserList(User u) {
         return userRepo.backGetUserList(u);

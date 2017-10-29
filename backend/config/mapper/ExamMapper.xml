@@ -134,7 +134,7 @@ left join ( select * from exam_record  where history_id in
  ( select answer_id from exam_record_answerchoice where record_id in(
  select record_id from exam_record  where  question_id=#{questionid} and history_id =
 (select max(history_id) from  exam_history where exam_id= #{examid} and user_id=#{userid}
- and status ='in-process')))r on  a.answer_id =r.answer_id;
+ and status ='in-process')))r on  a.answer_id =r.answer_id  order by  a.answer_num;
     </select>
 
 
@@ -151,7 +151,7 @@ left join ( select * from exam_record  where history_id in
     </insert>
 
     <select id="getQuestionListByExamid"  resultMap="QuestionMap"  >
-        select * from question  where  indicator =1 and  question_id in (
+        select * from question  where    question_id in (
         select question_id from exam_question where  exam_id = #{examid} )
     </select>
 
@@ -281,4 +281,213 @@ left join ( select * from exam_record  where history_id in
            select * from   exam  where exam_title like '%${keyword}%'  and company_id=#{companyid} and indicator=1  limit #{skip} ,#{take}
     </select>
 
+    <insert id="backAddExamQuestion"  parameterType="com.dli.entities.Question"    useGeneratedKeys="true"   keyProperty="question_id">
+        insert   question  values( null, #{type_id},   #{title}, #{company_id},  1,  now(), now()  )
+    </insert>
+
+    <insert id="backAddQuestionAnswer"   parameterType="com.dli.entities.Answer"  >
+        insert answer values(  0, #{question_id} , #{answer_num},  #{answer_option}, #{answer_content}, #{is_right}, 1 ,  now(),  now() )
+    </insert>
+
+    <select id="backGetQuestion" resultType="com.dli.entities.Question">
+        select * from  question where question_id=#{questionid}
+    </select>
+
+    <select id="backGetQuestionAnswerList" resultType="com.dli.entities.Answer">
+        select * from answer where question_id=#{questionid}  and indicator =1
+    </select>
+
+    <update id="backUpdateQuestion"  parameterType="com.dli.entities.Question">
+        update  question set type_id=#{type_id}, title=#{title}, updated_at=now() where question_id=#{question_id}
+    </update>
+
+    <update id="backDisableAnswer">
+update  answer set indicator=0 where answer_id=#{answerid}
+    </update>
+    
+    <update id="backUpdateAnswer"  parameterType="com.dli.entities.Answer">
+        update answer set answer_num=#{answer_num},
+         answer_option=#{answer_option},
+          answer_content= #{answer_content},
+           is_right=#{is_right}, updated_at=now() where answer_id=#{answer_id}
+    </update>
+
+    <select id="backGetQuestionList"  parameterType="com.dli.entities.QuestionCondition"  resultType="com.dli.entities.Question">
+        select * from(
+        select *, DATE_FORMAT(created_at,'%Y-%m-%d') as created_at1 from question where company_id=#{company_id}
+        )result  where 1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="type_id!=0">and type_id =#{type_id} </if>
+        <if test="created_at!=null">and created_at1 = #{created_at}</if>
+        limit #{skip} ,#{take}
+    </select>
+
+
+    <select id="backGetQuestionListCount"  parameterType="com.dli.entities.QuestionCondition"  resultType="int">
+        select count(*) from(
+        select *, DATE_FORMAT(created_at,'%Y-%m-%d') as created_at1 from question where company_id=#{company_id}
+        )result  where 1=1
+        <if test="title!=null">and title like '%${title}%'</if>
+        <if test="type_id!=0">and type_id =#{type_id} </if>
+        <if test="created_at!=null">and created_at1 = #{created_at}</if>
+    </select>
+
+    <select id="backGetExamDetailQuestionAnswer"  resultType="com.dli.entities.Answer">
+        select o1.*   ,
+case  when  o2.answer_id2  is not null then 1 else 0   end  as isSelected
+from  (  select *  from answer  where  indicator =1 and  question_id= #{questionid})o1
+left  join (
+select  ra.answer_id as   answer_id2 from
+ exam_record  r  join   exam_record_answerchoice  ra on r.record_id =ra.record_id
+where   r.history_id= #{historyid}     and r.question_id =#{questionid})o2   on
+ o1.answer_id = o2.answer_id2   order by o1.answer_num
+    </select>
+
+
+    <select id="backGetExamList"   parameterType="com.dli.entities.ExamCondition"   resultType="com.dli.entities.Exam">
+        select * from (
+select e.*,  u.full_name as manager_idName from exam   e   join   user  u   on e.manager_id = u.user_id  where e.indicator=1 and e.company_id=#{company_id}
+)result
+where 1=1
+        <if test="exam_num!=null">and exam_num like '%${exam_num}%'</if>
+        <if test="exam_title!=null">and exam_title   like '%${exam_title}%' </if>
+        <if test="manager_idName!=null">and manager_idName    like '%${manager_idName}%'</if>
+        <if test="start_date!=null">and start_date &gt;=    #{start_date} </if>
+        <if test="end_date!=null">and end_date  &lt;=   #{end_date}</if>
+        limit #{skip} ,#{take}
+    </select>
+
+
+
+    <select id="backGetExamListCount"   parameterType="com.dli.entities.ExamCondition"   resultType="int">
+        select count(*) from (
+        select e.*,  u.full_name as manager_idName from exam   e   join   user  u   on e.manager_id = u.user_id  where e.indicator=1 and e.company_id=#{company_id}
+        )result
+        where 1=1
+        <if test="exam_num!=null">and exam_num like '%${exam_num}%'</if>
+        <if test="exam_title!=null">and exam_title   like '%${exam_title}%' </if>
+        <if test="manager_idName!=null">and manager_idName    like '%${manager_idName}%'</if>
+        <if test="start_date!=null">and start_date &gt;=    #{start_date} </if>
+        <if test="end_date!=null">and end_date  &lt;=   #{end_date}</if>
+    </select>
+
+    <update id="backDisableExam">
+        update exam  set indicator =0 where exam_id =#{examid}
+    </update>
+
+    <update id="backDisableQuestion">
+        update question  set indicator =0 where question_id =#{questionid}
+    </update>
+
+
+     <select id="backGetExamHistoryList"   parameterType="com.dli.entities.backExamHistory"  resultType="com.dli.entities.backExamHistory">
+         select *  from(select  h.history_id,
+         e.exam_num, e.exam_title,   u.full_name,  u.department   ,u.area  ,  h.score, h.`status`,  h.start_date,h.end_date from    exam_history   h  join  exam  e on h.exam_id =e.exam_id
+         join user u  on  h.user_id = u.user_id
+         where e.company_id=#{company_id}   and  h.`status`!='in-process')result
+         where 1=1
+         <if test="exam_num!=null">and exam_num like '%${exam_num}%'</if>
+         <if test="exam_title!=null">and exam_title   like '%${exam_title}%' </if>
+         <if test="full_name!=null">and full_name    like '%${full_name}%'</if>
+         <if test="start_date!=null">and start_date &gt;=    #{start_date} </if>
+         <if test="end_date!=null">and end_date  &lt;=   #{end_date}</if>
+         limit #{skip} ,#{take}
+
+     </select>
+
+
+
+    <select id="backGetExamHistoryListCount"   parameterType="com.dli.entities.backExamHistory"  resultType="int">
+        select count(*)  from(select  e.exam_num, e.exam_title,   u.full_name,  u.department   ,u.area  ,  h.score, h.`status`,  h.start_date,h.end_date from    exam_history   h  join  exam  e on h.exam_id =e.exam_id
+        join user u  on  h.user_id = u.user_id
+        where e.company_id=#{company_id}   and  h.`status`!='in-process')result
+        where 1=1
+        <if test="exam_num!=null">and exam_num like '%${exam_num}%'</if>
+        <if test="exam_title!=null">and exam_title   like '%${exam_title}%' </if>
+        <if test="full_name!=null">and full_name    like '%${full_name}%'</if>
+        <if test="start_date!=null">and start_date &gt;=    #{start_date} </if>
+        <if test="end_date!=null">and end_date  &lt;=   #{end_date}</if>
+    </select>
+
+     <select id="backGetExamHistory"  resultType="com.dli.entities.backExamHistory">
+         select  e.exam_title,  h.start_date,h.end_date,  h.score, u.full_name,   h.`status`  from    exam_history   h  join  exam  e on h.exam_id =e.exam_id
+join user u  on  h.user_id = u.user_id
+ where h.history_id=#{historyid}
+
+     </select>
+
+
+    <select id="backGetExamHistoryQuestionList"  resultType="com.dli.entities.Question"  >
+    select  m.question_num,  q.* ,
+case  when   r.is_right is  not null then  cast( r.is_right  as signed ) else  0  end  as  is_Right  from exam_history   h   join   exam_question  m  on h.exam_id= m.exam_id
+join  question q on   m.question_id= q.question_id
+
+ left  join      exam_record   r  on  h.history_id =  r.history_id    and   q.question_id= r.question_id
+where  h.history_id=  #{historyid}  order by    m.question_num
+    limit #{skip} ,#{take}
+    </select>
+
+
+
+    <select id="backGetExamHistoryQuestionListCount"  resultType="int"  >
+        select  count(*)  from exam_history   h   join   exam_question  m  on h.exam_id= m.exam_id
+        join  question q on   m.question_id= q.question_id
+
+        left  join      exam_record   r  on  h.history_id =  r.history_id    and   q.question_id= r.question_id
+        where  h.history_id=  #{historyid}
+
+    </select>
+
+   <insert id="backAddExamCourseMapping" >
+       insert exam_course VALUES(  #{examid}, #{courseid} )
+   </insert>
+
+    <insert id="backAddExamQuestionMapping">
+        insert   exam_question values( #{questionid}  , #{examid} , #{num}  );
+    </insert>
+
+
+
+    <insert id="backAddExam"  parameterType="com.dli.entities.Exam"   useGeneratedKeys="true"   keyProperty="exam_id" >
+         insert  exam  values( 0,  #{exam_num}, #{exam_title},  #{manager_id} ,  #{start_date},  #{end_date},     #{tries_limit} ,#{pass_score}, #{time_limit}, #{intro},      #{icon},   #{pic} ,  #{company_id}, 1, now(),  now()  );
+    </insert>
+
+
+    <update id="backUpdateExamIconAndPic"  parameterType="com.dli.entities.Exam">
+        update   exam    <set>    <if test="icon!=null">icon = #{icon},</if>   <if test="pic!=null"> pic =#{pic}</if>  </set>  where exam_id =#{exam_id}
+    </update>
+
+
+    <select id="backGetExamCourseListByExamID"  resultType="com.dli.entities.Course">
+        select  c.* from  course  c  join   exam_course  m  on  c.course_id= m.course_id  where m.exam_id=   #{examid}
+    </select>
+
+    <select id="backGetExamQuestionListByExamID"  resultType="com.dli.entities.Question">
+select   q.*  ,  m.question_num from question q join  exam_question  m   on  q.question_id =m.question_id where   m.exam_id=#{examid}   order by m.question_num
+    </select>
+
+
+    <delete  id="backDeleteExamCourseMapping" >
+        delete   from  exam_course where exam_id = #{examid}
+    </delete>
+
+    <delete id="backDeleteExamQuestionMapping">
+        delete from    exam_question  where exam_id =  #{exam_id}
+    </delete>
+
+    <update id="backUpdateExam"  parameterType="com.dli.entities.Exam">
+update    exam   set
+exam_title= #{exam_title},
+manager_id=#{manager_id},
+start_date=#{start_date},
+end_date=#{end_date},
+tries_limit=#{tries_limit},
+pass_score=#{pass_score},
+time_limit=#{time_limit},
+intro=#{intro},
+icon=#{icon},
+pic=#{pic},
+updated_at=  now()
+where     exam_id =  #{exam_id}
+    </update>
 </mapper>

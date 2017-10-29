@@ -40,4 +40,6 @@ public interface UserRepo {
     List<User>   backGetCompanyEmployeeList ( @Param("fullname") String fullname,  @Param("companyid") int companyid  ,@Param("skip") int skip ,@Param("take") int take);
 
    int   backGetCompanyEmployeeListCount (  @Param("fullname") String fullname,  @Param("companyid") int companyid);
+
+      void     UpdateUserPic(  @Param("avatar")  String  avatar,   @Param("userid") int userid );
 }

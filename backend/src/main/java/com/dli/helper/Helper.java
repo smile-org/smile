@@ -208,7 +208,8 @@ public class Helper {
      3. generate token . when : log on , if token is null.
      4. job to create records into table short_message(table created already) ,  for new user which password is null
      5. job to send message ,record from short_message
-     6.  员工管理列表页面  批量导入，  下载倒入模板
+     6.  员工，  问题    导入的   读取excel部分
+       导出问题列表   没导出选项
      7.  job 清理  course_content 中没有course_id的记录 和对应的 文件， 考虑一下当前正在编辑的课程（也是这种情况，但是不能删除），比如删除一周以前创建的
     *
     * */

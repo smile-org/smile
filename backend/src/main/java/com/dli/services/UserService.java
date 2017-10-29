@@ -35,4 +35,5 @@ public interface UserService {
 
     int   backGetCompanyEmployeeListCount ( String fullname,  int companyid);
 
+    void     UpdateUserPic(  String  avatar,   int userid );
 }

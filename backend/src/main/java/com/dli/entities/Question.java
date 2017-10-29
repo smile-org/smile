@@ -11,6 +11,7 @@ public class Question {
     private String title;
     private int company_id;
 
+
     private boolean indicator;
     private Date created_at;
     private Date updated_at;
@@ -18,8 +19,28 @@ public class Question {
 
     private String lastStatus;
 
+    private  boolean    is_Right;
+    private  int    question_num;
+
+    public int getQuestion_num() {
+        return question_num;
+    }
+
+    public void setQuestion_num(int question_num) {
+        this.question_num = question_num;
+    }
 
     public List<Answer>   answers;
+
+
+
+    public boolean isIs_Right() {
+        return is_Right;
+    }
+
+    public void setIs_Right(boolean is_Right) {
+        this.is_Right = is_Right;
+    }
 
 
 

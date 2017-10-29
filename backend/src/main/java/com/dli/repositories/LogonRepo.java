@@ -1,10 +1,7 @@
 package com.dli.repositories;
 
 
-import com.dli.entities.Demo;
-import com.dli.entities.LogonHistory;
-import com.dli.entities.SMS;
-import com.dli.entities.User;
+import com.dli.entities.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -40,4 +37,5 @@ public interface LogonRepo {
     List<LogonHistory>  backGetLogonHistoryList(LogonHistory   h);
 
     int backGetLogonHistoryListCount(LogonHistory   h);
+
 }

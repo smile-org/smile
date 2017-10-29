@@ -2,6 +2,7 @@ package com.dli.services.impl;
 
 
 import com.dli.entities.*;
+import com.dli.helper.Constant;
 import com.dli.repositories.CollectRepo;
 import com.dli.repositories.DemoRepo;
 import com.dli.repositories.ExamRepo;
@@ -234,5 +235,174 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public List<SearchResult> searchExam(int companyid, String keyword, int skip, int take) {
         return  examRepo.searchExam(companyid,keyword,skip,take);
+    }
+
+    @Override
+    public void backAddQuestion(  Question   q,  List<Answer> answerList) {
+        examRepo.backAddExamQuestion(q);
+        for(   Answer  a : answerList  )
+        {
+            a.setQuestion_id(q.getQuestion_id());
+            examRepo.backAddQuestionAnswer(a);
+
+        }
+    }
+
+    @Override
+    public QuestionEditPageInfo backGetQuestionEditPageInfo(int questionid) {
+        QuestionEditPageInfo entity =new QuestionEditPageInfo();
+        entity.QuestionToBeEidt= examRepo.backGetQuestion(questionid);
+        entity.AnswerList =examRepo.backGetQuestionAnswerList(questionid);
+
+        return  entity;
+    }
+
+    @Override
+    public void backUpdateQuestion(Question q, List<Answer> answerList) {
+        examRepo.backUpdateQuestion(q);
+
+
+
+        List<Answer>  storedLst = examRepo.backGetQuestionAnswerList(q.getQuestion_id());
+
+        for(Answer  stored : storedLst)
+        {
+            if( !answerList.contains(  stored ))
+            {
+                examRepo.backDisableAnswer(  stored.getAnswer_id());
+            }
+        }
+
+
+        for(Answer  a  :  answerList)
+        {
+            if(a.getAnswer_id()==0)
+            {
+                a.setQuestion_id(q.getQuestion_id());
+                examRepo.backAddQuestionAnswer(a);
+            }
+            else
+            {
+                examRepo.backUpdateAnswer(a);
+            }
+        }
+
+
+    }
+
+    @Override
+    public List<Question> backGetQuestionList(QuestionCondition q) {
+        return  examRepo.backGetQuestionList(q);
+    }
+
+    @Override
+    public int backGetQuestionListCount(QuestionCondition q) {
+        return  examRepo.backGetQuestionListCount(q);
+    }
+
+    @Override
+    public List<Exam> backGetExamList(ExamCondition e) {
+        return   examRepo.backGetExamList(e);
+    }
+
+    @Override
+    public int backGetExamListCount(ExamCondition e) {
+        return  examRepo.backGetExamListCount(e);
+    }
+
+    @Override
+    public void backDisableExam(int examid) {
+        examRepo.backDisableExam(examid);
+    }
+
+    @Override
+    public void backDisableQuestion(int questionid) {
+           examRepo.backDisableQuestion(questionid);
+    }
+
+    @Override
+    public List<backExamHistory> backGetExamHistoryList(backExamHistory bh) {
+        return   examRepo.backGetExamHistoryList(bh);
+    }
+
+    @Override
+    public int backGetExamHistoryListCount(backExamHistory bh) {
+        return  examRepo.backGetExamHistoryListCount(bh);
+    }
+
+    @Override
+    public List<Question>  backGetExamHistoryQuestionList(int historyid ,int skip ,int take){
+
+
+        List<Question>  questions =examRepo.backGetExamHistoryQuestionList(historyid ,skip ,take);
+
+        for(   Question  q :  questions  )
+        {
+            q.answers =examRepo.backGetExamDetailQuestionAnswer(historyid,  q.getQuestion_id());
+        }
+
+        return  questions;
+    }
+
+    @Override
+    public backExamHistory backGetExamHistory(int historyid) {
+        return   examRepo.backGetExamHistory(historyid);
+    }
+
+    @Override
+    public int backGetExamHistoryQuestionListCount(int historyid) {
+        return   examRepo.backGetExamHistoryQuestionListCount(historyid);
+    }
+
+    @Override
+    public void backAddExamCourseMapping(int examid, int courseid) {
+         examRepo.backAddExamCourseMapping(examid,courseid);
+    }
+
+    @Override
+    public void backAddExamQuestionMapping(int questionid, int examid, int num) {
+        examRepo.backAddExamQuestionMapping(questionid, examid, num);
+    }
+
+    @Override
+    public void backAddExam(Exam exam) {
+        examRepo.backAddExam(exam);
+    }
+
+    @Override
+    public void backUpdateExamIconAndPic(Exam e) {
+        examRepo.backUpdateExamIconAndPic(e);
+    }
+
+    @Override
+    public ExamEditPageInfo backGetExamEditPageInfo(int examid, int companyid) {
+
+        ExamEditPageInfo  entity =  new ExamEditPageInfo();
+
+        entity.AdminList = userRepo.backGetCompanyAdminList( companyid, 0,  Constant.takeMax );
+
+        if( examid>0)
+        {
+            entity.ExamToBeEdit = examRepo.getExambyID(examid);
+            entity.CourseList =examRepo.backGetExamCourseListByExamID(examid);
+            entity.QuestionList =examRepo.backGetExamQuestionListByExamID(examid);
+        }
+
+        return   entity;
+    }
+
+    @Override
+    public void backDeleteExamCourseMapping(int examid) {
+        examRepo.backDeleteExamCourseMapping(examid);
+    }
+
+    @Override
+    public void backDeleteExamQuestionMapping(int examid) {
+         examRepo.backDeleteExamQuestionMapping(examid);
+    }
+
+    @Override
+    public void backUpdateExam(Exam e) {
+        examRepo.backUpdateExam(e);
     }
 }

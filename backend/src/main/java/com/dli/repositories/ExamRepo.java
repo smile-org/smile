@@ -58,6 +58,64 @@ public interface ExamRepo {
     List<Exam> getMyCollectionList( @Param("userid") int userid,  @Param("skip")int  skip , @Param("take")int take );
 
     List<SearchResult>  searchExam(@Param("companyid") int companyid,  @Param("keyword")String keyword,   @Param("skip") int skip,@Param("take")  int take);
+
+    void    backAddExamQuestion(  Question  q );
+
+    void   backAddQuestionAnswer(Answer  a);
+
+    Question backGetQuestion(int questionid);
+
+    List<Answer>  backGetQuestionAnswerList(int   questionid);
+
+    void   backUpdateQuestion(Question q);
+
+    void    backDisableAnswer(int answerid);
+
+    void  backUpdateAnswer(Answer  a);
+
+    List<Question>  backGetQuestionList( QuestionCondition  q );
+
+    int backGetQuestionListCount( QuestionCondition  q );
+
+     List<Exam>   backGetExamList(ExamCondition   e);
+
+
+    int backGetExamListCount(ExamCondition   e);
+
+      void   backDisableExam(int  examid);
+
+
+    void   backDisableQuestion(int  questionid);
+
+    List<backExamHistory>  backGetExamHistoryList(backExamHistory  bh);
+
+    int backGetExamHistoryListCount(backExamHistory bh);
+
+    backExamHistory  backGetExamHistory(int historyid);
+
+    List<Question>  backGetExamHistoryQuestionList( @Param("historyid") int  historyid , @Param("skip")int skip, @Param("take")int take);
+
+    int backGetExamHistoryQuestionListCount(int historyid);
+
+    void     backAddExamCourseMapping(  @Param("examid") int examid, @Param("courseid")  int  courseid );
+
+    void   backAddExamQuestionMapping( @Param("questionid") int questionid, @Param("examid")  int examid,   @Param("num")int num );
+
+    void  backAddExam( Exam  exam);
+
+    void  backUpdateExamIconAndPic(Exam  e);
+
+    List<Answer>  backGetExamDetailQuestionAnswer(  @Param("historyid") int historyid ,  @Param("questionid") int questionid);
+
+    List<Course>  backGetExamCourseListByExamID(int  examid);
+    List<Question>     backGetExamQuestionListByExamID(    int examid  );
+
+    void  backDeleteExamCourseMapping(int  examid);
+
+    void  backDeleteExamQuestionMapping(int  examid);
+
+    void   backUpdateExam(  Exam  e  );
+
 }
 
 

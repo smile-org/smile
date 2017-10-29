@@ -3,6 +3,7 @@ package com.dli.controllers;
 import com.dli.entities.Demo;
 import com.dli.entities.User;
 import com.dli.helper.Constant;
+import com.dli.helper.FileUtil;
 import com.dli.helper.Helper;
 import com.dli.helper.OfficeUtil;
 import com.dli.services.DemoService;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -461,6 +463,98 @@ public class UserController {
         }
         return result;
     }
+
+
+
+    @Value("${userimporttempfile}")
+    private String userimporttempfile;
+
+
+  //  userimporttempfile=/import/%s-User.xlsx
+
+    @RequestMapping(value = "/back/ImportUserList", method = RequestMethod.POST)
+    public Map backImportUserList(@RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            String guid = UUID.randomUUID().toString();
+            String fileName = String.format("%s-User.xlsx", guid);
+            String path = String.format(userimporttempfile, guid).replace(fileName, "");
+            FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
+
+
+            //todo :  读取excel ,插入数据
+
+
+
+
+            result.put(Constant.status, 1);
+             result.put(Constant.result,  "导入成功");
+           // result.put(Constant.result, path + fileName);
+
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+    @Value("${header}")
+    private String headerpath;
+
+    // header=/company-%s/header/%s-header.png
+
+    @RequestMapping(value = "/UploadUserPic", method = RequestMethod.POST)
+    public Map UploadUserPic(@RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+           //String guid = UUID.randomUUID().toString();
+            String fileName = String.format("%s-header.png", user.getUser_id());
+            String path = String.format(headerpath, user.getCompany_id(), user.getUser_id()).replace(fileName, "");
+            FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
+
+            userService.UpdateUserPic( path + fileName , user.getUser_id() );
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result,   "头像上传成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+
+
+
+
+
 
 
 

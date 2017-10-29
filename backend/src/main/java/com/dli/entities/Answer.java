@@ -97,4 +97,19 @@ public class Answer {
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Answer answer = (Answer) o;
+
+        return answer_id == answer.answer_id;
+    }
+
+    @Override
+    public int hashCode() {
+        return answer_id;
+    }
 }

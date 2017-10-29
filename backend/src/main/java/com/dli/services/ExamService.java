@@ -35,4 +35,54 @@ public interface ExamService {
 
     List<SearchResult>  searchExam(int companyid,  String keyword,    int skip,  int take);
 
+    void      backAddQuestion(Question   q ,List<Answer>   answerList);
+
+    QuestionEditPageInfo  backGetQuestionEditPageInfo(  int  questionid);
+
+    void  backUpdateQuestion(Question   q ,List<Answer>   answerList);
+
+    List<Question>  backGetQuestionList( QuestionCondition  q );
+
+    int backGetQuestionListCount( QuestionCondition  q );
+
+    List<Exam>   backGetExamList(ExamCondition   e);
+
+    int backGetExamListCount(ExamCondition   e);
+
+    void   backDisableExam(int  examid);
+
+
+    void   backDisableQuestion(int  questionid);
+
+    List<backExamHistory>  backGetExamHistoryList(backExamHistory  bh);
+
+
+    int backGetExamHistoryListCount(backExamHistory bh);
+
+
+    List<Question>  backGetExamHistoryQuestionList(int historyid ,int skip ,int take);
+
+
+    backExamHistory  backGetExamHistory(int historyid);
+
+    int backGetExamHistoryQuestionListCount(int historyid);
+
+    void     backAddExamCourseMapping(   int examid,   int  courseid );
+
+    void   backAddExamQuestionMapping(  int questionid,   int examid,   int num );
+
+
+    void  backAddExam( Exam  exam);
+
+    void  backUpdateExamIconAndPic(Exam  e);
+
+
+    ExamEditPageInfo     backGetExamEditPageInfo(int examid ,int companyid);
+
+    void  backDeleteExamCourseMapping(int  examid);
+
+    void  backDeleteExamQuestionMapping(int  examid);
+
+    void   backUpdateExam(  Exam  e  );
+
 }

@@ -1050,12 +1050,11 @@ public class EnrollmentController {
                 ec.setSequnce_title((String) content.get("sequnce_title"));
                 ec.setContent((String) content.get("content"));
 
-                if (content.get("content_id") != null) {
-                    ec.setContent_id((int) content.get("content_id"));
-                } else {
-                    ec.setContent_id(0);
+                int  contentid= (int) content.get("content_id");
+                ec.setContent_id(contentid);
+                if(contentid==0)
                     ec.setEnrollment_id(enrollmentid);
-                }
+
                 lst.add(ec);
             }
 
@@ -1133,12 +1132,13 @@ public class EnrollmentController {
                 ec.setSequnce_title((String) content.get("sequnce_title"));
                 ec.setContent((String) content.get("content"));
 
-                if (content.get("content_id") != null) {
-                    ec.setContent_id((int) content.get("content_id"));
-                } else {
-                    ec.setContent_id(0);
+               // if (content.get("content_id") != null) {
+                int  contentid= (int) content.get("content_id");
+                    ec.setContent_id(contentid);
+
+                if(  contentid==0 )
                     ec.setEnrollment_id(enrollmentid);
-                }
+
                 lst.add(ec);
             }
 
