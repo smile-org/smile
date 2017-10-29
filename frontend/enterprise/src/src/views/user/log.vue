@@ -16,11 +16,11 @@
             </el-form-item>
             <el-form-item label="登录时间">
               <el-col :span="11">
-                <el-date-picker type="date" @change="changeDateFrom" placeholder="选择日期" v-model="dateFrom" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" class="dateTab_width" @change="changeDateFrom" placeholder="选择日期" v-model="dateFrom" style="width: 100%;"></el-date-picker>
               </el-col>
               <el-col class="line tc ml_10style" :span="2"> —</el-col>
               <el-col :span="11">
-                <el-date-picker type="date" @change="changeDateTo" placeholder="选择日期" v-model="dateTo" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date"  class="dateTab_width" @change="changeDateTo" placeholder="选择日期" v-model="dateTo" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item label="部门">
