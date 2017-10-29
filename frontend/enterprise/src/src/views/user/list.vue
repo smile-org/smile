@@ -45,7 +45,7 @@
                     <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
                         <!--<el-row>-->
                         <el-form-item label="姓名">
-                            <el-input v-model="formInLine.user" placeholder="姓名"></el-input>
+                            <el-input v-model="formInLine.name" placeholder="姓名"></el-input>
                         </el-form-item>
                         <el-form-item label="手机号">
                             <el-input v-model="formInLine.mobile" placeholder="手机号"></el-input>
