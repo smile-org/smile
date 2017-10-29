@@ -625,6 +625,7 @@ table {
   border: 1px solid #ededed;
   padding: 5px;
   overflow: hidden;
+  vertical-align: middle;
   /*background: #ededed;*/
 }
 
@@ -646,7 +647,9 @@ table {
   text-align: center;
   margin: 20px 0;
 }
-
+.dateTab_width .el-input__icon+.el-input__inner{
+  padding-right:10px;
+}
 /*输入框宽度统一*/
 /*.el-form--inline .el-form-item__content .el-input{*/
   /*width: 160px;*/
@@ -664,4 +667,11 @@ table {
   text-align: center;
   padding-left:3px;
   box-sizing: border-box;
+}
+/*分页颜色*/
+.el-pager li.active,.el-pager li.active:hover{
+  border-color: #55b761;
+  background-color: #55b761;
+  color: #fff;
+  cursor: default;
 }

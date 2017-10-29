@@ -35,14 +35,14 @@
                         <el-row>
                             <el-col :span="8">
                                 <el-form-item label="开始时间">
-                                    <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"
+                                    <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.startDate"
                                                     style="width: 100%;"></el-date-picker>
                                     <div class="el-form-item__error">{{startDateErrMsg}}</div>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="结束时间">
-                                    <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate"
+                                    <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.endDate"
                                                     style="width: 100%;"></el-date-picker>
                                     <div class="el-form-item__error">{{endDateErrMsg}}</div>
                                 </el-form-item>
@@ -53,7 +53,6 @@
                               <div class="el-form-item__error">{{locationErrMsg}}</div>
                             </el-form-item>
                           </el-col>
-
                         </el-row>
                       <el-col>
                         <el-form-item label="课程简介">
@@ -61,9 +60,9 @@
                           <div class="el-form-item__error">{{introErrMsg}}</div>
                         </el-form-item>
                       </el-col>
-
                     </el-form>
-                    <table class="page_m mt30" cellspacing="0" cellpadding="0" border="0">
+                  <hr class="hr_line">
+                    <table class="page_m mt30 mb30" cellspacing="0" cellpadding="0" border="0">
                         <tr>
                             <td class="page_m_a">课程图标</td>
                             <td class="page_m_b">
@@ -87,6 +86,7 @@
                             </td>
                         </tr>
                     </table>
+                    <hr class="hr_line">
                     <div class="mt30 ">
                         <p class="pos_re">培训内容   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
                         <template class="hidden">
@@ -101,7 +101,7 @@
                                 </el-col>
                                 <el-col :span="12">
                                     <el-form-item label="起止时间">
-                                        <el-date-picker v-model="formInline.dateRange" type="datetimerange" placeholder="选择时间范围"></el-date-picker>
+                                        <el-date-picker v-model="formInline.dateRange" type="datetimerange"   placeholder="选择时间范围"></el-date-picker>
                                         <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
                                     </el-form-item>
                                 </el-col>
@@ -115,7 +115,6 @@
                                 </el-col>
                             </el-form>
                         </template>
-                        <hr class="hr_line">
                         <template>
                             <el-table :data="tableData" class="mt20" border style="width: 100%">
                                 <el-table-column prop="sequnce_num" align="center" label="序号" width="100"></el-table-column>

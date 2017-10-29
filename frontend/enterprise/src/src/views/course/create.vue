@@ -21,7 +21,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="课程类别" prop="cateid">
-                <el-select v-model="form.cateid" placeholder="请选择课程类别">
+                <el-select class="dateTab_width" v-model="form.cateid" placeholder="请选择课程类别">
                   <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
                   </el-option>
                 </el-select>
@@ -34,7 +34,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="责任人" prop="adminid">
-                <el-select v-model="form.adminid" placeholder="请选择责任人">
+                <el-select class="dateTab_width" v-model="form.adminid" placeholder="请选择责任人">
                   <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
                   </el-option>
                 </el-select>
@@ -42,12 +42,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="有效期" prop="expdate">
-                <el-date-picker
-                  v-model="form.expdate"
-                  type="date"
-                  placeholder="选择日期"
-                  style="width: 100%;"
-                  :picker-options="pickerOptions0">
+                <el-date-picker v-model="form.expdate" type="date" placeholder="选择日期" class="dateTab_width" style="width: 100%;" :picker-options="pickerOptions0">
                 </el-date-picker>
               </el-form-item>
             </el-col>

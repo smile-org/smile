@@ -16,14 +16,14 @@
                         <el-form-item label="讲师" prop="region">
                             <el-input v-model="form.teacher" placeholder="讲师"></el-input>
                         </el-form-item>
-                        <el-form-item label="开始时间">
+                        <el-form-item label="开始时间" >
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
+                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                         <el-form-item label="结束时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
+                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                         <el-form-item class="fr">

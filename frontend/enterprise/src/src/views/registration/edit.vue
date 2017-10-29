@@ -36,14 +36,14 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="开始时间">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"
+                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.startDate"
                                   style="width: 100%;"></el-date-picker>
                   <div class="el-form-item__error">{{startDateErrMsg}}</div>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="结束时间">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate"
+                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.endDate"
                                   style="width: 100%;"></el-date-picker>
                   <div class="el-form-item__error">{{endDateErrMsg}}</div>
                 </el-form-item>
@@ -63,15 +63,11 @@
             </el-col>
 
           </el-form>
-          <table class="page_m mt30" cellspacing="0" cellpadding="0" border="0">
+          <hr class="hr_line">
+          <table class="page_m mt30 mb30" cellspacing="0" cellpadding="0" border="0">
             <tr>
               <td class="page_m_a">
                 课程图标
-
-
-
-
-
             </td>
               <td class="page_m_b">
                 <img :src="iconSrc | formatImage" width="20%"/>
@@ -84,11 +80,6 @@
             <tr>
               <td class="page_m_a">
                 课程主图
-
-
-
-
-
             </td>
               <td class="page_m_b">
                 <img :src="bannerSrc | formatImage" width="100%"/>
@@ -99,9 +90,9 @@
               </td>
             </tr>
           </table>
+          <hr class="hr_line">
           <div class="mt30 ">
             <p class="pos_re">培训内容   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
-
             <template class="hidden">
               <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
                 <!--<el-col :span="12">-->
@@ -111,12 +102,10 @@
                     <el-input-number v-model="formInline.num" :min="1" label="序号"></el-input-number>
                     <div class="el-form-item__error"> {{numErrMsg}}</div>
                   </el-form-item>
-
                 </el-col>
                 <el-col :span="12">
                   <el-form-item label="起止时间">
-                    <el-date-picker v-model="formInline.dateRange" type="datetimerange"
-                                    placeholder="选择时间范围"></el-date-picker>
+                    <el-date-picker v-model="formInline.dateRange" type="datetimerange" placeholder="选择时间范围"></el-date-picker>
                     <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
                   </el-form-item>
                 </el-col>
@@ -124,32 +113,20 @@
                   <el-form-item label="主题">
                     <el-input v-model="formInline.topic" placeholder="主题"
                               style="width:400px;"></el-input>
-                    <el-button :plain="true" type="success" class="ml20" size="primary"
-                               v-on:click="addContent()">添加主题
-
-
-
-
-                                        </el-button>
+                    <el-button :plain="true" type="success" class="ml20" size="primary" v-on:click="addContent()">添加主题</el-button>
                     <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
-
                   </el-form-item>
                 </el-col>
               </el-form>
             </template>
             <template>
               <el-table :data="tableData" class="mt20" border style="width: 100%">
-                <el-table-column prop="sequnce_num" label="序号" width="100"></el-table-column>
-                <el-table-column prop="content" label="主题" width=""></el-table-column>
-                <el-table-column prop="sequnce_title" label="起止时间"></el-table-column>
-                <el-table-column prop="" label="操作" width="100">
+                <el-table-column prop="sequnce_num" align="center" label="序号" width="100"></el-table-column>
+                <el-table-column prop="content"  align="center" label="主题" width=""></el-table-column>
+                <el-table-column prop="sequnce_title"  align="center" label="起止时间"></el-table-column>
+                <el-table-column prop="" label="操作"  align="center" width="100">
                   <template scope="scope">
-                    <el-button @click="deleteContent(scope.row.sequnce_num)" type="text" size="small">删除
-
-
-
-
-                                        </el-button>
+                    <el-button @click="deleteContent(scope.row.sequnce_num)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -383,15 +360,15 @@
     padding: 10px 20px;
   }
 
-  .el-button--small {
-    font-size: 14px;
-    color: #00b553;
-  }
+  /*.el-button--small {*/
+    /*font-size: 14px;*/
+    /*color: #00b553;*/
+  /*}*/
 
-  .el-button--small:hover, .el-button--small:active, .el-button--small:focus {
-    font-size: 14px;
-    color: #1DB513;
-  }
+  /*.el-button--small:hover, .el-button--small:active, .el-button--small:focus {*/
+    /*font-size: 14px;*/
+    /*color: #1DB513;*/
+  /*}*/
 
   .add_topic li span {
     /*width:100%;*/

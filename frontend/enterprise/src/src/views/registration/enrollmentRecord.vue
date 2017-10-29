@@ -18,12 +18,12 @@
             </el-form-item>
             <el-form-item label="开始时间">
               <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" class="dateTab_width" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item label="结束时间">
               <el-col>
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" class="dateTab_width"  placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item class="fr">
@@ -43,6 +43,7 @@
             </div>
 
           </el-dialog>
+          <hr class="hr_line">
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="title" align="center" label="课程名称" width="">
             </el-table-column>

@@ -15,7 +15,7 @@
               <el-input v-model="formInline.name" placeholder="课程名称"></el-input>
             </el-form-item>
             <el-form-item label="课程类别">
-              <el-select v-model="formInline.categoryId" placeholder="请选择课程类别">
+              <el-select class="dateTab_width" v-model="formInline.categoryId" placeholder="请选择课程类别">
                  <el-option
                   v-for="item in categoryList"
                   :key="item.category_id"
@@ -28,7 +28,7 @@
               <el-input v-model="formInline.user" placeholder="责任人"></el-input>
             </el-form-item>
             <el-form-item label="发布时间">
-              <el-date-picker type="date" placeholder="发布时间" v-model="formInline.date" style="width: 100%;"></el-date-picker>
+              <el-date-picker class="dateTab_width" type="date" placeholder="发布时间" v-model="formInline.date" style="width: 100%;"></el-date-picker>
             </el-form-item>
             <el-form-item>
               <button type="button" class="inf_btn ml20" v-on:click="search">查  询</button>
