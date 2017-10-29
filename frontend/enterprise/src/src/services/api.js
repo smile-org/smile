@@ -14,12 +14,12 @@ axios.defaults.imageServer = 'http://192.168.1.106:4001'
  * 作用： 可以为每个请求加上额外参数
  */
 axios.interceptors.request.use(config => {
-  // var token = sessionStorage.getItem(conf.cookie.key)
-  // if (token) {
-  //   // token放到header中
-  //   config.headers.common.token = token
-  // }
-  config.headers.common.token = '666666'
+  var token = window.localStorage.getItem('token')
+  if (token) {
+    // token放到header中
+    config.headers.common.token = token
+  }
+  // config.headers.common.token = '666666'
   return config
 }, error => {
   return Promise.reject(error)
@@ -169,7 +169,21 @@ export default {
     // 编辑试题
     editQuestion: '/back/UpdateQuestion',
     // 获取试题
-    getQuestion: '/back/GetQuestionEditPageInfo'
+    getQuestion: '/back/GetQuestionEditPageInfo',
+    uploadExamIcon: axios.defaults.baseURL + '/back/UploadExamIcon',
+    uploadExamBanner: axios.defaults.baseURL + '/back/UploadExamPic',
+    addExam: '/back/AddExam',
+
+    // 员工导入
+    uploadEmployeeExcel: axios.defaults.baseURL + '/back/ImportUserList',
+    // 试题导入
+    uploadQuestionExcel: axios.defaults.baseURL + '/back/ImportQuestionList',
+    // 员工导出
+    exportUserList: '/back/ExportUserList',
+    // 课程导出
+    exportCourseList: '/back/ExportCourseList',
+    // 学习记录导出
+    exportUserLearnProgressList: '/back/ExportUserLearnProgressList'
   },
   image: {
     category: '/default/cateicon.png',
@@ -180,12 +194,17 @@ export default {
     enrollment: {
       icon: '/default/enrollment-icon.png',
       banner: '/default/enrollment-pic.png'
+    },
+    exam: {
+      icon: '/default/exam-icon.png',
+      banner: '/default/exam-pic.png'
     }
   },
 
   getUploadHeaders: function () {
+    var token = window.localStorage.getItem('token')
     return {
-      token: '666666'
+      token: token
     }
   }
 }

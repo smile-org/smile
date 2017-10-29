@@ -96,7 +96,8 @@
         take: 10,
         currentPage: 1,
         showloading: false,
-        excelUrl: ''
+        excelUrl: '',
+        dialogTableVisible: false
       }
     },
     components: {

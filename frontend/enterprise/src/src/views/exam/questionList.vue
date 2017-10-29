@@ -11,7 +11,7 @@
                 <div class="con_tab">
                     <div>
                         <button type="button" v-on:click="addQuestion()" class="inf_btn mr15">添加试题</button>
-                        <button type="button" class="inf_btn mr15">试题导入</button>
+                        <button type="button" class="inf_btn mr15" v-on:click="showUploadDialog()">试题导入</button>
                         <a v-bind:href="templateExcelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
                         <el-button type="button" v-on:click="exportQuestionList()" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
                         <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
@@ -25,6 +25,18 @@
                                 <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
                                 </button>
                             </div>
+                        </el-dialog>
+                        <el-dialog title="试题导入" :visible.sync="dialogUploadVisible">
+                            <el-upload class="upload-demo"
+                                       ref="uploadContent"
+                                       :action="uploadContentAction"
+                                       :on-success="onContentSuccess"
+                                       :before-upload="beforeContentUpload"
+                                       :auto-upload="true"
+                                       :headers="headers">
+                                <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
+                                <div slot="tip" class="el-upload__tip">支持类型xlsx，大小不超过100M</div>
+                            </el-upload>
                         </el-dialog>
                     </div>
                     <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
@@ -115,7 +127,10 @@
         value: '',
         excelUrl: '',
         dialogTableVisible: false,
-        showloading: false
+        showloading: false,
+        dialogUploadVisible: false,
+        uploadContentAction: api.uri.uploadQuestionExcel,
+        headers: {}
       }
     },
     components: {
@@ -124,6 +139,7 @@
     },
     created () {
       this.queryQuestionList()
+      this.headers = api.getUploadHeaders()
     },
     filters: {
       formatDate (time) {
@@ -187,6 +203,28 @@
       },
       editQuestion: function (id) {
         router.push({name: 'examQuestionEdit', query: {id: id}})
+      },
+      showUploadDialog () {
+        this.dialogUploadVisible = true
+      },
+      onContentSuccess (response, file) {
+        this.dialogUploadVisible = false
+      },
+      beforeContentUpload (file) {
+        if (file.name.indexOf('.xlsx') < 0) {
+          this.$message({
+            type: 'info',
+            message: '请上传excel文件！'
+          })
+          return false
+        }
+        if (file.size > 100 * 1024 * 1024) {
+          this.$message({
+            type: 'info',
+            message: '附件不能大于100M'
+          })
+          return false
+        }
       }
     }
   }
