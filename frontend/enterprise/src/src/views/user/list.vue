@@ -12,9 +12,21 @@
         <div class="con_tab">
           <div>
             <button v-on:click="routeByName('userCreate')" class="inf_btn mr15 vm">添加员工</button>
-            <button class="inf_btn mr15 vm dis_in_block">批量导入</button>
+            <button class="inf_btn mr15 vm dis_in_block" v-on:click="showUploadDialog ()">批量导入</button>
             <a v-bind:href="excelUrl"   class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
             <button class="inf_btn mr15 vm">导  出</button>
+            <el-dialog title="员工导入" :visible.sync="dialogUploadVisible">
+              <el-upload class="upload-demo"
+                         ref="uploadContent"
+                         :action="uploadContentAction"
+                         :on-success="onContentSuccess"
+                         :before-upload="beforeContentUpload"
+                         :auto-upload="true"
+                         :headers="headers">
+                <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">支持类型xlsx，大小不超过100M</div>
+              </el-upload>
+            </el-dialog>
           </div>
           <el-form :inline="true" :model="formInLine"  class="demo-form-inline mt20">
             <!--<el-row>-->
@@ -101,7 +113,10 @@
         take: 10,
         currentPage: 0,
         total: 0,
-        excelUrl: axios.defaults.imageServer + '/import/template/User.xlsx'
+        excelUrl: axios.defaults.imageServer + '/import/template/User.xlsx',
+        dialogUploadVisible: false,
+        uploadContentAction: api.uri.uploadEmployeeExcel,
+        headers: {}
       }
     },
     components: {
@@ -109,6 +124,7 @@
       navigator
     },
     created () {
+      this.headers = api.getUploadHeaders()
       console.log(this.formInLine)
       api.fetch(api.uri.searchUserList, {
         fullname: this.formInLine.name,
@@ -191,6 +207,28 @@
       },
       routeByName: function (name) {
         router.push({name: name})
+      },
+      showUploadDialog () {
+        this.dialogUploadVisible = true
+      },
+      onContentSuccess (response, file) {
+        this.dialogUploadVisible = false
+      },
+      beforeContentUpload (file) {
+        if (file.name.indexOf('.xlsx') < 0) {
+          this.$message({
+            type: 'info',
+            message: '请上传excel文件！'
+          })
+          return false
+        }
+        if (file.size > 100 * 1024 * 1024) {
+          this.$message({
+            type: 'info',
+            message: '附件不能大于100M'
+          })
+          return false
+        }
       }
     }
   }

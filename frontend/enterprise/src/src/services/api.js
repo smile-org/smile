@@ -172,7 +172,12 @@ export default {
     getQuestion: '/back/GetQuestionEditPageInfo',
     uploadExamIcon: axios.defaults.baseURL + '/back/UploadExamIcon',
     uploadExamBanner: axios.defaults.baseURL + '/back/UploadExamPic',
-    addExam: '/back/AddExam'
+    addExam: '/back/AddExam',
+
+    // 员工导入
+    uploadEmployeeExcel: axios.defaults.baseURL + '/back/ImportUserList',
+    // 试题导入
+    uploadQuestionExcel: axios.defaults.baseURL + '/back/ImportQuestionList'
   },
   image: {
     category: '/default/cateicon.png',
