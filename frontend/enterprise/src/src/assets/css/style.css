@@ -15,17 +15,17 @@ header {
 }
 
 header .logo {
-  margin-left: 40px;
+  margin-left: 30px;
   line-height: 58px;
   width: 190px;
   flex: 1; /*这里设置为占比1，填充满剩余空间*/
 }
 
-header .logo img {
-  width: 45px;
-  height: 45px;
-  border-radius: 22.5px;
-}
+/*header .logo img {*/
+  /*width: 45px;*/
+  /*height: 45px;*/
+  /*border-radius: 22.5px;*/
+/*}*/
 
 header .logo span {
   font-size: 22px;
@@ -674,4 +674,17 @@ table {
   background-color: #55b761;
   color: #fff;
   cursor: default;
+}
+/*判断符号*/
+.el-icon-check{
+  color: #55b761;
+}
+.el-icon-close{
+  color: #e83131;
+}
+.el-icon-plus{
+  color: #8391a5;
+}
+.el-icon-minus{
+  color:#8391a5;
 }

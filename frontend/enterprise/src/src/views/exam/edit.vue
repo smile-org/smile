@@ -27,8 +27,8 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="责任人" prop="admin">
-                <el-select v-model="form.admin" placeholder="请选择责任人">
-                  <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
+                <el-select class="dateTab_width" v-model="form.admin" placeholder="请选择责任人">
+                  <el-option   v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -41,28 +41,14 @@
             <el-col :span="8">
               <el-form-item label="开始时间" prop="dateStart">
                 <el-col>
-                  <el-date-picker
-                    type="date"
-                    :picker-options="pickerOptions0"
-                    @change="changeDateStart"
-                    placeholder="选择日期"
-                    v-model="form.dateStart"
-                    style="width: 100%;">
-                  </el-date-picker>
+                  <el-date-picker  class="dateTab_width" type="date" :picker-options="pickerOptions0" @change="changeDateStart" placeholder="选择日期" v-model="form.dateStart" style="width: 100%;"></el-date-picker>
                 </el-col>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="结束时间" prop="dateEnd">
                 <el-col>
-                  <el-date-picker
-                    type="date"
-                    :picker-options="pickerOptions0"
-                    @change="changeDateEnd"
-                    placeholder="选择日期"
-                    v-model="form.dateEnd"
-                    style="width: 100%;">
-                  </el-date-picker>
+                  <el-date-picker  class="dateTab_width" type="date" :picker-options="pickerOptions0" @change="changeDateEnd" placeholder="选择日期" v-model="form.dateEnd" style="width: 100%;"></el-date-picker>
                 </el-col>
               </el-form-item>
             </el-col>
@@ -72,7 +58,8 @@
               </el-form-item>
             </el-col>
           </el-form>
-          <table class="page_m mt30" cellspacing="0" cellpadding="0" border="0">
+          <hr class="hr_line">
+          <table class="page_m mt30 mb30" cellspacing="0" cellpadding="0" border="0">
             <tr>
               <td class="page_m_a">
                 课程图标
@@ -98,8 +85,8 @@
               </td>
             </tr>
           </table>
-
-          <div class="mt30">
+          <hr class="hr_line">
+          <div class="mt30 mb30">
             <p>复习资料
               <el-button type="text" @click="dialogMaterialVisible = true">添加复习资料</el-button>
             </p>
@@ -128,7 +115,7 @@
               </el-dialog>
             </template>
           </div>
-          <div class="mt20">
+          <div class="mt20 mb30">
             <template>
               <el-table :data="materialSelected" border class="mt20" style="width: 100%">
                 <el-table-column prop="name" label="课程名称" width="">
@@ -141,6 +128,7 @@
               </el-table>
             </template>
           </div>
+          <hr class="hr_line">
           <div class="mt30">
             <p>
               试题

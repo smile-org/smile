@@ -61,25 +61,26 @@
                         </el-form-item>
                         <!--</el-row>-->
                     </el-form>
+                    <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="title" label="试题题目" width="">
+                        <el-table-column align="center" prop="title" label="试题题目" width="">
                         </el-table-column>
-                        <el-table-column prop="type_id" label="试题类型" width="">
+                        <el-table-column align="center" prop="type_id" label="试题类型" width="">
                             <template scope="scope">
                                 <span v-if="scope.row.type_id === 1">单选题</span>
                                 <span v-else-if="scope.row.type_id === 2">多选题</span>
                                 <span v-else>是非题</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="created_at" label="创建时间" width="">
+                        <el-table-column align="center" prop="created_at" label="创建时间" width="">
                             <template scope="scope">
                                 <span>{{scope.row.created_at | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作" class="tc" width="">
+                        <el-table-column align="center" label="操作" class="tc" width="">
                             <template scope="scope">
                                 <el-button type="text" size="small" @click="editQuestion(scope.row.question_id)">编辑</el-button>
-                                <el-button type="text" size="small">删除</el-button>
+                                <el-button type="text" class="red_font" size="small">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>

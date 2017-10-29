@@ -23,13 +23,13 @@
                         </el-form-item>
                         <el-form-item label="开始时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="formInline.start_date"
+                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.start_date"
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
                         <el-form-item label="结束时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="formInline.end_date"
+                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
@@ -52,33 +52,34 @@
                             </div>
                         </el-dialog>
                     </div>
+                   <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="exam_num" label="考试编号" width="180">
+                        <el-table-column prop="exam_num" align="center" label="考试编号" width="180">
                         </el-table-column>
-                        <el-table-column prop="exam_title" label="考试名称" width="180">
+                        <el-table-column prop="exam_title" align="center" label="考试名称" width="180">
                         </el-table-column>
-                        <el-table-column prop="manager_idName" label="管理员" width="180">
+                        <el-table-column prop="manager_idName" align="center" label="管理员" width="180">
                         </el-table-column>
-                        <el-table-column prop="start_date" label="开始日期" width="180">
+                        <el-table-column prop="start_date" align="center" label="开始日期" width="180">
                             <template scope="scope" >
                                 <span >{{scope.row.start_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="end_date | formatDate" label="结束日期" width="180">
+                        <el-table-column align="center" prop="end_date | formatDate" label="结束日期" width="180">
                             <template scope="scope" >
                                 <span >{{scope.row.end_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="tries_limit" label="次数限制" width="180">
+                        <el-table-column align="center" prop="tries_limit" label="次数限制" width="100">
                         </el-table-column>
-                        <el-table-column prop="pass_score" label="通过分数" width="180">
+                        <el-table-column align="center" prop="pass_score" label="通过分数" width="100">
                         </el-table-column>
-                        <el-table-column prop="time_limit" label="时间限制" width="180">
+                        <el-table-column align="center" prop="time_limit" label="时间限制" width="100">
                         </el-table-column>
-                        <el-table-column label="操作" class="tc" width="180">
+                        <el-table-column align="center" label="操作" class="tc" width="100">
                             <template scope="scope">
                                 <el-button @click="editExam(scope.row.exam_id)" type="text" size="small">编辑</el-button>
-                                <el-button @click="deleteExam(scope.row.exam_id)" type="text" size="small">删除</el-button>
+                                <el-button @click="deleteExam(scope.row.exam_id)" class="red_font" type="text" size="small">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>

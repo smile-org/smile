@@ -23,11 +23,11 @@
                                 <li>{{item.question_num}}/{{total}}({{item.question_type}})</li>
                                 <li class="tit_con" v-if="item.type_id === 2">
                                     <p>{{item.title}}
-                                        <span class="false_n" v-if="item.is_right === true">
+                                        <span class="false_n ml20" v-if="item.is_right === true">
                                             <i class="el-icon-check" />
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
-                                        <span v-else>
+                                        <span class="ml20" v-else>
                                             <i class="el-icon-close" />
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
@@ -44,11 +44,11 @@
                                 </li>
                                 <li class="tit_con" v-else>
                                     <p>{{item.title}}
-                                        <span class="false_n" v-if="item.is_right === true">
+                                        <span class="false_n ml20" v-if="item.is_right === true">
                                             <i class="el-icon-check" />
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
-                                        <span v-else>
+                                        <span class="ml20" v-else>
                                             <i class="el-icon-close" />
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
