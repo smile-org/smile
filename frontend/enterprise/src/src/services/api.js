@@ -185,7 +185,10 @@ export default {
     // 课程导出
     exportCourseList: '/back/ExportCourseList',
     // 学习记录导出
-    exportUserLearnProgressList: '/back/ExportUserLearnProgressList'
+    exportUserLearnProgressList: '/back/ExportUserLearnProgressList',
+    // 上传报名Icon和Banner
+    uploadEnrollmentIcon: '/back/UploadEnrollmentIcon',
+    uploadEnrollmentBanner: '/back/UploadEnrollmentPic'
   },
   image: {
     category: '/default/cateicon.png',
