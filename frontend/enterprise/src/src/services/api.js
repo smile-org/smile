@@ -173,6 +173,8 @@ export default {
     uploadExamIcon: axios.defaults.baseURL + '/back/UploadExamIcon',
     uploadExamBanner: axios.defaults.baseURL + '/back/UploadExamPic',
     addExam: '/back/AddExam',
+    getExam: '/back/GetExamEditPageInfo',
+    updateExam: '/back/UpdateExam',
 
     // 员工导入
     uploadEmployeeExcel: axios.defaults.baseURL + '/back/ImportUserList',

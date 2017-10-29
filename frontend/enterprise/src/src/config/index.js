@@ -1,7 +1,7 @@
 
 export default {
   cookie: {
-    key: 'smile',
+    key: 'token',
     expires: 1
   }
 }
