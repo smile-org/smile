@@ -14,12 +14,12 @@ axios.defaults.imageServer = 'http://192.168.1.106:4001'
  * 作用： 可以为每个请求加上额外参数
  */
 axios.interceptors.request.use(config => {
-  // var token = sessionStorage.getItem(conf.cookie.key)
-  // if (token) {
-  //   // token放到header中
-  //   config.headers.common.token = token
-  // }
-  config.headers.common.token = '666666'
+  var token = window.localStorage.getItem('token')
+  if (token) {
+    // token放到header中
+    config.headers.common.token = token
+  }
+  // config.headers.common.token = '666666'
   return config
 }, error => {
   return Promise.reject(error)
@@ -202,8 +202,9 @@ export default {
   },
 
   getUploadHeaders: function () {
+    var token = window.localStorage.getItem('token')
     return {
-      token: '666666'
+      token: token
     }
   }
 }

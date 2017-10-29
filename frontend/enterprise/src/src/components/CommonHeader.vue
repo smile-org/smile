@@ -34,7 +34,7 @@
         <span class="h_icon h_icon07"></span>
         <p class="name_e">公司管理员</p>
       </li>
-      <li>
+      <li v-on:click="exit()">
         <span class="h_icon h_icon08"></span>
         <p>退出</p>
       </li>
@@ -57,6 +57,13 @@ export default {
   methods: {
     routeByName: function (name) {
       router.push({ name: name })
+    },
+    exit: function () {
+      var storage = window.localStorage
+      storage.removeItem('token')
+      storage.removeItem('username')
+      storage.removeItem('password')
+      this.routeByName('login')
     }
   }
 }
