@@ -22,7 +22,7 @@ Vue.use(vueInfiniteScroll)
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    var token = window.localStorage.getItem(conf.cookie.key)
+    var token = localStorage.getItem(conf.cookie.key)
     if (token) {
       next()
     } else {

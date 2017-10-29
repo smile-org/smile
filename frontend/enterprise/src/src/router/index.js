@@ -53,7 +53,7 @@ import examQuestionEdit from '@/views/exam/questionEdit'
 import examDetail from '@/views/exam/detail'
 
 Vue.use(Router)
-var requiresAuth = false
+var requiresAuth = true
 
 export default new Router({
   mode: 'history',
@@ -63,7 +63,7 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login,
-      meta: {requiresAuth: requiresAuth}
+      meta: {requiresAuth: false}
     },
     // 公司信息管理
     {
