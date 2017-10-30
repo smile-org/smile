@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header></common-header>
+    <common-header type="registration"></common-header>
     <div class="con_main">
       <navigator module="registration" menu="record"></navigator>
       <section class="con_main_r">

@@ -1,8 +1,8 @@
 <template>
     <div>
-        <common-header></common-header>
+        <common-header type="exam"></common-header>
         <div class="con_main">
-            <navigator module="exam" ></navigator>
+            <navigator module="exam" menu="user"></navigator>
             <section class="con_main_r">
                 <nav>
                     <img src="../../assets/img/house.png" class="vm">
@@ -59,7 +59,7 @@
                     <el-table :data="tableData" border style="width: 100%">
                         <el-table-column align="center" prop="exam_num" label="考试编号" width="180">
                         </el-table-column>
-                        <el-table-column align="center" prop="exam_title" label="考试编号" width="180">
+                        <el-table-column align="center" prop="exam_title" label="考试名称" min-width="180">
                         </el-table-column>
                         <el-table-column align="center" prop="full_name" label="考试人" width="180">
                         </el-table-column>

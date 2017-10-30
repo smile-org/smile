@@ -485,7 +485,8 @@ table {
   letter-spacing: 2px;
   cursor: pointer;
   padding: 0 20px;
-  border-color: #55b761;
+  border-color:#55b761;
+  outline: none;
 
 }
 

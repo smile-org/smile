@@ -1,6 +1,6 @@
 <template>
     <div>
-        <common-header></common-header>
+        <common-header type="admin"></common-header>
         <div class="con_main">
             <navigator module="admin" menu="list"></navigator>
             <section class="con_main_r">

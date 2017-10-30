@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header></common-header>
+    <common-header type="course"></common-header>
     <div class="con_main">
       <navigator module="course" menu="list"></navigator>
       <section class="con_main_r">

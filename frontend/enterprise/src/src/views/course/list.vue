@@ -1,6 +1,6 @@
 <template>
     <div>
-        <common-header></common-header>
+        <common-header type="course"></common-header>
         <div class="con_main">
             <navigator module="course" menu="list"></navigator>
             <section class="con_main_r">
@@ -54,15 +54,15 @@
                     </div>
                     <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%" >
-                        <el-table-column prop="title" align="center" label="课程名称" width="200">
+                        <el-table-column prop="title" align="center" label="课程名称" min-width="200">
                         </el-table-column>
                         <el-table-column prop="category_name" align="center" label="课程类别" width="200">
                         </el-table-column>
                         <el-table-column prop="principal_user_idName" align="center" label="责任人" width="120">
                         </el-table-column>
-                        <el-table-column prop="department" label="部门" align="center" width="">
+                        <el-table-column prop="department" label="部门" align="center" min-width="100">
                         </el-table-column>
-                        <el-table-column prop="expiration_date" label="有效期" align="center" width="">
+                        <el-table-column prop="expiration_date" label="有效期" align="center" min-width="180">
                         </el-table-column>
                         <el-table-column prop="type_name" label="课程类型" align="center" width="180">
                         </el-table-column>

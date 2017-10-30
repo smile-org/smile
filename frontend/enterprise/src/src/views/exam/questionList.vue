@@ -1,6 +1,6 @@
 <template>
     <div>
-        <common-header></common-header>
+        <common-header type="exam"></common-header>
         <div class="con_main">
             <navigator module="exam" menu="question"></navigator>
             <section class="con_main_r">

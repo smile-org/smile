@@ -1,6 +1,6 @@
 <template>
     <div>
-        <common-header></common-header>
+        <common-header type="exam"></common-header>
         <div class="con_main">
             <navigator module="exam" menu="list"></navigator>
             <section class="con_main_r">
@@ -54,9 +54,9 @@
                     </div>
                    <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="exam_num" align="center" label="考试编号" width="180">
+                        <el-table-column prop="exam_num" align="center" label="考试编号" min-width="180">
                         </el-table-column>
-                        <el-table-column prop="exam_title" align="center" label="考试名称" width="200">
+                        <el-table-column prop="exam_title" align="center" label="考试名称" min-width="200">
                         </el-table-column>
                         <el-table-column prop="manager_idName" align="center" label="管理员" width="180">
                         </el-table-column>
@@ -70,7 +70,7 @@
                                 <span >{{scope.row.end_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" prop="tries_limit" label="次数限制" width="">
+                        <el-table-column align="center" prop="tries_limit" label="次数限制" min-width="100">
                         </el-table-column>
                         <el-table-column align="center" prop="pass_score" label="通过分数" width="100">
                         </el-table-column>
