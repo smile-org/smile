@@ -36,22 +36,21 @@
             </li>
             <li>
               <span class="tit">需求列表 :</span>
-              <ul class="con">
-                <li v-for="(item, index) in itemList" :key="index">
-                  {{++ index}}.
-                  <span>{{item.itemTitle}}</span>
-                  <span>{{item.sponsorName}}</span>
-                  <span>{{item.sponsorDate | formatDate}}</span>
-                </li>
-              </ul>
-              <!--<div class="con">-->
-                <!--<el-table :data="itemList" border class="mt20 " style="width: 100%">-->
-                  <!--<el-table-column align="center" prop="itemTitle" label="需求" width="">-->
-                  <!--</el-table-column>-->
-                  <!--<el-table-column  align="center" prop="sponsorName" label="角色" width=""></el-table-column>-->
-                  <!--<el-table-column   align="center" prop="sponsorDate" label="时间" width=""></el-table-column>-->
-                <!--</el-table>-->
-              <!--</div>-->
+
+              <div class="con">
+                <el-table :data="itemList" border class="mt20 " style="width: 100%">
+                  <el-table-column type="index" width="50">
+                  </el-table-column>
+                  <el-table-column align="center" prop="itemTitle" label="需求" width="">
+                  </el-table-column>
+                  <el-table-column  align="center" prop="sponsorName" label="角色" width=""></el-table-column>
+                  <el-table-column   align="center" prop="sponsorDate" label="时间" width="">
+                    <template scope="scope">
+                      {{scope.row.sponsorDate | formatDate}}
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
 
             </li>
             <li>
