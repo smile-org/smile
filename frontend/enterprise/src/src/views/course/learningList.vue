@@ -23,7 +23,7 @@
               <el-input v-model="formInline.area" placeholder="区域"></el-input>
             </el-form-item>
             <el-form-item>
-              <button type="button" class="inf_btn ml20" v-on:click="search">查  询</button>
+              <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
               <el-button type="button" v-on:click="exportList()" :loading="showloading"
                          class="inf_btn ml20 export_bor">导  出
                         </el-button>

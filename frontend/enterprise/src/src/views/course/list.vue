@@ -31,7 +31,7 @@
                                             v-model="formInline.date" style="width: 100%;"></el-date-picker>
                         </el-form-item>
                         <el-form-item>
-                            <button type="button" class="inf_btn ml20" v-on:click="search">查  询</button>
+                            <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
                         </el-form-item>
                     </el-form>
                     <div class="fr hidden mb20">
@@ -53,20 +53,20 @@
                         </el-dialog>
                     </div>
                     <hr class="hr_line">
-                    <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="title" align="center" label="课程名称" width="180">
+                    <el-table :data="tableData" border style="width: 100%" >
+                        <el-table-column prop="title" align="center" label="课程名称" width="200">
                         </el-table-column>
-                        <el-table-column prop="category_name" align="center" label="课程类别" width="180">
+                        <el-table-column prop="category_name" align="center" label="课程类别" width="200">
                         </el-table-column>
                         <el-table-column prop="principal_user_idName" align="center" label="责任人" width="120">
                         </el-table-column>
-                        <el-table-column prop="department" label="部门" align="center" width="120">
+                        <el-table-column prop="department" label="部门" align="center" width="">
                         </el-table-column>
-                        <el-table-column prop="expiration_date" label="有效期" align="center" width="120">
+                        <el-table-column prop="expiration_date" label="有效期" align="center" width="">
                         </el-table-column>
                         <el-table-column prop="type_name" label="课程类型" align="center" width="180">
                         </el-table-column>
-                        <el-table-column prop="ispublished" label="课程状态" align="center" width="100">
+                        <el-table-column prop="ispublished" label="课程状态" align="center" width="120">
                             <template scope="scope">
                                 {{scope.row.ispublished ? "已发布" : "未发布"}}
 

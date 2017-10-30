@@ -13,8 +13,7 @@
                     <table class="page_m" cellspacing="0" cellpadding="0" border="0">
                         <tr>
                             <td class="page_m_a">
-                                logo
-
+                                个人端logo
                             </td>
                             <td class="page_m_b">
                                 <img :src="logoSrc | formatImage" width="20%"/>
@@ -26,7 +25,7 @@
                         </tr>
                         <tr>
                             <td class="page_m_a">
-                                banner
+                                个人端主图
 
                             </td>
                             <td class="page_m_b">

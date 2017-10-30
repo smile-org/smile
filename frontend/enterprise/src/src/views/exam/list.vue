@@ -2,7 +2,7 @@
     <div>
         <common-header></common-header>
         <div class="con_main">
-            <navigator module="exam"></navigator>
+            <navigator module="exam" menu="list"></navigator>
             <section class="con_main_r">
                 <nav>
                     <img src="../../assets/img/house.png" class="vm">
@@ -13,7 +13,7 @@
 
                     <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
                         <el-form-item label="考试编号">
-                            <el-input v-model="formInline.exam_num" placeholder="考试编号"></el-input>
+                            <el-input v-model="formInline.exam_num" placeholder="考试编号" ></el-input>
                         </el-form-item>
                         <el-form-item label="考试名称">
                             <el-input v-model="formInline.exam_title" placeholder="考试名称"></el-input>
@@ -54,9 +54,9 @@
                     </div>
                    <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="exam_num" align="center" label="考试编号" width="200">
+                        <el-table-column prop="exam_num" align="center" label="考试编号" width="180">
                         </el-table-column>
-                        <el-table-column prop="exam_title" align="center" label="考试名称" width="">
+                        <el-table-column prop="exam_title" align="center" label="考试名称" width="200">
                         </el-table-column>
                         <el-table-column prop="manager_idName" align="center" label="管理员" width="180">
                         </el-table-column>
@@ -70,7 +70,7 @@
                                 <span >{{scope.row.end_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" prop="tries_limit" label="次数限制" width="100">
+                        <el-table-column align="center" prop="tries_limit" label="次数限制" width="">
                         </el-table-column>
                         <el-table-column align="center" prop="pass_score" label="通过分数" width="100">
                         </el-table-column>

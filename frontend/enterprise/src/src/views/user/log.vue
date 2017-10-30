@@ -30,7 +30,7 @@
               <el-input v-model="criteria.area" placeholder="区域"></el-input>
             </el-form-item>
             <el-form-item>
-              <button class="inf_btn ml20" type="button"  @click="onSubmit">查  询</button>
+              <button class="line-btn ml20" type="button"  @click="onSubmit">查  询</button>
             </el-form-item>
           </el-form>
           <template>

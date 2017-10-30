@@ -2,7 +2,7 @@
     <div>
         <common-header></common-header>
         <div class="con_main">
-            <navigator module="exam"></navigator>
+            <navigator module="exam" ></navigator>
             <section class="con_main_r">
                 <nav>
                     <img src="../../assets/img/house.png" class="vm">
@@ -85,7 +85,7 @@
                                 <span>{{scope.row.end_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column  align="center" label="操作" class="tc" width="100">
+                        <el-table-column  align="center" label="" class="tc" width="100">
                             <template scope="scope">
                                 <el-button v-on:click="viewDetail(scope.row.history_id)" type="text" size="small">查看
                                 </el-button>

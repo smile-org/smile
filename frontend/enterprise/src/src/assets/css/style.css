@@ -22,9 +22,9 @@ header .logo {
 }
 
 /*header .logo img {*/
-  /*width: 45px;*/
-  /*height: 45px;*/
-  /*border-radius: 22.5px;*/
+/*width: 45px;*/
+/*height: 45px;*/
+/*border-radius: 22.5px;*/
 /*}*/
 
 header .logo span {
@@ -55,9 +55,11 @@ header ul li:after {
 header ul li:hover {
   background: rgba(255, 255, 255, 0.15);
 }
-header ul .active{
-   background: rgba(255, 255, 255, 0.15);
+
+header ul .active {
+  background: rgba(255, 255, 255, 0.15);
 }
+
 header ul li:hover > .h_icon {
   opacity: 1;
 }
@@ -246,17 +248,24 @@ aside ul li {
 }
 
 aside ul li:hover {
-  background: rgba(35, 35, 35, 0.2);
+  /*background: rgba(35, 35, 35, 0.1);*/
+  /*border-left: 5px solid #55b761;*/
+  /*color: #ffffff;*/
+
   border-left: 5px solid #55b761;
-  color: #ffffff;
+  color: #55b761;
+  transition: .5s;
 }
-aside ul .active{
-  background: rgba(35, 35, 35, 0.2);
+
+aside ul .active {
+  /*background: rgba(35, 35, 35, 0.4);*/
   border-left: 5px solid #55b761;
-  color: #ffffff;
+  color: #55b761;
+  /*border-bottom: 1px solid #55b761;*/
 }
+
 aside ul li:hover span {
-  color: #fff;
+  color: #55b761;
 }
 
 nav {
@@ -287,8 +296,8 @@ nav span .f_blue {
   /*min-height: -moz-calc(100vh - 155px);*/
   /*min-height: -webkit-calc(100vh - 155px);*/
   /*min-height: calc(100vh - 155px);*/
-  min-height:500px;
-  margin:20px auto;
+  min-height: 500px;
+  margin: 20px auto;
   padding: 30px 40px 20px;
   background: #fff;
   max-width: 1600px;
@@ -436,6 +445,7 @@ table {
 .login_con .form_list .img_person {
   background: url('../img/person.png') no-repeat center center;
 }
+
 /*按钮操作*/
 .login_con button {
   width: 100%;
@@ -466,7 +476,7 @@ table {
 .inf_btn {
   min-width: 120px;
   height: 38px;
-  line-height:38px;
+  line-height: 38px;
   text-align: center;
   color: #fff;
   background: #55b761;
@@ -475,6 +485,7 @@ table {
   letter-spacing: 2px;
   cursor: pointer;
   padding: 0 20px;
+  border-color: #55b761;
 
 }
 
@@ -484,14 +495,20 @@ table {
 
 .inf_btn:hover {
   background: rgba(96, 204, 109, 0.84);
+  border-color:rgba(96, 204, 109, 0.84);
+  color: #fff;
 }
 
 .inf_btn:active {
   background: rgba(96, 204, 109, 0.84);
+  border-color:rgba(96, 204, 109, 0.84);
+  color: #fff;
 }
 
 .inf_btn:focus {
   outline: none;
+  border-color:rgba(96, 204, 109, 0.84);
+  color: #fff;
 }
 
 .line-btn {
@@ -513,8 +530,11 @@ table {
   background: #55b761;
   color: #fff;
   outline: none;
+  transition: .5s;
+  border-color:#55b761;
 }
-.line-btn_o{
+
+.line-btn_o {
   min-width: 120px;
   height: 38px;
   text-align: center;
@@ -527,6 +547,7 @@ table {
   padding: 0 20px;
   background: none;
 }
+
 /*表格分页*/
 .pagination-footer .el-pagination {
   text-align: center;
@@ -566,6 +587,8 @@ table {
   width: 25%;
   min-height: 60px;
   padding: 10px;
+  background: #f2f7f1;
+  /*font-weight:bold;*/
 }
 
 .page_m_b {
@@ -637,57 +660,65 @@ table {
 /*min-height:440px;*/
 /*}*/
 /*.table_minheight .el-table__body-wrapper{*/
-  /*min-height:100px;*/
+/*min-height:100px;*/
 /*}*/
 
-.hr_line{
-  width:100%;
-  border:none;
+.hr_line {
+  width: 100%;
+  border: none;
   border-bottom: 1px dashed #dcdcdc;
   margin: 0px 0 30px;
 }
-.ds_oq_pageF{
+
+.ds_oq_pageF {
   text-align: center;
   margin: 20px 0;
 }
-.dateTab_width .el-input__icon+.el-input__inner{
-  padding-right:10px;
+
+.dateTab_width .el-input__icon + .el-input__inner {
+  padding-right: 10px;
 }
+
 /*输入框宽度统一*/
 /*.el-form--inline .el-form-item__content .el-input{*/
-  /*width: 160px;*/
-  /*magin-right:10px;*/
+/*width: 160px;*/
+/*magin-right:10px;*/
 /*}*/
 /*.el-input__icon+.el-input__inner {*/
-  /*width:160px;*/
+/*width:160px;*/
 /*}*/
 /*.el-input {*/
-  /*width: 160px;*/
+/*width: 160px;*/
 /*}*/
 .ml_10style {
   /*margin-left: 5px;*/
   color: #bfcbd9;
   text-align: center;
-  padding-left:3px;
+  padding-left: 3px;
   box-sizing: border-box;
 }
+
 /*分页颜色*/
-.el-pager li.active,.el-pager li.active:hover{
+.el-pager li.active, .el-pager li.active:hover {
   border-color: #55b761;
   background-color: #55b761;
   color: #fff;
   cursor: default;
 }
+
 /*判断符号*/
-.el-icon-check{
+.el-icon-check {
   color: #55b761;
 }
-.el-icon-close{
+
+.el-icon-close {
   color: #e83131;
 }
-.el-icon-plus{
+
+.el-icon-plus {
   color: #8391a5;
 }
-.el-icon-minus{
-  color:#8391a5;
+
+.el-icon-minus {
+  color: #8391a5;
 }

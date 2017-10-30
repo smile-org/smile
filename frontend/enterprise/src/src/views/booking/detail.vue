@@ -2,7 +2,7 @@
   <div>
     <common-header type="booking"></common-header>
     <div class="con_main">
-      <navigator module="booking"></navigator>
+      <navigator module="booking"  menu="list"></navigator>
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
@@ -44,22 +44,33 @@
                   <span>{{item.sponsorDate | formatDate}}</span>
                 </li>
               </ul>
+              <!--<div class="con">-->
+                <!--<el-table :data="itemList" border class="mt20 " style="width: 100%">-->
+                  <!--<el-table-column align="center" prop="itemTitle" label="需求" width="">-->
+                  <!--</el-table-column>-->
+                  <!--<el-table-column  align="center" prop="sponsorName" label="角色" width=""></el-table-column>-->
+                  <!--<el-table-column   align="center" prop="sponsorDate" label="时间" width=""></el-table-column>-->
+                <!--</el-table>-->
+              <!--</div>-->
+
+            </li>
+            <li>
               <span class="tit">参与者 :</span>
               <div class="con">
                 <span>{{followerCount}}人</span>
                 <el-table :data="tableData" border class="mt20" style="width: 100%">
-                  <el-table-column prop="followerName" label="姓名" width="">
+                  <el-table-column prop="followerName"  align="center" label="姓名" width="">
                   </el-table-column>
-                  <el-table-column prop="followerType" label="角色" width="">
+                  <el-table-column prop="followerType"  align="center" label="角色" width="">
                     <template scope="scope" >
                       <span v-if="scope.row.followerType === 'appointment_sponsor'">发起者</span>
                       <span v-else-if="scope.row.followerType === 'item_sponsor'">响应者</span>
                       <span v-else>同约者</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="department" label="部门" width="">
+                  <el-table-column prop="department"  align="center" label="部门" width="">
                   </el-table-column>
-                  <el-table-column prop="area" label="区域" width="">
+                  <el-table-column prop="area"  align="center" label="区域" width="">
                   </el-table-column>
                 </el-table>
               </div>

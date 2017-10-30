@@ -73,13 +73,16 @@ export default {
         name: '考试管理',
         items: [{
           text: '考试信息管理',
-          routeName: 'examList'
+          routeName: 'examList',
+          name: 'list'
         }, {
           text: '题库信息管理',
-          routeName: 'examQuestionList'
+          routeName: 'examQuestionList',
+          name: 'question'
         }, {
           text: '员工考试记录',
-          routeName: 'examUserList'
+          routeName: 'examUserList',
+          name: 'user'
         }]
       }
     } else if (this.module === 'registration') {
@@ -87,10 +90,12 @@ export default {
         name: '培训报名管理',
         items: [{
           text: '培训报名管理',
-          routeName: 'registrationTrainlist'
+          routeName: 'registrationTrainlist',
+          name: 'list'
         }, {
           text: '员工报名管理',
-          routeName: 'registrationEnrollmentRecord'
+          routeName: 'registrationEnrollmentRecord',
+          name: 'record'
         }]
       }
     } else if (this.module === 'booking') {
@@ -98,7 +103,8 @@ export default {
         name: '约课管理',
         items: [{
           text: '约课信息管理',
-          routeName: 'bookingList'
+          routeName: 'bookingList',
+          name: 'list'
         }]
       }
     } else {
@@ -106,10 +112,12 @@ export default {
         name: '系统管理',
         items: [{
           text: '公司管理员',
-          routeName: 'adminList'
+          routeName: 'adminList',
+          name: 'list'
         }, {
           text: '修改密码',
-          routeName: 'adminChangePWD'
+          routeName: 'adminChangePWD',
+          name: 'admin'
         }]
       }
     }

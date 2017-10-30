@@ -2,7 +2,7 @@
   <div>
     <common-header></common-header>
     <div class="con_main">
-      <navigator module="exam"></navigator>
+      <navigator module="exam" menu="list"></navigator>
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">

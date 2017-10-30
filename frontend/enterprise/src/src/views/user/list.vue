@@ -14,8 +14,7 @@
                         <button v-on:click="routeByName('userCreate')" class="inf_btn mr15 vm">添加员工</button>
                         <button class="inf_btn mr15 vm dis_in_block" v-on:click="showUploadDialog ()">批量导入</button>
                         <a v-bind:href="excelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
-                        <el-button type="button" v-on:click="exportUserList" :loading="showloading"
-                                   class="inf_btn ml20 export_bor">导  出
+                        <el-button type="button" v-on:click="exportUserList" :loading="showloading" class="inf_btn export_bor vm">导  出
                         </el-button>
                         <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                             <div class="tc">
@@ -24,7 +23,7 @@
                             </div>
                             <div class="tc">
                                 <a v-bind:href="exportExcelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
-                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
+                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取  消
                                 </button>
                             </div>
                         </el-dialog>
@@ -58,8 +57,8 @@
                         <el-form-item label="区域">
                             <el-input v-model="formInLine.area" placeholder="区域"></el-input>
                         </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="onSubmit">查询</el-button>
+                        <el-form-item class="fr">
+                            <el-button  class="line-btn" @click="onSubmit">查  询</el-button>
                         </el-form-item>
                         <!--</el-row>-->
                     </el-form>
@@ -76,7 +75,7 @@
                             </el-table-column>
                             <el-table-column prop="department" align="center" label="部门" width="120">
                             </el-table-column>
-                            <el-table-column prop="area" label="区域" align="center" width="140">
+                            <el-table-column prop="area" label="区域" align="center" width="">
                             </el-table-column>
                             <el-table-column prop="created_at" align="center" label="创建时间" width="180">
                                 <template scope="scope">
@@ -274,14 +273,14 @@
 </script>
 
 <style scoped>
-    .el-button--primary {
-        color: #fff;
-        background-color: #00b553;
-        border-color: #00b553;
-        width: 80px;
-    }
-    .el-button--primary:hover, .el-button--primary:active {
-        background: rgba(0, 181, 83, 0.75);
-    }
+    /*.el-button--primary {*/
+        /*color: #fff;*/
+        /*background-color: #00b553;*/
+        /*border-color: #00b553;*/
+        /*width: 80px;*/
+    /*}*/
+    /*.el-button--primary:hover, .el-button--primary:active {*/
+        /*background: rgba(0, 181, 83, 0.75);*/
+    /*}*/
 
 </style>
