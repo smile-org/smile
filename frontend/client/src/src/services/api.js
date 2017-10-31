@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import conf from '../config/index.js'
+// import conf from './../config/index.js'
 
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
