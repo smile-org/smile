@@ -9,9 +9,9 @@
   <!--</header>-->
     <common-header></common-header>
   <section>
-     <div class="course_banner">
-       <a href=""><img :src="data.exam.pic|formatImage"/></a>
-     </div>
+     <!--<div class="course_banner">-->
+       <!--<a href=""><img :src="data.exam.pic|formatImage"/></a>-->
+     <!--</div>-->
     <el-row class="course_tit">
       <el-col :span="16"><h3>{{data.exam.exam_title}}</h3></el-col>
       <el-col :span="4" class="tc" ><a class="exam_green" v-on:click="goQuestionList">答题卡</a></el-col>

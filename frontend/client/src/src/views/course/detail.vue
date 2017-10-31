@@ -55,10 +55,10 @@
         <el-tab-pane label="课程目录" name="second">
           <ul style="overflow: hidden" class="list_border course_con a_v">
             <li class="con_list" v-for="item in courseContent" :key="item.content_id">
-              <span v-on:click='start(item.content_id, item.content_link)'>
-                <span v-bind:class="item.typeImageClass" class="media_img media_img1"></span>
-                <span class="c_list_font">{{item.sequnce_title}} {{item.content}}</span>
-              </span>
+              <div v-on:click='start(item.content_id, item.content_link)' class="hidden">
+                <span v-bind:class="item.typeImageClass" class="media_img media_img1 fl"></span>
+                <p class="c_list_font" style="margin-left: 1rem;">{{item.sequnce_title}} {{item.content}}</p>
+              </div>
             </li>
           </ul>
         </el-tab-pane>
