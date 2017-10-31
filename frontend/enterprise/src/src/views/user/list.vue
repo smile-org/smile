@@ -10,38 +10,8 @@
 
                 </nav>
                 <div class="con_tab">
-                    <div>
-                        <button v-on:click="routeByName('userCreate')" class="inf_btn mr15 vm">添加员工</button>
-                        <button class="inf_btn mr15 vm dis_in_block" v-on:click="showUploadDialog ()">批量导入</button>
-                        <a v-bind:href="excelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
-                        <el-button type="button" v-on:click="exportUserList" :loading="showloading" class="inf_btn export_bor vm">导  出
-                        </el-button>
-                        <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
-                            <div class="tc">
-                                <!--<p class="exal">电子表格文件生成成功</p>-->
-                                <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
-                            </div>
-                            <div class="tc">
-                                <a v-bind:href="exportExcelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
-                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取  消
-                                </button>
-                            </div>
-                        </el-dialog>
-                        <el-dialog title="员工导入" :visible.sync="dialogUploadVisible">
-                            <el-upload class="upload-demo"
-                                       ref="uploadContent"
-                                       :action="uploadContentAction"
-                                       :on-success="onContentSuccess"
-                                       :before-upload="beforeContentUpload"
-                                       :auto-upload="true"
-                                       :headers="headers">
-                                <el-button slot="trigger" size="small" class="update_btn" type="primary">点击上传
-                                </el-button>
-                                <div slot="tip" class="el-upload__tip">支持类型xlsx，大小不超过100M</div>
-                            </el-upload>
-                        </el-dialog>
-                    </div>
-                    <el-form :inline="true" :model="formInLine" class="demo-form-inline mt20">
+
+                    <el-form :inline="true" :model="formInLine" class="demo-form-inline ">
                         <!--<el-row>-->
                         <el-form-item label="姓名">
                             <el-input v-model="formInLine.name" placeholder="姓名"></el-input>
@@ -57,11 +27,43 @@
                         <el-form-item label="区域">
                             <el-input v-model="formInLine.area" placeholder="区域"></el-input>
                         </el-form-item>
-                        <el-form-item class="fr">
-                            <el-button  class="line-btn" @click="onSubmit">查  询</el-button>
-                        </el-form-item>
+                        <!--<el-form-item class="">-->
+
+                        <!--</el-form-item>-->
                         <!--</el-row>-->
                     </el-form>
+                  <div class="fr mb20">
+                    <button  class="line-btn vm mr15" @click="onSubmit">查  询</button>
+                    <button v-on:click="routeByName('userCreate')" class="inf_btn mr15 vm">添加员工</button>
+                    <button class="inf_btn mr15 vm dis_in_block" v-on:click="showUploadDialog ()">批量导入</button>
+                    <a v-bind:href="excelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
+                    <button type="button" v-on:click="exportUserList" :loading="showloading" class="inf_btn export_bor vm">导  出
+                    </button>
+                    <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                      <div class="tc">
+                        <!--<p class="exal">电子表格文件生成成功</p>-->
+                        <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+                      </div>
+                      <div class="tc">
+                        <a v-bind:href="exportExcelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                        <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取  消
+                        </button>
+                      </div>
+                    </el-dialog>
+                    <el-dialog title="员工导入" :visible.sync="dialogUploadVisible">
+                      <el-upload class="upload-demo"
+                                 ref="uploadContent"
+                                 :action="uploadContentAction"
+                                 :on-success="onContentSuccess"
+                                 :before-upload="beforeContentUpload"
+                                 :auto-upload="true"
+                                 :headers="headers">
+                        <el-button slot="trigger" size="small" class="update_btn" type="primary">点击上传
+                        </el-button>
+                        <div slot="tip" class="el-upload__tip">支持类型xlsx，大小不超过100M</div>
+                      </el-upload>
+                    </el-dialog>
+                  </div>
                     <hr class="hr_line">
                     <template>
                         <el-table :data="data" border style="width: 100%">
@@ -272,15 +274,3 @@
   }
 </script>
 
-<style scoped>
-    /*.el-button--primary {*/
-        /*color: #fff;*/
-        /*background-color: #00b553;*/
-        /*border-color: #00b553;*/
-        /*width: 80px;*/
-    /*}*/
-    /*.el-button--primary:hover, .el-button--primary:active {*/
-        /*background: rgba(0, 181, 83, 0.75);*/
-    /*}*/
-
-</style>

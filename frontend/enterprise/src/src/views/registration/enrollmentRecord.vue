@@ -28,7 +28,7 @@
             </el-form-item>
             <el-form-item class="fr">
               <button type="button" class="line-btn ml20" v-on:click="queryEnrollmentResult">查  询</button>
-              <el-button type="button" v-on:click="exportEnrollmentResult" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
+              <button type="button" v-on:click="exportEnrollmentResult" :loading="showloading" class="inf_btn ml20 export_bor">导  出</button>
             </el-form-item>
           </el-form>
           <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">

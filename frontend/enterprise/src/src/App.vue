@@ -8,11 +8,11 @@
 
 </script>
 
-<style >
+<style>
 @import './assets/css/common.css';
 @import './assets/css/style.css';
 .el-input__inner:focus,el-input:focus{
-  border-color: #55b761;
+  border-color: #55b761!important;
 }
 .el-icon-loading {
   color: #fff;

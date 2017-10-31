@@ -36,9 +36,9 @@
                     </el-form>
                     <div class="fr hidden mb20">
                         <button type="button" class="inf_btn mr20" v-on:click="addCourse">添加课程</button>
-                        <el-button type="button" v-on:click="exportQuestionList" :loading="showloading"
+                        <button type="button" v-on:click="exportQuestionList" :loading="showloading"
                                    class="inf_btn ml20 export_bor">导  出
-                        </el-button>
+                        </button>
                         <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                             <div class="tc">
                                 <!--<p class="exal">电子表格文件生成成功</p>-->
@@ -236,7 +236,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped="scope">
     .el-input {
         width: 100%;
     }

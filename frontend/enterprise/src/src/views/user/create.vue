@@ -110,7 +110,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped="scope">
   .demo-ruleForm{
     width:600px;
     margin-top:20px;

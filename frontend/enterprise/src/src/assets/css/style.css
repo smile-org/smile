@@ -703,8 +703,8 @@ table {
 
 /*分页颜色*/
 .el-pager li.active, .el-pager li.active:hover {
-  border-color: #55b761;
-  background-color: #55b761;
+  border-color: #55b761!important;
+  background-color: #55b761!important;
   color: #fff;
   cursor: default;
 }

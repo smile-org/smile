@@ -26,22 +26,27 @@
                                 <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
-                        <el-form-item class="fr">
+                        <el-form-item>
                           <button type="button" class="line-btn ml20" v-on:click="queryEnrollment">查  询</button>
-                          <button type="button" class="inf_btn ml10" v-on:click="addEnrollment">添加报名</button>
-                          <el-button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml10 export_bor">导  出</el-button>
-                          <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
-                            <div class="tc">
-                              <!--<p class="exal">电子表格文件生成成功</p>-->
-                              <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
-                            </div>
-                            <div class="tc">
-                              <a v-bind:href="excelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
-                              <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
-                            </div>
-                          </el-dialog>
-
                         </el-form-item>
+                        <!--<el-form-item>-->
+                          <!---->
+
+                        <!--</el-form-item>-->
+                      <div  class="fr">
+                        <button type="button" class="inf_btn ml10" v-on:click="addEnrollment">添加报名</button>
+                        <button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml10 export_bor">导  出</button>
+                        <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                          <div class="tc">
+                            <!--<p class="exal">电子表格文件生成成功</p>-->
+                            <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+                          </div>
+                          <div class="tc">
+                            <a v-bind:href="excelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                            <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
+                          </div>
+                        </el-dialog>
+                      </div>
                     </el-form>
                    <hr class="hr_line">
                     <!--添加报名导出表格-->

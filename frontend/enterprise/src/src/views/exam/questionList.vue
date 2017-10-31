@@ -13,7 +13,7 @@
                         <button type="button" v-on:click="addQuestion()" class="inf_btn mr15">添加试题</button>
                         <button type="button" class="inf_btn mr15" v-on:click="showUploadDialog()">试题导入</button>
                         <a v-bind:href="templateExcelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
-                        <el-button type="button" v-on:click="exportQuestionList()" :loading="showloading" class="inf_btn vm export_bor">导  出</el-button>
+                        <button type="button" v-on:click="exportQuestionList()" :loading="showloading" class="inf_btn vm export_bor">导  出</button>
                         <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                             <div class="tc">
                                 <!--<p class="exal">电子表格文件生成成功</p>-->
