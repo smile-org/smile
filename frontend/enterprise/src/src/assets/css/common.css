@@ -360,13 +360,12 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
   border-color: #55b761 !important;
   outline: 0;
 }
-
 .red_font {
-  color: #FF4949 !important;
+  color: #f56d16 !important;
 }
 
 .red_font:hover, .red_font:active {
-  color: #e83131 !important;
+  color: #eb894a !important;
 }
 
 .tr {

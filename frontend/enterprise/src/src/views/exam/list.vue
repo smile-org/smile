@@ -1,98 +1,102 @@
 <template>
-    <div>
-        <common-header type="exam"></common-header>
-        <div class="con_main">
-            <navigator module="exam" menu="list"></navigator>
-            <section class="con_main_r">
-                <nav>
-                    <img src="../../assets/img/house.png" class="vm">
-                    <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">编辑考试</span> > <span
-                            class="f_blue">考试信息管理</span></span>
-                </nav>
-                <div class="con_tab">
+  <div>
+    <common-header type="exam"></common-header>
+    <div class="con_main">
+      <navigator module="exam" menu="list"></navigator>
+      <section class="con_main_r">
+        <nav>
+          <img src="../../assets/img/house.png" class="vm">
+          <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">编辑考试</span> > <span
+            class="f_blue">考试信息管理</span></span>
+        </nav>
+        <div class="con_tab">
 
-                    <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
-                        <el-form-item label="考试编号">
-                            <el-input v-model="formInline.exam_num" placeholder="考试编号" ></el-input>
-                        </el-form-item>
-                        <el-form-item label="考试名称">
-                            <el-input v-model="formInline.exam_title" placeholder="考试名称"></el-input>
-                        </el-form-item>
-                        <el-form-item label="管理员">
-                            <el-input v-model="formInline.manager_idName" placeholder="管理员"></el-input>
-                        </el-form-item>
-                        <el-form-item label="开始时间">
-                            <el-col>
-                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.start_date"
-                                                style="width: 100%;"></el-date-picker>
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="结束时间">
-                            <el-col>
-                                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
-                                                style="width: 100%;"></el-date-picker>
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item>
-                            <button type="button" class="line-btn ml20" v-on:click="queryExamList()">查  询</button>
-                        </el-form-item>
-                    </el-form>
-                    <div class="fr hidden mb20">
-                        <button type="button" v-on:click="addExam" class="inf_btn mr10" icon="search">添加考试</button>
-                        <button type="button" v-on:click="exportExamList()" :loading="showloading" class="inf_btn  export_bor">导  出</button>
-                        <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+          <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
+            <el-form-item label="考试编号">
+              <el-input v-model="formInline.exam_num" placeholder="考试编号"></el-input>
+            </el-form-item>
+            <el-form-item label="考试名称">
+              <el-input v-model="formInline.exam_title" placeholder="考试名称"></el-input>
+            </el-form-item>
+            <el-form-item label="管理员">
+              <el-input v-model="formInline.manager_idName" placeholder="管理员"></el-input>
+            </el-form-item>
+            <el-form-item label="开始时间">
+              <el-col>
+                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.start_date"
+                                style="width: 100%;"></el-date-picker>
+              </el-col>
+            </el-form-item>
+            <el-form-item label="结束时间">
+              <el-col>
+                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
+                                style="width: 100%;"></el-date-picker>
+              </el-col>
+            </el-form-item>
+            <el-form-item>
+              <button type="button" class="line-btn ml20" v-on:click="queryExamList()">查  询</button>
+            </el-form-item>
+          </el-form>
+          <div class="fr hidden mb20">
+            <button type="button" v-on:click="addExam" class="inf_btn mr10" icon="search">添加考试</button>
+            <button type="button" v-on:click="exportExamList()" :loading="showloading" class="inf_btn  export_bor">
+              导  出
+            </button>
+            <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
 
-                            <div class="tc">
-                                <!--<p class="exal">电子表格文件生成成功</p>-->
-                                <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
-                            </div>
-                            <div class="tc">
-                                <a v-bind:href="excelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下  载</a>
-                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
-                            </div>
-                        </el-dialog>
-                    </div>
-                   <hr class="hr_line">
-                    <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column prop="exam_num" align="center" label="考试编号" min-width="180">
-                        </el-table-column>
-                        <el-table-column prop="exam_title" align="center" label="考试名称" min-width="200">
-                        </el-table-column>
-                        <el-table-column prop="manager_idName" align="center" label="管理员" width="180">
-                        </el-table-column>
-                        <el-table-column prop="start_date" align="center" label="开始日期" width="180">
-                            <template scope="scope" >
-                                <span >{{scope.row.start_date | formatDate}} </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" prop="end_date | formatDate" label="结束日期" width="180">
-                            <template scope="scope" >
-                                <span >{{scope.row.end_date | formatDate}} </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column align="center" prop="tries_limit" label="次数限制" min-width="100">
-                        </el-table-column>
-                        <el-table-column align="center" prop="pass_score" label="通过分数" width="100">
-                        </el-table-column>
-                        <el-table-column align="center" prop="time_limit" label="时间限制" width="100">
-                        </el-table-column>
-                        <el-table-column align="center" label="操作" class="tc" width="100">
-                            <template scope="scope">
-                                <el-button @click="editExam(scope.row.exam_id)" type="text" size="small">编辑</el-button>
-                                <el-button @click="deleteExam(scope.row.exam_id)" class="red_font" type="text" size="small">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <div class="tc mt20">
-                        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"
-                                       :page-size="take" layout="total, prev, pager, next"
-                                       :total="total"></el-pagination>
-                    </div>
-                </div>
-            </section>
+              <div class="tc">
+                <!--<p class="exal">电子表格文件生成成功</p>-->
+                <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
+              </div>
+              <div class="tc">
+                <a v-bind:href="excelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download"
+                   style="display: inline-block;">下  载</a>
+                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
+              </div>
+            </el-dialog>
+          </div>
+          <hr class="hr_line">
+          <el-table :data="tableData" border style="width: 100%">
+            <el-table-column prop="exam_num" align="center" label="考试编号" min-width="120">
+            </el-table-column>
+            <el-table-column prop="exam_title" align="center" label="考试名称" min-width="160">
+            </el-table-column>
+            <el-table-column prop="manager_idName" align="center" label="管理员" min-width="120">
+            </el-table-column>
+            <el-table-column prop="start_date" align="center" label="开始日期" min-width="120">
+              <template scope="scope">
+                <span>{{scope.row.start_date | formatDate}} </span>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" prop="end_date | formatDate" label="结束日期" min-width="120">
+              <template scope="scope">
+                <span>{{scope.row.end_date | formatDate}} </span>
+              </template>
+            </el-table-column>
+            <!--<el-table-column align="center" prop="tries_limit" label="次数限制" min-width="100">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column align="center" prop="pass_score" label="通过分数" width="100">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column align="center" prop="time_limit" label="时间限制" width="100">-->
+            <!--</el-table-column>-->
+            <el-table-column align="center" label="操作" class="tc" width="100">
+              <template scope="scope">
+                <el-button @click="editExam(scope.row.exam_id)" type="text" size="small">编辑</el-button>
+                <el-button @click="deleteExam(scope.row.exam_id)" class="red_font" type="text" size="small">删除
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="tc mt20">
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"
+                           :page-size="take" layout="total, prev, pager, next"
+                           :total="total"></el-pagination>
+          </div>
         </div>
-
+      </section>
     </div>
+
+  </div>
 </template>
 
 <script>
@@ -227,52 +231,52 @@
 </script>
 
 <style scoped="scope">
-    .export_bor i {
-        color: #fff !important;
-    }
+  .export_bor i {
+    color: #fff !important;
+  }
 
-    .export_bor {
-        border: none;
-        color: #fff;
-    }
+  .export_bor {
+    border: none;
+    color: #fff;
+  }
 
-    .export_bor:hover, .export_bor:active, .export_bor:focus {
-        color: #fff;
-    }
+  .export_bor:hover, .export_bor:active, .export_bor:focus {
+    color: #fff;
+  }
 
-    .el-icon-loading {
-        color: #fff;
-    }
+  .el-icon-loading {
+    color: #fff;
+  }
 
-    .el-icon-loading {
-        animation: rotating 1s linear infinite;
-        color: #fff;
-    }
+  .el-icon-loading {
+    animation: rotating 1s linear infinite;
+    color: #fff;
+  }
 
-    /*导出样式*/
-    .download {
-        line-height: 38px;
-        display: inline-block;
-    }
+  /*导出样式*/
+  .download {
+    line-height: 38px;
+    display: inline-block;
+  }
 
-    .qx_btn {
-        min-width: 120px;
-        height: 38px;
-        text-align: center;
-        color: #fff;
-        background: #a4a4a4;
-        border-radius: 4px;
-        font-size: 16px;
-        letter-spacing: 2px;
-        cursor: pointer;
-        padding: 0 20px;
-    }
+  .qx_btn {
+    min-width: 120px;
+    height: 38px;
+    text-align: center;
+    color: #fff;
+    background: #a4a4a4;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    padding: 0 20px;
+  }
 
-    .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-        color: #fff;
-        background: #c3c3c3;
-        outline: none;
-    }
+  .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
+    color: #fff;
+    background: #c3c3c3;
+    outline: none;
+  }
 
-    /*导出样式end*/
+  /*导出样式end*/
 </style>

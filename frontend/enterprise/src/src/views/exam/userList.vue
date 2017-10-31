@@ -57,35 +57,35 @@
                     </el-form>
                    <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%">
-                        <el-table-column align="center" prop="exam_num" label="考试编号" width="180">
+                        <el-table-column align="center" prop="exam_num" label="考试编号" min-width="140">
                         </el-table-column>
-                        <el-table-column align="center" prop="exam_title" label="考试名称" min-width="180">
+                        <el-table-column align="center" prop="exam_title" label="考试名称" min-width="140">
                         </el-table-column>
-                        <el-table-column align="center" prop="full_name" label="考试人" width="180">
+                        <el-table-column align="center" prop="full_name" label="考试人" min-width="120">
                         </el-table-column>
-                        <el-table-column align="center" prop="department" label="部门" width="180">
+                        <!--<el-table-column align="center" prop="department" label="部门" min-width="120">-->
+                        <!--</el-table-column>-->
+                        <!--<el-table-column align="center" prop="area" label="区域" min-width="120">-->
+                        <!--</el-table-column>-->
+                        <el-table-column align="center" prop="score" label="分数" width="80">
                         </el-table-column>
-                        <el-table-column align="center" prop="area" label="区域" width="180">
-                        </el-table-column>
-                        <el-table-column align="center" prop="score" label="分数" width="100">
-                        </el-table-column>
-                        <el-table-column align="center" prop="status" label="是否通过" width="120">
+                        <el-table-column align="center" prop="status" label="是否通过" min-width="100">
                             <template scope="scope">
                                 <span v-if="scope.row.status === 'pass'">通过</span>
                                 <span v-else>未通过</span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" prop="start_date" label="开始时间" width="180">
+                        <el-table-column align="center" prop="start_date" label="开始时间" width="140">
                             <template scope="scope">
                                 <span>{{scope.row.start_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column align="center" prop="end_date" label="结束时间" width="180">
+                        <el-table-column align="center" prop="end_date" label="结束时间" width="140">
                             <template scope="scope">
                                 <span>{{scope.row.end_date | formatDate}} </span>
                             </template>
                         </el-table-column>
-                        <el-table-column  align="center" label="" class="tc" width="100">
+                        <el-table-column  align="center" label="" class="tc" width="80">
                             <template scope="scope">
                                 <el-button v-on:click="viewDetail(scope.row.history_id)" type="text" size="small">查看
                                 </el-button>

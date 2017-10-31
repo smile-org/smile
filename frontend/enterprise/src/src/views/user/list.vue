@@ -67,30 +67,30 @@
                     <hr class="hr_line">
                     <template>
                         <el-table :data="data" border style="width: 100%">
-                            <el-table-column prop="full_name" align="center" label="姓名" width="100">
+                            <el-table-column prop="full_name" align="center" label="姓名" min-width="100">
                             </el-table-column>
-                            <el-table-column prop="cell_phone" align="center" label="手机" width="140">
+                            <el-table-column prop="cell_phone" align="center" label="手机" min-width="120">
                             </el-table-column>
-                            <el-table-column prop="job_number" align="center" label="工号" width="180">
+                            <el-table-column prop="job_number" align="center" label="工号" min-width="140">
                             </el-table-column>
-                            <el-table-column prop="email" align="center" label="邮箱" width="180">
+                            <el-table-column prop="email" align="center" label="邮箱" min-width="140">
                             </el-table-column>
                             <el-table-column prop="department" align="center" label="部门" width="120">
                             </el-table-column>
                             <el-table-column prop="area" label="区域" align="center" min-width="100">
                             </el-table-column>
-                            <el-table-column prop="created_at" align="center" label="创建时间" width="180">
-                                <template scope="scope">
-                                    {{scope.row.created_at | formatDate}}
+                            <!--<el-table-column prop="created_at" align="center" label="创建时间" min-width="180">-->
+                                <!--<template scope="scope">-->
+                                    <!--{{scope.row.created_at | formatDate}}-->
 
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="updated_at" align="center" label="最后修改时间" width="180">
-                                <template scope="scope">
-                                    {{scope.row.updated_at | formatDate}}
+                                <!--</template>-->
+                            <!--</el-table-column>-->
+                            <!--<el-table-column prop="updated_at" align="center" label="最后修改时间" min-width="180">-->
+                                <!--<template scope="scope">-->
+                                    <!--{{scope.row.updated_at | formatDate}}-->
 
-                                </template>
-                            </el-table-column>
+                                <!--</template>-->
+                            <!--</el-table-column>-->
                             <el-table-column label="操作" align="center" class="tc" width="120">
                                 <template scope="scope">
                                     <el-button @click="editUser(scope.row.user_id)" type="text" size="small">编辑

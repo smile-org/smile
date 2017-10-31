@@ -54,19 +54,19 @@
                     </div>
                     <hr class="hr_line">
                     <el-table :data="tableData" border style="width: 100%" >
-                        <el-table-column prop="title" align="center" label="课程名称" min-width="200">
+                        <el-table-column prop="title" align="center" label="课程名称" min-width="180">
                         </el-table-column>
-                        <el-table-column prop="category_name" align="center" label="课程类别" width="200">
+                        <el-table-column prop="category_name" align="center" label="课程类别" min-width="140">
                         </el-table-column>
                         <el-table-column prop="principal_user_idName" align="center" label="责任人" width="120">
                         </el-table-column>
                         <el-table-column prop="department" label="部门" align="center" min-width="100">
                         </el-table-column>
-                        <el-table-column prop="expiration_date" label="有效期" align="center" min-width="180">
+                        <el-table-column prop="expiration_date" label="有效期" align="center" min-width="120">
                         </el-table-column>
-                        <el-table-column prop="type_name" label="课程类型" align="center" width="180">
+                        <el-table-column prop="type_name" label="课程类型" align="center" min-width="120">
                         </el-table-column>
-                        <el-table-column prop="ispublished" label="课程状态" align="center" width="120">
+                        <el-table-column prop="ispublished" label="课程状态" align="center" min-width="100">
                             <template scope="scope">
                                 {{scope.row.ispublished ? "已发布" : "未发布"}}
 
@@ -74,7 +74,7 @@
                         </el-table-column>
                         <el-table-column prop="publish_date" label="发布日期" align="center" width="120">
                         </el-table-column>
-                        <el-table-column label="查看评价" width="100">
+                        <el-table-column label="查看评价" align="center" width="100">
                             <template scope="scope">
                                 <el-button v-on:click="getComments(scope.row.course_id)" type="text" size="small">
                                     查看课程评价
