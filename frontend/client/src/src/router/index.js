@@ -16,6 +16,7 @@ import getCourseCategories from '@/views/course/list'
 import getCourses from '@/views/course/courseList'
 import getCourseDetails from '@/views/course/detail'
 import commentCourse from '@/views/course/comment'
+import media from '@/views/course/media'
 
 // 考试
 import getExamList from '@/views/exam/list'
@@ -96,6 +97,12 @@ export default new Router({
       path: '/commentCourse',
       name: 'courseComment',
       component: commentCourse,
+      meta: { requiresAuth: requiresAuth }
+    },
+    {
+      path: '/media',
+      name: 'courseMedia',
+      component: media,
       meta: { requiresAuth: requiresAuth }
     },
     // 考试

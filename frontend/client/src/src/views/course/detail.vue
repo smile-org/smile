@@ -55,10 +55,10 @@
         <el-tab-pane label="课程目录" name="second">
           <ul style="overflow: hidden" class="list_border course_con a_v">
             <li class="con_list" v-for="item in courseContent" :key="item.content_id">
-              <div v-on:click='start(item.content_id, item.content_link)' class="hidden">
-                <span v-bind:class="item.typeImageClass" class="media_img media_img1 fl"></span>
-                <p class="c_list_font" style="margin-left: 1rem;">{{item.sequnce_title}} {{item.content}}</p>
-              </div>
+                <span v-on:click='start(item.content_id, item.content_link, item.orignal_path, item.content_type)'>
+                  <span v-bind:class="item.typeImageClass" class="media_img media_img1"></span>
+                  <span class="c_list_font">{{item.sequnce_title}} {{item.content}}</span>
+                </span>
             </li>
           </ul>
         </el-tab-pane>
@@ -176,13 +176,17 @@ export default {
       sessionStorage.setItem('courseTitle', this.data.title)
       router.push({ name: 'courseComment', query: { id: this.id } })
     },
-    start: function (contentId, contentLink) {
+    start: function (contentId, contentLink, orignalPath, type) {
       api.fetch(api.uri.startCourse, {
         courseid: this.id,
         contentid: contentId
       }).then(data => {
         if (data.status === 1) {
-          window.open(axios.defaults.imageServer + contentLink, '_blank')
+          if (type === 'ppt' || type === 'pptx' || type === 'doc' || type === 'docx') {
+            window.open(axios.defaults.imageServer + contentLink, '_self')
+          } else {
+            window.open(axios.defaults.imageServer + orignalPath, '_self')
+          }
         }
       })
     }

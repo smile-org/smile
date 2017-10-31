@@ -7,7 +7,7 @@
           <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
             <img :src="item.icon | formatImage" class="fl img_bg">
             <div class="course_cen show_star">
-              <div class="hidden effect_right"">
+              <div class="hidden effect_right">
                 <h3 class="fl">{{item.title}}</h3>
                 <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                 <ul class="small_icon fr">
