@@ -32,7 +32,7 @@
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
-                        <el-form-item class="fr">
+                        <el-form-item class="">
                             <button type="button" @click="queryExamHistoryList" class="line-btn ml20">查  询</button>
                             <button type="button" v-on:click="exportExamHistoryList" :loading="showloading"
                                        class="inf_btn ml20 export_bor">导  出

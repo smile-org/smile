@@ -26,7 +26,7 @@
                 <el-date-picker type="date" class="dateTab_width"  placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
-            <el-form-item class="fr">
+            <el-form-item class="">
               <button type="button" class="line-btn ml20" v-on:click="queryEnrollmentResult">查  询</button>
               <button type="button" v-on:click="exportEnrollmentResult" :loading="showloading" class="inf_btn ml20 export_bor">导  出</button>
             </el-form-item>
