@@ -124,4 +124,5 @@
     /*font-weight:600;*/
     background: #f2f7f1;
   }
+
 </style>

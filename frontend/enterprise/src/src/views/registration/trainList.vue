@@ -28,7 +28,8 @@
                         </el-form-item>
                         <el-form-item class="fr">
                           <button type="button" class="line-btn ml20" v-on:click="queryEnrollment">查  询</button>
-                          <el-button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml10  mr10 export_bor">导  出</el-button>
+                          <button type="button" class="inf_btn ml10" v-on:click="addEnrollment">添加报名</button>
+                          <el-button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml10 export_bor">导  出</el-button>
                           <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                             <div class="tc">
                               <!--<p class="exal">电子表格文件生成成功</p>-->
@@ -39,7 +40,7 @@
                               <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
                             </div>
                           </el-dialog>
-                          <button type="button" class="inf_btn " v-on:click="addEnrollment">添加报名</button>
+
                         </el-form-item>
                     </el-form>
                    <hr class="hr_line">

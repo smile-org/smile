@@ -224,8 +224,11 @@
   }
 </script>
 
-<style>
+<style  scoped="scope">
 .el-dialog--small {
   width: auto;
+}
+.page_m{
+  background: #f1f1f1;
 }
 </style>

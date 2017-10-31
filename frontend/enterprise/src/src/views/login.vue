@@ -19,12 +19,12 @@
                     </div>
                     <ul class="hidden">
                         <li class="fl">
-                            <input type="checkbox" name="memberPass" class="" v-model="keepAlive"/>
+                            <input type="checkbox" name="memberPass" class="vm" v-model="keepAlive"/>
                             <label>保持我的登录状态</label>
                         </li>
                     </ul>
                     <div>
-                        <button type="button" v-on:click="login()">登  录</button>
+                        <button type="button" v-on:click="login()">登   录</button>
                     </div>
                 </form>
 

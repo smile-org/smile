@@ -39,7 +39,7 @@
                     </el-form>
                     <div class="fr hidden mb20">
                         <button type="button" v-on:click="addExam" class="inf_btn mr20" icon="search">添加考试</button>
-                        <el-button type="button" v-on:click="exportExamList()" :loading="showloading" class="inf_btn ml20 export_bor">导  出</el-button>
+                        <el-button type="button" v-on:click="exportExamList()" :loading="showloading" class="inf_btn  export_bor">导  出</el-button>
                         <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
 
                             <div class="tc">
