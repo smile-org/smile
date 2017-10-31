@@ -70,7 +70,7 @@
       login: function () {
         var uri = api.uri.login
         var md5PWD = md5(this.password)
-        md5PWD = this.password
+        // md5PWD = this.password
         api.post(uri, {cellphone: this.username, pwd: md5PWD}).then(data => {
           if (data.status === 1) {
             this.showError = false

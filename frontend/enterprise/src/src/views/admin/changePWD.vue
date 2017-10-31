@@ -44,6 +44,7 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
+  import md5 from 'js-md5'
 
   export default {
     data: function () {
@@ -80,7 +81,8 @@
           this.msg = '两次输入的密码不一致'
           return
         }
-        api.post(api.uri.updatePassword, {password: this.newPass}).then(data => {
+        var md5Password = md5(this.newPass)
+        api.post(api.uri.updatePassword, {password: md5Password}).then(data => {
           if (data.status === 1) {
             this.$message({
               type: 'success',

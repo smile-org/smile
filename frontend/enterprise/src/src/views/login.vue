@@ -36,6 +36,7 @@
 <script>
   import api from '../services/api'
   import router from '../router'
+  import md5 from 'js-md5'
   export default {
     data: function () {
       return {
@@ -56,19 +57,20 @@
     methods: {
       login () {
         this.msg = ''
-        console.log(this.keepAlive, this.username, this.password)
+        var md5Password = md5(this.password)
+        console.log(this.keepAlive, this.username, md5Password)
         if (!this.username || !this.password) {
           this.msg = '请输入用户名和密码'
           return
         }
-        api.post(api.uri.login, {cellphone: this.username, pwd: this.password}).then(data => {
+        api.post(api.uri.login, {cellphone: this.username, pwd: md5Password}).then(data => {
           if (data.status === 1) {
             this.token = data.result
             var storage = window.localStorage
             storage['token'] = this.token
             if (this.keepAlive) {
               storage['username'] = this.username
-              storage['password'] = this.password
+              storage['password'] = md5Password
             }
             router.push({name: 'informationDetail'})
           } else {
