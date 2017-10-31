@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-default/index.css'
 import vueInfiniteScroll from 'vue-infinite-scroll'
 import VueCookie from 'vue-cookie'
 import conf from './config/'
+import 'babel-polyfill'
 
 Vue.config.productionTip = false
 
