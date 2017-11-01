@@ -23,6 +23,7 @@
           <img class="s_seach" src="../../assets/img/seach_icon.png" />
           <img class="" src="../../assets/img/delate.png" v-on:click="searchText = ''" />
           <input placeholder="选择资源类型搜索更精准" v-model.trim="searchText" @keyup.13="search">
+          <button type="text" v-on:click="search">搜索</button>
         </div>
       </div>
 
@@ -79,6 +80,7 @@ export default {
       if (this.searchText.trim().length > 0) {
         api.fetch(api.uri.addSearchHistory, { typeid: this.type, keyword: this.searchText }).then(data => {
           if (data.status === 1) {
+            sessionStorage.setItem('searchType', this.type)
             router.push({ name: 'searchResult', query: { type: this.type, search: this.searchText } })
           }
         })
@@ -97,7 +99,6 @@ export default {
           this.hotSearchItems = recommandList.result
         }
       }))
-      console.log(this.type)
     },
     deleteSearchHistory: function () {
       this.searchText = ''
@@ -111,7 +112,10 @@ export default {
   },
   created () {
     var queryType = parseInt(this.$route.query.type)
-    if (queryType) {
+    var searchTypeInSession = sessionStorage.getItem('searchType')
+    if (searchTypeInSession) {
+      this.type = parseInt(searchTypeInSession)
+    } else {
       this.type = queryType
     }
     axios.all([

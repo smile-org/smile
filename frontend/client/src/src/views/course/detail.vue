@@ -115,9 +115,14 @@ export default {
   created () {
     this.id = this.$route.query.id
     this.userAvatar = sessionStorage.getItem('userAvatar')
+    var tab = this.$route.query.tab
     api.fetch(api.uri.getCourse, { courseid: this.id }).then(data => {
       if (data.status === 1) {
         this.data = data.result
+        if (tab === 'comments') {
+          this.activeName = 'third'
+          this.handleClick({name: 'third'})
+        }
       } else {
         alert(data.result)
       }

@@ -104,7 +104,7 @@ header .search_c .search_input input{
   margin-bottom:0rem;
 }
 .b_search_input input{
-  width: 100%;
+  width: 80%;
   border-radius: 1rem;
   height: .55rem;
   line-height: 0.55rem;
@@ -121,7 +121,7 @@ header .search_c .search_input input{
   width: 0.29rem;
   position: absolute;
   top: .13rem;
-  right: .2rem;
+  right: .9rem;
 }
 .b_search_input .s_seach{
   left: .2rem;

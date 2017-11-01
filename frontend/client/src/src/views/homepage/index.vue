@@ -88,7 +88,7 @@
                     <div class="course_cen show_star">
                       <div class="hidden effect_right">
                         <h3 class="fl">{{item.title}}</h3>
-                        <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
+                        <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                         <ul class="small_icon fr">
                           <li class="fl">
                             <span class="icon icon1"></span>
@@ -116,7 +116,7 @@
                     <div class="course_cen show_star">
                       <div class="hidden effect_right">
                         <h3 class="fl">{{item.title}}</h3>
-                        <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
+                        <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                         <ul class="small_icon fr">
                           <li class="fl">
                             <span class="icon icon1"></span>
@@ -144,7 +144,7 @@
                     <div class="course_cen show_star">
                       <div class="hidden effect_right">
                         <h3 class="fl">{{item.title}}</h3>
-                        <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
+                        <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                         <ul class="small_icon fr">
                           <li class="fl">
                             <span class="icon icon1"></span>
@@ -216,7 +216,7 @@
                   <h3 class=" mb10">{{item.title}}</h3>
                   <p class="">主讲：{{item.teacher}}</p>
                   <p class="" style="">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
-                  <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
+                  <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -289,7 +289,7 @@ export default {
       visible: false,
       nav1: false,
       username: '',
-      value5: 3.7,
+//      value5: 3.7,
       userAvatar: ''
     }
   },
@@ -341,6 +341,7 @@ export default {
       this.nav1 = status
     },
     goSearch: function () {
+      sessionStorage.removeItem('searchType')
       router.push({name: 'search', query: {type: 1}})
     }
   }

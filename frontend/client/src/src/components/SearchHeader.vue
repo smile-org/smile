@@ -61,6 +61,7 @@ export default {
       router.go(-1)
     },
     goSearch () {
+      sessionStorage.removeItem('searchType')
       router.push({name: 'search', query: {type: this.type}})
     }
   }

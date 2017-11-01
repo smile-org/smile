@@ -68,7 +68,7 @@
         <el-tab-pane label="课程评价" name="third">
           <ul class="list_border course_con mb3hafe">
             <li v-for="item in courseComment" :key="item.comment_id">
-              <p class="time_comment">2012-08-03</p>
+              <p class="time_comment">{{item.created_at | formatDate}}</p>
               <el-row class="font22">
                 <el-col :span="4"><img class="person_header1" :src="item.user_idAvatar | formatImage"></el-col>
                 <el-col :span="6" class="vm">
