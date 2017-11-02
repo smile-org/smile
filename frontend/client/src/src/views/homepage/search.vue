@@ -23,7 +23,7 @@
           <img class="s_seach" src="../../assets/img/seach_icon.png" />
           <img class="" src="../../assets/img/delate.png" v-on:click="searchText = ''" />
           <input placeholder="选择资源类型搜索更精准" v-model.trim="searchText" @keyup.13="search">
-          <button type="text" v-on:click="search">搜索</button>
+          <button type="text" class="search_font" v-on:click="search">搜索</button>
         </div>
       </div>
 

@@ -102,6 +102,10 @@ header .search_c .search_input input{
   box-sizing: border-box;
   /*margin: .3rem;*/
   margin-bottom:0rem;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
 }
 .b_search_input input{
   width: 80%;
@@ -115,7 +119,14 @@ header .search_c .search_input input{
   outline: 0;
   background-color: #fff;
   -webkit-appearance: none;
+  flex:1
 
+}
+.search_font{
+  font-size:.28rem;
+  background: none;
+  margin-left:.15rem;
+  color: #00b553;
 }
 .b_search_input img {
   width: 0.29rem;
