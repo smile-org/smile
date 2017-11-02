@@ -84,7 +84,11 @@
       </el-tabs>
     </section>
     <footer>
-      <button class="login_btn btn_position" :class="{ b_active: data.isEnrollemntAdded }" type="button" v-on:click="enroll">我要报名</button>
+      <button class="login_btn btn_position"
+        :class="{ b_active: data.isEnrollemntAdded }"
+        type="button" v-on:click="enroll">
+        {{data.isEnrollemntAdded ? "已报名" : "我要报名"}}
+      </button>
     </footer>
   </div>
 </template>
@@ -179,7 +183,7 @@ export default {
     },
     comment: function () {
       sessionStorage.setItem('enrollCourseTitle', this.data.title)
-      router.push({ name: 'getEnrollComment', query: { id: this.enrollmentId } })
+      router.push({ name: 'getEnrollComment', query: { id: this.enrollmentId, pid: this.id } })
     }
   }
 }

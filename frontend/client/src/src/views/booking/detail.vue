@@ -81,11 +81,11 @@
       <h3>需求描述</h3>
       <div class="booking_input">
         <input v-model="newRequirement" type="text">
-        <span class="add_img"></span>
-        <div class="mt2">
+        <!--<span class="add_img"></span>-->
+        <!--<div class="mt2">
           <p class="addBook_list"><span>1. </span>sssssssss</p>
           <p class="addBook_list"><span>1. </span>sssssssss</p>
-        </div>
+        </div>-->
 
         <div class="el-row dio_btn yk">
           <div class="el-col el-col-12">

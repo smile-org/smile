@@ -144,6 +144,8 @@ export default {
     addEnrollmentComment: '/addEnrollmentComment',
     // 添加开班提醒
     addEnrollReminder: '/addReminderMapping',
+    // 列表页面取消报名
+    cancelEnrollment: '/deleteEnrollmentmapping',
 
     // *** 个人中心  ***
     // 首页

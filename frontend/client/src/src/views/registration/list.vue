@@ -43,7 +43,7 @@
                     <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
                     <p class="">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
-                    <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
+                    <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                     <ul class="small_icon fr">
                       <li class="fl">
                         <span class="icon icon1"></span>
@@ -117,6 +117,16 @@ export default {
     }
   },
   methods: {
+    // TODO: 宏宇 调试
+    cancelRegistration: function (id) {
+      api.fetch(api.uri.cancelRegistration, {periodid: id}).then(data => {
+        if (data.status === 1) {
+          this.currentPage = -1
+          this.busy = false
+          this.loadMore()
+        }
+      })
+    },
     handleClick: function (tab, event) {
       console.log(tab, event)
     },
