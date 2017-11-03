@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <!--<header>-->
-      <!--<div class="logo_c">-->
-        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
-        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
-        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
-      <!--</div>-->
+    <!--<div class="logo_c">-->
+    <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
+    <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
+    <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
+    <!--</div>-->
     <!--</header>-->
     <common-header></common-header>
     <section>
       <div class="course_banner">
-        <a href="##"><img :src="data.pic | formatImage" /></a>
+        <a href="##"><img :src="data.pic | formatImage"/></a>
       </div>
       <div class="course_tit">
         <h3>{{data.title}}</h3>
@@ -24,7 +24,8 @@
             <span class="redff7">{{data.collect_count}}</span>
           </li>
           <li class="fr">
-            <span id="c_save" v-on:click="favorite" :class="{icon:true,icon4:data.enrollmentCollected,icon5:!data.enrollmentCollected}"></span>
+            <span id="c_save" v-on:click="favorite"
+                  :class="{icon:true,icon4:data.enrollmentCollected,icon5:!data.enrollmentCollected}"></span>
           </li>
           <li class="fr">
             <span class="icon icon3" v-on:click="comment"></span>
@@ -47,7 +48,8 @@
             <li class="position_r">
               <span>人数 :</span> {{data.count}}
               <em class="surplus_num red_full" style="bottom: .2rem;" v-if="data.left_count === 0">已  满</em>
-              <em class="surplus_num s_num" style="bottom: .2rem;" v-if="data.left_count > 0">剩 余 {{data.left_count}} 人</em>
+              <em class="surplus_num s_num" style="bottom: .2rem;"
+                  v-if="data.left_count > 0">剩 余 {{data.left_count}} 人</em>
             </li>
             <li>
               <span>课程简介 :</span>
@@ -85,8 +87,8 @@
     </section>
     <footer>
       <button class="login_btn btn_position"
-        :class="{ b_active: data.isEnrollemntAdded }"
-        type="button" v-on:click="enroll">
+              :class="{ b_active: data.isEnrollemntAdded }"
+              type="button" v-on:click="enroll">
         {{data.isEnrollemntAdded ? "已报名" : "我要报名"}}
       </button>
     </footer>
@@ -94,99 +96,104 @@
 </template>
 
 <script>
-import api from '../../services/api'
-import axios from 'axios'
-import { formatDate } from '../../common/date'
-import router from '../../router'
-import commonHeader from '../../components/CommonHeader'
-export default {
-  data: function () {
-    return {
-      activeName: 'first',
-      data: {},
-      courseContent: [],
-      courseComment: [],
-      id: 0,
-      enrollmentId: 0
-    }
-  },
-  components: {
-    commonHeader
-  },
-  created () {
-    this.id = this.$route.query.id
-    api.fetch(api.uri.getEnrollCourse, { periodid: this.id }).then(data => {
-      if (data.status === 1) {
-        this.enrollmentId = data.result.enrollment_id
-        this.data = data.result
-      } else {
-        // alert(data.result)
-      }
-    }).catch(error => {
-      alert(error.message)
-    })
-  },
-  filters: {
-    formatImage: function (uri) {
-      return axios.defaults.imageServer + uri
-    },
-    formatDate (time) {
-      var date = new Date(time)
-      return formatDate(date, 'yyyy-MM-dd')
-    }
-  },
-  methods: {
-    handleClick: function (tab, event) {
-      if (tab.name === 'second') {
-        api.fetch(api.uri.getEnrollCourseCategory, { periodid: this.id }).then(data => {
-          if (data.status === 1) {
-            this.courseContent = data.result
-          } else {
-            // alert(data.result)
-          }
-        }).catch(error => {
-          console.log(error.message)
-        })
-      } else if (tab.name === 'third') {
-        api.fetch(api.uri.getEnrollCourseComment, { enrollmentid: this.enrollmentId }).then(data => {
-          if (data.status === 1) {
-            this.courseComment = data.result
-          } else {
-            // alert(data.result)
-          }
-        }).catch(error => {
-          console.log(error.message)
-        })
+  import api from '../../services/api'
+  import axios from 'axios'
+  import {formatDate} from '../../common/date'
+  import router from '../../router'
+  import commonHeader from '../../components/CommonHeader'
+  export default {
+    data: function () {
+      return {
+        activeName: 'first',
+        data: {},
+        courseContent: [],
+        courseComment: [],
+        id: 0,
+        enrollmentId: 0
       }
     },
-    enroll: function () {
-      api.fetch(api.uri.enroll, { periodid: this.id }).then(data => {
+    components: {
+      commonHeader
+    },
+    created () {
+      this.id = this.$route.query.id
+      var tab = this.$route.query.tab
+      api.fetch(api.uri.getEnrollCourse, {periodid: this.id}).then(data => {
         if (data.status === 1) {
-          this.data.isEnrollemntAdded = true
+          this.enrollmentId = data.result.enrollment_id
+          this.data = data.result
+          if (tab === 'comments') {
+            this.activeName = 'third'
+            this.handleClick({name: 'third'})
+          }
         } else {
-          alert(data.message)
+          alert(data.result)
         }
       }).catch(error => {
-        console.log(error.message)
+        alert(error.message)
       })
     },
-    favorite: function () {
-      if (this.data.enrollmentCollected === 1) {
-        this.data.enrollmentCollected = 0
-        this.data.collect_count = this.data.collect_count - 1
-        api.fetch(api.uri.cancelFavoriteEnrollment, { periodid: this.id })
-      } else {
-        this.data.enrollmentCollected = 1
-        this.data.collect_count = this.data.collect_count + 1
-        api.fetch(api.uri.favoriteEnrollment, { periodid: this.id })
+    filters: {
+      formatImage: function (uri) {
+        return axios.defaults.imageServer + uri
+      },
+      formatDate (time) {
+        var date = new Date(time)
+        return formatDate(date, 'yyyy-MM-dd')
       }
     },
-    comment: function () {
-      sessionStorage.setItem('enrollCourseTitle', this.data.title)
-      router.push({ name: 'getEnrollComment', query: { id: this.enrollmentId, pid: this.id } })
+    methods: {
+      handleClick: function (tab, event) {
+        if (tab.name === 'second') {
+          api.fetch(api.uri.getEnrollCourseCategory, {periodid: this.id}).then(data => {
+            if (data.status === 1) {
+              this.courseContent = data.result
+            } else {
+              // alert(data.result)
+            }
+          }).catch(error => {
+            console.log(error.message)
+          })
+        } else if (tab.name === 'third') {
+          api.fetch(api.uri.getEnrollCourseComment, {enrollmentid: this.enrollmentId}).then(data => {
+            if (data.status === 1) {
+              this.courseComment = data.result
+            } else {
+              // alert(data.result)
+            }
+          }).catch(error => {
+            console.log(error.message)
+          })
+        }
+      },
+      enroll: function () {
+        api.fetch(api.uri.enroll, {periodid: this.id}).then(data => {
+          if (data.status === 1) {
+            this.data.isEnrollemntAdded = true
+          } else {
+            alert(data.message)
+          }
+        }).catch(error => {
+          console.log(error.message)
+        })
+      },
+      favorite: function () {
+        if (this.data.enrollmentCollected === 1) {
+          this.data.enrollmentCollected = 0
+          this.data.collect_count = this.data.collect_count - 1
+          api.fetch(api.uri.cancelFavoriteEnrollment, {periodid: this.id})
+        } else {
+          this.data.enrollmentCollected = 1
+          this.data.collect_count = this.data.collect_count + 1
+          api.fetch(api.uri.favoriteEnrollment, {periodid: this.id})
+        }
+      },
+      comment: function () {
+        sessionStorage.setItem('enrollCourseTitle', this.data.title)
+        router.push({name: 'getEnrollComment', query: {id: this.enrollmentId, pid: this.id}})
+      }
     }
   }
-}
 </script>
 
 <style>

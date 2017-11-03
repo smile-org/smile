@@ -31,6 +31,7 @@
                         <span class="redff7">{{item.collect_count}}</span>
                       </li>
                     </ul>
+                    <span class="surplus_num red_full " style="right: 0.05rem; top: 0.65rem;">结束报名</span>
                   </div>
                 </div>
               </router-link>

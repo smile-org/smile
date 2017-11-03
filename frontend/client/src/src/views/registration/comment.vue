@@ -82,7 +82,7 @@ export default {
       api.post(api.uri.addEnrollmentComment, {enrollmentid: parseInt(this.id), star: this.star, comment: this.comments}).then(data => {
         if (data.status === 1) {
           // TODO: element ui 弹出框后再跳转
-          router.push({name: 'getEnroll', query: { id: this.pid }})
+          router.push({name: 'getEnroll', query: { id: this.pid, tab: 'comments' }})
         } else {
           this.showError = true
           this.errorMessage = data.result
