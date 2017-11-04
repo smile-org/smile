@@ -24,6 +24,19 @@ Vue.use(vueInfiniteScroll)
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     var token = sessionStorage.getItem(conf.cookie.key)
+    console.log('token in session', token)
+    if (!token) {
+      token = localStorage.getItem(conf.cookie.key)
+      // 如果在local中存在，复制到session，后续直接从session中取
+      if (token) {
+        console.log('token in local', token)
+        sessionStorage.setItem(conf.cookie.key, token)
+        var username = localStorage.getItem(conf.cookie.username)
+        var avatar = localStorage.getItem(conf.cookie.userAvatar)
+        sessionStorage.setItem(conf.cookie.username, username)
+        sessionStorage.setItem(conf.cookie.userAvatar, avatar)
+      }
+    }
     if (token) {
       next()
     } else {
