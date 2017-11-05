@@ -5,7 +5,7 @@
         <img src="../assets/img/back.png" alt="返回" v-show="routeName!=='startExam' && routeName!=='examFailed' && routeName !== 'examSuccess'" v-on:click="goBack" />
       </a>
       <!--<router-link v-bind:to="{name: 'homepage'}">-->
-      <img src="../assets/img/logo.png" alt="smile" class="logo1" v-on:click="goHome" />
+      <a><img src="../assets/img/logo.png" alt="smile" class="logo1" v-on:click="goHome" /></a>
       <!--</router-link>-->
       <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)">
         <img src="../assets/img/home.png" alt="更多" v-show="routeName!=='startExam'" />
