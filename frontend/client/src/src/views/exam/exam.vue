@@ -1,17 +1,7 @@
 <template>
   <div id="app">
-<!--<header>-->
-  <!--<div class="logo_c">-->
-    <!--<a class="tl" href="../course/course.html"><img src="../../assets/img/back.png" alt="返回"/></a>-->
-    <!--<a class="tc" href="../course/course3.html"><img src="../../assets/img/logo.png" alt="smile"  class="logo1"/></a>-->
-    <!--<a class="tr" href="../course/course5.html"><img src="../../assets/img/home.png" alt="更多" /></a>-->
-  <!--</div>-->
-  <!--</header>-->
     <common-header></common-header>
   <section>
-     <!--<div class="course_banner">-->
-       <!--<a href=""><img :src="data.exam.pic|formatImage"/></a>-->
-     <!--</div>-->
     <el-row class="course_tit">
       <el-col :span="16"><h3>{{data.exam.exam_title}}</h3></el-col>
       <el-col :span="4" class="tc" ><a class="exam_green" v-on:click="goQuestionList">答题卡</a></el-col>
@@ -167,6 +157,7 @@ export default {
     this.historyId = parseInt(this.$route.query.historyId)
     api.fetch(api.uri.getExamQuestions, {examid: this.id}).then(data => {
       if (data.status === 1) {
+        console.log(data.result)
         this.data = data.result
         this.questionCount = this.data.questions.length
         this.currentQuestion = this.data.questions[this.currentQuestionNo - 1]

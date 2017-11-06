@@ -24,7 +24,7 @@
         </p>
         <!--<a href="#" class="unable_login">无法登陆，点击找回密码</a>-->
         <div class="rember_pws">
-          <input type="checkbox" class=" vm" name="memberPass" v-model="keepAlive"/>
+          <input type="checkbox" class=" vm" name="memberPass" v-model="keepAlive" />
           <label class="vm" style="font-size: 0.26rem;  color: #666;margin-left: -.1rem;">保持我的登录状态</label>
         </div>
 
@@ -53,7 +53,8 @@
         password: '',
         // isDisabled: false,
         showError: false,
-        errorMessage: ''
+        errorMessage: '',
+        keepAlive: false
       }
     },
     validations: {
@@ -78,6 +79,11 @@
             sessionStorage.setItem('smile', data.result)
             sessionStorage.setItem('username', data.userInfo.full_name)
             sessionStorage.setItem('userAvatar', data.userInfo.avatar)
+            if (this.keepAlive === true) {
+              localStorage.setItem('smile', data.result)
+              localStorage.setItem('username', data.userInfo.full_name)
+              localStorage.setItem('userAvatar', data.userInfo.avatar)
+            }
             router.push({name: 'homepage'})
           } else {
             this.showError = true

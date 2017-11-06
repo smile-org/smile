@@ -1,10 +1,14 @@
 <template>
   <header>
     <div class="logo_c">
-      <a class="tl"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack" /></a>
-      <router-link v-bind:to="{name: 'homepage'}"><img src="../assets/img/logo.png" alt="smile" class="logo1" /></router-link>
+      <a class="tl">
+        <img src="../assets/img/back.png" alt="返回" v-show="routeName!=='startExam' && routeName!=='examFailed' && routeName !== 'examSuccess'" v-on:click="goBack" />
+      </a>
+      <!--<router-link v-bind:to="{name: 'homepage'}">-->
+      <a><img src="../assets/img/logo.png" alt="smile" class="logo1" v-on:click="goHome" /></a>
+      <!--</router-link>-->
       <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)">
-        <img src="../assets/img/home.png" alt="更多" />
+        <img src="../assets/img/home.png" alt="更多" v-show="routeName!=='startExam'" />
       </a>
     </div>
     <nav @click="homeClick(false,$event)" id="slide_menu" :class="nav1 ?'active' : ''">
@@ -44,10 +48,12 @@ export default {
   data: function () {
     return {
       nav1: false,
-      userAvatar: ''
+      userAvatar: '',
+      routeName: ''
     }
   },
   created () {
+    this.routeName = this.$route.name
     this.userAvatar = axios.defaults.imageServer + sessionStorage.getItem('userAvatar')
   },
   methods: {
@@ -56,6 +62,13 @@ export default {
     },
     goBack () {
       router.go(-1)
+    },
+    goHome () {
+      if (this.routeName === 'startExam') {
+        return
+      } else {
+        router.push({name: 'homepage'})
+      }
     }
   }
 }
