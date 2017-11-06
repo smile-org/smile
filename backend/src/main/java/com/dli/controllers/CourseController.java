@@ -1022,7 +1022,10 @@ public class CourseController {
             for (String contentid : contengidList) {
                 courseService.backUpdateCourseContentCourseID(c.getCourse_id(), Integer.parseInt(contentid));
             }
-            courseService.backSaveCourseWhilteList(c.getCourse_id(), whitelsituserids.split("\\,"));
+
+            if( !Helper.isNullOrEmpty(whitelsituserids)) {
+                courseService.backSaveCourseWhilteList(c.getCourse_id(), whitelsituserids.split("\\,"));
+            }
 
 
             result.put(Constant.status, 1);
@@ -1177,7 +1180,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/GetCourseList", method = RequestMethod.GET)
-    public Map backGetCourseList(String title, String priName, int typeid, String pubdate, int skip, int take, @RequestHeader Map header) {
+    public Map backGetCourseList(String title, String priName, int categoryid, String pubdate, int skip, int take, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -1193,8 +1196,8 @@ public class CourseController {
                 c.setTitle(title);
             if (!Helper.isNullOrEmpty(priName))
                 c.setPrincipal_user_idName(priName);
-            if (typeid != 0)
-                c.setType_id(typeid);
+            if (categoryid != 0)
+                c.setCategory_id(categoryid);
             if (!Helper.isNullOrEmpty(pubdate))
                 c.setPublish_date(pubdate);
 
@@ -1223,7 +1226,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/ExportCourseList", method = RequestMethod.GET)
-    public Map backExportCourseList(String title, String priName, int typeid, String pubdate,
+    public Map backExportCourseList(String title, String priName, int categoryid, String pubdate,
                                     //HttpServletRequest request, HttpServletResponse response,
                                     @RequestHeader Map header) {
 
@@ -1242,8 +1245,8 @@ public class CourseController {
                 c.setTitle(title);
             if (!Helper.isNullOrEmpty(priName))
                 c.setPrincipal_user_idName(priName);
-            if (typeid != 0)
-                c.setType_id(typeid);
+            if (categoryid != 0)
+                c.setCategory_id(categoryid);
             if (!Helper.isNullOrEmpty(pubdate))
                 c.setPublish_date(pubdate);
 

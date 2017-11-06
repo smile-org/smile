@@ -5,11 +5,14 @@ public class backCourse {
 
     private int course_id;
     private String title;
+
+
+    private  int category_id;
     private String category_name;
     private String principal_user_idName;
     private String department;
     private String expiration_date;
-    private int type_id;
+
     private String type_name;
     private boolean ispublished;
     private String publish_date;
@@ -91,13 +94,16 @@ public class backCourse {
         this.expiration_date = expiration_date;
     }
 
-    public int getType_id() {
-        return type_id;
+
+    public int getCategory_id() {
+        return category_id;
     }
 
-    public void setType_id(int type_id) {
-        this.type_id = type_id;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
+
+
 
     public String getType_name() {
         return type_name;

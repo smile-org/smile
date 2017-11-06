@@ -43,6 +43,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public void cancelFollow(int appointmentId, int itemId, int followerId, String followerType) {
+         appointmentRepo.cancelFollow(appointmentId, itemId, followerId, followerType);
+    }
+
+    @Override
     public int addItem(int appointmentId, String content, int sponsorId, Date sponsorDate) {
         appointmentRepo.addItem(appointmentId, content, sponsorId, sponsorDate);
         return appointmentRepo.getMaxItemId();

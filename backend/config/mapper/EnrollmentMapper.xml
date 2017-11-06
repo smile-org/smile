@@ -74,6 +74,7 @@
         <result column="isFinished" property="isFinished"/>
         <result column="isEnrollemntAdded" property="isEnrollemntAdded"/>
         <result column="isReminderAdded" property="isReminderAdded"/>
+        <result column="star" property="star"/>
 
         <result column="title" property="title"/>
         <result column="intro" property="intro"/>
@@ -96,6 +97,10 @@
         <result column="title" property="title"/>
         <result column="intro" property="intro"/>
         <result column="icon" property="icon"/>
+
+        <result column="start_date" property="start"/>
+        <result column="end_date" property="end"/>
+        <result column="study_count" property="count"/>
     </resultMap>
 
 
@@ -105,7 +110,8 @@
           select *   , count - study_count as left_count   from (
            select result.*  ,
             case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count,
-            case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count
+            case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count,
+              case when o3.pingfen is not null  then o3.pingfen  else 0 end as star
             from(
          select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
          on p.enrollment_id= e.enrollment_id where    now()  &gt;=start_date  and   now()  &lt; end_date
@@ -116,6 +122,12 @@
          left join(
          select item_id as period_id,  count(user_id) as userct from  user_favor where item_type='enrollment' group by item_id)o2
          on   result.period_id= o2.period_id
+
+left join(
+select  enrollment_id,    total/ct as pingfen from (
+select enrollment_id, sum(star) as total , count(comment_id) as ct from enrollment_comment  group by enrollment_id)t)o3
+on result.enrollment_id= o3.enrollment_id
+
          )t where count  &gt; study_count
          order by study_count desc, start_date  desc  limit #{skip},#{take};
 
@@ -128,7 +140,9 @@
             case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count,
             case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count,
             case when   now()  &lt; end_date then 0 else 1 end as isFinished,
-             case when o3.period_id is null then 0 else 1 end as isReminderAdded
+             case when o3.period_id is null then 0 else 1 end as isReminderAdded,
+
+               case when o4.pingfen is not null  then o4.pingfen  else 0 end as star
             from(
          select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
          on p.enrollment_id= e.enrollment_id where
@@ -143,6 +157,14 @@
          left join(
          select * from  user_enrollment_reminder  where user_id= #{userid})o3
          on   result.period_id= o3.period_id
+
+
+
+left join(
+select  enrollment_id,    total/ct as pingfen from (
+select enrollment_id, sum(star) as total , count(comment_id) as ct from enrollment_comment  group by enrollment_id)t)o4
+on result.enrollment_id= o4.enrollment_id
+
          )t where count   &lt;= study_count   or   now()  &gt;= end_date
          order by study_count desc, start_date  desc  limit   #{skip},#{take};
 
@@ -161,9 +183,10 @@
          select *   , count - study_count as left_count   from (
            select result.*  ,
             case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count,
-            case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count
+            case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count,
+                 case when o3.pingfen is not null  then o3.pingfen  else 0 end as star
             from(
-         select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
+         select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id  from enrollment_period  p   join   enrollment   e
          on p.enrollment_id= e.enrollment_id where
        p.indicator=1 and e.indicator=1 and p.period_id=#{periodid})result
          left join (
@@ -172,6 +195,11 @@
          left join(
          select item_id as period_id,  count(user_id) as userct from  user_favor where item_type='enrollment' group by item_id)o2
          on   result.period_id= o2.period_id
+
+          left join(
+select  enrollment_id,    total/ct as pingfen from (
+select enrollment_id, sum(star) as total , count(comment_id) as ct from enrollment_comment  group by enrollment_id)t)o3
+on result.enrollment_id= o3.enrollment_id
          )t
     </select>
 
@@ -183,6 +211,10 @@
     <insert id="addEnrollmentMapping" >
         insert   user_enrollment  values(  #{periodid}, #{userid}  );
     </insert>
+
+    <delete id="deleteEnrollmentMapping" >
+               delete from  user_enrollment where    period_id= #{periodid}  and  user_id=#{userid}
+    </delete>
 
 
     <select id="getEnrollmentContentListByID"  resultMap="EnrollmentContentMap">
@@ -208,7 +240,8 @@
            select result.*  ,
             case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count,
             case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count,
-                 case when   now()  &lt; end_date then 0 else 1 end as isFinished
+                 case when   now()  &lt; end_date then 0 else 1 end as isFinished,
+                     case when o4.pingfen is not null  then o4.pingfen  else 0 end as star
             from(
          select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
          on p.enrollment_id= e.enrollment_id where
@@ -227,6 +260,11 @@
          )o3
           on   result.period_id= o3.period_id
 
+          left join(
+select  enrollment_id,    total/ct as pingfen from (
+select enrollment_id, sum(star) as total , count(comment_id) as ct from enrollment_comment  group by enrollment_id)t)o4
+on result.enrollment_id= o4.enrollment_id
+
          )t
          order by study_count desc, start_date  desc  limit #{skip},#{take};
 
@@ -240,7 +278,8 @@
     select result.*  ,
     case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count,
     case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count,
-    case when   now()  &lt; end_date then 0 else 1 end as isFinished
+    case when   now()  &lt; end_date then 0 else 1 end as isFinished,
+        case when o5.pingfen is not null  then o5.pingfen  else 0 end as star
     from(
     select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
     on p.enrollment_id= e.enrollment_id where
@@ -263,6 +302,12 @@
     select   period_id  from   user_enrollment_reminder  where user_id= #{userid}
     ))  group by enrollment_id
     )o4  on result.enrollment_id=o4.enrollment_id and   result.period_id= o4.period_id
+
+
+left join(
+select  enrollment_id,    total/ct as pingfen from (
+select enrollment_id, sum(star) as total , count(comment_id) as ct from enrollment_comment  group by enrollment_id)t)o5
+on result.enrollment_id= o5.enrollment_id
     )t
     order by study_count desc, start_date  desc  limit #{skip},#{take};
     </select>
@@ -303,8 +348,17 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
 
 
     <select id="searchEnrollment" resultMap="SearchMap">
-         select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
-         on p.enrollment_id= e.enrollment_id where
+         select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id,
+
+                  case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count
+          from enrollment_period  p   join   enrollment   e
+         on p.enrollment_id= e.enrollment_id
+
+              left join (
+         select period_id, count(*)  as  renshu from
+         user_enrollment   group by  period_id )o1   on  p.period_id =o1.period_id
+
+         where
            p.indicator=1 and e.indicator=1 and e.company_id=#{companyid} and  e.title like '%${keyword}%'  limit #{skip},#{take};
     </select>
 

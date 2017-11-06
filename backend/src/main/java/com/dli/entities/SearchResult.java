@@ -1,12 +1,19 @@
 package com.dli.entities;
 
 
+import java.util.Date;
+
 public class SearchResult {
 
     private  int id;
     private  String title;
     private  String intro;
+
     private  String icon;
+
+    private   Date start;
+    private Date end;
+    private   int   count;
 
     public int getId() {
         return id;
@@ -39,4 +46,31 @@ public class SearchResult {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
+
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
 }

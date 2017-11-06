@@ -22,6 +22,7 @@
         <result column="collect_count" property="collect_count"/>
         <result column="principal_user_idName" property="principal_user_idName"/>
         <result column="courseCollected" property="courseCollected"/>
+        <result column="star" property="star"/>
     </resultMap>
 
 
@@ -82,6 +83,9 @@
         <result column="title" property="title"/>
         <result column="intro" property="intro"/>
         <result column="icon" property="icon"/>
+
+        <result column="expiration_date" property="start"/>
+        <result column="study_count" property="count"/>
     </resultMap>
 
     <select id="getCourseCategoryList"  resultMap="CategoryMap">
@@ -92,7 +96,8 @@
     <select id="getCourseList" resultMap="CourseMap">
         select result.* ,
   case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
-  case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+  case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
+   case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
          from (
 select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
   where indicator=1 and category_id=#{cateid} and
@@ -116,7 +121,7 @@ order by  renshu desc, pingfen desc  limit #{skip},#{take};
 
 
     <select id="getCourseByID" resultMap="CourseMap">
-        select result.*, c1.study_count,c2.collect_count , c3.courseCollected from (
+        select result.*, c1.study_count,c2.collect_count , c3.courseCollected,     c4.star from (
 select c.* ,  u.full_name as principal_user_idName from course  c  left join  user u on c.principal_user_id=u.user_id  where u.indicator=1 and c.indicator=1 and course_id=#{id}) result join
 (
 
@@ -125,7 +130,12 @@ join (
 select count( user_id) as collect_count from user_favor where item_type='course' and item_id=#{id} )c2 on 1=1
 join (
   select  case  when   count(*)  >0 then 1 else 0  end as courseCollected   from user_favor
-  where item_type='course'  and  item_id=#{id} and user_id=#{userid})c3 on 1=1  ;
+  where item_type='course'  and  item_id=#{id} and user_id=#{userid})c3 on 1=1
+
+   join
+(
+select    case when  total is  not  null  then  total/ct else 0    end    as star from (
+select  sum(star) as total , count(comment_id) as ct from course_comment   where course_id =#{id})t)c4  on 1=1;
 
     </select>
 
@@ -161,7 +171,14 @@ join (
     </update>
 
     <select id="searchCourse" resultMap="SearchMap">
-          select * from  course where title like '%${keyword}%'    and  indicator=1     and   company_id=#{companyid} limit #{skip}, #{take}
+          select c.*,
+             case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count
+           from  course c
+           left join (
+select course_id, count(*)  as  renshu from (
+select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+on c.course_id =o1.course_id
+           where c.title like '%${keyword}%'    and  c.indicator=1     and   c.company_id=#{companyid} limit #{skip}, #{take}
     </select>
 
     <select id="getCourseListByExamid" resultMap="CourseMap">
@@ -174,7 +191,8 @@ select  course_id from  exam_course where exam_id= #{examid});
 
       select result.* ,
   case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
-  case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+  case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
+     case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
          from (
 select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
   where indicator=1  and  company_id=#{companyid}   and
@@ -196,7 +214,13 @@ on   result.course_id= o3.course_id
 
 JOIN
 (
-select course_id from   learn_progress  where user_id=#{userid}  and `status`='NotStarted'  group by course_id)o4
+        select a.course_id from
+        (select   course_id , count(*) as count   from   learn_progress  where user_id=#{userid} group by course_id )a
+        join
+        (  select  course_id , count(*) as count  from   course_content    group by   course_id  )b
+        on  a.course_id =b. course_id   and   a.count &lt; b.count
+
+)o4
 on  result.course_id=o4.course_id
 order by  renshu desc, pingfen desc  limit #{skip},#{take};
 
@@ -208,7 +232,8 @@ order by  renshu desc, pingfen desc  limit #{skip},#{take};
 
         select result.* ,
         case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
-        case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+        case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
+           case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
         from (
         select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
         where indicator=1  and    company_id=#{companyid}   and
@@ -229,9 +254,11 @@ order by  renshu desc, pingfen desc  limit #{skip},#{take};
         on   result.course_id= o3.course_id
 
         JOIN
-        (
-         select  DISTINCT course_id from   learn_progress  where user_id=#{userid}   and course_id not in (
-        select course_id from   learn_progress  where user_id=#{userid}  and `status`='NotStarted'  group by course_id))o4
+        (  select a.course_id from
+(select   course_id , count(*) as count   from   learn_progress  where user_id=#{userid} group by course_id )a
+join
+(  select  course_id , count(*) as count  from   course_content    group by   course_id  )b
+on  a.course_id =b. course_id   and   a.count =b.count)o4
         on  result.course_id=o4.course_id
         order by  renshu desc, pingfen desc  limit #{skip},#{take};
 
@@ -243,7 +270,8 @@ order by  renshu desc, pingfen desc  limit #{skip},#{take};
         select result.* ,
         case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
         case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
-        case when  o2.course_id is not null then  1 else 0 end  started
+        case when  o2.course_id is not null then  1 else 0 end  started,
+           case when o5.pingfen is not null  then o5.pingfen  else 0 end as star
         from (
         select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
         where indicator=1   and  company_id=#{companyid}   and
@@ -265,9 +293,19 @@ order by  renshu desc, pingfen desc  limit #{skip},#{take};
 
         LEFT  JOIN
         (
-        select  DISTINCT course_id from   learn_progress  where user_id=#{userid}   and course_id not in (
-        select course_id from   learn_progress  where user_id=#{userid}  and `status`='NotStarted'  group by course_id))o4
+         select a.course_id from
+(select   course_id , count(*) as count   from   learn_progress  where user_id=#{userid} group by course_id )a
+join
+(  select  course_id , count(*) as count  from   course_content    group by   course_id  )b
+on  a.course_id =b. course_id   and   a.count =b.count)o4
         on  result.course_id=o4.course_id
+
+
+        left join
+(
+select  course_id,    total/ct as pingfen from (
+select course_id, sum(star) as total , count(comment_id) as ct from course_comment  group by course_id)t)o5  on result.course_id= o5.course_id
+
         where   o4.course_id is null
         order by  started desc  ,renshu desc  limit #{skip},#{take};
 
@@ -320,7 +358,8 @@ where created_at
     <select id="getFirstPageCourseList" resultMap="CourseMap">
         select result.* ,
         case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
-        case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+        case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
+        case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
         from (
         select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
         where indicator=1 and  created_at > #{scope}  and company_id=#{companyid}   and
@@ -330,6 +369,12 @@ where created_at
         select course_id, count(*)  as  renshu from (
         select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
         on result.course_id =o1.course_id
+
+left join
+(
+select  course_id,    total/ct as pingfen from (
+select course_id, sum(star) as total , count(comment_id) as ct from course_comment  group by course_id)t)o2
+on result.course_id= o2.course_id
 
         left join
         (
@@ -442,8 +487,8 @@ where  content_id=#{content_id}
 
     <select id="backGetCourseList"   parameterType="com.dli.entities.backCourse"  resultType="com.dli.entities.backCourse">
          select * from (
-select   c.course_id,c.title,cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
- DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  c.type_id   , t.type_name  , c.ispublished  ,
+select   c.course_id,c.title,   cate.category_id, cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
+ DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  t.type_name  , c.ispublished  ,
   DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date   from  course  c
  join   course_category   cate    on c.category_id =cate.category_id
 join  user    u on c.principal_user_id =u.user_id
@@ -451,7 +496,7 @@ JOIN   course_type t on c.type_id=  t.type_id
      where c.indicator =1 and c.company_id=#{company_id} )t   where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="principal_user_idName!=null">and principal_user_idName like '%${principal_user_idName}%' </if>
-        <if test="type_id!=0">and type_id  = #{type_id}</if>
+        <if test="category_id!=0">and category_id  = #{category_id}</if>
         <if test="publish_date!=null">and publish_date = #{publish_date}</if>
        LIMIT #{skip},#{take};
     </select>
@@ -460,8 +505,8 @@ JOIN   course_type t on c.type_id=  t.type_id
 
     <select id="backGetCourseListCount"   parameterType="com.dli.entities.backCourse"  resultType="int">
         select count(*) from (
-        select   c.course_id,c.title,cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
-        DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  c.type_id   , t.type_name  , c.ispublished  ,
+        select   c.course_id,c.title,cate.category_id, cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
+        DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  t.type_name  , c.ispublished  ,
         DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date   from  course  c
         join   course_category   cate    on c.category_id =cate.category_id
         join  user    u on c.principal_user_id =u.user_id
@@ -469,7 +514,7 @@ JOIN   course_type t on c.type_id=  t.type_id
         where c.indicator =1 and c.company_id=#{company_id} )t   where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="principal_user_idName!=null">and principal_user_idName like '%${principal_user_idName}%' </if>
-        <if test="type_id!=0">and type_id  = #{type_id}</if>
+        <if test="category_id!=0">and category_id  = #{category_id}</if>
         <if test="publish_date!=null">and publish_date = #{publish_date}</if>
     </select>
 
@@ -485,7 +530,7 @@ join course_content   ct on p.content_id = ct.content_id
   where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="full_name!=null">and full_name like '%${full_name}%' </if>
-        <if test="department!=0">and department  like '%${department}%'</if>
+        <if test="department!=null">and department  like '%${department}%'</if>
         <if test="area!=null">and publish_date like '%${area}%'</if>
  order by full_name  ,  title,  content_id     LIMIT #{skip},#{take};
     </select>
@@ -500,7 +545,7 @@ join course_content   ct on p.content_id = ct.content_id
         where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="full_name!=null">and full_name like '%${full_name}%' </if>
-        <if test="department!=0">and department  like '%${department}%'</if>
+        <if test="department!=null">and department  like '%${department}%'</if>
         <if test="area!=null">and publish_date like '%${area}%'</if>
     </select>
 

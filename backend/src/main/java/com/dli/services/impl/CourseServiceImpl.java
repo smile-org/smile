@@ -64,6 +64,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String ClickCourseContent(int courseid, int contentid, int userid) {
+   /*
        CourseLearnProgress  clp=  courseRepo.getLearnProgress(userid, contentid);
 
        if( clp !=null ) {
@@ -86,6 +87,23 @@ public class CourseServiceImpl implements CourseService {
 
            return "该课程所有目录初始化完成";
        }
+
+       */
+
+        CourseLearnProgress  clp=  courseRepo.getLearnProgress(userid, contentid);
+
+        if( clp ==null ) {
+
+            courseRepo.addLearnProgress(courseid, contentid, userid);
+            courseRepo.updateLearnProgress(userid, contentid);
+
+            return "学习记录添加成功";
+        }
+
+        else
+        {
+            return    "学习记录已存在";
+        }
 
     }
 

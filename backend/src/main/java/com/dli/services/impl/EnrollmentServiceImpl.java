@@ -43,6 +43,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
 
     @Override
+    public void deleteEnrollmentMapping(int periodid, int userid) {
+        enrollmentRepo.deleteEnrollmentMapping(periodid, userid);
+    }
+
+    @Override
     public EnrollmentPeriodEnrollment getEnrollmentPeriodByID(int periodid, int userid) {
         EnrollmentPeriodEnrollment e = enrollmentRepo.getEnrollmentPeriodByID(periodid);
 

@@ -11,6 +11,7 @@ public interface EnrollmentService {
     List<EnrollmentPeriodEnrollment> getEnrollmentPeriodListFinished(int userid,int companyid, int skip , int take);
     int getReminderMappingCount( int periodid  ,   int userid   );
     void   addReminderMapping( int periodid  ,   int userid );
+    void  deleteEnrollmentMapping  ( int periodid  ,  int userid );
     EnrollmentPeriodEnrollment  getEnrollmentPeriodByID(int periodid   ,int userid);
 
     int getEnrollmentMappingCount( int periodid  ,  int userid   );

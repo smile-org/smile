@@ -174,27 +174,34 @@ public class OfficeUtil {
         InputStream is = new FileInputStream(excelPath);
         XSSFWorkbook workbook = new XSSFWorkbook(is);
         XSSFSheet sheet = workbook.getSheetAt(0);
-        int rowCount = sheet.getLastRowNum();
+        //int rowCount = sheet.getLastRowNum();
+        int rowCount = sheet.getLastRowNum() +1;
+        int cellCount=0;
         for (int rowNum = 0; rowNum < rowCount; rowNum++){
             XSSFRow row = sheet.getRow(rowNum);
-            int cellCount = row.getLastCellNum();
+            if( cellCount==0 ) {
+                cellCount = row.getLastCellNum();
+            }
             Object[] dataArray = new Object[cellCount];
-            for(int cellNum = 0; cellNum < row.getLastCellNum();cellNum++){
+            for(int cellNum = 0; cellNum < cellCount;cellNum++){
                 XSSFCell cell = row.getCell(cellNum);
                 Object val = null;
-                if (cell.getCellType() == cell.CELL_TYPE_BOOLEAN) {
-                    val =  cell.getBooleanCellValue();
-                } else if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
-                    if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                        Date date = cell.getDateCellValue();
-                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-                        val = sdf.format(date);
+
+                if(  cell!=null) {
+                    if (cell.getCellType() == cell.CELL_TYPE_BOOLEAN) {
+                        val = cell.getBooleanCellValue();
+                    } else if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
+                        if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                            Date date = cell.getDateCellValue();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            val = sdf.format(date);
+                        } else {
+                          //  val = cell.getNumericCellValue();
+                            val =  (int) cell.getNumericCellValue();
+                        }
                     } else {
-                        val = cell.getNumericCellValue();
+                        val = cell.getStringCellValue();
                     }
-                }
-                else {
-                    val = cell.getStringCellValue();
                 }
                 dataArray[cellNum] = val;
             }

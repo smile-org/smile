@@ -85,6 +85,10 @@
         <result column="exam_title" property="title"/>
         <result column="intro" property="intro"/>
         <result column="icon" property="icon"/>
+
+        <result column="start_date" property="start"/>
+        <result column="end_date" property="end"/>
+        <result column="study_count" property="count"/>
     </resultMap>
 
 
@@ -137,6 +141,10 @@ left join ( select * from exam_record  where history_id in
  and status ='in-process')))r on  a.answer_id =r.answer_id  order by  a.answer_num;
     </select>
 
+
+    <select id="getMyExamHistoryIDsInProcess"   resultType="com.dli.entities.ExamHistory">
+           select  * from    exam_history  where user_id=#{userid}  and  status='in-process'
+    </select>
 
     <insert id="addExamHistroy"   parameterType="com.dli.entities.ExamHistory"   useGeneratedKeys="true"   keyProperty="history_id"  >
         insert exam_history values( 0, #{exam_id},#{user_id}, null,'in-process', now(), null );
@@ -278,7 +286,18 @@ left join ( select * from exam_record  where history_id in
 
 
     <select id="searchExam" resultMap="SearchMap">
-           select * from   exam  where exam_title like '%${keyword}%'  and company_id=#{companyid} and indicator=1  limit #{skip} ,#{take}
+           select e.*,
+
+               case when o1.renshu  is not null then o1.renshu else 0 end  as study_count
+            from   exam  e
+
+              left join (
+          select exam_id, count(*)  as  renshu from (
+          select  exam_id, user_id from exam_history  group by exam_id, user_id)t group by exam_id)o1
+          on e.exam_id=o1.exam_id
+
+
+            where e.exam_title like '%${keyword}%'  and e.company_id=#{companyid} and e.indicator=1  limit #{skip} ,#{take}
     </select>
 
     <insert id="backAddExamQuestion"  parameterType="com.dli.entities.Question"    useGeneratedKeys="true"   keyProperty="question_id">

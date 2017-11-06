@@ -19,6 +19,8 @@ public interface AppointmentRepo {
     List<AppointmentFollower> getAppointmentFollowList(int appointmentId);
 
     int follow(@Param("appointmentId") int appointmentId, @Param("itemId") Integer itemId, @Param("followerId") int followerId, @Param("followerType") String followerType);
+void  cancelFollow(@Param("appointmentId") int appointmentId, @Param("itemId") Integer itemId, @Param("followerId") int followerId, @Param("followerType") String followerType);
+
 
     int addItem(@Param("appointmentId") int appointmentId, @Param("content") String content, @Param("sponsorId") int sponsorId, @Param("sponsorDate") Date sponsorDate);
 

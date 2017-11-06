@@ -210,6 +210,37 @@ public class EnrollmentController {
         return result;
     }
 
+
+    @RequestMapping(value = "/deleteEnrollmentMapping", method = RequestMethod.GET)
+    public Map deleteEnrollmentMapping(int periodid, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+
+            enrollmentService.deleteEnrollmentMapping(periodid, user.getUser_id());
+
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "删除报名成功");
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
     @RequestMapping(value = "/getEnrollmentContentListByID", method = RequestMethod.GET)
     public Map getEnrollmentContentListByID(int periodid, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
@@ -612,7 +643,6 @@ public class EnrollmentController {
     }
 
 
-
     @RequestMapping(value = "/back/ExportEnrollmentResultList", method = RequestMethod.GET)
     public Map backExportEnrollmentResultList(String title, String teacher, String start, String end, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
@@ -691,7 +721,6 @@ public class EnrollmentController {
         }
         return result;
     }
-
 
 
     @RequestMapping(value = "/back/GetUserListThisEnrollmentPeriod", method = RequestMethod.GET)
@@ -1050,9 +1079,9 @@ public class EnrollmentController {
                 ec.setSequnce_title((String) content.get("sequnce_title"));
                 ec.setContent((String) content.get("content"));
 
-                int  contentid= (int) content.get("content_id");
+                int contentid = (int) content.get("content_id");
                 ec.setContent_id(contentid);
-                if(contentid==0)
+                if (contentid == 0)
                     ec.setEnrollment_id(enrollmentid);
 
                 lst.add(ec);
@@ -1132,11 +1161,11 @@ public class EnrollmentController {
                 ec.setSequnce_title((String) content.get("sequnce_title"));
                 ec.setContent((String) content.get("content"));
 
-               // if (content.get("content_id") != null) {
-                int  contentid= (int) content.get("content_id");
-                    ec.setContent_id(contentid);
+                // if (content.get("content_id") != null) {
+                int contentid = (int) content.get("content_id");
+                ec.setContent_id(contentid);
 
-                if(  contentid==0 )
+                if (contentid == 0)
                     ec.setEnrollment_id(enrollmentid);
 
                 lst.add(ec);

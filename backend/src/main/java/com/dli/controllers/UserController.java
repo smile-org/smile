@@ -40,9 +40,8 @@ public class UserController {
     private LogonService logonService;
 
 
-
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
-    public Map updatePassword( @RequestBody Map body, @RequestHeader Map header) {
+    public Map updatePassword(@RequestBody Map body, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -54,8 +53,8 @@ public class UserController {
 
         try {
 
-            String   password =(String) body.get("password");
-            userService.updatePasswordByUserid(password,  user.getUser_id());
+            String password = (String) body.get("password");
+            userService.updatePasswordByUserid(password, user.getUser_id());
 
             result.put(Constant.result, "密码更新成功");
             result.put(Constant.status, 1);
@@ -73,9 +72,10 @@ public class UserController {
 
     @Value("${defaultheader}")
     private String defaultheader;
+
     @RequestMapping(value = "/back/AddEmployee", method = RequestMethod.GET)
-    public Map backAddEmployee(@RequestParam String cellphone,@RequestParam String email,@RequestParam String jobnumber,
-                               @RequestParam String fullname, @RequestParam String department,@RequestParam String area,
+    public Map backAddEmployee(@RequestParam String cellphone, @RequestParam String email, @RequestParam String jobnumber,
+                               @RequestParam String fullname, @RequestParam String department, @RequestParam String area,
                                @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
@@ -87,7 +87,7 @@ public class UserController {
         }
 
         try {
-            User u =new User();
+            User u = new User();
             u.setCell_phone(cellphone);
             u.setEmail(email);
             u.setJob_number(jobnumber);
@@ -111,9 +111,8 @@ public class UserController {
     }
 
 
-
     @RequestMapping(value = "/back/getUserByID", method = RequestMethod.GET)
-    public Map backGetUserByID(@RequestParam int userid ,  @RequestHeader Map header) {
+    public Map backGetUserByID(@RequestParam int userid, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -139,11 +138,10 @@ public class UserController {
     }
 
 
-
     @RequestMapping(value = "/back/UpdateEmployee", method = RequestMethod.GET)
-    public Map backUpdateEmployee(@RequestParam int userid,@RequestParam String cellphone,@RequestParam String email,@RequestParam String jobnumber,
-                               @RequestParam String fullname, @RequestParam String department,@RequestParam String area,
-                               @RequestHeader Map header) {
+    public Map backUpdateEmployee(@RequestParam int userid, @RequestParam String cellphone, @RequestParam String email, @RequestParam String jobnumber,
+                                  @RequestParam String fullname, @RequestParam String department, @RequestParam String area,
+                                  @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -154,7 +152,7 @@ public class UserController {
         }
 
         try {
-            User u =new User();
+            User u = new User();
             u.setUser_id(userid);
             u.setCell_phone(cellphone);
             u.setEmail(email);
@@ -177,8 +175,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/back/GetUserList", method = RequestMethod.GET)
-    public Map backGetUserList(@RequestParam String fullname,@RequestParam String cellphone, @RequestParam String department,
-                               @RequestParam String area,@RequestParam int skip,@RequestParam int take, @RequestHeader Map header) {
+    public Map backGetUserList(@RequestParam String fullname, @RequestParam String cellphone, @RequestParam String department,
+                               @RequestParam String area, @RequestParam int skip, @RequestParam int take, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -190,18 +188,18 @@ public class UserController {
 
         try {
 
-            if(  Helper.isNullOrEmpty(fullname)  )
-                fullname=null;
-            if(  Helper.isNullOrEmpty(cellphone)  )
-                cellphone=null;
-            if(  Helper.isNullOrEmpty(department)  )
-                department=null;
-            if(  Helper.isNullOrEmpty(area)  )
-                area=null;
+            if (Helper.isNullOrEmpty(fullname))
+                fullname = null;
+            if (Helper.isNullOrEmpty(cellphone))
+                cellphone = null;
+            if (Helper.isNullOrEmpty(department))
+                department = null;
+            if (Helper.isNullOrEmpty(area))
+                area = null;
 
 
-            List<User>  lst= userService.backGetUserList(user.getCompany_id(),fullname,cellphone,department,area,skip,take);
-            int total =userService.backGetUserListCount(user.getCompany_id(),fullname,cellphone,department,area);
+            List<User> lst = userService.backGetUserList(user.getCompany_id(), fullname, cellphone, department, area, skip, take);
+            int total = userService.backGetUserListCount(user.getCompany_id(), fullname, cellphone, department, area);
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
             result.put(Constant.total, total);
@@ -215,9 +213,8 @@ public class UserController {
     }
 
 
-
     @RequestMapping(value = "/back/DisableUserByID", method = RequestMethod.GET)
-    public Map backDisableUserByID(@RequestParam int userid ,  @RequestHeader Map header) {
+    public Map backDisableUserByID(@RequestParam int userid, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -229,7 +226,7 @@ public class UserController {
 
         try {
 
-           userService.backDisableUserByID(userid);
+            userService.backDisableUserByID(userid);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, "删除成功");
@@ -243,16 +240,13 @@ public class UserController {
     }
 
 
-
-
-
-
     @Value("${exportfolder}")
     private String exportfolder;
     @Value("${fileroot}")
     private String fileroot;
+
     @RequestMapping(value = "/back/ExportUserList", method = RequestMethod.GET)
-    public Map backExportUserList(@RequestParam String fullname,@RequestParam String cellphone,
+    public Map backExportUserList(@RequestParam String fullname, @RequestParam String cellphone,
                                   @RequestParam String department, @RequestParam String area,
                                   //HttpServletRequest request, HttpServletResponse response,
                                   @RequestHeader Map header) {
@@ -267,15 +261,15 @@ public class UserController {
         }
         try {
             //获取数据
-            if(  Helper.isNullOrEmpty(fullname)  )
-                fullname=null;
-            if(  Helper.isNullOrEmpty(cellphone)  )
-                cellphone=null;
-            if(  Helper.isNullOrEmpty(department)  )
-                department=null;
-            if(  Helper.isNullOrEmpty(area)  )
-                area=null;
-            List<User>  lst= userService.backGetUserList(user.getCompany_id(),fullname,cellphone,department,area,0,Constant.takeMax);
+            if (Helper.isNullOrEmpty(fullname))
+                fullname = null;
+            if (Helper.isNullOrEmpty(cellphone))
+                cellphone = null;
+            if (Helper.isNullOrEmpty(department))
+                department = null;
+            if (Helper.isNullOrEmpty(area))
+                area = null;
+            List<User> lst = userService.backGetUserList(user.getCompany_id(), fullname, cellphone, department, area, 0, Constant.takeMax);
 
             //导出到服务器
             String sheetName = "sheet1";
@@ -293,24 +287,23 @@ public class UserController {
 
             List<Object[]> dataList = new ArrayList<>();
 
-            for(  User u : lst  )
-            {
+            for (User u : lst) {
                 Object[] dataArray = new Object[8];
 
-                dataArray[0] =  u.getFull_name();
+                dataArray[0] = u.getFull_name();
                 dataArray[1] = u.getCell_phone();
-                dataArray[2] =  u.getJob_number();
-                dataArray[3] =   u.getEmail();
+                dataArray[2] = u.getJob_number();
+                dataArray[3] = u.getEmail();
 
-                dataArray[4] =   u.getDepartment();
-                dataArray[5] =   u.getArea();
-                dataArray[6] =     Helper.formatDate(u.getCreated_at()) ;
-                dataArray[7] =    Helper.formatDate(u.getUpdated_at());
+                dataArray[4] = u.getDepartment();
+                dataArray[5] = u.getArea();
+                dataArray[6] = Helper.formatDate(u.getCreated_at());
+                dataArray[7] = Helper.formatDate(u.getUpdated_at());
 
                 dataList.add(dataArray);
             }
 
-            String  url=  Helper.Export( rowNameList, dataList, "UserList-" , fileroot ,exportfolder );
+            String url = Helper.Export(rowNameList, dataList, "UserList-", fileroot, exportfolder);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, url);
@@ -322,9 +315,6 @@ public class UserController {
         }
         return result;
     }
-
-
-
 
 
     @RequestMapping(value = "/back/GetCompanyAdminList", method = RequestMethod.GET)
@@ -340,7 +330,7 @@ public class UserController {
 
         try {
 
-            List<User> lst =   userService.backGetCompanyAdminList( user.getCompany_id(), skip,take);
+            List<User> lst = userService.backGetCompanyAdminList(user.getCompany_id(), skip, take);
 
             int total = userService.backGetCompanyAdminListCount(user.getCompany_id());
 
@@ -358,12 +348,8 @@ public class UserController {
     }
 
 
-
-
-
-
     @RequestMapping(value = "/back/SetAdminToEmployee", method = RequestMethod.GET)
-    public Map backSetAdminToEmployee( int userid,  @RequestHeader Map header) {
+    public Map backSetAdminToEmployee(int userid, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -375,11 +361,11 @@ public class UserController {
 
         try {
 
-             userService.backUpdateUserRole( 1, userid  );
+            userService.backUpdateUserRole(1, userid);
 
             result.put(Constant.status, 1);
             result.put(Constant.result, "更新成功");
-;
+            ;
 
 
         } catch (Exception ex) {
@@ -391,11 +377,8 @@ public class UserController {
     }
 
 
-
-
-
     @RequestMapping(value = "/back/GetCompanyEmployeeList", method = RequestMethod.GET)
-    public Map backGetCompanyEmployeeList( String fullname,  int skip, int take, @RequestHeader Map header) {
+    public Map backGetCompanyEmployeeList(String fullname, int skip, int take, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -406,12 +389,12 @@ public class UserController {
         }
 
         try {
-             if(Helper.isNullOrEmpty(fullname))
-                 fullname=null;
+            if (Helper.isNullOrEmpty(fullname))
+                fullname = null;
 
-            List<User> lst =  userService.backGetCompanyEmployeeList(fullname,user.getCompany_id() ,skip,take);
+            List<User> lst = userService.backGetCompanyEmployeeList(fullname, user.getCompany_id(), skip, take);
 
-            int total = userService.backGetCompanyEmployeeListCount(fullname,user.getCompany_id());
+            int total = userService.backGetCompanyEmployeeListCount(fullname, user.getCompany_id());
 
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
@@ -427,11 +410,8 @@ public class UserController {
     }
 
 
-
-
-
     @RequestMapping(value = "/back/AddAdminList", method = RequestMethod.GET)
-    public Map backAddAdminList( String  userids ,  @RequestHeader Map header) {
+    public Map backAddAdminList(String userids, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -443,17 +423,15 @@ public class UserController {
 
         try {
 
-             String[]  idArr=  userids.split("\\,");
+            String[] idArr = userids.split("\\,");
 
 
-             for(  String   id:idArr )
-             {
-                 userService.backUpdateUserRole(2,  Integer.valueOf(id)  );
-             }
+            for (String id : idArr) {
+                userService.backUpdateUserRole(2, Integer.valueOf(id));
+            }
 
             result.put(Constant.status, 1);
             result.put(Constant.result, "管理员添加成功");
-
 
 
         } catch (Exception ex) {
@@ -465,12 +443,11 @@ public class UserController {
     }
 
 
-
     @Value("${userimporttempfile}")
     private String userimporttempfile;
 
 
-  //  userimporttempfile=/import/%s-User.xlsx
+    //  userimporttempfile=/import/%s-User.xlsx
 
     @RequestMapping(value = "/back/ImportUserList", method = RequestMethod.POST)
     public Map backImportUserList(@RequestParam(value = "file", required = true) MultipartFile file, @RequestHeader Map header) {
@@ -492,13 +469,31 @@ public class UserController {
 
             //todo :  读取excel ,插入数据
 
+            List<Object[]> lst = OfficeUtil.getInstance().extractExcel(fileroot + path + fileName);
+            //第一行是列头
+            for (int i = 1; i < lst.size(); i++) {
 
+                Object[] arr =lst.get(i);
+
+                User u = new User();
+                u.setCell_phone(   String.valueOf(arr[0]));
+                u.setEmail(arr[1] == null ? null :  String.valueOf(arr[1]));
+                u.setJob_number(arr[2] == null ? null :  String.valueOf(arr[2]));
+                u.setFull_name( String.valueOf(arr[3]));
+                u.setDepartment(arr[4] == null ? null :  String.valueOf(arr[4]));
+                u.setArea(arr[5] == null ? null :  String.valueOf(arr[5]));
+
+                u.setAvatar(defaultheader);
+                u.setCompany_id(user.getCompany_id());
+
+                userService.backAddEmployee(u);
+
+            }
 
 
             result.put(Constant.status, 1);
-             result.put(Constant.result,  "导入成功");
-           // result.put(Constant.result, path + fileName);
-
+            result.put(Constant.result, "导入成功");
+            // result.put(Constant.result, path + fileName);
 
 
         } catch (Exception ex) {
@@ -508,8 +503,6 @@ public class UserController {
         }
         return result;
     }
-
-
 
 
     @Value("${header}")
@@ -529,15 +522,15 @@ public class UserController {
         }
 
         try {
-           //String guid = UUID.randomUUID().toString();
+            //String guid = UUID.randomUUID().toString();
             String fileName = String.format("%s-header.png", user.getUser_id());
             String path = String.format(headerpath, user.getCompany_id(), user.getUser_id()).replace(fileName, "");
             FileUtil.uploadFile(file.getBytes(), fileroot + path, fileName);
 
-            userService.UpdateUserPic( path + fileName , user.getUser_id() );
+            userService.UpdateUserPic(path + fileName, user.getUser_id());
 
             result.put(Constant.status, 1);
-            result.put(Constant.result,   "头像上传成功");
+            result.put(Constant.result, "头像上传成功");
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -546,17 +539,6 @@ public class UserController {
         }
         return result;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
