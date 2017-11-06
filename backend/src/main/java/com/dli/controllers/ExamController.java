@@ -5,6 +5,7 @@ import com.dli.entities.*;
 import com.dli.helper.Constant;
 import com.dli.helper.FileUtil;
 import com.dli.helper.Helper;
+import com.dli.helper.OfficeUtil;
 import com.dli.services.CollectService;
 import com.dli.services.CourseService;
 import com.dli.services.ExamService;
@@ -275,6 +276,16 @@ public class ExamController {
         }
 
         try {
+            //开始一个考试前先关闭其他正在进行的考试
+            List<ExamHistory>   lst=  examService.getMyExamHistoryIDsInProcess( user.getUser_id());
+            for(ExamHistory   history :    lst){
+                examService.finishHistory(  history.getExam_id(), history.getHistory_id() );
+
+            }
+
+
+
+
             int  historyid = examService.addHistory( user.getUser_id(), examid );
 
             result.put(Constant.status, 1);
@@ -673,6 +684,53 @@ public class ExamController {
 
 
             //todo :  读取excel ,插入数据
+            List<Object[]>  lst= OfficeUtil.getInstance().extractExcel(fileroot+path+fileName);
+            for( int i=1; i<  lst.size(); i++  )
+            {
+                Object[] arr =lst.get(i);
+
+                Question q =new  Question();
+                q.setType_id(  (int) arr[0]  );
+                q.setTitle(  String.valueOf(  arr[1] ));
+                q.setCompany_id( user.getCompany_id()  );
+
+
+                List<Answer>   answerlst=new   ArrayList<Answer>();
+
+                int num =1;
+
+
+                String   correctAnswer =  String.valueOf( arr[2]  );
+                for( int j= 3;j<  arr.length   ; j++ )
+                {
+                    if( arr[j] !=null) {
+
+                        Answer answer = new Answer();
+                        answer.setAnswer_content(String.valueOf(arr[j]));
+                         answer.setAnswer_num( num);
+                        answer.setAnswer_option(   String.valueOf ((char) (64 + num) )   );
+
+                        if(correctAnswer.contains(answer.getAnswer_option()  ) ) {
+                            answer.setIs_right(true);
+                        }
+                        else {
+                            answer.setIs_right(false);
+                        }
+                        answerlst.add(answer);
+
+                         num++;
+                    }
+                }
+
+
+
+                examService.backAddQuestion(q,  answerlst);
+
+
+
+
+
+            }
 
 
 

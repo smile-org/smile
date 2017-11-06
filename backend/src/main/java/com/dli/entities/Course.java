@@ -18,6 +18,8 @@ public class Course {
     private int company_id;
     private boolean indicator;
     private Date created_at;
+
+
     private Date updated_at;
 
     //append property
@@ -25,6 +27,7 @@ public class Course {
     private  int collect_count;
     private   String  principal_user_idName;
     private   int courseCollected;
+    private  double star;
 
     public int getCourseCollected() {
         return courseCollected;
@@ -176,6 +179,15 @@ public class Course {
 
     public void setIspublished(boolean ispublished) {
         this.ispublished = ispublished;
+    }
+
+
+    public double getStar() {
+        return star;
+    }
+
+    public void setStar(double star) {
+        this.star = star;
     }
 
 }

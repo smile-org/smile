@@ -116,6 +116,8 @@ public interface ExamRepo {
 
     void   backUpdateExam(  Exam  e  );
 
+    List<ExamHistory>  getMyExamHistoryIDsInProcess(    int userid  );
+
 }
 
 

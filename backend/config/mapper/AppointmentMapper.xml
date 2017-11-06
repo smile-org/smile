@@ -83,6 +83,11 @@ where ai.appointment_id = #{appointmentId}
         values (#{appointmentId},#{itemId},#{followerId},#{followerType})
     </insert>
 
+    <delete id="cancelFollow">
+        delete from  appointment_follower    where appointment_id =#{appointmentId}
+        and item_id=#{itemId} and follower_id=#{followerId} and follower_type=#{followerType}
+    </delete>
+
     <insert id="addItem">
         insert into  appointment_item(appointment_id,content,sponsor_id,sponsor_date)
         values (#{appointmentId}, #{content}, #{sponsorId}, #{sponsorDate});
@@ -122,12 +127,20 @@ where ai.appointment_id = #{appointmentId}
     <resultMap type="com.dli.entities.SearchResult" id="SearchMap">
         <id column="appointment_id" property="id"/>
         <result column="appointment_title" property="title"/>
-        <result column="sponsor_date" property="intro"/>
+      <!-- <result column="sponsor_date" property="intro"/> -->
         <result column="avatar" property="icon" />
+
+        <result column="sponsor_date" property="start"/>
+        <result column="follow_count" property="count"/>
     </resultMap>
 
     <select id="searchAppointment" resultMap="SearchMap">
-      select a.appointment_id,a.appointment_title,a.sponsor_date,u.avatar from appointment a join user u on a.sponsor_id = u.user_id
+      select a.appointment_id,a.appointment_title,a.sponsor_date,u.avatar  ,
+       af.follow_count
+     from appointment a join user u on a.sponsor_id = u.user_id
+
+      left join (select appointment_id, count(*) follow_count from appointment_follower where follower_type='follower' group by appointment_id) af on a.appointment_id = af.appointment_id
+
       where a.appointment_title like '%${keyword}%' and a.company_id=#{companyid} and a.indicator=1  limit #{skip} ,#{take}
     </select>
 

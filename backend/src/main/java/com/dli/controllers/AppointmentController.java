@@ -135,6 +135,37 @@ public class AppointmentController {
         return result;
     }
 
+
+
+
+    @RequestMapping(value = "/cancelFollow", method = RequestMethod.GET)
+    public Map cancelFollow(int appointmentId, int itemId, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            appointmentService.cancelFollow(appointmentId, itemId, user.getUser_id(), "follower");
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "点赞取消成功");
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+
+        return result;
+    }
+
+
+
     @RequestMapping(value = "/addItem", method = RequestMethod.POST)
     public Map addItem(@RequestBody Map body, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();

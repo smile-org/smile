@@ -15,6 +15,7 @@ public interface AppointmentService {
     List<AppointmentFollower> getAppointmentFollowList(int appointmentId);
 
     int follow(int appointmentId, int itemId, int followerId, String followerType);
+    void  cancelFollow(int appointmentId, int itemId, int followerId, String followerType);
 
     int addItem(int appointmentId, String content, int sponsorId, Date sponsorDate);
 

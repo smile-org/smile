@@ -405,4 +405,9 @@ public class ExamServiceImpl implements ExamService {
     public void backUpdateExam(Exam e) {
         examRepo.backUpdateExam(e);
     }
+
+    @Override
+    public List<ExamHistory> getMyExamHistoryIDsInProcess(int userid) {
+        return   examRepo.getMyExamHistoryIDsInProcess(userid);
+    }
 }

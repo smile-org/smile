@@ -20,6 +20,7 @@ public interface EnrollmentRepo {
 
       int getEnrollmentMappingCount(@Param("periodid") int periodid  , @Param("userid")  int userid   );
       void   addEnrollmentMapping(@Param("periodid") int periodid  , @Param("userid")  int userid );
+    void  deleteEnrollmentMapping  (@Param("periodid") int periodid  , @Param("userid")  int userid );
 
      List<EnrollmentContent> getEnrollmentContentListByID(int periodid);
 

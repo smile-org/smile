@@ -17,6 +17,14 @@ public class EnrollmentPeriodEnrollment {
     private Date created_at;
     private Date updated_at;
 
+
+    //enrollment property
+    private String title;
+    private String intro;
+    private String icon;
+    private String pic;
+    private int company_id;
+
     //append property
     private  int study_count;
     private  int collect_count;
@@ -25,6 +33,8 @@ public class EnrollmentPeriodEnrollment {
     private   int  isFinished;
     private   int isReminderAdded;
     private   int  isEnrollemntAdded;
+
+    private   double  star;
 
     public int getIsEnrollemntAdded() {
         return isEnrollemntAdded;
@@ -51,14 +61,6 @@ public class EnrollmentPeriodEnrollment {
     }
 
 
-
-    //enrollment property
-    private String title;
-    private String intro;
-    private String icon;
-    private String pic;
-    private int company_id;
-
     public int getLeft_count() {
         return left_count;
     }
@@ -66,8 +68,6 @@ public class EnrollmentPeriodEnrollment {
     public void setLeft_count(int left_count) {
         this.left_count = left_count;
     }
-
-
 
     public String getTitle() {
         return title;
@@ -215,4 +215,15 @@ public class EnrollmentPeriodEnrollment {
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
+
+
+
+    public double getStar() {
+        return star;
+    }
+
+    public void setStar(double star) {
+        this.star = star;
+    }
+
 }
