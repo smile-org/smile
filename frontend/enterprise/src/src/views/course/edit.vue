@@ -690,11 +690,12 @@ export default {
 }
 
 .baiming_list span {
-  margin-right: 20px;
+
   height: 34px;
   line-height: 32px;
   padding: 0 5px 0 15px;
   font-size: 14px;
+  margin: 10px 20px 10px 0px;
 }
 
 .baiming_list span i {

@@ -656,7 +656,7 @@ export default {
 }
 
 .baiming_list span {
-  margin-right: 20px;
+  margin: 10px 20px 10px 0px;
   height: 34px;
   line-height: 32px;
   padding: 0 5px 0 15px;
@@ -665,9 +665,8 @@ export default {
 
 .baiming_list span i {
   margin-left: 10px;
+  color: #fff;
 }
-
-
 /*此处为弹出小分页的颜色*/
 
 .el-pager li.active {
