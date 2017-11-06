@@ -12,6 +12,7 @@ header {
   flex-flow: row; /*伸缩项目单行排列*/
   /*background-color: #3bbb50;*/
   background: #55b761;
+  overflow: hidden\0; /* ie9 */;
 }
 
 header .logo {
@@ -19,6 +20,7 @@ header .logo {
   line-height: 58px;
   width: 190px;
   flex: 1; /*这里设置为占比1，填充满剩余空间*/
+  float: left\0; /* ie9 */;
 }
 
 /*header .logo img {*/
@@ -197,6 +199,7 @@ header ul li .name_e {
   min-width: 1245px;
   display: flex; /*设为伸缩容器*/
   flex-flow: row; /*伸缩项目单行排列*/
+  overflow: hidden\0; /* ie9 */;
 }
 
 aside {
@@ -209,6 +212,7 @@ aside {
   min-height: calc(100vh - 60px);
   background: #fff;
   z-index: 2;
+  float: left\0;
 
 }
 
@@ -232,6 +236,7 @@ aside .a_tit span:last-child {
 
 .con_main_r {
   flex: 1; /*这里设置为占比1，填充满剩余空间*/
+  margin-left: 180px \0; /* ie9 */;
 }
 
 aside ul li {
@@ -415,10 +420,12 @@ table {
   font-size: 16px;
   color: #c2c2c2;
 }
-.login_con .form_list input:hover,.login_con .form_list input:active,.login_con .form_list input:focus{
+
+.login_con .form_list input:hover, .login_con .form_list input:active, .login_con .form_list input:focus {
   border-color: #55b761;
   outline: none;
 }
+
 .login_con .form_list {
   position: relative;
   margin-top: 15px;
@@ -487,7 +494,7 @@ table {
   letter-spacing: 2px;
   cursor: pointer;
   padding: 0 20px;
-  border-color:#55b761;
+  border-color: #55b761;
   outline: none;
 
 }
@@ -498,19 +505,19 @@ table {
 
 .inf_btn:hover {
   background: rgba(96, 204, 109, 0.84);
-  border-color:rgba(96, 204, 109, 0.84);
+  border-color: rgba(96, 204, 109, 0.84);
   color: #fff;
 }
 
 .inf_btn:active {
   background: rgba(96, 204, 109, 0.84);
-  border-color:rgba(96, 204, 109, 0.84);
+  border-color: rgba(96, 204, 109, 0.84);
   color: #fff;
 }
 
 .inf_btn:focus {
   outline: none;
-  border-color:rgba(96, 204, 109, 0.84);
+  border-color: rgba(96, 204, 109, 0.84);
   color: #fff;
 }
 
@@ -534,7 +541,7 @@ table {
   color: #fff;
   outline: none;
   transition: .5s;
-  border-color:#55b761;
+  border-color: #55b761;
 }
 
 .line-btn_o {
@@ -703,8 +710,8 @@ table {
 
 /*分页颜色*/
 .el-pager li.active, .el-pager li.active:hover {
-  border-color: #55b761!important;
-  background-color: #55b761!important;
+  border-color: #55b761 !important;
+  background-color: #55b761 !important;
   color: #fff;
   cursor: default;
 }
