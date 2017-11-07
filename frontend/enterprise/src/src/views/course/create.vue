@@ -34,7 +34,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="责任人" prop="adminid">
-                <el-select class="dateTab_width" v-model="form.adminid" placeholder="请选择责任人">
+                <el-select class="dateTab_width" filterable v-model="form.adminid" placeholder="请选择责任人">
                   <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
                   </el-option>
                 </el-select>
@@ -179,10 +179,10 @@
             <button type="button" class="inf_btn  " v-on:click="submitCourse">保 存</button>
             <!--<button type="button" class="inf_btn  ml20" v-on:click="publish">发布</button>-->
           </div>
-          <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
+          <my-upload @input="closeIcon" :no-rotate=false field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
 
-          <my-upload @input="closeBanner" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="120" :value.sync="showBanner" :no-circle=true img-format="png">
+          <my-upload @input="closeBanner" :no-rotate=false field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="120" :value.sync="showBanner" :no-circle=true img-format="png">
           </my-upload>
         </div>
       </section>

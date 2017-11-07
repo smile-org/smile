@@ -34,7 +34,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="责任人" prop="principal_user_id">
-                <el-select v-model="currentCourse.principal_user_id" placeholder="请选择责任人">
+                <el-select filterable v-model="currentCourse.principal_user_id" placeholder="请选择责任人">
                   <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
                   </el-option>
                 </el-select>
@@ -565,7 +565,11 @@ export default {
           api.post(api.uri.editCourse, submitObj).then(data => {
             if (data.status === 1) {
               router.push({name: 'courseList'})
+            } else {
+              console.log(data)
             }
+          }).then(error => {
+            console.log(error)
           })
         } else {
           return false
