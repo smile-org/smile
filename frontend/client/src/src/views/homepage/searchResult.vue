@@ -111,7 +111,7 @@ export default {
     commonHeader
   },
   created () {
-    this.type = this.$route.query.type
+    this.type = parseInt(this.$route.query.type)
     this.search = this.$route.query.search
   },
   filters: {
@@ -159,7 +159,7 @@ export default {
     },
     goDetail: function (itemId) {
       if (this.type === 1) {
-        router.push({path: '/getCourses', query: {id: itemId}})
+        router.push({path: '/getCourseDetails', query: {id: itemId}})
       } else if (this.type === 2) {
         router.push({name: 'getExamInfo', query: {id: itemId}})
       } else if (this.type === 3) {
