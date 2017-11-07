@@ -139,7 +139,7 @@
       api.fetch(api.uri.searchCourse, {
         title: this.formInline.name,
         priName: this.formInline.user,
-        typeid: this.formInline.categoryId ? parseInt(this.formInline.categoryId) : 0,
+        categoryid: this.formInline.categoryId ? parseInt(this.formInline.categoryId) : 0,
         pubdate: this.formInline.date,
         skip: 0,
         take: this.take
@@ -199,7 +199,7 @@
         api.fetch(api.uri.searchCourse, {
           title: this.formInline.name,
           priName: this.formInline.user,
-          typeid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
+          categoryid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
           pubdate: pubDate,
           skip: this.take * (this.currentPage - 1),
           take: this.take
@@ -221,7 +221,7 @@
         api.fetch(api.uri.exportCourseList, {
           title: this.formInline.name,
           priName: this.formInline.user,
-          typeid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
+          categoryid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
           pubdate: pubDate
         }).then(data => {
           if (data.status === 1) {

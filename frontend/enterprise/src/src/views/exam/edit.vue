@@ -412,7 +412,7 @@
         api.fetch(api.uri.searchCourse, {
           title: this.formMaterial.name,
           priName: '',
-          typeid: 0,
+          categoryid: 0,
           pubdate: '',
           take: this.materialTake,
           skip: this.materialTake * (this.materialCurrentPage - 1)
