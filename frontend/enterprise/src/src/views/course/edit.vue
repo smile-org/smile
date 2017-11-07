@@ -524,11 +524,12 @@ export default {
     },
     beforeContentUpload (file) {
       // 判断大小
-      if (file.size > 100 * 1024 * 1024) {
+      if (file.size > 500 * 1024 * 1024) {
         this.$message({
           type: 'info',
-          message: '附件不能大于100M'
+          message: '附件不能大于500M'
         })
+        this.fileList = []
         return false
       }
     },
