@@ -225,8 +225,6 @@
 </script>
 
 <style scoped="scope">
-
-
   .page_m {
     background: #f1f1f1;
   }
