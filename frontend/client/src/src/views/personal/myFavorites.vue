@@ -15,9 +15,10 @@
             <li class="course_list  line_only" v-for="item in dataCourse" :key="item.course_id">
               <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
                 <img :src="item.icon | formatImage" class="fl img_bg">
-                <div class="course_cen">
+                <div class="course_cen show_star">
                   <div class="hidden effect_right">
                     <h3 class="fl">{{item.title}}</h3>
+                    <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                     <ul class="small_icon fr">
                       <li class="fl">
                         <span class="icon icon1"></span>
@@ -47,7 +48,8 @@
                   <div class="hidden bm_font ml6">
                     <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
-                    <p class="star_time" style="bottom: .3rem;">{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
+                    <p class="" style="bottom: .3rem;">{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
+                    <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                     <ul class="small_icon fr">
                       <li class="fl">
                         <span class="icon icon1"></span>
@@ -135,7 +137,14 @@ export default {
     handleClick: function (tab, event) {
       this.loadMore()
     },
-
+    handleStar: function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var current = data[i]
+        if (current && current.star) {
+          current.star = current.star.toFixed(1)
+        }
+      }
+    },
     loadMore: function () {
       if (this.activeName === 'first' && this.dataCourse.length === 0 && !this.isBusy_course) {
         this.currentPage_course = this.currentPage_course + 1
@@ -143,6 +152,7 @@ export default {
         api.fetch(api.uri.getMyFavorite, { typeid: 1, take: this.take, skip: this.currentPage_course * this.take }).then(data => {
           if (data.status === 1) {
             this.dataCourse = this.dataCourse.concat(data.result)
+            this.handleStar(this.dataCourse)
             if (data.result.length === this.take) {
               this.isBusy_course = false
             }
@@ -159,6 +169,7 @@ export default {
         api.fetch(api.uri.getMyFavorite, { typeid: 3, take: this.take, skip: this.currentPage_enroll * this.take }).then(data => {
           if (data.status === 1) {
             this.dataEnroll = this.dataEnroll.concat(data.result)
+            this.handleStar(this.dataEnroll)
             if (data.result.length === this.take) {
               this.isBusy_enroll = false
             }

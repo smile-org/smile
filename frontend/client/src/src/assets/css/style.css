@@ -635,6 +635,7 @@ section .form_list input:hover{
   max-width:.9rem;
   max-height: .9rem;
   border-radius: .9rem;
+  overflow: hidden;
 }
 .person_header1{
   width: .7rem;
@@ -1224,9 +1225,10 @@ footer .exam_b .btn span:nth-child(2){
 }
 .b_header li p{
   margin:.1rem 0 0;
+  /*font-size: .24rem;*/
 }
 .b_header li span{
-  font-size: .24rem;
+  font-size: .22rem;
   color: #666;
 }
 .add_list hr{

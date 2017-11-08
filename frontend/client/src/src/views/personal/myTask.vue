@@ -69,9 +69,10 @@
         <li class="course_list  line_only" v-for="item in dataInProgress" :key="item.course_id">
           <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
             <img :src="item.icon | formatImage" class="fl img_bg">
-            <div class="course_cen">
+            <div class="course_cen show_star">
               <div class="hidden effect_right ">
                 <h3 class="fl">{{item.title}}</h3>
+                <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                 <ul class="small_icon fr">
                   <li class="fl">
                     <span class="icon icon1"></span>
@@ -123,13 +124,21 @@ export default {
     // handleClick: function (tab, event) {
     //   this.loadMore()
     // },
-
+    handleStar: function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var current = data[i]
+        if (current && current.star) {
+          current.star = current.star.toFixed(1)
+        }
+      }
+    },
     loadMore: function () {
       this.busy = true
       this.currentPage_inProgress = this.currentPage_inProgress + 1
       api.fetch(api.uri.getMyTaskListInProgress, { take: this.take, skip: this.currentPage_inProgress * this.take }).then(data => {
         if (data.status === 1) {
           this.dataInProgress = this.dataInProgress.concat(data.result)
+          this.handleStar(this.dataInProgress)
           if (data.result.length === this.take) {
             this.isBusy_inProgress = false
           }
