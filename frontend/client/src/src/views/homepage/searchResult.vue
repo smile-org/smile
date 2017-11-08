@@ -19,9 +19,9 @@
         </ul>
         <div class="b_search_input">
           <img class="s_seach" src="../../assets/img/seach_icon.png" />
-          <img class="s_delate" src="../../assets/img/delate.png" v-on:click="goBack"  style="top:.06rem"/>
+          <img class="s_delate" src="../../assets/img/delate.png" v-on:click="goBack"  style="top:.06rem;right: .2rem;"/>
           <input placeholder="选择资源类型搜索更精准" v-model.trim="search" @focus="goBack">
-          <button type="text" class="search_font" v-on:click="search">搜索</button>
+          <!--<button type="text" class="search_font" v-on:click="search">搜索</button>-->
         </div>
       </div>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">

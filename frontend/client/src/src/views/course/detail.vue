@@ -44,6 +44,10 @@
             <li>
               <span>有效期 :</span> {{data.expiration_date | formatDate}}
             </li>
+            <!--<li>-->
+              <!--<span>课程评分 :</span>-->
+              <!--&lt;!&ndash;<el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>&ndash;&gt;-->
+            <!--</li>-->
             <li>
               <span>课程简介 :</span>
               <p>

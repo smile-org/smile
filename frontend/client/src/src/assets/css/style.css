@@ -642,12 +642,14 @@ section .form_list input:hover{
   max-width: .7rem;
   max-height: .7rem;
   border-radius: .7rem;
+  overflow: hidden;
 }
 .person_header2{
   width: 1.9rem;
   height: 1.44rem;
   max-width: 1.9rem;
   max-height: 1.44rem;
+  overflow: hidden;
 }
 .bm_time{
   position: absolute;
@@ -1479,7 +1481,7 @@ footer .exam_b .btn span:nth-child(2){
   font-size:.24rem;
   color: #999;
   float: right;
-  padding-right:.5rem;
+  padding-right:.3rem;
   padding-top:.35rem;
   position: relative;
 }
