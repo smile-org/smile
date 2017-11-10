@@ -129,7 +129,7 @@
                         </template>
                     </div>
                     <div class="tc btn_margin">
-                        <el-button type="button" v-on:click="add()" :loading="showloading" class="inf_btn ml20 export_bor">保  存</el-button>
+                        <button type="button" v-on:click="add()" :loading="showloading" class="inf_btn ml20">保  存</button>
                     </div>
                 </div>
             </section>
@@ -510,24 +510,6 @@
         display: inline-block;
     }
 
-    .qx_btn {
-        min-width: 120px;
-        height: 38px;
-        text-align: center;
-        color: #fff;
-        background: #a4a4a4;
-        border-radius: 4px;
-        font-size: 16px;
-        letter-spacing: 2px;
-        cursor: pointer;
-        padding: 0 20px;
-    }
-
-    .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-        color: #fff;
-        background: #c3c3c3;
-        outline: none;
-    }
 
     /*文字错误提示*/
     .error_font {

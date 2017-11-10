@@ -264,24 +264,5 @@
         display: inline-block;
     }
 
-    .qx_btn {
-        min-width: 120px;
-        height: 38px;
-        text-align: center;
-        color: #fff;
-        background: #a4a4a4;
-        border-radius: 4px;
-        font-size: 16px;
-        letter-spacing: 2px;
-        cursor: pointer;
-        padding: 0 20px;
-    }
-
-    .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-        color: #fff;
-        background: #c3c3c3;
-        outline: none;
-    }
-
     /*导出样式end*/
 </style>

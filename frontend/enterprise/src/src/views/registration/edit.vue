@@ -133,9 +133,7 @@
             </template>
           </div>
           <div class="tc btn_margin">
-            <el-button type="button" v-on:click="add()" :loading="showloading"
-                       class="inf_btn ml20 export_bor">保  存
-            </el-button>
+            <button type="button" v-on:click="add()" :loading="showloading" class="inf_btn  mb20">保  存</button>
           </div>
           <my-upload
             @input="closeIcon"
@@ -436,17 +434,6 @@
   .el-dialog__body {
     padding: 10px 20px;
   }
-
-  /*.el-button--small {*/
-    /*font-size: 14px;*/
-    /*color: #00b553;*/
-  /*}*/
-
-  /*.el-button--small:hover, .el-button--small:active, .el-button--small:focus {*/
-    /*font-size: 14px;*/
-    /*color: #1DB513;*/
-  /*}*/
-
   .add_topic li span {
     /*width:100%;*/
     /*padding:10px 0;*/
@@ -487,24 +474,6 @@
     display: inline-block;
   }
 
-  .qx_btn {
-    min-width: 120px;
-    height: 38px;
-    text-align: center;
-    color: #fff;
-    background: #a4a4a4;
-    border-radius: 4px;
-    font-size: 16px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    padding: 0 20px;
-  }
-
-  .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-    color: #fff;
-    background: #c3c3c3;
-    outline: none;
-  }
 
   /*文字错误提示*/
   .error_font {

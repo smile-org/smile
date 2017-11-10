@@ -67,11 +67,6 @@
                         <tr>
                             <td class="page_m_a">
                                 课程图标
-
-
-
-
-
                             </td>
                             <td class="page_m_b">
                                 <img :src="iconSrc | formatImage" width="20%"/>
@@ -84,11 +79,6 @@
                         <tr>
                             <td class="page_m_a">
                                 课程主图
-
-
-
-
-
                             </td>
                             <td class="page_m_b">
                                 <img :src="bannerSrc | formatImage" width="100%"/>
@@ -126,13 +116,8 @@
                                                   style="width:400px;"></el-input>
                                         <el-button :plain="true" type="success" class="ml20" size="primary"
                                                    v-on:click="addContent()">添加主题
-
-
-
-
                                         </el-button>
                                         <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
-
                                     </el-form-item>
                                 </el-col>
                             </el-form>
@@ -144,24 +129,15 @@
                                 <el-table-column prop="sequnce_title" label="起止时间"></el-table-column>
                                 <el-table-column prop="" label="操作" width="100">
                                     <template scope="scope">
-                                        <el-button @click="deleteContent(scope.row.sequnce_num)" type="text" size="small">删除
-
-
-
-
-                                        </el-button>
+                                        <el-button @click="deleteContent(scope.row.sequnce_num)" type="text" size="small">删除</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </template>
                     </div>
                     <div class="tc btn_margin">
-                        <el-button type="button" v-on:click="add()" :loading="showloading"
-                                   class="inf_btn ml20 export_bor">保  存
-
-
-
-                        </el-button>
+                        <button type="button" v-on:click="add()" :loading="showloading" class="inf_btn ml20">保  存
+                        </button>
                     </div>
                 </div>
             </section>
@@ -399,7 +375,6 @@
         font-size: 14px;
         color: #666;
     }
-
     .add_topic li i {
         /*width:100%;*/
         /*padding:10px 0;*/
@@ -409,46 +384,24 @@
         margin-left: 10px;
         cursor: pointer;
     }
-
     .add_topic li i:hover {
         color: #f93d1f;
+    }
+    .export_bor {
+      border: none;
+      color: #fff;
+    }
+    .export_bor:hover, .export_bor:active {
+      color: #fff;
     }
 
     .el-icon-loading {
         color: #fff;
     }
 
-    .export_bor {
-        border: none;
-        color: #fff;
-    }
-
-    .export_bor:hover, .export_bor:active {
-        color: #fff;
-    }
-
     .download {
         line-height: 38px;
         display: inline-block;
-    }
-
-    .qx_btn {
-        min-width: 120px;
-        height: 38px;
-        text-align: center;
-        color: #fff;
-        background: #a4a4a4;
-        border-radius: 4px;
-        font-size: 16px;
-        letter-spacing: 2px;
-        cursor: pointer;
-        padding: 0 20px;
-    }
-
-    .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-        color: #fff;
-        background: #c3c3c3;
-        outline: none;
     }
 
     /*文字错误提示*/
