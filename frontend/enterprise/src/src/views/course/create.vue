@@ -109,7 +109,7 @@
                   :file-list="fileList"
                   :headers="headers">
                   <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
-                  <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过100M</div>
+                  <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过500M</div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>

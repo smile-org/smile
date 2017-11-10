@@ -155,13 +155,13 @@
             if (data.status === 1) {
               for (var i = 0; i < data.result.length; i++) {
                 var item = data.result[i]
-                if (item.content_type === 'word') {
+                if (item.content_type.toUpperCase() === 'DOC' || item.content_type.toUpperCase() === 'DOCX') {
                   item.typeImageClass = 'media_img media_img3'
-                } else if (item.content_type === 'ppt') {
+                } else if (item.content_type.toUpperCase() === 'PPTX' || item.content_type.toUpperCase() === 'PPT') {
                   item.typeImageClass = 'media_img media_img2'
-                } else if (item.content_type === 'mp4') {
+                } else if (item.content_type.toUpperCase() === 'MP4' || item.content_type.toUpperCase() === 'MOV') {
                   item.typeImageClass = 'media_img media_img1'
-                } else {
+                } else if (item.content_typetoUpperCase() === 'JPG' || item.content_typetoUpperCase() === 'JPEG' || item.content_typetoUpperCase() === 'PNG') {
                   item.typeImageClass = 'media_img media_img4'
                 }
               }
