@@ -688,12 +688,29 @@ table {
 .dateTab_width .el-input__icon + .el-input__inner {
   padding-right: 10px;
 }
-
-/*输入框宽度统一*/
-/*.el-form--inline .el-form-item__content .el-input{*/
-/*width: 160px;*/
-/*magin-right:10px;*/
-/*}*/
+.el-input__icon+.el-input__inner {
+  padding-right: 10px;
+}
+输入框宽度统一
+.add_width .el-form-item__content{
+  width: 70%;
+  /*magin-right:10px;*/
+}
+.add_width .el-form-item{
+  width:100%;
+}
+.add_width .el-form-item__content {
+  width: 70%;
+}
+.add_width .el-input-number {
+  /*display: inline-block;*/
+  width: 100%;
+  /*position: relative;*/
+  /*line-height: normal;*/
+}
+.add_width .el-select{
+  width:100%;
+}
 /*.el-input__icon+.el-input__inner {*/
 /*width:160px;*/
 /*}*/
@@ -722,7 +739,7 @@ table {
 }
 
 .el-icon-close {
-  color: #e83131;
+  color: rgb(245, 90, 16);
 }
 
 .el-icon-plus {

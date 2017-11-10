@@ -48,7 +48,7 @@
                         </button>
                       </div>
                     </el-dialog>
-                    <el-dialog title="试题导入" :visible.sync="dialogUploadVisible">
+                    <el-dialog title="试题导入" class="tl" :visible.sync="dialogUploadVisible">
                       <el-upload class="upload-demo"
                                  ref="uploadContent"
                                  :action="uploadContentAction"

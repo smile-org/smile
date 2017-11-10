@@ -9,7 +9,7 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">考试信息管理</span> > <span class="f_blue">添加考试</span></span>
         </nav>
         <div class="con_tab">
-          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
+          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
             <el-col :span="8">
               <el-form-item label="考试名称" prop="name">
                 <el-input v-model="form.name" placeholder="考试名称"></el-input>
@@ -53,9 +53,9 @@
                 </el-col>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="16">
               <el-form-item label="考试简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="考试简介"></el-input>
+                <el-input v-model="form.intro" placeholder="考试简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>

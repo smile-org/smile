@@ -9,7 +9,7 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">考试信息管理</span> > <span class="f_blue">添加考试</span></span>
         </nav>
         <div class="con_tab">
-          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
+          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
             <el-col :span="8">
               <el-form-item label="考试名称" prop="name">
                 <el-input v-model="form.name" placeholder="考试名称"></el-input>
@@ -52,9 +52,9 @@
                 </el-col>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="16">
               <el-form-item label="考试简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="考试简介"></el-input>
+                <el-input v-model="form.intro" placeholder="考试简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -118,11 +118,11 @@
           <div class="mt20 mb30">
             <template>
               <el-table :data="materialSelected" border class="mt20" style="width: 100%">
-                <el-table-column prop="name" label="课程名称" width="">
+                <el-table-column prop="name" align="center" label="课程名称" width="">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作" align="center"  class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="deleteSelectedMaterial(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedMaterial(scope.row.id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -158,7 +158,7 @@
                 <el-table-column property="id" align="center" width="100" type="selection" @selection-change="examListCheckedChange">
                 </el-table-column>
                 <!--<el-table-column property="num" label="序号" width=""></el-table-column>-->
-                <el-table-column property="name" label="试题名称" width=""></el-table-column>
+                <el-table-column property="name"  label="试题名称" width=""></el-table-column>
                 <el-table-column property="type" label="试题类型" width="">
                   <template scope="scope">
                     {{scope.row.type | formatExamType}}
@@ -177,13 +177,13 @@
             </el-dialog>
             <template>
               <el-table :data="examSelected" border class="mt20" style="width: 100%">
-                <el-table-column type="index" width="50">
+                <el-table-column type="index" align="center"  width="50">
                 </el-table-column>
-                <el-table-column prop="name" label="试题名称" width="">
+                <el-table-column prop="name" align="center"  label="试题名称" width="">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作" align="center"  class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="deleteSelectedExam(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedExam(scope.row.id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>

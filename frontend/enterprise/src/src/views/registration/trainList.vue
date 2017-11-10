@@ -222,7 +222,7 @@
   }
 </script>
 
-<style scoped="scope">
+<style scope="scoped">
     .el-icon-loading {
         color: #fff;
     }

@@ -32,11 +32,9 @@
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
-                        <el-form-item class="">
+                        <el-form-item class="fr">
                             <button type="button" @click="queryExamHistoryList" class="line-btn ml20">查  询</button>
-                            <button type="button" v-on:click="exportExamHistoryList" :loading="showloading"
-                                       class="inf_btn ml20 export_bor">导  出
-
+                            <button type="button" v-on:click="exportExamHistoryList" :loading="showloading" class="inf_btn ml20 export_bor">导  出
                             </button>
                             <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                                 <div class="tc">

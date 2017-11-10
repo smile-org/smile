@@ -371,4 +371,7 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .tr {
   text-align: right;
 }
+.tl {
+  text-align: left;
+}
 

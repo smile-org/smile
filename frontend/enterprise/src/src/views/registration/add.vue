@@ -10,7 +10,7 @@
                       <span class="">报名管理</span> > <span class=""> 培训报名管理</span> > <span class="f_blue">添加报名</span></span>
                 </nav>
                 <div class="con_tab">
-                    <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
+                    <el-form ref="form" :inline="true"  :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
                         <el-row>
                             <el-col :span="8">
                                 <el-form-item label="课程名称">
@@ -56,7 +56,7 @@
                         </el-row>
                       <el-col>
                         <el-form-item label="课程简介">
-                          <el-input v-model="form.intro" placeholder="课程简介" style="width: 500px;"></el-input>
+                          <el-input v-model="form.intro" placeholder="课程简介"  style="min-width: 545px;"></el-input>
                           <div class="el-form-item__error">{{introErrMsg}}</div>
                         </el-form-item>
                       </el-col>

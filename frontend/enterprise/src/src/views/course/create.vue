@@ -13,42 +13,44 @@
           </span>
         </nav>
         <div class="con_tab">
-          <el-form :rules="formRules" ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
-            <el-col :span="8">
-              <el-form-item label="课程名称" prop="title">
-                <el-input v-model="form.title" placeholder="课程名称"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="课程类别" prop="cateid">
-                <el-select class="dateTab_width" v-model="form.cateid" placeholder="请选择课程类别">
-                  <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="部门" prop="depart">
-                <el-input v-model="form.depart" placeholder="部门"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="责任人" prop="adminid">
-                <el-select class="dateTab_width" filterable v-model="form.adminid" placeholder="请选择责任人">
-                  <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="有效期" prop="expdate">
-                <el-date-picker v-model="form.expdate" type="date" placeholder="选择日期" class="dateTab_width" style="width: 100%;" :picker-options="pickerOptions0">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
+          <el-form :rules="formRules" ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="课程名称" prop="title">
+                  <el-input v-model="form.title" placeholder="课程名称"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="课程类别" prop="cateid">
+                  <el-select class="dateTab_width" v-model="form.cateid" placeholder="请选择课程类别">
+                    <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="责任人" prop="adminid">
+                  <el-select class="dateTab_width" filterable v-model="form.adminid" placeholder="请选择责任人">
+                    <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="部门" prop="depart">
+                  <el-input v-model="form.depart" placeholder="部门"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="有效期" prop="expdate">
+                  <el-date-picker v-model="form.expdate" type="date" placeholder="选择日期" class="dateTab_width" style="width: 100%;" :picker-options="pickerOptions0">
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-col>
               <el-form-item label="简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="简介"></el-input>
+                <el-input v-model="form.intro" placeholder="简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -130,7 +132,7 @@
                 <el-table-column label="操作" align="center"  class="tc" width="100">
                   <template scope="scope">
                     <el-button @click="editContent(scope.row.id)" type="text" size="small">编辑</el-button>
-                    <el-button @click="remove(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="remove(scope.row.id)" type="text" class="red_font" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>

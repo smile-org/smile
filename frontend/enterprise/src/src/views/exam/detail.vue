@@ -1,80 +1,80 @@
 <template>
-    <div>
-        <common-header type="exam"></common-header>
-        <div class="con_main">
-            <navigator module="exam" menu="user"></navigator>
-            <section class="con_main_r">
-                <nav>
-                    <img src="../../assets/img/house.png" class="vm">
-                    <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">员工考试记录</span> > <span
-                            class="f_blue">考试详情</span></span>
-                </nav>
-                <div class="con_tab">
-                    <div class="detail_tit">
-                        <span>{{examTitle}}</span>
-                        <span>{{startDate}} — {{endDate}}</span>
-                        <span>{{score}}分</span>
-                        <span>{{fullname}}</span>
-                        <button class="inf_btn fr" v-on:click="back()">返  回</button>
-                    </div>
-                    <ul>
-                        <li class="single_title" v-for="item in tableData" :key="item.question_id">
-                            <ul>
-                                <li>{{item.question_num}}/{{total}}({{item.question_type}})</li>
-                                <li class="tit_con" v-if="item.type_id === 2">
-                                    <p>{{item.title}}
-                                        <span class="false_n ml20" v-if="item.is_right === true">
-                                            <i class="el-icon-check" />
+  <div>
+    <common-header type="exam"></common-header>
+    <div class="con_main">
+      <navigator module="exam" menu="user"></navigator>
+      <section class="con_main_r">
+        <nav>
+          <img src="../../assets/img/house.png" class="vm">
+          <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">员工考试记录</span> > <span
+            class="f_blue">考试详情</span></span>
+        </nav>
+        <div class="con_tab">
+          <div class="detail_tit">
+            <span>{{examTitle}}</span>
+            <span>{{startDate}} — {{endDate}}</span>
+            <span>{{score}}分</span>
+            <span>{{fullname}}</span>
+            <button class="inf_btn fr" v-on:click="back()">返  回</button>
+          </div>
+          <ul>
+            <li class="single_title" v-for="item in tableData" :key="item.question_id">
+              <ul>
+                <li>{{item.question_num}}/{{total}}({{item.question_type}})</li>
+                <li class="tit_con" v-if="item.type_id === 2">
+                  <p>{{item.title}}
+                    <span class="true_n ml20" v-if="item.is_right === true">
+                                            <i class="el-icon-check"/>
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
-                                        <span class="ml20" v-else>
-                                            <i class="el-icon-close" />
+                    <span class="ml20 false_n " v-else>
+                                            <i class="el-icon-close"/>
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
-                                    </p>
-                                    <ul>
-                                        <el-checkbox-group v-model="item.selected_answers">
-                                            <li v-for="answer in item.answers">
-                                                <el-checkbox class="radio" v-model="item.selected_answers" :label="answer.answer_id">
-                                                    {{answer.answer_option}}. {{answer.answer_content}} {{item.selected_answer}}
-                                                </el-checkbox>
-                                            </li>
-                                        </el-checkbox-group>
-                                    </ul>
-                                </li>
-                                <li class="tit_con" v-else>
-                                    <p>{{item.title}}
-                                        <span class="false_n ml20" v-if="item.is_right === true">
-                                            <i class="el-icon-check" />
+                  </p>
+                  <ul>
+                    <el-checkbox-group v-model="item.selected_answers">
+                      <li v-for="answer in item.answers">
+                        <el-checkbox class="radio" v-model="item.selected_answers" :label="answer.answer_id">
+                          {{answer.answer_option}}. {{answer.answer_content}} {{item.selected_answer}}
+                        </el-checkbox>
+                      </li>
+                    </el-checkbox-group>
+                  </ul>
+                </li>
+                <li class="tit_con" v-else>
+                  <p>{{item.title}}
+                    <span class="true_n ml20" v-if="item.is_right === true">
+                                            <i class="el-icon-check"/>
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
-                                        <span class="ml20" v-else>
-                                            <i class="el-icon-close" />
+                    <span class="ml20 false_n" v-else>
+                                            <i class="el-icon-close"/>
                                             ( 正确答案：{{item.right_answers}} )
                                         </span>
-                                    </p>
-                                    <ul>
-                                        <el-radio-group v-model="item.selected_answer">
-                                            <li v-for="answer in item.answers">
-                                                <el-radio class="radio" v-model="item.selected_answer" :label="answer.answer_id">
-                                                    {{answer.answer_option}}. {{answer.answer_content}} {{item.selected_answer}}
-                                                </el-radio>
-                                            </li>
-                                        </el-radio-group>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div class="tc mt20">
-                        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"
-                                       :page-size="take"
-                                       layout="total, prev, pager, next" :total="total"></el-pagination>
-                    </div>
-                </div>
-            </section>
+                  </p>
+                  <ul>
+                    <el-radio-group v-model="item.selected_answer">
+                      <li v-for="answer in item.answers">
+                        <el-radio class="radio" v-model="item.selected_answer" :label="answer.answer_id">
+                          {{answer.answer_option}}. {{answer.answer_content}} {{item.selected_answer}}
+                        </el-radio>
+                      </li>
+                    </el-radio-group>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="tc mt20">
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage"
+                           :page-size="take"
+                           layout="total, prev, pager, next" :total="total"></el-pagination>
+          </div>
         </div>
+      </section>
     </div>
+  </div>
 </template>
 
 <script>
@@ -189,47 +189,49 @@
 </script>
 
 <style scoped="scope">
-    .detail_tit {
-        font-size: 14px;
-    }
+  .detail_tit {
+    font-size: 14px;
+  }
 
-    .detail_tit span {
-        margin-top: 5px;
-        margin-right: 20px;
-    }
+  .detail_tit span {
+    margin-top: 5px;
+    margin-right: 20px;
+  }
 
-    .single_title {
-        margin-top: 20px;
-    }
+  .single_title {
+    margin-top: 20px;
+  }
 
-    .tit_con {
-        margin-left: 20px;
+  .tit_con {
+    margin-left: 20px;
+  }
 
-    }
+  .tit_con p {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-szie: 16px;
+    /*font-weight: bold;*/
+  }
 
-    .tit_con p {
-        margin-top: 15px;
-        margin-bottom: 10px;
-        font-szie: 16px;
-        /*font-weight: bold;*/
-    }
+  .tit_con li {
+    margin-bottom: 10px;
+  }
 
-    .tit_con li {
-        margin-bottom: 10px;
-    }
+  .tit_con .el-radio__original {
+    border-color: #01b554;
+    background: #01b554 !important;
+    margin-right: 10px;
+  }
 
-    .tit_con .el-radio__original {
-        border-color: #01b554;
-        background: #01b554 !important;
-        margin-right: 10px;
-    }
+  .el-radio__label {
+    margin-left: 15px;
+  }
 
-    .el-radio__label {
-        margin-left: 15px;
-    }
-
-    .false_n {
-        color: rgb(245, 90, 16);
-    }
+  .false_n {
+    color: rgb(245, 90, 16);
+  }
+  .true_n {
+    color: #01B554;
+  }
 
 </style>

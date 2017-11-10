@@ -13,47 +13,49 @@
           </span>
         </nav>
         <div class="con_tab">
-          <el-form :rules="formRules" ref="form" :inline="true" :model="currentCourse" class="demo-form-inline mt20 hidden" label-width="80px">
-            <el-col :span="8">
-              <el-form-item label="课程名称" prop="title">
-                <el-input v-model="currentCourse.title" placeholder="课程名称"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="课程类别" prop="category_id">
-                <el-select v-model="currentCourse.category_id" placeholder="请选择课程类别">
-                  <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="部门" prop="department">
-                <el-input v-model="currentCourse.department" placeholder="部门"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="责任人" prop="principal_user_id">
-                <el-select filterable v-model="currentCourse.principal_user_id" placeholder="请选择责任人">
-                  <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="有效期" prop="expiration_date">
-                <el-date-picker
-                  v-model="currentCourse.expiration_date"
-                  type="date"
-                  placeholder="选择日期"
-                  style="width: 100%;"
-                  >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
+          <el-form :rules="formRules" ref="form" :inline="true" :model="currentCourse" class="demo-form-inline mt20 hidden add_width" label-width="80px">
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="课程名称" prop="title">
+                  <el-input v-model="currentCourse.title" placeholder="课程名称"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="课程类别" prop="category_id">
+                  <el-select v-model="currentCourse.category_id" placeholder="请选择课程类别">
+                    <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="部门" prop="department">
+                  <el-input v-model="currentCourse.department" placeholder="部门"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="责任人" prop="principal_user_id">
+                  <el-select filterable v-model="currentCourse.principal_user_id" placeholder="请选择责任人">
+                    <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="有效期" prop="expiration_date">
+                  <el-date-picker
+                    v-model="currentCourse.expiration_date"
+                    type="date"
+                    placeholder="选择日期"
+                    style="width: 100%;"
+                    >
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-col :span="24">
               <el-form-item label="简介" prop="intro">
-                <el-input v-model="currentCourse.intro" placeholder="简介"></el-input>
+                <el-input v-model="currentCourse.intro" placeholder="简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -124,18 +126,18 @@
           <div class="mt20">
             <template>
               <el-table :data="contentList" border class="mt20 mb30" style="width: 100%">
-                <el-table-column prop="sequnce_num" label="序号" width="100">
+                <el-table-column prop="sequnce_num" align="center" label="序号" width="100">
                 </el-table-column>
-                <el-table-column prop="sequnce_title" label="章节">
+                <el-table-column prop="sequnce_title" align="center" label="章节">
                 </el-table-column>
-                <el-table-column prop="content" label="标题">
+                <el-table-column prop="content" align="center" label="标题">
                 </el-table-column>
-                <el-table-column prop="filename" label="课件">
+                <el-table-column prop="filename" align="center" label="课件">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作" align="center" class="tc" width="100">
                   <template scope="scope">
                     <el-button @click="editContent(scope.row.content_id)" type="text" size="small">编辑</el-button>
-                    <el-button @click="delContent(scope.row.content_id)" type="text" size="small">删除</el-button>
+                    <el-button @click="delContent(scope.row.content_id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -728,7 +730,9 @@ export default {
   background: none;
   color: #00b553;
 }
-
+.dateTab_width .el-input__icon+.el-input__inner{
+  margin-right: 10px;
+}
 .update_btn:hover,
 .update_btn:active,
 .update_btn:focus {

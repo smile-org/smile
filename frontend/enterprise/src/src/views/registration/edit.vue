@@ -10,7 +10,7 @@
                   class="f_blue">编辑报名</span></span>
         </nav>
         <div class="con_tab">
-          <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden"
+          <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width"
                    label-width="80px">
             <el-row>
               <el-col :span="8">
@@ -49,16 +49,16 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="课程简介">
-                  <el-input v-model="form.intro" placeholder="课程简介"></el-input>
-                  <div class="el-form-item__error">{{introErrMsg}}</div>
+                <el-form-item label="地址">
+                  <el-input v-model="form.location" placeholder="地址"></el-input>
+                  <div class="el-form-item__error">{{locationErrMsg}}</div>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-col :span="8">
-              <el-form-item label="地址">
-                <el-input v-model="form.location" placeholder="地址"></el-input>
-                <div class="el-form-item__error">{{locationErrMsg}}</div>
+            <el-col :span="24">
+              <el-form-item label="课程简介">
+                <el-input v-model="form.intro" placeholder="课程简介" style="min-width: 545px;"></el-input>
+                <div class="el-form-item__error">{{introErrMsg}}</div>
               </el-form-item>
             </el-col>
 
