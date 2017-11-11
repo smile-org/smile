@@ -1663,14 +1663,14 @@ footer .exam_b .btn span:nth-child(2){
   font-size: .16rem;
   margin-right: .006rem;
 }
-
+/*.show_star2 .three_tab .el-rate__icon {*/
+  /*font-size: 0.29rem;*/
+  /*margin-right: .15rem;*/
+/*}*/
 .three_tab .el-tabs__active-bar {
   width: 0!important;
   transform: translateX(0rem)!important;
 }
-
-
-
 .three_tab .el-tabs__item.is-active:before {
   content: "";
   position: absolute;
@@ -1681,7 +1681,6 @@ footer .exam_b .btn span:nth-child(2){
   background: #00b553;
   z-index: 2;
 }
-
 .three_tab .el-tabs__item {
   padding: 0 .5rem;
   height: .7rem;
