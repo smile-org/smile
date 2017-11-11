@@ -146,6 +146,7 @@
           </div>
           <div class="tc btn_margin">
             <button type="button" v-on:click="add()" :loading="showloading" class="inf_btn  mb20">保  存</button>
+            <button type="button" class="inf_btn  ml20" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
           </div>
           <my-upload
             @input="closeIcon"
@@ -211,7 +212,8 @@
           startDate: '',
           endDate: '',
           intro: '',
-          location: ''
+          location: '',
+          ispublished: ''
         },
         tableData: [],
         iconSrc: '',
@@ -265,10 +267,12 @@
       api.fetch(api.uri.getEnrollmentEditPageInfo, {
         periodid: this.period_id
       }).then(data => {
+        console.log(data)
         if (data.status === 1) {
           console.log(data)
           this.iconSrc = data.result.EnrollmentToBeEidt.icon
           this.bannerSrc = data.result.EnrollmentToBeEidt.pic
+          this.form.ispublished = data.result.EnrollmentPeriodToBeEdit.ispublished
           this.form.title = data.result.EnrollmentToBeEidt.title
           this.form.intro = data.result.EnrollmentToBeEidt.intro
           this.form.teacher = data.result.EnrollmentPeriodToBeEdit.teacher
@@ -282,6 +286,27 @@
       })
     },
     methods: {
+      publish () {
+        console.log(this.form.ispublished)
+      // 隐藏传0， 发布传1
+        var _type = 0
+        if (this.form.ispublished === true) {
+          _type = 0
+        } else {
+          _type = 1
+        }
+        api.fetch(api.uri.publishEnrollment, {
+          periodid: this.period_id,
+          publish: _type
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            router.push({name: 'registrationTrainlist'})
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
       addContent: function () {
         this.numErrMsg = ''
         this.topicErrMsg = ''
@@ -382,6 +407,7 @@
           location: this.form.location,
           contentList: this.tableData
         }).then(data => {
+          console.log(data)
           if (data.status === 1) {
             router.push({name: 'registrationTrainlist'})
 //            this.form.title = ''

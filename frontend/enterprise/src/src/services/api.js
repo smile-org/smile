@@ -144,6 +144,7 @@ export default {
     addEnrollment: '/back/AddEnrollment',
     updateEnrollment: '/back/UpdateEnrollment',
     openEnrollment: '/back/OpenEnrollment',
+    publishEnrollment: '/back/UpdateEnrollmentPublishStatus',
 
     // 公司管理员
     updatePassword: 'updatePassword',
@@ -164,6 +165,7 @@ export default {
     exportExamHistoryList: '/back/ExportExamHistoryList',
     getExamHistoryDetail: '/back/GetExamHistoryDetail',
     getExamDetailQuestionList: '/back/GetExamDetailQuestionList',
+    publishExam: '/back/UpdateExamPublishStatus',
     // 添加试题
     addQuestion: '/back/AddQuestion',
     // 编辑试题
@@ -189,6 +191,19 @@ export default {
     // 上传报名Icon和Banner
     uploadEnrollmentIcon: '/back/UploadEnrollmentIcon',
     uploadEnrollmentBanner: '/back/UploadEnrollmentPic'
+  },
+  extension: {
+    course: [
+      'PDF',
+      'JPG',
+      'PNG',
+      'MP4',
+      'MOV',
+      'DOC',
+      'DOCX',
+      'PPT',
+      'PPTX'
+    ]
   },
   image: {
     category: '/default/cateicon.png',

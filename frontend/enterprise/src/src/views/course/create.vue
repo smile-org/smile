@@ -99,7 +99,7 @@
                     <el-input v-model="formInline.content" placeholder="标题" style="width: 300px;"></el-input>
                   </el-form-item>
                 </el-form>
-                <el-upload class="upload-demo"
+                <el-upload class="upload-demo" accept="video/mp4,video/mov,application/msword,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
                   ref="uploadContent"
                   :action="uploadContentAction"
                   :on-success="onContentSuccess"
@@ -109,7 +109,7 @@
                   :file-list="fileList"
                   :headers="headers">
                   <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
-                  <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过500M</div>
+                  <div slot="tip" class="el-upload__tip">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
@@ -489,7 +489,27 @@ export default {
       }
     },
     beforeContentUpload (file) {
-      // 判断大小
+      // 判断大小与格式
+      console.log(file.name.indexOf('.') !== -1)
+      if (file.name.indexOf('.') !== -1) {
+        var arrLen = file.name.split('.').length - 1
+        var extension = file.name.split('.')[arrLen].toUpperCase()
+        if (api.extension.course.indexOf(extension) === -1) {
+          this.$message({
+            type: 'info',
+            message: '不支持的上传文件格式'
+          })
+          this.fileList = []
+          return false
+        }
+      } else {
+        this.$message({
+          type: 'info',
+          message: '不支持的上传文件格式'
+        })
+        this.fileList = []
+        return false
+      }
       if (file.size > 500 * 1024 * 1024) {
         this.$message({
           type: 'info',

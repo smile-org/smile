@@ -191,6 +191,7 @@
           </div>
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " v-on:click="save">保  存</button>
+            <button type="button" class="inf_btn  ml20" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
           </div>
           <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
@@ -256,7 +257,8 @@
           minutes: 60,
           dateStart: '',
           dateEnd: '',
-          intro: ''
+          intro: '',
+          ispublished: ''
         },
         formRules: {
           name: [
@@ -361,7 +363,8 @@
             minutes: currentExam.time_limit,
             dateStart: moment(currentExam.start_date).format('YYYY-MM-DD'),
             dateEnd: moment(currentExam.end_date).format('YYYY-MM-DD'),
-            intro: currentExam.intro
+            intro: currentExam.intro,
+            ispublished: currentExam.ispublished
           }
           this.iconSrc = currentExam.icon
           this.bannerSrc = currentExam.pic
@@ -390,6 +393,27 @@
       })
     },
     methods: {
+      publish () {
+        console.log(this.form.ispublished)
+      // 隐藏传0， 发布传1
+        var _type = 0
+        if (this.form.ispublished === true) {
+          _type = 0
+        } else {
+          _type = 1
+        }
+        api.fetch(api.uri.publishExam, {
+          examid: this.id,
+          publish: _type
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            router.push({name: 'examList'})
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
       materialListCheckedChange (val) {
         this.materialListChecked = val
       },
