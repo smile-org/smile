@@ -20,6 +20,7 @@
     "mint-ui": "^2.2.9",
     "vue": "^2.4.2",
     "vue-cookie": "^1.1.4",
+    "vue-croppa": "^1.1.2",
     "vue-infinite-scroll": "^2.0.1",
     "vue-router": "^2.7.0",
     "vue-video": "^0.1.7",
