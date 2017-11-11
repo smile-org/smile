@@ -41,6 +41,12 @@
                     <!--<span class="icon icon1 vm"></span>-->
                     <!--<span class="vm">{{item.followerCount}}</span>-->
                   <!--</div>-->
+                  <ul class="small_icon fr font22">
+                    {{item.person}}{{item.count}}
+                  </ul>
+                </div>
+                <div class="small_icon exam_explain font22">
+                  {{item.start | formatDate}}<span v-if="item.end">&nbsp;至&nbsp;{{item.end | formatDate}}</span>
                 </div>
               </div>
             </div>
@@ -52,21 +58,17 @@
             <div class="course_cen">
               <div class="hidden">
                 <h3 class="fl">{{item.title}}</h3>
-                <!--<ul class="small_icon fr">
-                  <li class="fl">
-                    <span class="icon icon1"></span>
-                    <span class="green00b">80</span>
-                  </li>
-                  <li class="fl">
-                    <span class="icon icon2"></span>
-                    <span class="redff7">80</span>
-                  </li>
-                </ul>-->
+                <ul class="small_icon fr font22">
+                  {{item.person}}{{item.count}}
+                </ul>
               </div>
             </div>
             <p class="exam_explain">
               {{item.intro}}
             </p>
+            <div class="small_icon exam_explain font22">
+              {{item.start | formatDate}}<span v-if="item.end">&nbsp;至&nbsp;{{item.end | formatDate}}</span>
+            </div>
           </a>
           <!--</router-link>-->
         </li>
@@ -94,6 +96,7 @@
 import commonHeader from '../../components/CommonHeader'
 import api from '../../services/api'
 import axios from 'axios'
+import { formatDate } from '../../common/date'
 import router from '../../router'
 export default {
   data: function () {
@@ -117,6 +120,10 @@ export default {
   filters: {
     formatImage: function (uri) {
       return axios.defaults.imageServer + uri
+    },
+    formatDate (time) {
+      var date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
     }
   },
   methods: {
@@ -148,8 +155,9 @@ export default {
       router.go(-1)
     },
     selectModule: function (type) {
+      sessionStorage.removeItem('searchType')
       this.type = type
-      router.push({name: 'search'}, {query: { type: type }})
+      router.push({name: 'search', query: {type: this.type}})
     },
     goBooking: function () {
       router.push({name: 'newBooking'})

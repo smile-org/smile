@@ -163,6 +163,8 @@
                   item.typeImageClass = 'media_img media_img1'
                 } else if (item.content_type.toUpperCase() === 'JPG' || item.content_type.toUpperCase() === 'JPEG' || item.content_type.toUpperCase() === 'PNG') {
                   item.typeImageClass = 'media_img media_img4'
+                } else if (item.content_type.toUpperCase() === 'PDF') {
+                  item.typeImageClass = 'media_img media_img5'
                 }
               }
               this.courseContent = data.result
