@@ -26,7 +26,7 @@
       </div>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.id">
-          <a  v-if="type===4" v-on:click="goDetail(item.id)">
+          <a  v-if="type===4" v-on:click="goDetail(item.id)" style="width: 100%;">
           <!--<router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">-->
             <div class="p3_line wid100 hidden">
               <img class="person_header fl" :src="item.icon | formatImage">
@@ -41,32 +41,46 @@
                     <!--<span class="icon icon1 vm"></span>-->
                     <!--<span class="vm">{{item.followerCount}}</span>-->
                   <!--</div>-->
-                  <ul class="small_icon fr font22">
-                    {{item.person}}{{item.count}}
-                  </ul>
+                  <div class="hidden wid100">
+                    <p class="fl">主讲：{{item.person}}</p>
+                    <!--<p class="fr">{{item.sponsorDate | formatDate}}</p>-->
+                    <p class="fr">
+                      {{item.start | formatDate}}<span v-if="item.end">&nbsp;至&nbsp;{{item.end | formatDate}}</span>
+                    </p>
+                  </div>
+                  <div class="home_person">
+                    <span class="icon icon1 vm"></span>
+                    <span class="vm">{{item.count}}</span>
+                  </div>
+                  <!--<ul class="small_icon fr font22">-->
+                    <!--{{item.person}}{{item.count}}-->
+                  <!--</ul>-->
                 </div>
-                <div class="small_icon exam_explain font22">
-                  {{item.start | formatDate}}<span v-if="item.end">&nbsp;至&nbsp;{{item.end | formatDate}}</span>
-                </div>
+
               </div>
             </div>
           </a>
-          <a  v-else v-on:click="goDetail(item.id)">
+          <a  v-else v-on:click="goDetail(item.id)" style="width: 100%;">
             <!--<router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">-->
             <img  :src="item.icon | formatImage" class="fl img_bg">
             <!--<img v-else :src="item.icon | formatImage" class="fl img_bg">-->
             <div class="course_cen">
-              <div class="hidden">
-                <h3 class="fl">{{item.title}}</h3>
-                <ul class="small_icon fr font22">
-                  {{item.person}}{{item.count}}
+              <div class="hidden person_search">
+                <h3 class="">{{item.title}}</h3>
+                <p class="person_search">主讲：{{item.person}} </p>
+                <p class="exam_explains">
+                  {{item.intro}}
+                </p>
+                <ul class="small_icon fr font22" style="top: .3rem">
+                  <li class="fl">
+                    <span class="icon icon1"></span>
+                    <span class="green00b">{{item.count}}</span>
+                  </li>
                 </ul>
               </div>
             </div>
-            <p class="exam_explain">
-              {{item.intro}}
-            </p>
-            <div class="small_icon exam_explain font22">
+
+            <div class="small_icon exam_explain " style="color: #999;">
               {{item.start | formatDate}}<span v-if="item.end">&nbsp;至&nbsp;{{item.end | formatDate}}</span>
             </div>
           </a>
@@ -179,3 +193,24 @@ export default {
   }
 }
 </script>
+<style>
+  .person_search p{
+    font-size: .22rem;
+    color: #999;
+    /*margin-top: .1rem;*/
+  }
+  .person_search .exam_explains{
+    font-size: .22rem;
+    color: #999;
+    margin-top: .01rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    /*max-width: 70%;*/
+    min-height:.5rem;
+    margin-left: 0rem;
+    padding-right: .3rem;
+  }
+
+</style>
