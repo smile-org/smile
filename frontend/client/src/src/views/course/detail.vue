@@ -161,7 +161,7 @@
                   item.typeImageClass = 'media_img media_img2'
                 } else if (item.content_type.toUpperCase() === 'MP4' || item.content_type.toUpperCase() === 'MOV') {
                   item.typeImageClass = 'media_img media_img1'
-                } else if (item.content_typetoUpperCase() === 'JPG' || item.content_typetoUpperCase() === 'JPEG' || item.content_typetoUpperCase() === 'PNG') {
+                } else if (item.content_type.toUpperCase() === 'JPG' || item.content_type.toUpperCase() === 'JPEG' || item.content_type.toUpperCase() === 'PNG') {
                   item.typeImageClass = 'media_img media_img4'
                 }
               }
