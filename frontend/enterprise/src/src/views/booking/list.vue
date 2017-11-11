@@ -18,7 +18,7 @@
                 <el-date-picker type="date" placeholder="发起时间" v-model="form.date1" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
-            <el-form-item class="fr">
+            <el-form-item class="fr dc_width">
               <button type="button" class="line-btn ml20" v-on:click="queryAppointment">查  询</button>
               <button type="button" v-on:click="exportAppointment" :loading="showloading" class="inf_btn ml20 export_bor">导  出</button>
               <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">

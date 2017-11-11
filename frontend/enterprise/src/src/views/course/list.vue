@@ -34,7 +34,7 @@
                             <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
                         </el-form-item>
                     </el-form>
-                    <div class="fr hidden mb20">
+                    <div class="fr hidden mb20 dc_width">
                         <button type="button" class="inf_btn mr20" v-on:click="addCourse">添加课程</button>
                         <button type="button" v-on:click="exportQuestionList" :loading="showloading"
                                    class="inf_btn ml20 export_bor">导  出

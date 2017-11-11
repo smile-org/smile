@@ -29,13 +29,8 @@
                         <el-form-item>
                           <button type="button" class="line-btn ml20" v-on:click="queryEnrollment">查  询</button>
                         </el-form-item>
-                        <!--<el-form-item>-->
-
-
-                        <!--</el-form-item>-->
-
                     </el-form>
-                  <div  class="fr mb20">
+                  <div  class="fr mb20 dc_width">
                     <button type="button" class="inf_btn ml10" v-on:click="addEnrollment">添加报名</button>
                     <button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml10 export_bor">导  出</button>
                     <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">

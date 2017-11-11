@@ -515,24 +515,37 @@ table {
   outline: none;
 
 }
-
+.inf_btn2{
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  color: #fff;
+  background: #55b761;
+  border-radius: 4px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 0 20px;
+  border-color: #55b761;
+  outline: none;
+}
 .btn_margin {
   margin: 50px auto;
 }
 
-.inf_btn:hover {
+.inf_btn:hover,.inf_btn2:hover  {
   background: rgba(96, 204, 109, 0.84);
   border-color: rgba(96, 204, 109, 0.84);
   color: #fff;
 }
 
-.inf_btn:active {
+.inf_btn:active,.inf_btn2:active  {
   background: rgba(96, 204, 109, 0.84);
   border-color: rgba(96, 204, 109, 0.84);
   color: #fff;
 }
 
-.inf_btn:focus {
+.inf_btn:focus,.inf_btn2:focus  {
   outline: none;
   border-color: rgba(96, 204, 109, 0.84);
   color: #fff;
@@ -765,4 +778,15 @@ table {
 
 .el-icon-minus {
   color: #8391a5;
+}
+/*导出样式*/
+.dc_width .el-dialog--small {
+  min-width: 40%;
+  width: 40%;
+}
+ .el-dialog__headerbtn .el-dialog__close:hover{
+  color: #55b761;
+}
+ .el-dialog__headerbtn .el-dialog__close:active{
+  color: #55b761;
 }

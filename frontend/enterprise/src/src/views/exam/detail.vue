@@ -35,7 +35,7 @@
                   <ul>
                     <el-checkbox-group v-model="item.selected_answers">
                       <li v-for="answer in item.answers">
-                        <el-checkbox class="radio" v-model="item.selected_answers" :label="answer.answer_id">
+                        <el-checkbox class="radio" disabled v-model="item.selected_answers" :label="answer.answer_id">
                           {{answer.answer_option}}. {{answer.answer_content}} {{item.selected_answer}}
                         </el-checkbox>
                       </li>
@@ -56,7 +56,7 @@
                   <ul>
                     <el-radio-group v-model="item.selected_answer">
                       <li v-for="answer in item.answers">
-                        <el-radio class="radio" v-model="item.selected_answer" :label="answer.answer_id">
+                        <el-radio class="radio" disabled v-model="item.selected_answer" :label="answer.answer_id">
                           {{answer.answer_option}}. {{answer.answer_content}} {{item.selected_answer}}
                         </el-radio>
                       </li>
@@ -230,8 +230,12 @@
   .false_n {
     color: rgb(245, 90, 16);
   }
+
   .true_n {
     color: #01B554;
   }
-
+  .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner {
+    background-color: #979797;
+    border-color: #979797;
+  }
 </style>

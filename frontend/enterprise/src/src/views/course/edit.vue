@@ -113,7 +113,7 @@
                   :on-change="changeContentUpload"
                   :file-list="fileList"
                   :headers="headers">
-                  <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
+                  <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
                   <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过500M</div>
                 </el-upload>
                 <div class="tc btn_margin">

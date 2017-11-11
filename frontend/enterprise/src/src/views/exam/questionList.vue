@@ -31,12 +31,12 @@
                         </el-form-item>
                         <!--</el-row>-->
                     </el-form>
-                  <div class="tr mb20">
+                  <div class="tr mb20 dc_width">
                     <button type="button" v-on:click="addQuestion()" class="inf_btn mr15">添加试题</button>
                     <button type="button" class="inf_btn mr15" v-on:click="showUploadDialog()">试题导入</button>
                     <a v-bind:href="templateExcelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
                     <button type="button" v-on:click="exportQuestionList()" :loading="showloading" class="inf_btn vm export_bor">导  出</button>
-                    <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                    <el-dialog class="tl" title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                       <div class="tc">
                         <!--<p class="exal">电子表格文件生成成功</p>-->
                         <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
@@ -56,7 +56,7 @@
                                  :before-upload="beforeContentUpload"
                                  :auto-upload="true"
                                  :headers="headers">
-                        <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
+                        <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
                         <div slot="tip" class="el-upload__tip">支持类型xlsx，大小不超过100M</div>
                       </el-upload>
                     </el-dialog>
