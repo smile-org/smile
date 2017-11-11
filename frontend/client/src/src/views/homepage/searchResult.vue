@@ -208,9 +208,9 @@ export default {
     -webkit-line-clamp: 2;
     overflow: hidden;
     /*max-width: 70%;*/
-    min-height:.5rem;
+    min-height:.4rem;
     margin-left: 0rem;
-    padding-right: .3rem;
+    padding-right: .03rem;
   }
 
 </style>
