@@ -417,6 +417,10 @@ section .form_list input:hover{
   background: url('../img/icon_img.png')no-repeat center center;
   background-size: 100% 100%;
 }
+.media_img4{
+  background: url('../img/icon_pdf.png')no-repeat center center;
+  background-size: 100% 100%;
+}
 /*此处为学课内容图片引用end*/
 /*此处为login 警告样式*/
 .form_warning{
