@@ -101,13 +101,13 @@
                                 </el-col>
                               <el-col :span="8">
                                 <el-form-item label="开始时间">
-                                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
+                                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
                                   <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
                                 </el-form-item>
                               </el-col>
                               <el-col :span="8">
                                 <el-form-item label="结束时间">
-                                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
+                                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
                                   <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
                                 </el-form-item>
                               </el-col>

@@ -96,19 +96,31 @@
             <template class="hidden">
               <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
                 <!--<el-col :span="12">-->
-                <el-col :span="12">
+                <el-col :span="8">
                   <el-form-item class="mb10" label="序号">
                     <!--<el-input v-model="formInline.num" placeholder="序号"></el-input>-->
                     <el-input-number v-model="formInline.num" :min="1" label="序号"></el-input-number>
                     <div class="el-form-item__error"> {{numErrMsg}}</div>
                   </el-form-item>
                 </el-col>
-                <el-col :span="12">
-                  <el-form-item label="起止时间">
-                    <el-date-picker v-model="formInline.dateRange" type="datetimerange" placeholder="选择时间范围"></el-date-picker>
+                <el-col :span="8">
+                  <el-form-item label="开始时间">
+                    <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
                     <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
                   </el-form-item>
                 </el-col>
+                <el-col :span="8">
+                  <el-form-item label="结束时间">
+                    <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
+                    <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
+                  </el-form-item>
+                </el-col>
+                <!--<el-col :span="12">-->
+                  <!--<el-form-item label="起止时间">-->
+                    <!--<el-date-picker v-model="formInline.dateRange" type="datetimerange" placeholder="选择时间范围"></el-date-picker>-->
+                    <!--<div class="el-form-item__error">{{dateRangeErrMsg}}</div>-->
+                  <!--</el-form-item>-->
+                <!--</el-col>-->
                 <el-col :span="24">
                   <el-form-item label="主题">
                     <el-input v-model="formInline.topic" placeholder="主题"
@@ -188,7 +200,9 @@
         formInline: {
           num: '',
           dateRange: '',
-          topic: ''
+          topic: '',
+          startDate: '',
+          endDate: ''
         },
         form: {
           title: '',
