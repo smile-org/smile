@@ -209,6 +209,8 @@
         formInline: {
           num: '',
           dateRange: '',
+          startDate: '',
+          endDate: '',
           topic: ''
         },
         form: {
