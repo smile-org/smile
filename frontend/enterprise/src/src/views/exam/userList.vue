@@ -43,12 +43,8 @@
                                 </div>
                                 <div class="tc">
                                     <a class="inf_btn download"
-                                       v-bind:href="excelUrl" v-on:click="dialogTableVisible = false"
-                                       style="display: inline-block;">下  载</a>
-                                    <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">
-                                        取 消
-
-                                    </button>
+                                       v-bind:href="excelUrl" v-on:click="dialogTableVisible = false" style="display: inline-block;">下  载</a>
+                                    <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
                                 </div>
                             </el-dialog>
                         </el-form-item>

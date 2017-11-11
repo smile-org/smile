@@ -45,7 +45,7 @@
                         <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
                       </div>
                       <div class="tc">
-                        <a v-bind:href="exportExcelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                        <a v-bind:href="exportExcelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下  载</a>
                         <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取  消
                         </button>
                       </div>

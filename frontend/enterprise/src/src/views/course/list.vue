@@ -35,7 +35,7 @@
                         </el-form-item>
                     </el-form>
                     <div class="fr hidden mb20 dc_width">
-                        <button type="button" class="inf_btn mr20" v-on:click="addCourse">添加课程</button>
+                        <button type="button" class="inf_btn" v-on:click="addCourse">添加课程</button>
                         <button type="button" v-on:click="exportQuestionList" :loading="showloading"
                                    class="inf_btn ml20 export_bor">导  出
                         </button>
@@ -45,9 +45,8 @@
                                 <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
                             </div>
                             <div class="tc">
-                                <a v-bind:href="exportExcelUrl" class="inf_btn download"
-                                   style="display: inline-block;">下  载</a>
-                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
+                                <a v-bind:href="exportExcelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下  载</a>
+                                <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml10">取 消
                                 </button>
                             </div>
                         </el-dialog>
