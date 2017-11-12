@@ -74,7 +74,7 @@
               <el-row class="font22">
                 <el-col :span="4"><img class="person_header1" :src="item.user_idAvatar | formatImage"></el-col>
                 <el-col :span="6" class="vm">
-                  <p>{{item.user_idName}}</p>
+                  <p style="margin-top: 0rem;">{{item.user_idName}}</p>
                   <el-rate v-model="item.star" disabled text-color="#ff9900" text-template="{value}">
                   </el-rate>
                 </el-col>

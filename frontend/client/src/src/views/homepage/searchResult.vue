@@ -212,5 +212,4 @@ export default {
     margin-left: 0rem;
     padding-right: .03rem;
   }
-
 </style>
