@@ -102,13 +102,13 @@
                               <el-col :span="8">
                                 <el-form-item label="开始时间">
                                   <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
-                                  <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
+                                  <div class="el-form-item__error">{{startDateInContentErrMsg}}</div>
                                 </el-form-item>
                               </el-col>
                               <el-col :span="8">
                                 <el-form-item label="结束时间">
                                   <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
-                                  <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
+                                  <div class="el-form-item__error">{{endDateInContentErrMsg}}</div>
                                 </el-form-item>
                               </el-col>
                                 <!--<el-col :span="12">-->
@@ -247,7 +247,10 @@
         uploadUrl: '',
         params: {
           pictype: ''
-        }
+        },
+
+        startDateInContentErrMsg: '',
+        endDateInContentErrMsg: ''
       }
     },
     components: {
@@ -275,7 +278,8 @@
       addContent: function () {
         this.numErrMsg = ''
         this.topicErrMsg = ''
-        this.dateRangeErrMsg = ''
+        this.startDateInContentErrMsg = ''
+        this.endDateInContentErrMsg = ''
         if (!this.formInline.num) {
           this.numErrMsg = '序号不能为空'
         }
@@ -287,19 +291,22 @@
         if (!this.formInline.topic) {
           this.topicErrMsg = '主题不能为空'
         }
-        if (!this.formInline.dateRange[0]) {
-          this.dateRangeErrMsg = '日期范围不能为空'
+        if (!this.formInline.startDate) {
+          this.startDateInContentErrMsg = '开始日期不能为空'
         }
-        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.dateRangeErrMsg !== '') {
+        if (!this.formInline.endDate) {
+          this.endDateInContentErrMsg = '结束日期不能为空'
+        }
+        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.startDateInContentErrMsg !== '' || this.endDateInContentErrMsg !== '') {
           return
         }
         var date1 = ''
-        if (this.formInline.dateRange[0]) {
-          date1 = moment(this.formInline.dateRange[0]).format('YYYY-MM-DD HH:mm:ss')
+        if (this.formInline.startDate) {
+          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD HH:mm:ss')
         }
         var date2 = ''
-        if (this.formInline.dateRange[1]) {
-          date2 = moment(this.formInline.dateRange[1]).format('YYYY-MM-DD HH:mm:ss')
+        if (this.formInline.endDate) {
+          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD HH:mm:ss')
         }
 
         var dateRangeString = date1 + ' - ' + date2
@@ -311,7 +318,8 @@
         this.tableData.push(content)
         this.formInline.num = ''
         this.formInline.topic = ''
-        this.formInline.dateRange = ''
+        this.formInline.startDate = ''
+        this.formInline.endDate = ''
         console.log(this.tableData)
       },
       deleteContent: function (num) {
