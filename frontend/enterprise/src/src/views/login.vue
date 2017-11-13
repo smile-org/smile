@@ -20,7 +20,7 @@
                     <ul class="hidden">
                         <li class="fl">
                             <input type="checkbox" name="memberPass" class="vm" v-model="keepAlive"/>
-                            <label>保持我的登录状态</label>
+                            <label>记住用户名和密码</label>
                         </li>
                     </ul>
                     <div>

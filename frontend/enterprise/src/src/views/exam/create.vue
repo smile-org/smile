@@ -53,9 +53,9 @@
                 </el-col>
               </el-form-item>
             </el-col>
-            <el-col :span="16">
-              <el-form-item label="考试简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="考试简介" style="min-width: 545px;"></el-input>
+            <el-col :span="24">
+              <el-form-item label="考试简介" prop="intro"  class="input_textarea">
+                <el-input  type="textarea" v-model="form.intro" placeholder="考试简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>

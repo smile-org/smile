@@ -684,8 +684,8 @@ table {
 }
 
 .course_header {
-  width: 120px;
-  height: 90px;
+  width: 81px;
+  height: 81px;
   max-width: 120px;
   max-height: 90px;
   border: 1px solid #ededed;
@@ -740,6 +740,9 @@ table {
 }
 .add_width .el-select{
   width:100%;
+}
+.input_textarea .el-form-item__content{
+  width:90%;
 }
 /*.el-input__icon+.el-input__inner {*/
 /*width:160px;*/

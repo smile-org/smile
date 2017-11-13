@@ -55,8 +55,8 @@
                           </el-col>
                         </el-row>
                       <el-col>
-                        <el-form-item label="课程简介">
-                          <el-input v-model="form.intro" placeholder="课程简介"  style="min-width: 545px;"></el-input>
+                        <el-form-item label="课程简介" class="input_textarea">
+                          <el-input type="textarea" v-model="form.intro" placeholder="课程简介" ></el-input>
                           <div class="el-form-item__error">{{introErrMsg}}</div>
                         </el-form-item>
                       </el-col>
@@ -134,7 +134,7 @@
                                 <el-table-column prop="sequnce_title" align="center" label="起止时间"></el-table-column>
                                 <el-table-column prop="" label="操作" align="center" width="100">
                                     <template scope="scope">
-                                        <el-button @click="deleteContent(scope.row.sequnce_num)" type="text" size="small">删除</el-button>
+                                        <el-button @click="deleteContent(scope.row.sequnce_num)"  class="red_font"   type="text" size="small">删除</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>

@@ -374,4 +374,6 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .tl {
   text-align: left;
 }
-
+.input_textarea .el-textarea__inner:active,.input_textarea .el-textarea__inner:focus{
+  border-color: #55b761
+}

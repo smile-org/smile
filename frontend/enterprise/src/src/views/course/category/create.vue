@@ -19,19 +19,19 @@
               @crop-upload-success="cropUploadSuccess"
               @crop-upload-fail="cropUploadFail"
               :url="uploadUrl"
-              :width="750"
+              :width="81"
               :headers="headers"
-              :height="240"
+              :height="81"
               :value.sync="show"
               :no-circle=true
               img-format="png">
             </my-upload>
           </div>
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm course_left">
             <el-form-item label="课程类别"  prop="content">
-              <el-input v-model="ruleForm.content"></el-input>
+              <el-input v-model="ruleForm.content" style="width: 50%;"></el-input>
             </el-form-item>
-            <div class="tc">
+            <div class=""  style="margin-left: 100px;margin-top: 40px;">
               <button type="button" class="inf_btn " v-on:click="submitForm('ruleForm')">保  存</button>
             </div>
           </el-form>
@@ -180,5 +180,11 @@
   }
   .el-input__inner:focus{
     border-color: #00b553;
+  }
+</style>
+<style>
+  .course_left  .el-form-item__label{
+    text-align: left;
+    margin-left: -5px;
   }
 </style>
