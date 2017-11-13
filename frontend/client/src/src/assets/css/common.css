@@ -42,6 +42,12 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.zj_ellipsis{
+  width: 68%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .vm{
   vertical-align: middle;
 }

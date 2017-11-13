@@ -58,7 +58,7 @@
                   <div class="hidden bm_font ml2">
                     <h3 class="">{{item.appointmentTitle}}</h3>
                     <div class="hidden wid100">
-                      <p class="fl">主讲：{{item.sponsorName}}</p>
+                      <p class="fl zj_ellipsis">主讲：{{item.sponsorName}}</p>
                       <p class="fr">{{item.sponsorDate | formatDate}}</p>
                     </div>
                     <div class="home_person">
@@ -218,7 +218,7 @@
               <div class="bm_con_bm show_star">
                 <div class="hidden bm_font ml6">
                   <h3 class=" mb10">{{item.title}}</h3>
-                  <p class="">主讲：{{item.teacher}}</p>
+                  <p class="ellipsis" style="width: 90%;">主讲：{{item.teacher}}</p>
                   <p class="" style="">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
                   <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900"
                            text-template="{value}"></el-rate>

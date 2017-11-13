@@ -1230,6 +1230,7 @@ footer .exam_b .btn span:nth-child(2){
 .b_header li p{
   margin:.1rem 0 0;
   /*font-size: .24rem;*/
+  height: .35rem;
 }
 .b_header li span{
   font-size: .22rem;

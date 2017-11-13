@@ -25,7 +25,7 @@
         <!--<a href="#" class="unable_login">无法登陆，点击找回密码</a>-->
         <div class="rember_pws">
           <input type="checkbox" class=" vm" name="memberPass" v-model="keepAlive" />
-          <label class="vm" style="font-size: 0.26rem;  color: #666;margin-left: -.1rem;">保持我的登录状态</label>
+          <label class="vm" style="font-size: 0.26rem;  color: #666;margin-left: -.1rem;">记住用户名和密码</label>
         </div>
 
         <router-link :to="{name: 'codeVerification'}" class="unable_login">无法登陆，点击找回密码</router-link>

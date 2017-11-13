@@ -36,7 +36,7 @@
                   </div>
                 </div>
               </router-link>
-              <span @click.prevent="cancelCourse(item.period_id)" class="surplus_num red_full " style="right: 0.05rem; top: 0.65rem;cursor: pointer">结束报名</span>
+              <span @click.prevent="cancelCourse(item.period_id)" class="surplus_num red_full " style="right: 0.05rem; top: 0.65rem;cursor: pointer">取消报名</span>
             </li>
           </ul>
         </el-tab-pane>

@@ -36,7 +36,7 @@
       <el-tabs class="three_tab" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="课程信息" name="first">
           <ul class="list_border course_con mb3hafe">
-            <li class="">
+            <li class="ellipsis" style="width: 100%;">
               <span>讲师 :</span> {{data.teacher}}
             </li>
             <li>
@@ -50,6 +50,11 @@
               <em class="surplus_num red_full" style="bottom: .2rem;" v-if="data.left_count === 0">已  满</em>
               <em class="surplus_num s_num" style="bottom: .2rem;"
                   v-if="data.left_count > 0">剩 余 {{data.left_count}} 人</em>
+
+            <li class="hidden ">
+              <span class="fl">课程评分 :</span>
+              <el-rate class="fl ml1 show_star2" v-model="data.star" disabled show-text text-color="#ff9900"
+                       text-template="{value}"></el-rate>
             </li>
             <li>
               <span>课程简介 :</span>
@@ -122,6 +127,7 @@
         if (data.status === 1) {
           this.enrollmentId = data.result.enrollment_id
           this.data = data.result
+          this.handleStar(this.data)
           if (tab === 'comments') {
             this.activeName = 'third'
             this.handleClick({name: 'third'})
@@ -143,6 +149,15 @@
       }
     },
     methods: {
+      handleStar: function (data) {
+        data.star = data.star.toFixed(1)
+//        for (var i = 0; i < data.length; i++) {
+//          var current = data[i]
+//          if (current && current.star) {
+//            current.star = current.star.toFixed(1)
+//          }
+//        }
+      },
       handleClick: function (tab, event) {
         if (tab.name === 'second') {
           api.fetch(api.uri.getEnrollCourseCategory, {periodid: this.id}).then(data => {
@@ -195,7 +210,13 @@
     }
   }
 </script>
-
 <style>
+  .show_star2 span .el-rate__icon {
+    font-size: 0.29rem;
+    margin-right: .15rem;
+  }
 
+  .show_star2 .el-rate__text {
+    font-size: .26rem;
+  }
 </style>
