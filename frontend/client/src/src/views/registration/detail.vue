@@ -68,7 +68,7 @@
           <ul class="list_border course_con mb3hafe">
             <li v-for="item in courseContent" :key="item.content_id">
               <p>{{item.content}}</p>
-              <p>{{item.sequnce_title}} </p>
+              <p>{{item.sequnce_title | formatDateRange}} </p>
             </li>
           </ul>
         </el-tab-pane>
@@ -146,6 +146,11 @@
       formatDate (time) {
         var date = new Date(time)
         return formatDate(date, 'yyyy-MM-dd')
+      },
+      formatDateRange (dateRange) {
+        var dr = dateRange.replace(/\d{4}-/g, '')
+        var arr = dr.match(/\d{2}-\d{2} \d{2}:\d{2}/g)
+        return arr[0] + ' - ' + arr[1]
       }
     },
     methods: {
