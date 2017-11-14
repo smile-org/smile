@@ -90,9 +90,10 @@
                         </tr>
                     </table>
                     <div class="mt30 ">
-                        <p class="pos_re">培训内容   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
+                        <p class="pos_re">培训内容  <a href="javascript:void(0)" v-on:click="openDialog()" >添加培训内容</a>  <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
 
                         <template class="hidden">
+                          <el-dialog title="添加/编辑培训内容" :visible.sync="dialogFormVisible">
                             <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
                                 <!--<el-col :span="12">-->
                                 <el-col :span="12">
@@ -103,13 +104,24 @@
                                     </el-form-item>
 
                                 </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="起止时间">
-                                        <el-date-picker v-model="formInline.dateRange" type="datetimerange"
-                                                        placeholder="选择时间范围"></el-date-picker>
-                                        <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
-                                    </el-form-item>
-                                </el-col>
+                              <el-col :span="8">
+                                <el-form-item label="开始时间">
+                                  <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
+                                  <div class="el-form-item__error">{{startDateInContentErrMsg}}</div>
+                                </el-form-item>
+                              </el-col>
+                              <el-col :span="8">
+                                <el-form-item label="结束时间">
+                                  <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
+                                  <div class="el-form-item__error">{{endDateInContentErrMsg}}</div>
+                                </el-form-item>
+                              </el-col>
+                              <el-col :span="8">
+                                <el-form-item label="讲师">
+                                  <el-input v-model="formInline.teacher" placeholder="讲师" style="width: 100%;"></el-input>
+                                  <div class="el-form-item__error">{{teacherInContentErrMsg}}</div>
+                                </el-form-item>
+                              </el-col>
                                 <el-col :span="24">
                                     <el-form-item label="主题">
                                         <el-input v-model="formInline.topic" placeholder="主题"
@@ -121,14 +133,17 @@
                                     </el-form-item>
                                 </el-col>
                             </el-form>
+                          </el-dialog>
                         </template>
                         <template>
                             <el-table :data="tableData" class="mt20" border style="width: 100%">
                                 <el-table-column prop="sequnce_num" label="序号" width="100"></el-table-column>
                                 <el-table-column prop="content" label="主题" width=""></el-table-column>
                                 <el-table-column prop="sequnce_title" label="起止时间"></el-table-column>
+                                <el-table-column prop="teacher" align="center" label="讲师"></el-table-column>
                                 <el-table-column prop="" label="操作" width="100">
                                     <template scope="scope">
+                                        <el-button @click="editContent(scope.row.sequnce_num)"  class="red_font"   type="text" size="small">编辑</el-button>
                                         <el-button @click="deleteContent(scope.row.sequnce_num)" type="text" size="small">删除</el-button>
                                     </template>
                                 </el-table-column>
@@ -158,7 +173,10 @@
         formInline: {
           num: '',
           dateRange: '',
-          topic: ''
+          topic: '',
+          startDate: '',
+          endDate: '',
+          teacher: ''
         },
         form: {
           title: '',
@@ -185,7 +203,12 @@
         contentErrMsg: '',
         showloading: false,
         period_id: '',
-        enrollment_id: ''
+        enrollment_id: '',
+
+        startDateInContentErrMsg: '',
+        endDateInContentErrMsg: '',
+        teacherInContentErrMsg: '',
+        dialogFormVisible: false
       }
     },
     components: {
@@ -223,6 +246,19 @@
       })
     },
     methods: {
+      openDialog: function () {
+        this.numErrMsg = ''
+        this.topicErrMsg = ''
+        this.startDateInContentErrMsg = ''
+        this.endDateInContentErrMsg = ''
+        this.teacherInContentErrMsg = ''
+        this.formInline.num = 1
+        this.formInline.topic = ''
+        this.formInline.teacher = ''
+        this.formInline.startDate = ''
+        this.formInline.endDate = ''
+        this.dialogFormVisible = true
+      },
       addContent: function () {
         this.numErrMsg = ''
         this.topicErrMsg = ''
@@ -230,27 +266,31 @@
         if (!this.formInline.num) {
           this.numErrMsg = '序号不能为空'
         }
-        for (var i in this.tableData) {
-          if (this.tableData[i].sequnce_num === this.formInline.num) {
-            this.numErrMsg = '序号不能重复'
-          }
-        }
+//        for (var i in this.tableData) {
+//          if (this.tableData[i].sequnce_num === this.formInline.num) {
+//            this.numErrMsg = '序号不能重复'
+//          }
+//        }
         if (!this.formInline.topic) {
           this.topicErrMsg = '主题不能为空'
         }
         if (!this.formInline.dateRange[0]) {
           this.dateRangeErrMsg = '日期范围不能为空'
         }
-        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.dateRangeErrMsg !== '') {
+        if (!this.formInline.teacher) {
+          this.teacherInContentErrMsg = '讲师不能为空'
+        }
+        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.startDateInContentErrMsg !== '' || this.endDateInContentErrMsg !== '' || this.teacherInContentErrMsg !== '') {
           return
         }
+        this.deleteContent(this.formInline.num)
         var date1 = ''
-        if (this.formInline.dateRange[0]) {
-          date1 = moment(this.formInline.dateRange[0]).format('YYYY-MM-DD HH:mm:ss')
+        if (this.formInline.startDate) {
+          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD HH:mm:ss')
         }
         var date2 = ''
-        if (this.formInline.dateRange[1]) {
-          date2 = moment(this.formInline.dateRange[1]).format('YYYY-MM-DD HH:mm:ss')
+        if (this.formInline.endDate) {
+          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD HH:mm:ss')
         }
 
         var dateRangeString = date1 + ' - ' + date2
@@ -258,13 +298,30 @@
           content_id: 0,
           sequnce_num: parseInt(this.formInline.num),
           sequnce_title: dateRangeString,
-          content: this.formInline.topic
+          content: this.formInline.topic,
+          teacher: this.formInline.teacher
         }
         this.tableData.push(content)
         this.formInline.num = ''
         this.formInline.topic = ''
         this.formInline.dateRange = ''
+        this.formInline.teacher = ''
+        this.formInline.startDate = ''
+        this.formInline.endDate = ''
+        this.dialogFormVisible = false
         console.log(this.tableData)
+      },
+      editContent: function (num) {
+        for (var i in this.tableData) {
+          if (this.tableData[i].sequnce_num === num) {
+            this.dialogFormVisible = true
+            this.formInline.num = this.tableData[i].sequnce_num
+            this.formInline.teacher = this.tableData[i].teacher
+            this.formInline.topic = this.tableData[i].content
+            this.formInline.startDate = this.tableData[i].sequnce_title.split(' - ')[0]
+            this.formInline.endDate = this.tableData[i].sequnce_title.split(' - ')[1]
+          }
+        }
       },
       deleteContent: function (num) {
         this.tableData = _.remove(this.tableData, function (_item) {

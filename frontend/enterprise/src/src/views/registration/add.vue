@@ -88,8 +88,9 @@
                     </table>
                     <hr class="hr_line">
                     <div class="mt30 ">
-                        <p class="pos_re">培训内容   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
+                        <p class="pos_re">培训内容 <a href="javascript:void(0)" v-on:click="openDialog()" >添加培训内容</a>   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
                         <template class="hidden">
+                          <el-dialog title="添加/编辑培训内容" :visible.sync="dialogFormVisible">
                             <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
                                 <!--<el-col :span="12">-->
                                 <el-col :span="8">
@@ -101,14 +102,20 @@
                                 </el-col>
                               <el-col :span="8">
                                 <el-form-item label="开始时间">
-                                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
+                                  <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期时间" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
                                   <div class="el-form-item__error">{{startDateInContentErrMsg}}</div>
                                 </el-form-item>
                               </el-col>
                               <el-col :span="8">
                                 <el-form-item label="结束时间">
-                                  <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
+                                  <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期时间" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
                                   <div class="el-form-item__error">{{endDateInContentErrMsg}}</div>
+                                </el-form-item>
+                              </el-col>
+                              <el-col :span="8">
+                                <el-form-item label="讲师">
+                                  <el-input v-model="formInline.teacher" placeholder="讲师" style="width: 100%;"></el-input>
+                                  <div class="el-form-item__error">{{teacherInContentErrMsg}}</div>
                                 </el-form-item>
                               </el-col>
                                 <!--<el-col :span="12">-->
@@ -126,14 +133,17 @@
                                     </el-form-item>
                                 </el-col>
                             </el-form>
+                          </el-dialog>
                         </template>
                         <template>
                             <el-table :data="tableData" class="mt20" border style="width: 100%">
                                 <el-table-column prop="sequnce_num" align="center" label="序号" width="100"></el-table-column>
                                 <el-table-column prop="content" label="主题" align="center" width=""></el-table-column>
                                 <el-table-column prop="sequnce_title" align="center" label="起止时间"></el-table-column>
+                                <el-table-column prop="teacher" align="center" label="讲师"></el-table-column>
                                 <el-table-column prop="" label="操作" align="center" width="100">
                                     <template scope="scope">
+                                      <el-button @click="editContent(scope.row.sequnce_num)"  class="red_font"   type="text" size="small">编辑</el-button>
                                         <el-button @click="deleteContent(scope.row.sequnce_num)"  class="red_font"   type="text" size="small">删除</el-button>
                                     </template>
                                 </el-table-column>
@@ -203,6 +213,7 @@
   import myUpload from 'vue-image-crop-upload'
   import lang from 'vue-image-crop-upload/utils/language'
   import router from '../../router'
+  import ElInput from '../../../node_modules/element-ui/packages/input/src/input'
   export default {
     data: function () {
       return {
@@ -211,7 +222,8 @@
           dateRange: '',
           startDate: '',
           endDate: '',
-          topic: ''
+          topic: '',
+          teacher: ''
         },
         form: {
           title: '',
@@ -250,10 +262,13 @@
         },
 
         startDateInContentErrMsg: '',
-        endDateInContentErrMsg: ''
+        endDateInContentErrMsg: '',
+        teacherInContentErrMsg: '',
+        dialogFormVisible: false
       }
     },
     components: {
+      ElInput,
       commonHeader,
       navigator,
       myUpload
@@ -275,19 +290,33 @@
       console.log(this.headers.token)
     },
     methods: {
+      openDialog: function () {
+        this.numErrMsg = ''
+        this.topicErrMsg = ''
+        this.startDateInContentErrMsg = ''
+        this.endDateInContentErrMsg = ''
+        this.teacherInContentErrMsg = ''
+        this.formInline.num = 1
+        this.formInline.topic = ''
+        this.formInline.teacher = ''
+        this.formInline.startDate = ''
+        this.formInline.endDate = ''
+        this.dialogFormVisible = true
+      },
       addContent: function () {
         this.numErrMsg = ''
         this.topicErrMsg = ''
         this.startDateInContentErrMsg = ''
         this.endDateInContentErrMsg = ''
+        this.teacherInContentErrMsg = ''
         if (!this.formInline.num) {
           this.numErrMsg = '序号不能为空'
         }
-        for (var i in this.tableData) {
-          if (this.tableData[i].sequnce_num === this.formInline.num) {
-            this.numErrMsg = '序号不能重复'
-          }
-        }
+//        for (var i in this.tableData) {
+//          if (this.tableData[i].sequnce_num === this.formInline.num) {
+//            this.numErrMsg = '序号不能重复'
+//          }
+//        }
         if (!this.formInline.topic) {
           this.topicErrMsg = '主题不能为空'
         }
@@ -297,9 +326,13 @@
         if (!this.formInline.endDate) {
           this.endDateInContentErrMsg = '结束日期不能为空'
         }
-        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.startDateInContentErrMsg !== '' || this.endDateInContentErrMsg !== '') {
+        if (!this.formInline.teacher) {
+          this.teacherInContentErrMsg = '讲师不能为空'
+        }
+        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.startDateInContentErrMsg !== '' || this.endDateInContentErrMsg !== '' || this.teacherInContentErrMsg !== '') {
           return
         }
+        this.deleteContent(this.formInline.num)
         var date1 = ''
         if (this.formInline.startDate) {
           date1 = moment(this.formInline.startDate).format('YYYY-MM-DD HH:mm:ss')
@@ -313,19 +346,34 @@
         var content = {
           sequnce_num: parseInt(this.formInline.num),
           sequnce_title: dateRangeString,
-          content: this.formInline.topic
+          content: this.formInline.topic,
+          teacher: this.formInline.teacher
         }
         this.tableData.push(content)
         this.formInline.num = ''
         this.formInline.topic = ''
         this.formInline.startDate = ''
         this.formInline.endDate = ''
+        this.formInline.teacher = ''
+        this.dialogFormVisible = false
         console.log(this.tableData)
       },
       deleteContent: function (num) {
         this.tableData = _.remove(this.tableData, function (_item) {
           return _item.sequnce_num !== num
         })
+      },
+      editContent: function (num) {
+        for (var i in this.tableData) {
+          if (this.tableData[i].sequnce_num === num) {
+            this.dialogFormVisible = true
+            this.formInline.num = this.tableData[i].sequnce_num
+            this.formInline.teacher = this.tableData[i].teacher
+            this.formInline.topic = this.tableData[i].content
+            this.formInline.startDate = this.tableData[i].sequnce_title.split(' - ')[0]
+            this.formInline.endDate = this.tableData[i].sequnce_title.split(' - ')[1]
+          }
+        }
       },
       add: function () {
         this.titleErrMsg = ''
