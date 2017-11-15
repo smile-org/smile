@@ -13,9 +13,14 @@
             <el-form-item label="约课主题">
               <el-input v-model="form.name" placeholder="约课主题"></el-input>
             </el-form-item>
-            <el-form-item label="发起时间">
+            <el-form-item label="开始时间">
               <el-col>
-                <el-date-picker type="date" placeholder="发起时间" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" placeholder="开始时间" v-model="form.start" style="width: 100%;"></el-date-picker>
+              </el-col>
+            </el-form-item>
+            <el-form-item label="结束时间">
+              <el-col>
+                <el-date-picker type="date" placeholder="结束时间" v-model="form.end" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item class="fr dc_width">
@@ -71,7 +76,9 @@
         showloading: false,
         form: {
           name: '',
-          date1: ''
+          // date1: ''
+          start: '',
+          end: ''
         },
         tableData: [],
         take: 10,
@@ -102,11 +109,24 @@
       exportAppointment: function () {
         console.log('start export appointment.')
         this.showloading = true
-        var date = ''
-        if (this.form.date1) {
-          date = moment(this.form.date1).format('YYYY-MM-DD')
+        // var date = ''
+        // if (this.form.date1) {
+        //   date = moment(this.form.date1).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.form.start) {
+          start = moment(this.form.start).format('YYYY-MM-DD')
         }
-        api.fetch(api.uri.exportAppointment, {title: this.form.name, sponsorDate: date}).then(data => {
+        if (this.form.end) {
+          end = moment(this.form.end).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.exportAppointment, {
+          title: this.form.name,
+          // sponsorDate: date
+          start: start,
+          end: end
+        }).then(data => {
           if (data.status === 1) {
             console.log(data.result)
             this.excelUrl = axios.defaults.imageServer + data.result
@@ -116,13 +136,28 @@
         })
       },
       queryAppointment: function () {
-        console.log(this.form.date1)
-        var date = ''
-        if (this.form.date1) {
-          date = moment(this.form.date1).format('YYYY-MM-DD')
+        // console.log(this.form.date1)
+        // var date = ''
+        // if (this.form.date1) {
+        //   date = moment(this.form.date1).format('YYYY-MM-DD')
+        // }
+        // console.log(this.currentPage)
+        var start = ''
+        var end = ''
+        if (this.form.start) {
+          start = moment(this.form.start).format('YYYY-MM-DD')
         }
-        console.log(this.currentPage)
-        api.fetch(api.uri.getBackAppointmentList, {title: this.form.name, sponsorDate: date, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
+        if (this.form.end) {
+          end = moment(this.form.end).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.getBackAppointmentList, {
+          title: this.form.name,
+          // sponsorDate: date,
+          skip: (this.currentPage - 1) * this.take,
+          take: this.take,
+          start: start,
+          end: end
+        }).then(data => {
           if (data.status === 1) {
             this.total = data.total
             this.tableData = data.result

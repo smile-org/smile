@@ -22,7 +22,13 @@
                         </el-form-item>
                         <el-form-item label="开始时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.createdat"
+                                <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.start"
+                                                style="width: 100%;"></el-date-picker>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item label="结束时间">
+                            <el-col>
+                                <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.end"
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
@@ -113,7 +119,9 @@
         total: 0,
         formInLine: {
           title: '',
-          createdat: ''
+          // createdat: ''
+          start: '',
+          end: ''
         },
         options: [{
           value: '1',
@@ -153,21 +161,31 @@
         router.push({name: 'examQuestionCreate'})
       },
       queryQuestionList: function () {
-        console.log(this.formInLine.title, this.formInLine.createdat, this.value)
+        // console.log(this.formInLine.title, this.formInLine.createdat, this.value)
         var typeId = 0
         if (this.value !== '') {
           typeId = parseInt(this.value)
         }
-        var date = ''
-        if (this.formInLine.createdat) {
-          date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // var date = ''
+        // if (this.formInLine.createdat) {
+        //   date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.formInLine.start) {
+          start = moment(this.formInLine.start).format('YYYY-MM-DD')
+        }
+        if (this.formInLine.end) {
+          end = moment(this.formInLine.end).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.getQuestionList, {
           title: this.formInLine.title,
           typeid: typeId,
-          createdat: date,
+          // createdat: date,
           skip: (this.currentPage - 1) * this.take,
-          take: this.take
+          take: this.take,
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             this.tableData = data.result
@@ -185,14 +203,24 @@
         if (this.value !== '') {
           typeId = parseInt(this.value)
         }
-        var date = ''
-        if (this.formInLine.createdat) {
-          date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // var date = ''
+        // if (this.formInLine.createdat) {
+        //   date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.formInLine.start) {
+          start = moment(this.formInLine.start).format('YYYY-MM-DD')
+        }
+        if (this.formInLine.end) {
+          end = moment(this.formInLine.end).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.exportQuestionList, {
           title: this.formInLine.title,
           typeid: typeId,
-          createdat: date
+          // createdat: date
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             console.log(data.result)

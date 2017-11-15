@@ -97,6 +97,14 @@
                   <el-form-item label="课程名称">
                     <el-input v-model="formMaterial.name"  placeholder="课程名称"></el-input>
                   </el-form-item>
+                  <el-form-item label="开始时间">
+                    <el-date-picker class="dateTab_width" type="date" placeholder="开始时间"
+                      v-model="formMaterial.start" style="width: 100%;"></el-date-picker>
+                  </el-form-item>
+                  <el-form-item label="结束时间">
+                      <el-date-picker class="dateTab_width" type="date" placeholder="结束时间"
+                      v-model="formMaterial.end" style="width: 100%;"></el-date-picker>
+                  </el-form-item>
                   <el-form-item class="wrapper">
                     <el-button class="update_btn" @click="searchMaterial">查询</el-button>
                   </el-form-item>
@@ -145,7 +153,12 @@
                 <!--<el-col :span="12">-->
                   <el-form-item label="开始时间">
                     <el-col>
-                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.date" class="date_input" style="width: 100%;"></el-date-picker>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.start" class="date_input" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                  </el-form-item>
+                  <el-form-item label="结束时间">
+                    <el-col>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.end" class="date_input" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                 <!--</el-col>-->
@@ -287,7 +300,9 @@
         },
         // 复习资料
         formMaterial: {
-          name
+          name: '',
+          start: '',
+          end: ''
         },
         // 复习资料查询列表 ---- id, name
         materialList: [],
@@ -299,7 +314,9 @@
         // 试题
         formExam: {
           name: '',
-          date: ''
+          // date: ''
+          start: '',
+          end: ''
         },
 
         // 试题查询列表 --- num, name, type, date
@@ -368,11 +385,21 @@
         }
       },
       searchMaterial: function () {
+        var start = ''
+        var end = ''
+        if (this.formMaterial.start) {
+          start = moment(this.formMaterial.start).format('YYYY-MM-DD')
+        }
+        if (this.formMaterial.end) {
+          end = moment(this.formMaterial.end).format('YYYY-MM-DD')
+        }
         api.fetch(api.uri.searchCourse, {
           title: this.formMaterial.name,
           priName: '',
           categoryid: 0,
-          pubdate: '',
+          // pubdate: '',
+          start: start,
+          end: end,
           take: this.materialTake,
           skip: this.materialTake * (this.materialCurrentPage - 1)
         }).then(data => {
@@ -421,12 +448,22 @@
         })
       },
       searchExam: function () {
+        var start = ''
+        var end = ''
+        if (this.formExam.start) {
+          start = moment(this.formExam.start).format('YYYY-MM-DD')
+        }
+        if (this.formExam.end) {
+          end = moment(this.formExam.end).format('YYYY-MM-DD')
+        }
         api.fetch(api.uri.getQuestionList, {
           title: this.formExam.name,
           typeid: 0,
-          createdat: this.formExam.date ? moment(this.formExam.date).format('YYYY-MM-DD') : '',
+          // createdat: this.formExam.date ? moment(this.formExam.date).format('YYYY-MM-DD') : '',
           take: this.examTake,
-          skip: this.examTake * (this.examCurrentPage - 1)
+          skip: this.examTake * (this.examCurrentPage - 1),
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             var result = data.result
