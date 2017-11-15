@@ -92,40 +92,41 @@
           </table>
           <hr class="hr_line">
           <div class="mt30 ">
-            <p class="pos_re">培训内容 <a href="javascript:void(0)" v-on:click="openDialog()" >添加培训内容</a>   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
+            <p class="pos_re">培训内容 <a href="javascript:void(0)" class="green_font" v-on:click="openDialog()" >添加培训内容</a>   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
             <template class="hidden">
               <el-dialog title="添加/编辑培训内容" :visible.sync="dialogFormVisible">
-              <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
+              <el-form :inline="true" :model="formInline" class="demo-form-inline  hidden" label-width="80px">
                 <!--<el-col :span="12">-->
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item class="mb10" label="序号">
                     <!--<el-input v-model="formInline.num" placeholder="序号"></el-input>-->
                     <el-input-number v-model="formInline.num" :min="1" label="序号"></el-input-number>
                     <div class="el-form-item__error"> {{numErrMsg}}</div>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
-                  <el-form-item label="开始时间">
-                    <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
-                    <div class="el-form-item__error">{{startDateInContentErrMsg}}</div>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                  <el-form-item label="结束时间">
-                    <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
-                    <div class="el-form-item__error">{{endDateInContentErrMsg}}</div>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item label="讲师">
                     <el-input v-model="formInline.teacher" placeholder="讲师" style="width: 100%;"></el-input>
                     <div class="el-form-item__error">{{teacherInContentErrMsg}}</div>
                   </el-form-item>
                 </el-col>
+                <el-col :span="12">
+                  <el-form-item label="开始时间">
+                    <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
+                    <div class="el-form-item__error">{{startDateInContentErrMsg}}</div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="结束时间">
+                    <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
+                    <div class="el-form-item__error">{{endDateInContentErrMsg}}</div>
+                  </el-form-item>
+                </el-col>
+
                 <el-col :span="24">
                   <el-form-item label="主题">
                     <el-input v-model="formInline.topic" placeholder="主题"
-                              style="width:400px;"></el-input>
+                              style="width:365px;"></el-input>
                     <el-button :plain="true" type="success" class="ml20" size="primary" v-on:click="addContent()">添加主题</el-button>
                     <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
                   </el-form-item>
@@ -141,7 +142,7 @@
                 <el-table-column prop="teacher" align="center" label="讲师"></el-table-column>
                 <el-table-column prop="" label="操作"  align="center" width="100">
                   <template scope="scope">
-                    <el-button @click="editContent(scope.row.sequnce_num)"  class="red_font"   type="text" size="small">编辑</el-button>
+                    <el-button @click="editContent(scope.row.sequnce_num)"   type="text" size="small">编辑</el-button>
                     <el-button @click="deleteContent(scope.row.sequnce_num)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>

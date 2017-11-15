@@ -786,10 +786,15 @@ table {
 .dc_width .el-dialog--small {
   min-width: 40%;
   width: 40%;
+
 }
  .el-dialog__headerbtn .el-dialog__close:hover{
   color: #55b761;
 }
  .el-dialog__headerbtn .el-dialog__close:active{
   color: #55b761;
+}
+.el-dialog{
+  border:none;
+  border-top:4px solid #55b761;
 }
