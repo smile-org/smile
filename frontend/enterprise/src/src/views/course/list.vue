@@ -26,9 +26,13 @@
                         <el-form-item label="责任人">
                             <el-input v-model="formInline.user" placeholder="责任人"></el-input>
                         </el-form-item>
-                        <el-form-item label="发布时间">
-                            <el-date-picker class="dateTab_width" type="date" placeholder="发布时间"
-                                            v-model="formInline.date" style="width: 100%;"></el-date-picker>
+                        <el-form-item label="开始时间">
+                            <el-date-picker class="dateTab_width" type="date" placeholder="开始时间"
+                                            v-model="formInline.start" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                        <el-form-item label="结束时间">
+                            <el-date-picker class="dateTab_width" type="date" placeholder="结束时间"
+                                            v-model="formInline.end" style="width: 100%;"></el-date-picker>
                         </el-form-item>
                         <el-form-item>
                             <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
@@ -117,8 +121,10 @@
         formInline: {
           name: '',
           user: '',
-          date: '',
-          categoryId: ''
+          // date: '',
+          categoryId: '',
+          start: '',
+          end: ''
         },
         tableData: [],
         categoryList: [{
@@ -139,7 +145,9 @@
         title: this.formInline.name,
         priName: this.formInline.user,
         categoryid: this.formInline.categoryId ? parseInt(this.formInline.categoryId) : 0,
-        pubdate: this.formInline.date,
+        // pubdate: this.formInline.date,
+        start: this.formInline.start,
+        end: this.formInline.end,
         skip: 0,
         take: this.take
       }).then(data => {
@@ -191,15 +199,25 @@
         })
       },
       search: function () {
-        var pubDate = ''
-        if (this.formInline.date) {
-          pubDate = moment(this.formInline.date).format('YYYY-MM-DD')
+        // var pubDate = ''
+        // if (this.formInline.date) {
+        //   pubDate = moment(this.formInline.date).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.formInline.start) {
+          start = moment(this.formInline.start).format('YYYY-MM-DD')
+        }
+        if (this.formInline.end) {
+          end = moment(this.formInline.end).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.searchCourse, {
           title: this.formInline.name,
           priName: this.formInline.user,
           categoryid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
-          pubdate: pubDate,
+          // pubdate: pubDate,
+          start: start,
+          end: end,
           skip: this.take * (this.currentPage - 1),
           take: this.take
         }).then(data => {
@@ -213,15 +231,25 @@
       },
       exportQuestionList () {
         this.showloading = true
-        var pubDate = ''
-        if (this.formInline.date) {
-          pubDate = moment(this.formInline.date).format('YYYY-MM-DD')
+        // var pubDate = ''
+        // if (this.formInline.date) {
+        //   pubDate = moment(this.formInline.date).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.formInline.start) {
+          start = moment(this.formInline.start).format('YYYY-MM-DD')
+        }
+        if (this.formInline.end) {
+          end = moment(this.formInline.end).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.exportCourseList, {
           title: this.formInline.name,
           priName: this.formInline.user,
           categoryid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
-          pubdate: pubDate
+          // pubdate: pubDate
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             console.log(data.result)
