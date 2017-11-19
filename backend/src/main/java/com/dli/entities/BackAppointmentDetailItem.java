@@ -8,6 +8,9 @@ public class BackAppointmentDetailItem {
     private String itemTitle;
     private String sponsorName;
 
+    private Date sponsorDate;
+    private  int   followerCount;
+
     public int getItemId() {
         return itemId;
     }
@@ -40,8 +43,11 @@ public class BackAppointmentDetailItem {
         this.sponsorDate = sponsorDate;
     }
 
-    private Date sponsorDate;
+    public int getFollowerCount() {
+        return followerCount;
+    }
 
-
-
+    public void setFollowerCount(int followerCount) {
+        this.followerCount = followerCount;
+    }
 }

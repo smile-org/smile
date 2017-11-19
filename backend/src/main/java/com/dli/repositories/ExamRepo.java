@@ -118,6 +118,10 @@ public interface ExamRepo {
 
     List<ExamHistory>  getMyExamHistoryIDsInProcess(    int userid  );
 
+
+    void    backUpdateExamPublishStatus( @Param("status")  int   status  , @Param("examid") int  examid );
+
+
 }
 
 

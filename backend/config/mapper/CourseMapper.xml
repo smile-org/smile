@@ -86,6 +86,7 @@
 
         <result column="expiration_date" property="start"/>
         <result column="study_count" property="count"/>
+        <result column="person" property="person"/>
     </resultMap>
 
     <select id="getCourseCategoryList"  resultMap="CategoryMap">
@@ -172,12 +173,14 @@ select  sum(star) as total , count(comment_id) as ct from course_comment   where
 
     <select id="searchCourse" resultMap="SearchMap">
           select c.*,
-             case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count
+             case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count ,
+                u.full_name as  person
            from  course c
            left join (
 select course_id, count(*)  as  renshu from (
 select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
 on c.course_id =o1.course_id
+        left join   user u on    c.principal_user_id= u.user_id
            where c.title like '%${keyword}%'    and  c.indicator=1     and   c.company_id=#{companyid} limit #{skip}, #{take}
     </select>
 
@@ -331,7 +334,9 @@ where created_at
     <select id="getMyCollectionList" resultMap="CourseMap">
         select result.* ,
         case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
-        case when o3.userct is not null  then o3.userct  else 0 end as collect_count
+        case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
+
+           case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
         from (
         select  * from course
         where indicator=1 and   course_id IN (
@@ -464,7 +469,7 @@ where  content_id=#{content_id}
     </update>
 
     <update id="backUpdateCoursePublishStatus">
-        update course set ispublished =#{status} where course_id = #{courseid}
+        update course set ispublished =#{status}  , publish_date =now() where course_id = #{courseid}
     </update>
 
     <select id="backGetCourseByID" resultType="com.dli.entities.Course">
@@ -489,7 +494,7 @@ where  content_id=#{content_id}
          select * from (
 select   c.course_id,c.title,   cate.category_id, cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
  DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  t.type_name  , c.ispublished  ,
-  DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date   from  course  c
+  DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date  ,   c.created_at   from  course  c
  join   course_category   cate    on c.category_id =cate.category_id
 join  user    u on c.principal_user_id =u.user_id
 JOIN   course_type t on c.type_id=  t.type_id
@@ -497,7 +502,8 @@ JOIN   course_type t on c.type_id=  t.type_id
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="principal_user_idName!=null">and principal_user_idName like '%${principal_user_idName}%' </if>
         <if test="category_id!=0">and category_id  = #{category_id}</if>
-        <if test="publish_date!=null">and publish_date = #{publish_date}</if>
+        <if test="start!=null">and created_at  &gt; #{start}</if>
+        <if test="end!=null">and created_at &lt; #{end}</if>
        LIMIT #{skip},#{take};
     </select>
 
@@ -507,7 +513,7 @@ JOIN   course_type t on c.type_id=  t.type_id
         select count(*) from (
         select   c.course_id,c.title,cate.category_id, cate.category_name   ,  u.full_name     as principal_user_idName,  c.department,
         DATE_FORMAT(c.expiration_date,'%Y-%m-%d')  as   expiration_date  ,  t.type_name  , c.ispublished  ,
-        DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date   from  course  c
+        DATE_FORMAT(c.publish_date,'%Y-%m-%d')  as publish_date  ,  c.created_at   from  course  c
         join   course_category   cate    on c.category_id =cate.category_id
         join  user    u on c.principal_user_id =u.user_id
         JOIN   course_type t on c.type_id=  t.type_id
@@ -515,7 +521,8 @@ JOIN   course_type t on c.type_id=  t.type_id
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="principal_user_idName!=null">and principal_user_idName like '%${principal_user_idName}%' </if>
         <if test="category_id!=0">and category_id  = #{category_id}</if>
-        <if test="publish_date!=null">and publish_date = #{publish_date}</if>
+        <if test="start!=null">and created_at  &gt; #{start}</if>
+        <if test="end!=null">and created_at &lt; #{end}</if>
     </select>
 
 

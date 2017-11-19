@@ -278,4 +278,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
 
     }
+
+    @Override
+    public void backUpdateEnrollmentPublishStatus(int status, int periodid) {
+        enrollmentRepo.backUpdateEnrollmentPublishStatus( status, periodid);
+    }
+
+
 }

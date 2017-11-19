@@ -16,8 +16,8 @@
         select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
 from appointment a join user u on a.sponsor_id = u.user_id
 join (select appointment_id, group_concat(word) key_word from appointment_keyword  group by appointment_id) ak on a.appointment_id = ak.appointment_id
-left join (select appointment_id, count(*) follow_count from appointment_follower where follower_type='follower' group by appointment_id) af on a.appointment_id = af.appointment_id
-where a.company_id = #{companyId}
+left join (select appointment_id, count(distinct follower_id) follow_count from appointment_follower  group by appointment_id) af on a.appointment_id = af.appointment_id
+where a.company_id = #{companyId}  and a.indicator=1
 order by af.follow_count desc
 limit #{skip},#{take};
     </select>
@@ -26,7 +26,7 @@ limit #{skip},#{take};
         select a.appointment_id,a.appointment_title,a.sponsor_id,u.full_name sponsor_name, a.sponsor_date,u.avatar,ak.key_word, af.follow_count
 from appointment a join user u on a.sponsor_id = u.user_id
 join (select appointment_id, group_concat(word) key_word from appointment_keyword group by  appointment_id) ak on a.appointment_id = ak.appointment_id
-left join (select appointment_id, count(*) follow_count from appointment_follower where follower_type='follower' group by  appointment_id) af on a.appointment_id = af.appointment_id
+left join (select appointment_id, count( distinct follower_id) follow_count from appointment_follower  group by  appointment_id) af on a.appointment_id = af.appointment_id
 where a.appointment_id = #{appointmentId}
     </select>
 
@@ -118,7 +118,7 @@ where ai.appointment_id = #{appointmentId}
             where  appointment_id  in(select  DISTINCT appointment_id from
             appointment_follower  where  follower_id =#{userid}))a   join  user u on a.sponsor_id = u.user_id
         join (select appointment_id, group_concat(word) key_word from appointment_keyword group by  appointment_id) ak on a.appointment_id = ak.appointment_id
-        left join (select appointment_id, count(*) follow_count from appointment_follower   group by appointment_id) af on a.appointment_id = af.appointment_id
+        left join (select appointment_id, count( distinct follower_id) follow_count from appointment_follower   group by appointment_id) af on a.appointment_id = af.appointment_id
 
         order by af.follow_count desc
         limit #{skip},#{take};
@@ -132,11 +132,12 @@ where ai.appointment_id = #{appointmentId}
 
         <result column="sponsor_date" property="start"/>
         <result column="follow_count" property="count"/>
+        <result column="person" property="person"/>
     </resultMap>
 
     <select id="searchAppointment" resultMap="SearchMap">
       select a.appointment_id,a.appointment_title,a.sponsor_date,u.avatar  ,
-       af.follow_count
+       af.follow_count  ,  u.full_name   as  person
      from appointment a join user u on a.sponsor_id = u.user_id
 
       left join (select appointment_id, count(*) follow_count from appointment_follower where follower_type='follower' group by appointment_id) af on a.appointment_id = af.appointment_id
@@ -164,7 +165,8 @@ where ai.appointment_id = #{appointmentId}
             a.company_id = #{companyId}
         AND a.indicator = 1
         <if test="title!=null"> AND a.appointment_title LIKE '%${title}%'</if>
-        <if test="startDate!=null"> AND a.sponsor_date <![CDATA[>=]]> #{startDate} AND  a.sponsor_date <![CDATA[<=]]> #{endDate}</if>
+        <if test="startDate!=null"> AND a.sponsor_date <![CDATA[>=]]> #{startDate}</if>
+        <if test="endDate!=null">  AND  a.sponsor_date <![CDATA[<=]]> #{endDate}</if>
         LIMIT #{skip}, #{take}
     </select>
 
@@ -177,7 +179,8 @@ where ai.appointment_id = #{appointmentId}
         a.company_id = #{companyId}
         AND a.indicator = 1
         <if test="title!=null"> AND a.appointment_title LIKE '%${title}%'</if>
-        <if test="startDate!=null"> AND a.sponsor_date <![CDATA[>=]]> #{startDate} AND  a.sponsor_date <![CDATA[<=]]> #{endDate}</if>
+        <if test="startDate!=null"> AND a.sponsor_date <![CDATA[>=]]> #{startDate}</if>
+        <if test="endDate!=null">  AND  a.sponsor_date <![CDATA[<=]]> #{endDate}</if>
     </select>
 
     <resultMap id="backAppointmentDetail" type="com.dli.entities.BackAppointmentDetail">
@@ -201,12 +204,20 @@ where ai.appointment_id = #{appointmentId}
         <result column="item_title" property="itemTitle" />
         <result column="sponsor_name" property="sponsorName"/>
         <result column="sponsor_date" property="sponsorDate"/>
+        <result column="followerCount" property="followerCount"/>
     </resultMap>
 
     <select id="getBackAppointmentItem" resultMap="backAppointmentItem">
-        select ai.item_id,ai.content item_title,u.full_name sponsor_name, ai.sponsor_date
+        select ai.item_id,ai.content item_title,u.full_name sponsor_name, ai.sponsor_date,
+          case when   t.count   is not null then    t.count   else 0  end as  followerCount
         from appointment_item ai
         left join user u on ai.sponsor_id = u.user_id
+
+left join (
+select  item_id , count(*) as count from
+    appointment_follower
+where       follower_type =  'follower'  or   follower_type = 'item_sponsor'  group by  item_id )t  on ai.item_id= t.item_id
+
         where appointment_id = #{appointmentId}
     </select>
 

@@ -17,15 +17,13 @@ import java.util.*;
 public class Helper {
 
 
-
     public static String getCurrentWeekBegin() {
         int mondayPlus;
         Calendar cd = Calendar.getInstance();
 // 获得今天是一周的第几天，星期日是第一天，星期二是第二天......
         int dayOfWeek = cd.get(Calendar.DAY_OF_WEEK) - 1; // 因为按中国礼拜一作为第一天所以这里减1
-        if(dayOfWeek ==0)
-        {
-            dayOfWeek=7;
+        if (dayOfWeek == 0) {
+            dayOfWeek = 7;
         }
 
         if (dayOfWeek == 1) {
@@ -47,11 +45,11 @@ public class Helper {
         String preMonday = sdf.format(monday);
 
 
-        return  preMonday + " 00:00:00";
+        return preMonday + " 00:00:00";
 
     }
 
-    public  static  String getCurrentMonthBegin() {
+    public static String getCurrentMonthBegin() {
         // 获取当月第一天和最后一天
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String firstday;
@@ -61,94 +59,112 @@ public class Helper {
         cale.set(Calendar.DAY_OF_MONTH, 1);
         firstday = format.format(cale.getTime());
 
-        return   firstday + " 00:00:00";
+        return firstday + " 00:00:00";
     }
 
 
     // 1. 学课  2.考试 3. 培训报名 4. 约课
 
-    public  static  String GetItemType(int typeid )
-    {
-        String returnvalue="";
-        switch (typeid)
-        {
-            case  1:returnvalue= Constant.course_item_type; break;
-            case  2:returnvalue= Constant.exam_item_type; break;
-            case  3:returnvalue= Constant.enrollment_item_type; break;
-            case  4:returnvalue= Constant.appointment_item_type; break;
-            default:break;
+    public static String GetItemType(int typeid) {
+        String returnvalue = "";
+        switch (typeid) {
+            case 1:
+                returnvalue = Constant.course_item_type;
+                break;
+            case 2:
+                returnvalue = Constant.exam_item_type;
+                break;
+            case 3:
+                returnvalue = Constant.enrollment_item_type;
+                break;
+            case 4:
+                returnvalue = Constant.appointment_item_type;
+                break;
+            default:
+                break;
         }
 
-       return  returnvalue;
+        return returnvalue;
     }
 
     public static int getRandNum(int min, int max) {
-        int randNum = min + (int)(Math.random() * ((max - min) + 1));
+        int randNum = min + (int) (Math.random() * ((max - min) + 1));
         return randNum;
     }
 
 
-    public  static void SendMessage(String  cellphone,  String message)
-    {
+    public static void SendMessage(String cellphone, String message) {
 
     }
-    public  static  boolean  isNullOrEmpty(String value)
-    {
-        if (value==null || value.trim().equals("") ) return  true;
-        else  return  false;
+
+    public static boolean isNullOrEmpty(String value) {
+        if (value == null || value.trim().equals("")) return true;
+        else return false;
     }
 
-    public  static  String  formatDate( Date d)
-    {
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String result= sdf.format(d);
-        return  result;
+    public static String formatDate(Date d) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String result = sdf.format(d);
+        return result;
     }
 
-    public  static  String getFileNameExtension(String fileName)
-    {
-        String[] arr= fileName.split("\\.");
-        return arr[arr.length-1];
+    public static String getFileNameExtension(String fileName) {
+        String[] arr = fileName.split("\\.");
+        return arr[arr.length - 1];
     }
 
-    public  static  Date dateParse(String  dateString)
-     throws Exception
-    {
-        try
-        {
+    public static Date dateParse(String dateString)
+            throws Exception {
+        try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse(dateString);
-            return   date;
-        }
-        catch (Exception e)
-        {
-            throw  e;
+            return date;
+        } catch (Exception e) {
+            throw e;
         }
     }
 
 
-    public    static   String    Export(List<String> rowNameList, List<Object[]> dataList, String tempFileName, String  fileroot,String  exportfolder )
-            throws  Exception
-    {
+    public static String Export(List<String> rowNameList, List<Object[]> dataList, String tempFileName, String fileroot, String exportfolder)
+            throws Exception {
 
         try {
 
 
-            String path =fileroot +  exportfolder;
+            String path = fileroot + exportfolder;
             File targetFile = new File(path);
-            if(!targetFile.exists()){
+            if (!targetFile.exists()) {
                 targetFile.mkdirs();
             }
 
-            String fullPath =   path + tempFileName+ UUID.randomUUID() +".xlsx";
-            OfficeUtil.getInstance().export2excel("sheet1", rowNameList, dataList,fullPath);
-             return   fullPath.replace( fileroot,""  );
+            String fullPath = path + tempFileName + UUID.randomUUID() + ".xlsx";
+            OfficeUtil.getInstance().export2excel("sheet1", rowNameList, dataList, fullPath);
+            return fullPath.replace(fileroot, "");
 
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             throw ex;
         }
 
+    }
+
+
+    public static Date addOneDay(String date) throws Exception {
+        try {
+            Date endDate = dateParse(date);
+
+            Calendar cl = Calendar.getInstance();
+            cl.setTime(endDate);
+            cl.add(Calendar.DAY_OF_MONTH, 1);// 今
+
+
+
+            return  cl.getTime();
+
+
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
     }
 
     /*

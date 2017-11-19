@@ -88,4 +88,5 @@ public interface ExamService {
 
     List<ExamHistory>  getMyExamHistoryIDsInProcess(    int userid  );
 
+    void    backUpdateExamPublishStatus(  int   status  , int  examid );
 }

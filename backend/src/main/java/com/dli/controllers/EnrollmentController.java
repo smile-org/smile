@@ -458,10 +458,10 @@ public class EnrollmentController {
                 e.setTeacher(teacher);
 
             if (!Helper.isNullOrEmpty(start))
-                e.setStart(start);
+                e.setStartCondition(  Helper.dateParse(start) );
 
             if (!Helper.isNullOrEmpty(end))
-                e.setEnd(end);
+                e.setEndCondition(  Helper.addOneDay(end) );
 
             e.setCompany_id(user.getCompany_id());
             e.setSkip(skip);
@@ -513,11 +513,17 @@ public class EnrollmentController {
             if (!Helper.isNullOrEmpty(teacher))
                 e.setTeacher(teacher);
 
+           // if (!Helper.isNullOrEmpty(start))
+           //     e.setStart(start);
+
+           // if (!Helper.isNullOrEmpty(end))
+           //     e.setEnd(end);
+
             if (!Helper.isNullOrEmpty(start))
-                e.setStart(start);
+                e.setStartCondition(  Helper.dateParse(start) );
 
             if (!Helper.isNullOrEmpty(end))
-                e.setEnd(end);
+                e.setEndCondition(  Helper.addOneDay(end) );
 
             e.setCompany_id(user.getCompany_id());
             e.setSkip(0);
@@ -615,11 +621,19 @@ public class EnrollmentController {
             if (!Helper.isNullOrEmpty(teacher))
                 e.setTeacher(teacher);
 
+          //  if (!Helper.isNullOrEmpty(start))
+          //      e.setStart(start);
+
+          //  if (!Helper.isNullOrEmpty(end))
+          //      e.setEnd(end);
+
+
+
             if (!Helper.isNullOrEmpty(start))
-                e.setStart(start);
+                e.setStartCondition(  Helper.dateParse(start) );
 
             if (!Helper.isNullOrEmpty(end))
-                e.setEnd(end);
+                e.setEndCondition(  Helper.addOneDay(end) );
 
             e.setCompany_id(user.getCompany_id());
             e.setSkip(skip);
@@ -664,11 +678,19 @@ public class EnrollmentController {
             if (!Helper.isNullOrEmpty(teacher))
                 e.setTeacher(teacher);
 
+          //  if (!Helper.isNullOrEmpty(start))
+           //     e.setStart(start);
+
+          //  if (!Helper.isNullOrEmpty(end))
+           //     e.setEnd(end);
+
+
+
             if (!Helper.isNullOrEmpty(start))
-                e.setStart(start);
+                e.setStartCondition(  Helper.dateParse(start) );
 
             if (!Helper.isNullOrEmpty(end))
-                e.setEnd(end);
+                e.setEndCondition(  Helper.addOneDay(end) );
 
             e.setCompany_id(user.getCompany_id());
             e.setSkip(0);
@@ -985,6 +1007,8 @@ public class EnrollmentController {
                 ec.setSequnce_num((int) content.get("sequnce_num"));
                 ec.setSequnce_title((String) content.get("sequnce_title"));
                 ec.setContent((String) content.get("content"));
+
+                ec.setTeacher((String) content.get("teacher"));
                 ec.setEnrollment_id(enrollment.getEnrollment_id());
 
                 enrollmentService.backAddEnrollmentContent(ec);
@@ -1078,6 +1102,7 @@ public class EnrollmentController {
                 ec.setSequnce_num((int) content.get("sequnce_num"));
                 ec.setSequnce_title((String) content.get("sequnce_title"));
                 ec.setContent((String) content.get("content"));
+                ec.setTeacher((String) content.get("teacher"));
 
                 int contentid = (int) content.get("content_id");
                 ec.setContent_id(contentid);
@@ -1159,6 +1184,8 @@ public class EnrollmentController {
                 EnrollmentContent ec = new EnrollmentContent();
                 ec.setSequnce_num((int) content.get("sequnce_num"));
                 ec.setSequnce_title((String) content.get("sequnce_title"));
+
+                ec.setTeacher((String) content.get("teacher"));
                 ec.setContent((String) content.get("content"));
 
                 // if (content.get("content_id") != null) {
@@ -1228,4 +1255,34 @@ public class EnrollmentController {
         }
         return result;
     }
+
+
+
+    @RequestMapping(value = "/back/UpdateEnrollmentPublishStatus", method = RequestMethod.GET)
+    public Map backUpdateEnrollmentPublishStatus(int periodid, int publish, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            enrollmentService.backUpdateEnrollmentPublishStatus(publish, periodid);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "状态更新成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
 }

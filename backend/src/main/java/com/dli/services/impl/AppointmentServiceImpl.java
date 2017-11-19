@@ -80,9 +80,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<BackAppointment> getBackAppointmentList(int companyId, String title, Date sponsorDate, int skip, int take) throws ParseException {
-        Date startDate = null;
+    public List<BackAppointment> getBackAppointmentList(int companyId, String title, Date start,Date end,  int skip, int take) throws ParseException {
+       /* Date startDate = null;
         Date endDate = null;
+
+
         if (sponsorDate != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -90,11 +92,14 @@ public class AppointmentServiceImpl implements AppointmentService {
             startDate = sdf1.parse(sdf.format(sponsorDate) + " 00:00:00");
             endDate = sdf1.parse(sdf.format(sponsorDate) + " 23:59:59");
         }
-        return appointmentRepo.getBackAppointmentList(companyId, title, startDate, endDate, skip, take);
+        */
+        return appointmentRepo.getBackAppointmentList(companyId, title, start, end, skip, take);
     }
 
     @Override
-    public int getBackAppointmentCount(int companyId, String title, Date sponsorDate) throws ParseException {
+    public int getBackAppointmentCount(int companyId, String title, Date start,Date end) throws ParseException {
+
+       /*
         Date startDate = null;
         Date endDate = null;
         if (sponsorDate != null) {
@@ -104,7 +109,8 @@ public class AppointmentServiceImpl implements AppointmentService {
             startDate = sdf1.parse(sdf.format(sponsorDate) + " 00:00:00");
             endDate = sdf1.parse(sdf.format(sponsorDate) + " 23:59:59");
         }
-        return appointmentRepo.getBackAppointmentCount(companyId, title, startDate, endDate);
+        */
+        return appointmentRepo.getBackAppointmentCount(companyId, title, start, end);
     }
 
     @Override

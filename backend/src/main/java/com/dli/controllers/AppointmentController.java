@@ -238,8 +238,7 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/backAppointmentList", method = RequestMethod.GET)
-    public Map backGetAppointmentList(@RequestHeader Map header, @RequestParam String title,
-                                      @RequestParam String sponsorDate, @RequestParam int skip, @RequestParam int take) {
+    public Map backGetAppointmentList(@RequestHeader Map header, @RequestParam String title, @RequestParam String start,  @RequestParam   String end, @RequestParam int skip, @RequestParam int take) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -252,15 +251,23 @@ public class AppointmentController {
         try {
             int companyId = user.getCompany_id();
             if (title.equals("")) title = null;
-            Date newSponsorDate = null;
+            /* Date newSponsorDate = null;
             if (sponsorDate != null && !sponsorDate.equals("")) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 newSponsorDate = sdf.parse(sponsorDate);
-            }
+            } */
 
-            int total = appointmentService.getBackAppointmentCount(companyId, title, newSponsorDate);
+            Date startCondition =null;
+            Date endCondition =null;
 
-            List<BackAppointment> backAppointments = appointmentService.getBackAppointmentList(companyId, title, newSponsorDate, skip, take);
+            if(  !Helper.isNullOrEmpty( start) )
+                startCondition =Helper.dateParse(  start);
+            if (  !Helper.isNullOrEmpty( end) )
+                endCondition =Helper.addOneDay(end);
+
+            int total = appointmentService.getBackAppointmentCount(companyId, title, startCondition,endCondition);
+
+            List<BackAppointment> backAppointments = appointmentService.getBackAppointmentList(companyId, title, startCondition ,endCondition, skip, take);
 
             result.put(Constant.status, 1);
             result.put("total", total);
@@ -361,8 +368,8 @@ public class AppointmentController {
     private  String exportfolder;
 
     @RequestMapping(value = "/exportAppointment", method = RequestMethod.GET)
-    public Map exportAppointment(@RequestHeader Map header, @RequestParam String title,
-                                 @RequestParam String sponsorDate) {
+    public Map exportAppointment( @RequestParam String title,
+                                 @RequestParam String start,@RequestParam   String end  ,@RequestHeader Map header) {
 
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
@@ -376,13 +383,26 @@ public class AppointmentController {
         try {
 
             int companyId = user.getCompany_id();
-            Date newSponsorDate = null;
+            if (title.equals("")) title = null;
+
+            /*Date newSponsorDate = null;
             if (sponsorDate != null && !sponsorDate.equals("")) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 newSponsorDate = sdf.parse(sponsorDate);
-            }
+            }*/
+
+
+
+            Date startCondition =null;
+            Date endCondition =null;
+
+            if(  !Helper.isNullOrEmpty( start) )
+                startCondition =Helper.dateParse(  start);
+            if (  !Helper.isNullOrEmpty( end) )
+                endCondition =Helper.addOneDay(end);
+
             List<BackAppointment> appointmentList =
-                    appointmentService.getBackAppointmentList(companyId, title, newSponsorDate, 0, Constant.takeMax);
+                    appointmentService.getBackAppointmentList(companyId, title, startCondition,endCondition, 0, Constant.takeMax);
 
             List<String> rowNameList = new ArrayList<>();
 

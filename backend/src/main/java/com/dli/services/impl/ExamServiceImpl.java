@@ -177,7 +177,11 @@ public class ExamServiceImpl implements ExamService {
         }
 
         int correct = examRepo.getExamHistoryCorrectRecrdCount(historyid);
-        int score =  100  * correct / questionLst.size() ;
+        int score;
+        if(questionLst.size()==0)
+            score=100;
+        else
+         score =  100  * correct / questionLst.size() ;
 
         Exam exam = examRepo.getExambyID(examid);
         String status = "failure";
@@ -409,5 +413,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public List<ExamHistory> getMyExamHistoryIDsInProcess(int userid) {
         return   examRepo.getMyExamHistoryIDsInProcess(userid);
+    }
+
+    @Override
+    public void backUpdateExamPublishStatus(int status, int examid) {
+        examRepo.backUpdateExamPublishStatus(status, examid);
     }
 }

@@ -1,5 +1,7 @@
 package com.dli.entities;
 
+import java.util.Date;
+
 public class backCourse {
 
 
@@ -11,11 +13,15 @@ public class backCourse {
     private String category_name;
     private String principal_user_idName;
     private String department;
+
     private String expiration_date;
 
     private String type_name;
     private boolean ispublished;
     private String publish_date;
+
+    private Date start;
+    private Date end;
 
 
     private   int skip;
@@ -130,4 +136,19 @@ public class backCourse {
     }
 
 
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
 }

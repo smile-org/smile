@@ -530,7 +530,7 @@ public class UserController {
             userService.UpdateUserPic(path + fileName, user.getUser_id());
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, "头像上传成功");
+            result.put(Constant.result, path + fileName);
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());

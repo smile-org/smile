@@ -7,8 +7,10 @@ public class EnrollmentContent {
 
     private int content_id;
     private int sequnce_num;
+
     private String sequnce_title;
     private String content;
+    private   String   teacher;
     private int enrollment_id;
     private boolean indicator;
     private Date created_at;
@@ -78,10 +80,6 @@ public class EnrollmentContent {
         this.updated_at = updated_at;
     }
 
-
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,6 +95,14 @@ public class EnrollmentContent {
         return content_id;
     }
 
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
 
 
 }

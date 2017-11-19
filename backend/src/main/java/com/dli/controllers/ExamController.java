@@ -548,7 +548,7 @@ public class ExamController {
 
 
     @RequestMapping(value = "/back/GetQuestionList", method = RequestMethod.GET)
-    public Map backGetQuestionList( String  title,  int typeid, String createdat, int skip , int take ,   @RequestHeader Map header) {
+    public Map backGetQuestionList( String  title,  int typeid, String start,   String end,  int skip , int take ,   @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -564,8 +564,15 @@ public class ExamController {
             q.setTitle(title);
             if(typeid!=0)
             q.setType_id(typeid);
-            if(!Helper.isNullOrEmpty(createdat))
-            q.setCreated_at(createdat);
+          //  if(!Helper.isNullOrEmpty(createdat))
+          //  q.setCreated_at(createdat);
+
+            if( !Helper.isNullOrEmpty(start)  )
+                q.setStart(  Helper.dateParse(start));
+
+            if( !Helper.isNullOrEmpty(end)  )
+                q.setEnd(  Helper.addOneDay(end));
+
 
 
             q.setSkip(skip);
@@ -591,7 +598,7 @@ public class ExamController {
 
 
     @RequestMapping(value = "/back/ExportQuestionList", method = RequestMethod.GET)
-    public Map backExportQuestionList( String  title,  int typeid, String createdat,    @RequestHeader Map header) {
+    public Map backExportQuestionList( String  title,  int typeid,  String start,   String end,   @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -607,8 +614,14 @@ public class ExamController {
                 q.setTitle(title);
             if(typeid!=0)
                 q.setType_id(typeid);
-            if(!Helper.isNullOrEmpty(createdat))
-                q.setCreated_at(createdat);
+           // if(!Helper.isNullOrEmpty(createdat))
+           //     q.setCreated_at(createdat);
+
+            if( !Helper.isNullOrEmpty(start)  )
+                q.setStart(  Helper.dateParse(start));
+
+            if( !Helper.isNullOrEmpty(end)  )
+                q.setEnd(  Helper.addOneDay(end));
 
 
             q.setSkip(0);
@@ -779,7 +792,7 @@ public class ExamController {
                 e.setStart_date(  Helper.dateParse(start)  );
 
             if( !Helper.isNullOrEmpty(end))
-                e.setEnd_date(Helper.dateParse(end));
+                e.setEnd_date(Helper.addOneDay(end));
 
 
 
@@ -836,7 +849,7 @@ public class ExamController {
                 e.setStart_date(  Helper.dateParse(start)  );
 
             if( !Helper.isNullOrEmpty(end))
-                e.setEnd_date(Helper.dateParse(end));
+                e.setEnd_date(Helper.addOneDay(end));
 
             e.setCompany_id(user.getCompany_id());
             e.setSkip(0);
@@ -976,7 +989,7 @@ public class ExamController {
                 bh.setStart_date(  Helper.dateParse(start)  );
 
             if( !Helper.isNullOrEmpty(end))
-                bh.setEnd_date(Helper.dateParse(end));
+                bh.setEnd_date(Helper.addOneDay(end));
 
 
 
@@ -1029,7 +1042,7 @@ public class ExamController {
                 bh.setStart_date(  Helper.dateParse(start)  );
 
             if( !Helper.isNullOrEmpty(end))
-                bh.setEnd_date(Helper.dateParse(end));
+                bh.setEnd_date(Helper.addOneDay(end));
 
 
 
@@ -1247,7 +1260,12 @@ public class ExamController {
             String icon =(String ) body.get("icon");
             String pic =(String ) body.get("pic");
 
-            String courseids =(String ) body.get("courseids");
+            String courseids =  null;
+            Object    obj=  body.get("courseids");
+            if(  obj!=null)
+                courseids  = (String)body.get("courseids");
+
+
             List<LinkedHashMap> questionList = (List<LinkedHashMap>) body.get("questionList");
 
 
@@ -1266,7 +1284,7 @@ public class ExamController {
             e.setPic(pic);
             e.setCompany_id(user.getCompany_id());
 
-            SimpleDateFormat sdf= new SimpleDateFormat("yyyyMMdd-HHmmss-SSS");
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String  examNum = sdf.format( new Date());
             e.setExam_num( examNum );
 
@@ -1295,9 +1313,11 @@ public class ExamController {
             }
 
 
-            String[] courseidList = courseids.split("\\,");
-            for (String courseid : courseidList) {
-                examService.backAddExamCourseMapping(e.getExam_id(), Integer.parseInt(courseid) );
+            if( ! Helper.isNullOrEmpty(courseids) ) {
+                String[] courseidList = courseids.split("\\,");
+                for (String courseid : courseidList) {
+                    examService.backAddExamCourseMapping(e.getExam_id(), Integer.parseInt(courseid));
+                }
             }
 
             for (LinkedHashMap question : questionList) {
@@ -1372,7 +1392,12 @@ public class ExamController {
             String icon =(String ) body.get("icon");
             String pic =(String ) body.get("pic");
 
-            String courseids =(String ) body.get("courseids");
+            String courseids =  null;
+            Object    obj=  body.get("courseids");
+            if(  obj!=null)
+                courseids  = (String)body.get("courseids");
+
+
             List<LinkedHashMap> questionList = (List<LinkedHashMap>) body.get("questionList");
 
 
@@ -1421,9 +1446,11 @@ public class ExamController {
             examService.backDeleteExamCourseMapping(examid);
 
 
-            String[] courseidList = courseids.split("\\,");
-            for (String courseid : courseidList) {
-                examService.backAddExamCourseMapping( examid  , Integer.parseInt(courseid) );
+            if( !Helper.isNullOrEmpty(courseids) ) {
+                String[] courseidList = courseids.split("\\,");
+                for (String courseid : courseidList) {
+                    examService.backAddExamCourseMapping(examid, Integer.parseInt(courseid));
+                }
             }
 
 
@@ -1446,6 +1473,36 @@ public class ExamController {
         }
         return result;
     }
+
+
+
+
+    @RequestMapping(value = "/back/UpdateExamPublishStatus", method = RequestMethod.GET)
+    public Map backUpdateExamPublishStatus(int examid, int publish, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            examService.backUpdateExamPublishStatus(publish, examid);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "状态更新成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
 
 
 }

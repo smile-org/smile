@@ -15,8 +15,11 @@ public class Exam {
     private int pass_score;
     private int time_limit;
     private String intro;
+
+
     private String icon;
     private String pic;
+    private  boolean ispublished;
     private int company_id;
     private boolean indicator;
     private Date created_at;
@@ -206,5 +209,13 @@ public class Exam {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public boolean isIspublished() {
+        return ispublished;
+    }
+
+    public void setIspublished(boolean ispublished) {
+        this.ispublished = ispublished;
     }
 }
