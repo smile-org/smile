@@ -84,9 +84,10 @@
                                 </el-button>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作" class="tc" width="100" align="center">
+                        <el-table-column label="操作" class="tc" width="140" align="center">
                             <template scope="scope">
                                 <el-button @click="edit(scope.row.course_id)" type="text" size="small">编辑</el-button>
+                                <el-button @click="updateState(scope.row)" type="text" size="small">{{scope.row.ispublished ? '隐藏' : '发布'}}</el-button>
                                 <el-button @click="del(scope.row.course_id)" class="red_font" type="text" size="small">
                                     删除
                                 </el-button>
@@ -199,10 +200,6 @@
         })
       },
       search: function () {
-        // var pubDate = ''
-        // if (this.formInline.date) {
-        //   pubDate = moment(this.formInline.date).format('YYYY-MM-DD')
-        // }
         var start = ''
         var end = ''
         if (this.formInline.start) {
@@ -224,6 +221,32 @@
           if (data.status === 1) {
             this.tableData = data.result
             this.total = data.total
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      updateState (current) {
+        // 隐藏传0， 发布传1
+        var _type = 0
+        if (current.ispublished === true) {
+          _type = 0
+        } else {
+          _type = 1
+        }
+        api.fetch(api.uri.publishCourse, {
+          courseid: current.course_id,
+          publish: _type
+        }).then(data => {
+          if (data.status === 1) {
+            this.$message('操作成功')
+            current.ispublished = !current.ispublished
+            if (current.ispublished) {
+              console.log(moment())
+              current.publish_date = moment().format('YYYY-MM-DD')
+            } else {
+              current.publish_date = ''
+            }
           }
         }).catch(error => {
           this.$message(error.message)

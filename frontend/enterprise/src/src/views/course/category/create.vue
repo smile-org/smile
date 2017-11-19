@@ -15,6 +15,7 @@
             <a class="el-button--text cur ml20" v-on:click="toggleShow">上传</a>
             <a class="el-button--text cur ml20" v-on:click="setDefault">使用默认</a>
             <my-upload @input="closeMyUpload" field="file"
+              :no-rotate=false
               @crop-success="cropSuccess"
               @crop-upload-success="cropUploadSuccess"
               @crop-upload-fail="cropUploadFail"
@@ -65,9 +66,7 @@
         show: false,
         uploadUrl: api.uri.uploadCategoryImage,
         returnedImageUrl: '',
-        headers: {
-          token: '666666'
-        }
+        headers: api.getUploadHeaders()
       }
     },
     created () {
