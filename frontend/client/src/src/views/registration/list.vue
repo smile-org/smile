@@ -13,7 +13,7 @@
                     <h3 class="fl mb15">{{item.title}}</h3>
                     <p class="">主讲：{{item.teacher}}</p>
                     <p class="">{{item.start_date | formatDate}}--{{item.end_date | formatDate}}</p>
-                    <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
+                    <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                     <ul class="small_icon fr">
                       <li class="fl">
                         <span class="icon icon1"></span>
@@ -56,24 +56,25 @@
                     </ul>
                     <span>
                     </span>
-                    <span class="surplus_num s_num" v-if="!item.isFinished && item.left_count > 0">
-                      剩余{{item.left_count}}人
-                    </span>
-                    <span class="surplus_num red_full" v-if="!item.isFinished && item.left_count === 0">
-                      已 满
-                    </span>
-                    <button class="surplus_num g_remind" v-if="item.isFinished && !item.isReminderAdded" v-on:click="remind(item.period_id)" >
-                    开班提醒我
-                    </button>
-                    <span class="surplus_num end_grey" v-if="item.isFinished && item.isReminderAdded">
-                      开班提醒我
-                    </span>
-                    <span v-if="item.isFinished">
-                      <img class="end_png" src="../../assets/img/end.png" />
-                    </span>
+
                   </div>
                 </div>
               </router-link>
+              <span class="surplus_num s_num" v-if="!item.isFinished && item.left_count > 0">
+                      剩余{{item.left_count}}人
+                    </span>
+              <span class="surplus_num red_full" v-if="!item.isFinished && item.left_count === 0">
+                      已 满
+                    </span>
+              <button class="surplus_num g_remind" v-if="item.isFinished && !item.isReminderAdded" v-on:click="remind(item.period_id)" >
+                开班提醒我
+              </button>
+              <span class="surplus_num end_grey" v-if="item.isFinished && item.isReminderAdded">
+                      开班提醒我
+                    </span>
+              <span v-if="item.isFinished">
+                      <img class="end_png" src="../../assets/img/end.png" />
+                    </span>
             </li>
           </ul>
         </el-tab-pane>
@@ -127,6 +128,14 @@ export default {
         }
       })
     },
+    handleStar: function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var current = data[i]
+        if (current && current.star) {
+          current.star = current.star.toFixed(1)
+        }
+      }
+    },
     handleClick: function (tab, event) {
       console.log(tab, event)
     },
@@ -171,6 +180,7 @@ export default {
           // 只有实际拿到数据后， 才附加到data属性上
           if (data.result.length > 0) {
             this.data_sec = this.data_sec.concat(data.result)
+            this.handleStar(this.data_sec)
           }
         } else {
           // TODO:

@@ -13,47 +13,49 @@
           </span>
         </nav>
         <div class="con_tab">
-          <el-form :rules="formRules" ref="form" :inline="true" :model="currentCourse" class="demo-form-inline mt20 hidden" label-width="80px">
-            <el-col :span="8">
-              <el-form-item label="课程名称" prop="title">
-                <el-input v-model="currentCourse.title" placeholder="课程名称"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="课程类别" prop="category_id">
-                <el-select v-model="currentCourse.category_id" placeholder="请选择课程类别">
-                  <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="部门" prop="department">
-                <el-input v-model="currentCourse.department" placeholder="部门"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="责任人" prop="principal_user_id">
-                <el-select v-model="currentCourse.principal_user_id" placeholder="请选择责任人">
-                  <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="有效期" prop="expiration_date">
-                <el-date-picker
-                  v-model="currentCourse.expiration_date"
-                  type="date"
-                  placeholder="选择日期"
-                  style="width: 100%;"
-                  >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="简介" prop="intro">
-                <el-input v-model="currentCourse.intro" placeholder="简介"></el-input>
+          <el-form :rules="formRules" ref="form" :inline="true" :model="currentCourse" class="demo-form-inline mt20 hidden add_width" label-width="80px">
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="课程名称" prop="title">
+                  <el-input v-model="currentCourse.title" placeholder="课程名称"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="课程类别" prop="category_id">
+                  <el-select v-model="currentCourse.category_id" placeholder="请选择课程类别">
+                    <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="部门" prop="department">
+                  <el-input v-model="currentCourse.department" placeholder="部门"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="责任人" prop="principal_user_id">
+                  <el-select filterable v-model="currentCourse.principal_user_id" placeholder="请选择责任人">
+                    <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="有效期" prop="expiration_date">
+                  <el-date-picker
+                    v-model="currentCourse.expiration_date"
+                    type="date"
+                    placeholder="选择日期"
+                    style="width: 100%;"
+                    >
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-col :span="24">
+              <el-form-item label="简介" prop="intro" class="input_textarea">
+                <el-input  type="textarea" v-model="currentCourse.intro" placeholder="简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -102,7 +104,7 @@
                     <el-input v-model="formInline.content" placeholder="标题" style="width: 300px;"></el-input>
                   </el-form-item>
                 </el-form>
-                <el-upload class="upload-demo"
+                <el-upload class="upload-demo" accept="video/mp4,video/mov,application/msword,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
                   ref="uploadContent"
                   :action="uploadContentAction"
                   :on-success="onContentSuccess"
@@ -111,8 +113,8 @@
                   :on-change="changeContentUpload"
                   :file-list="fileList"
                   :headers="headers">
-                  <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
-                  <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过100M</div>
+                  <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
+                  <div slot="tip" class="el-upload__tip">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
@@ -124,18 +126,18 @@
           <div class="mt20">
             <template>
               <el-table :data="contentList" border class="mt20 mb30" style="width: 100%">
-                <el-table-column prop="sequnce_num" label="序号" width="100">
+                <el-table-column prop="sequnce_num" align="center" label="序号" width="100">
                 </el-table-column>
-                <el-table-column prop="sequnce_title" label="章节">
+                <el-table-column prop="sequnce_title" align="center" label="章节">
                 </el-table-column>
-                <el-table-column prop="content" label="标题">
+                <el-table-column prop="content" align="center" label="标题">
                 </el-table-column>
-                <el-table-column prop="filename" label="课件">
+                <el-table-column prop="filename" align="center" label="课件">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作" align="center" class="tc" width="100">
                   <template scope="scope">
                     <el-button @click="editContent(scope.row.content_id)" type="text" size="small">编辑</el-button>
-                    <el-button @click="delContent(scope.row.content_id)" type="text" size="small">删除</el-button>
+                    <el-button @click="delContent(scope.row.content_id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -328,6 +330,7 @@ export default {
     this.headers = api.getUploadHeaders()
     lang.zh.preview = ''
     api.fetch(api.uri.getSelectList, { courseid: this.id }).then(data => {
+      console.log(data)
       if (data.status === 1) {
         this.categoryList = data.result.CategoryList
         this.adminList = data.result.AdminList
@@ -347,6 +350,8 @@ export default {
   },
   methods: {
     publish () {
+      console.log('ss')
+      console.log(this.currentCourse)
       // 隐藏传0， 发布传1
       var _type = 0
       if (this.currentCourse.ispublished === true) {
@@ -523,12 +528,33 @@ export default {
       }
     },
     beforeContentUpload (file) {
-      // 判断大小
-      if (file.size > 100 * 1024 * 1024) {
+      // 判断大小与格式
+      console.log(file.name.indexOf('.') !== -1)
+      if (file.name.indexOf('.') !== -1) {
+        var arrLen = file.name.split('.').length - 1
+        var extension = file.name.split('.')[arrLen].toUpperCase()
+        if (api.extension.course.indexOf(extension) === -1) {
+          this.$message({
+            type: 'info',
+            message: '不支持的上传文件格式'
+          })
+          this.fileList = []
+          return false
+        }
+      } else {
         this.$message({
           type: 'info',
-          message: '附件不能大于100M'
+          message: '不支持的上传文件格式'
         })
+        this.fileList = []
+        return false
+      }
+      if (file.size > 500 * 1024 * 1024) {
+        this.$message({
+          type: 'info',
+          message: '附件不能大于500M'
+        })
+        this.fileList = []
         return false
       }
     },
@@ -565,7 +591,11 @@ export default {
           api.post(api.uri.editCourse, submitObj).then(data => {
             if (data.status === 1) {
               router.push({name: 'courseList'})
+            } else {
+              console.log(data)
             }
+          }).then(error => {
+            console.log(error)
           })
         } else {
           return false
@@ -690,11 +720,12 @@ export default {
 }
 
 .baiming_list span {
-  margin-right: 20px;
+
   height: 34px;
   line-height: 32px;
   padding: 0 5px 0 15px;
   font-size: 14px;
+  margin: 10px 20px 10px 0px;
 }
 
 .baiming_list span i {
@@ -722,7 +753,9 @@ export default {
   background: none;
   color: #00b553;
 }
-
+.dateTab_width .el-input__icon+.el-input__inner{
+  margin-right: 10px;
+}
 .update_btn:hover,
 .update_btn:active,
 .update_btn:focus {

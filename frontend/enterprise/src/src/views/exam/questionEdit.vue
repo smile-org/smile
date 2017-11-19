@@ -47,7 +47,7 @@
               </ul>
               <button type="primary" class="inf_btn mt30 mb20" v-on:click="save">保 存
               </button>
-              <button type="button" class="inf_btn mt30 mb20" v-on:click="resetAnwser">重 置
+              <button type="button" class="inf_btn mt30 mb20 ml20" v-on:click="resetAnwser">重 置
               </button>
             </div>
           </div>

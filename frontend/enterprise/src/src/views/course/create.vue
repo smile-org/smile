@@ -13,42 +13,44 @@
           </span>
         </nav>
         <div class="con_tab">
-          <el-form :rules="formRules" ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
-            <el-col :span="8">
-              <el-form-item label="课程名称" prop="title">
-                <el-input v-model="form.title" placeholder="课程名称"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="课程类别" prop="cateid">
-                <el-select class="dateTab_width" v-model="form.cateid" placeholder="请选择课程类别">
-                  <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="部门" prop="depart">
-                <el-input v-model="form.depart" placeholder="部门"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="责任人" prop="adminid">
-                <el-select class="dateTab_width" v-model="form.adminid" placeholder="请选择责任人">
-                  <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="有效期" prop="expdate">
-                <el-date-picker v-model="form.expdate" type="date" placeholder="选择日期" class="dateTab_width" style="width: 100%;" :picker-options="pickerOptions0">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="简介"></el-input>
+          <el-form :rules="formRules" ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="课程名称" prop="title">
+                  <el-input v-model="form.title" placeholder="课程名称"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="课程类别" prop="cateid">
+                  <el-select class="dateTab_width" v-model="form.cateid" placeholder="请选择课程类别">
+                    <el-option v-for="item in categoryList" :key="item.category_id" :label="item.category_name" :value="item.category_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="责任人" prop="adminid">
+                  <el-select class="dateTab_width" filterable v-model="form.adminid" placeholder="请选择责任人">
+                    <el-option v-for="item in adminList" :key="item.user_id" :label="item.full_name" :value="item.user_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="部门" prop="depart">
+                  <el-input v-model="form.depart" placeholder="部门"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="有效期" prop="expdate">
+                  <el-date-picker v-model="form.expdate" type="date" placeholder="选择日期" class="dateTab_width" style="width: 100%;" :picker-options="pickerOptions0">
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-col>
+              <el-form-item label="简介" prop="intro" class="input_textarea">
+                <el-input type="textarea" v-model="form.intro" placeholder="简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -97,7 +99,7 @@
                     <el-input v-model="formInline.content" placeholder="标题" style="width: 300px;"></el-input>
                   </el-form-item>
                 </el-form>
-                <el-upload class="upload-demo"
+                <el-upload class="upload-demo" accept="video/mp4,video/mov,application/msword,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
                   ref="uploadContent"
                   :action="uploadContentAction"
                   :on-success="onContentSuccess"
@@ -106,8 +108,8 @@
                   :on-change="changeContentUpload"
                   :file-list="fileList"
                   :headers="headers">
-                  <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
-                  <div slot="tip" class="el-upload__tip">支持类型word/ppt/mp4/png/jpg，大小不超过100M</div>
+                  <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
+                  <div slot="tip" class="el-upload__tip">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
@@ -130,7 +132,7 @@
                 <el-table-column label="操作" align="center"  class="tc" width="100">
                   <template scope="scope">
                     <el-button @click="editContent(scope.row.id)" type="text" size="small">编辑</el-button>
-                    <el-button @click="remove(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="remove(scope.row.id)" type="text" class="red_font" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -179,10 +181,10 @@
             <button type="button" class="inf_btn  " v-on:click="submitCourse">保 存</button>
             <!--<button type="button" class="inf_btn  ml20" v-on:click="publish">发布</button>-->
           </div>
-          <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
+          <my-upload @input="closeIcon" :no-rotate=false field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
 
-          <my-upload @input="closeBanner" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="120" :value.sync="showBanner" :no-circle=true img-format="png">
+          <my-upload @input="closeBanner" :no-rotate=false field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="120" :value.sync="showBanner" :no-circle=true img-format="png">
           </my-upload>
         </div>
       </section>
@@ -487,12 +489,33 @@ export default {
       }
     },
     beforeContentUpload (file) {
-      // 判断大小
-      if (file.size > 100 * 1024 * 1024) {
+      // 判断大小与格式
+      console.log(file.name.indexOf('.') !== -1)
+      if (file.name.indexOf('.') !== -1) {
+        var arrLen = file.name.split('.').length - 1
+        var extension = file.name.split('.')[arrLen].toUpperCase()
+        if (api.extension.course.indexOf(extension) === -1) {
+          this.$message({
+            type: 'info',
+            message: '不支持的上传文件格式'
+          })
+          this.fileList = []
+          return false
+        }
+      } else {
         this.$message({
           type: 'info',
-          message: '附件不能大于100M'
+          message: '不支持的上传文件格式'
         })
+        this.fileList = []
+        return false
+      }
+      if (file.size > 500 * 1024 * 1024) {
+        this.$message({
+          type: 'info',
+          message: '附件不能大于500M'
+        })
+        this.fileList = []
         return false
       }
     },
@@ -656,7 +679,7 @@ export default {
 }
 
 .baiming_list span {
-  margin-right: 20px;
+  margin: 10px 20px 10px 0px;
   height: 34px;
   line-height: 32px;
   padding: 0 5px 0 15px;
@@ -665,9 +688,8 @@ export default {
 
 .baiming_list span i {
   margin-left: 10px;
+  color: #fff;
 }
-
-
 /*此处为弹出小分页的颜色*/
 
 .el-pager li.active {

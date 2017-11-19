@@ -10,7 +10,7 @@
     <common-header></common-header>
     <section>
       <div class="course_banner">
-        <img :src="data.pic | formatImage" />
+        <img :src="data.pic | formatImage"/>
       </div>
       <div class="course_tit">
         <h3>{{data.title}}</h3>
@@ -24,7 +24,8 @@
             <span class="redff7">{{data.collect_count}}</span>
           </li>
           <li class="fr">
-            <span id="c_save" v-on:click="favorite" :class="{icon:true,icon4:data.courseCollected,icon5:!data.courseCollected}"></span>
+            <span id="c_save" v-on:click="favorite"
+                  :class="{icon:true,icon4:data.courseCollected,icon5:!data.courseCollected}"></span>
           </li>
           <li class="fr">
             <span class="icon icon3" v-on:click="comment"></span>
@@ -44,7 +45,12 @@
             <li>
               <span>有效期 :</span> {{data.expiration_date | formatDate}}
             </li>
-            <li>
+            <li class="hidden ">
+              <span class="fl">课程评分 :</span>
+              <el-rate class="fl ml1 show_star2" v-model="data.star" disabled show-text text-color="#ff9900"
+                       text-template="{value}"></el-rate>
+            </li>
+            <li class="">
               <span>课程简介 :</span>
               <p>
                 {{data.intro}}
@@ -69,7 +75,7 @@
               <el-row style="font-size: .22rem;">
                 <el-col :span="4"><img class="person_header1" :src="item.user_idAvatar | formatImage"></el-col>
                 <el-col :span="6" class="">
-                  <p>{{item.user_idName}}</p>
+                  <p style="margin-top: 0rem;">{{item.user_idName}}</p>
                   <el-rate v-model="item.star" disabled text-color="#ff9900" text-template="{value}">
                   </el-rate>
                 </el-col>
@@ -84,171 +90,150 @@
 </template>
 
 <script>
-import api from '../../services/api'
-import router from '../../router'
-import { formatDate } from '../../common/date'
-import axios from 'axios'
-import commonHeader from '../../components/CommonHeader'
-export default {
-  data: function () {
-    return {
-      activeName: 'first',
-      data: {},
-      // courseCollected
-      courseContent: [],
-      courseComment: [],
-      id: 0,
-      userAvatar: ''
-    }
-  },
-  components: {
-    commonHeader
-  },
-  filters: {
-    formatDate (time) {
-      var date = new Date(time)
-      return formatDate(date, 'yyyy-MM-dd')
-    },
-    formatImage (uri) {
-      return axios.defaults.imageServer + uri
-    }
-  },
-  created () {
-    this.id = this.$route.query.id
-    this.userAvatar = sessionStorage.getItem('userAvatar')
-    var tab = this.$route.query.tab
-    api.fetch(api.uri.getCourse, { courseid: this.id }).then(data => {
-      if (data.status === 1) {
-        this.data = data.result
-        if (tab === 'comments') {
-          this.activeName = 'third'
-          this.handleClick({name: 'third'})
-        }
-      } else {
-        alert(data.result)
-      }
-    }).catch(error => {
-      alert(error.message)
-    })
-  },
-  methods: {
-    handleClick: function (tab, event) {
-      if (tab.name === 'second') {
-        api.fetch(api.uri.getCourseContent, { courseid: this.id }).then(data => {
-          if (data.status === 1) {
-            for (var i = 0; i < data.result.length; i++) {
-              var item = data.result[i]
-              if (item.content_type === 'word') {
-                item.typeImageClass = 'media_img media_img3'
-              } else if (item.content_type === 'ppt') {
-                item.typeImageClass = 'media_img media_img2'
-              } else if (item.content_type === 'mp4') {
-                item.typeImageClass = 'media_img media_img1'
-              } else {
-                item.typeImageClass = 'media_img media_img4'
-              }
-            }
-            this.courseContent = data.result
-          } else {
-            alert(data.result)
-          }
-        }).catch(error => {
-          alert(error.message)
-        })
-      } else if (tab.name === 'third') {
-        api.fetch(api.uri.getCourseComment, { courseid: this.id }).then(data => {
-          if (data.status === 1) {
-            this.courseComment = data.result
-          } else {
-            alert(data.result)
-          }
-        }).catch(error => {
-          alert(error.message)
-        })
+  import api from '../../services/api'
+  import router from '../../router'
+  import {formatDate} from '../../common/date'
+  import axios from 'axios'
+  import commonHeader from '../../components/CommonHeader'
+  export default {
+    data: function () {
+      return {
+        activeName: 'first',
+        data: {},
+        // courseCollected
+        courseContent: [],
+        courseComment: [],
+        id: 0,
+        userAvatar: ''
       }
     },
-    favorite: function () {
-      if (this.data.courseCollected === 1) {
-        this.data.courseCollected = 0
-        api.fetch(api.uri.cancelFavoriteCourse, { courseid: this.id })
-        this.data.collect_count -= 1
-      } else {
-        this.data.courseCollected = 1
-        api.fetch(api.uri.favoriteCourse, { courseid: this.id })
-        this.data.collect_count += 1
+    components: {
+      commonHeader
+    },
+    filters: {
+      formatDate (time) {
+        var date = new Date(time)
+        return formatDate(date, 'yyyy-MM-dd')
+      },
+      formatImage (uri) {
+        return axios.defaults.imageServer + uri
       }
     },
-    comment: function () {
-      sessionStorage.setItem('courseTitle', this.data.title)
-      router.push({ name: 'courseComment', query: { id: this.id } })
-    },
-    start: function (contentId, contentLink, orignalPath, type) {
-      api.fetch(api.uri.startCourse, {
-        courseid: this.id,
-        contentid: contentId
-      }).then(data => {
+    created () {
+      this.id = this.$route.query.id
+      this.userAvatar = sessionStorage.getItem('userAvatar')
+      var tab = this.$route.query.tab
+      api.fetch(api.uri.getCourse, {courseid: this.id}).then(data => {
         if (data.status === 1) {
-          if (type === 'ppt' || type === 'pptx' || type === 'doc' || type === 'docx') {
-            window.open(axios.defaults.imageServer + contentLink, '_self')
-          } else {
-            window.open(axios.defaults.imageServer + orignalPath, '_self')
+          this.data = data.result
+//          星星评价date
+          this.handleStar(this.data)
+          if (tab === 'comments') {
+            this.activeName = 'third'
+            this.handleClick({name: 'third'})
           }
+        } else {
+          alert(data.result)
         }
+      }).catch(error => {
+        alert(error.message)
       })
+    },
+    methods: {
+      handleStar: function (data) {
+        data.star = data.star.toFixed(1)
+//        for (var i = 0; i < data.length; i++) {
+//          var current = data[i]
+//          if (current && current.star) {
+//            current.star = current.star.toFixed(1)
+//          }
+//        }
+      },
+      handleClick: function (tab, event) {
+        if (tab.name === 'second') {
+          api.fetch(api.uri.getCourseContent, {courseid: this.id}).then(data => {
+            if (data.status === 1) {
+              for (var i = 0; i < data.result.length; i++) {
+                var item = data.result[i]
+                if (item.content_type.toUpperCase() === 'DOC' || item.content_type.toUpperCase() === 'DOCX') {
+                  item.typeImageClass = 'media_img media_img3'
+                } else if (item.content_type.toUpperCase() === 'PPTX' || item.content_type.toUpperCase() === 'PPT') {
+                  item.typeImageClass = 'media_img media_img2'
+                } else if (item.content_type.toUpperCase() === 'MP4' || item.content_type.toUpperCase() === 'MOV') {
+                  item.typeImageClass = 'media_img media_img1'
+                } else if (item.content_type.toUpperCase() === 'JPG' || item.content_type.toUpperCase() === 'JPEG' || item.content_type.toUpperCase() === 'PNG') {
+                  item.typeImageClass = 'media_img media_img4'
+                } else if (item.content_type.toUpperCase() === 'PDF') {
+                  item.typeImageClass = 'media_img media_img5'
+                }
+              }
+              this.courseContent = data.result
+//              this.handleStar(this.courseContent)
+            } else {
+              alert(data.result)
+            }
+          }).catch(error => {
+            alert(error.message)
+          })
+        } else if (tab.name === 'third') {
+          api.fetch(api.uri.getCourseComment, {courseid: this.id}).then(data => {
+            if (data.status === 1) {
+              this.courseComment = data.result
+            } else {
+              alert(data.result)
+            }
+          }).catch(error => {
+            alert(error.message)
+          })
+        }
+      },
+      favorite: function () {
+        if (this.data.courseCollected === 1) {
+          this.data.courseCollected = 0
+          api.fetch(api.uri.cancelFavoriteCourse, {courseid: this.id})
+          this.data.collect_count -= 1
+        } else {
+          this.data.courseCollected = 1
+          api.fetch(api.uri.favoriteCourse, {courseid: this.id})
+          this.data.collect_count += 1
+        }
+      },
+      comment: function () {
+        sessionStorage.setItem('courseTitle', this.data.title)
+        router.push({name: 'courseComment', query: {id: this.id}})
+      },
+      start: function (contentId, contentLink, orignalPath, type) {
+        api.fetch(api.uri.startCourse, {
+          courseid: this.id,
+          contentid: contentId
+        }).then(data => {
+          if (data.status === 1) {
+            if (type === 'ppt' || type === 'pptx' || type === 'doc' || type === 'docx') {
+              window.open(axios.defaults.imageServer + contentLink, '_self')
+            } else {
+              window.open(axios.defaults.imageServer + orignalPath, '_self')
+            }
+          }
+        })
+      }
     }
   }
-}
 </script>
-
 <style>
-  /*.el-rate__icon {*/
-    /*font-size: .16rem;*/
-    /*margin-right: .006rem;*/
-  /*}*/
-  /*.el-tabs__active-bar{*/
-    /*width: 0!important;*/
-    /*transform: translateX(0rem)!important;*/
-  /*}*/
-  /*.three_tab .el-tabs__item.is-active:before {*/
-    /*content: "";*/
-    /*position: absolute;*/
-    /*bottom: 0;*/
-    /*left: .3rem;*/
-    /*right: .3rem;*/
-    /*height: 3px;*/
-    /*background: #00b553;*/
-    /*z-index: 2;*/
-  /*}*/
-  /*.three_tab .el-tabs__item {*/
-    /*padding: 0 .5rem;*/
-    /*height: .7rem;*/
-    /*box-sizing: border-box;*/
-    /*line-height: .5rem;*/
-    /*display: inline-block;*/
-    /*list-style: none;*/
-    /*font-size: .28rem;*/
-    /*color: #666;*/
-    /*position: relative;*/
-    /*width:33.33%;*/
-  /*}*/
-  /*.el-tabs__item.is-active {*/
-    /*color: #00b553;*/
-  /*}*/
-  /*.el-tabs__nav{*/
-    /*width:100%;*/
-    /*text-align: center;*/
-    /*margin-top: -.3rem;*/
-  /*}*/
-  /*.el-tabs__header {*/
-    /*border-bottom:0;*/
-    /*margin: 0;*/
-  /*}*/
-  /*.el-tabs__nav .el-tabs__item:first-child{*/
-    /*border-right:1px solid #ededed;*/
-  /*}*/
-  .course_cen h3{
+  .show_star2 span .el-rate__icon {
+    font-size: 0.29rem;
+    margin-right: .15rem;
+  }
+
+  .show_star2 .el-rate__text {
+    font-size: .26rem;
+  }
+</style>
+<style>
+  .course_cen h3 {
     max-width: 4.5rem;
   }
 </style>
+
 
 

@@ -29,13 +29,8 @@
                         <el-form-item>
                           <button type="button" class="line-btn ml20" v-on:click="queryEnrollment">查  询</button>
                         </el-form-item>
-                        <!--<el-form-item>-->
-
-
-                        <!--</el-form-item>-->
-
                     </el-form>
-                  <div  class="fr mb20">
+                  <div  class="fr mb20 dc_width">
                     <button type="button" class="inf_btn ml10" v-on:click="addEnrollment">添加报名</button>
                     <button type="button" v-on:click="exportEnrollment" :loading="showloading" class="inf_btn ml10 export_bor">导  出</button>
                     <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
@@ -44,7 +39,7 @@
                         <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
                       </div>
                       <div class="tc">
-                        <a v-bind:href="excelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                        <a v-bind:href="excelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下  载</a>
                         <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
                       </div>
                     </el-dialog>
@@ -222,11 +217,10 @@
   }
 </script>
 
-<style scoped="scope">
+<style scope="scoped">
     .el-icon-loading {
         color: #fff;
     }
-
     .export_bor {
         border: none;
         color: #fff;
@@ -241,22 +235,4 @@
         display: inline-block;
     }
 
-    .qx_btn {
-        min-width: 120px;
-        height: 38px;
-        text-align: center;
-        color: #fff;
-        background: #a4a4a4;
-        border-radius: 4px;
-        font-size: 16px;
-        letter-spacing: 2px;
-        cursor: pointer;
-        padding: 0 20px;
-    }
-
-    .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-        color: #fff;
-        background: #c3c3c3;
-        outline: none;
-    }
 </style>

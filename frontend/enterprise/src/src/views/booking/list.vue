@@ -13,12 +13,17 @@
             <el-form-item label="约课主题">
               <el-input v-model="form.name" placeholder="约课主题"></el-input>
             </el-form-item>
-            <el-form-item label="发起时间">
+            <el-form-item label="开始时间">
               <el-col>
-                <el-date-picker type="date" placeholder="发起时间" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" placeholder="开始时间" v-model="form.start" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
-            <el-form-item class="fr">
+            <el-form-item label="结束时间">
+              <el-col>
+                <el-date-picker type="date" placeholder="结束时间" v-model="form.end" style="width: 100%;"></el-date-picker>
+              </el-col>
+            </el-form-item>
+            <el-form-item class="fr dc_width">
               <button type="button" class="line-btn ml20" v-on:click="queryAppointment">查  询</button>
               <button type="button" v-on:click="exportAppointment" :loading="showloading" class="inf_btn ml20 export_bor">导  出</button>
               <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
@@ -27,7 +32,7 @@
                   <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
                 </div>
                 <div class="tc">
-                  <a v-bind:href="excelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                  <a v-bind:href="excelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下  载</a>
                   <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
                 </div>
               </el-dialog>
@@ -71,7 +76,9 @@
         showloading: false,
         form: {
           name: '',
-          date1: ''
+          // date1: ''
+          start: '',
+          end: ''
         },
         tableData: [],
         take: 10,
@@ -102,11 +109,24 @@
       exportAppointment: function () {
         console.log('start export appointment.')
         this.showloading = true
-        var date = ''
-        if (this.form.date1) {
-          date = moment(this.form.date1).format('YYYY-MM-DD')
+        // var date = ''
+        // if (this.form.date1) {
+        //   date = moment(this.form.date1).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.form.start) {
+          start = moment(this.form.start).format('YYYY-MM-DD')
         }
-        api.fetch(api.uri.exportAppointment, {title: this.form.name, sponsorDate: date}).then(data => {
+        if (this.form.end) {
+          end = moment(this.form.end).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.exportAppointment, {
+          title: this.form.name,
+          // sponsorDate: date
+          start: start,
+          end: end
+        }).then(data => {
           if (data.status === 1) {
             console.log(data.result)
             this.excelUrl = axios.defaults.imageServer + data.result
@@ -116,13 +136,28 @@
         })
       },
       queryAppointment: function () {
-        console.log(this.form.date1)
-        var date = ''
-        if (this.form.date1) {
-          date = moment(this.form.date1).format('YYYY-MM-DD')
+        // console.log(this.form.date1)
+        // var date = ''
+        // if (this.form.date1) {
+        //   date = moment(this.form.date1).format('YYYY-MM-DD')
+        // }
+        // console.log(this.currentPage)
+        var start = ''
+        var end = ''
+        if (this.form.start) {
+          start = moment(this.form.start).format('YYYY-MM-DD')
         }
-        console.log(this.currentPage)
-        api.fetch(api.uri.getBackAppointmentList, {title: this.form.name, sponsorDate: date, skip: (this.currentPage - 1) * this.take, take: this.take}).then(data => {
+        if (this.form.end) {
+          end = moment(this.form.end).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.getBackAppointmentList, {
+          title: this.form.name,
+          // sponsorDate: date,
+          skip: (this.currentPage - 1) * this.take,
+          take: this.take,
+          start: start,
+          end: end
+        }).then(data => {
           if (data.status === 1) {
             this.total = data.total
             this.tableData = data.result
@@ -178,22 +213,5 @@
     display: inline-block;
   }
 
-  .qx_btn {
-    min-width: 120px;
-    height: 38px;
-    text-align: center;
-    color: #fff;
-    background: #a4a4a4;
-    border-radius: 4px;
-    font-size: 16px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    padding: 0 20px;
-  }
 
-  .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-    color: #fff;
-    background: #c3c3c3;
-    outline: none;
-  }
 </style>

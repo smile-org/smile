@@ -32,11 +32,9 @@
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
-                        <el-form-item class="">
+                        <el-form-item class="fr dc_width">
                             <button type="button" @click="queryExamHistoryList" class="line-btn ml20">查  询</button>
-                            <button type="button" v-on:click="exportExamHistoryList" :loading="showloading"
-                                       class="inf_btn ml20 export_bor">导  出
-
+                            <button type="button" v-on:click="exportExamHistoryList" :loading="showloading" class="inf_btn ml20 export_bor">导  出
                             </button>
                             <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                                 <div class="tc">
@@ -45,12 +43,8 @@
                                 </div>
                                 <div class="tc">
                                     <a class="inf_btn download"
-                                       v-bind:href="excelUrl" v-on:click="dialogTableVisible = false"
-                                       style="display: inline-block;">下  载</a>
-                                    <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">
-                                        取 消
-
-                                    </button>
+                                       v-bind:href="excelUrl" v-on:click="dialogTableVisible = false" style="display: inline-block;">下  载</a>
+                                    <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消</button>
                                 </div>
                             </el-dialog>
                         </el-form-item>

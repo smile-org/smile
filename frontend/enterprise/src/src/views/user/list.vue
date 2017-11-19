@@ -32,7 +32,7 @@
                         <!--</el-form-item>-->
                         <!--</el-row>-->
                     </el-form>
-                  <div class="fr mb20">
+                  <div class="fr mb20 dc_width">
                     <button  class="line-btn vm mr15" @click="onSubmit">查  询</button>
                     <button v-on:click="routeByName('userCreate')" class="inf_btn mr15 vm">添加员工</button>
                     <button class="inf_btn mr15 vm dis_in_block" v-on:click="showUploadDialog ()">批量导入</button>
@@ -45,7 +45,7 @@
                         <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
                       </div>
                       <div class="tc">
-                        <a v-bind:href="exportExcelUrl" class="inf_btn download" style="display: inline-block;">下  载</a>
+                        <a v-bind:href="exportExcelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下  载</a>
                         <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取  消
                         </button>
                       </div>
@@ -58,8 +58,8 @@
                                  :before-upload="beforeContentUpload"
                                  :auto-upload="true"
                                  :headers="headers">
-                        <el-button slot="trigger" size="small" class="update_btn" type="primary">点击上传
-                        </el-button>
+                        <button slot="trigger" size="small" class="inf_btn2 vm" type="primary">点击上传
+                        </button>
                         <div slot="tip" class="el-upload__tip">支持类型xlsx，大小不超过100M</div>
                       </el-upload>
                     </el-dialog>
@@ -273,4 +273,3 @@
     }
   }
 </script>
-

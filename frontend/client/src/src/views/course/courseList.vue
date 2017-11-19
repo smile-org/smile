@@ -9,7 +9,7 @@
             <div class="course_cen show_star">
               <div class="hidden effect_right">
                 <h3 class="fl">{{item.title}}</h3>
-                <el-rate class="star_time" v-model="value5" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
+                <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="{value}"></el-rate>
                 <ul class="small_icon fr">
                   <li class="fl">
                     <span class="icon icon1"></span>
@@ -56,6 +56,14 @@ export default {
     }
   },
   methods: {
+    handleStar: function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var current = data[i]
+        if (current && current.star) {
+          current.star = current.star.toFixed(1)
+        }
+      }
+    },
     loadMore: function () {
       this.busy = true
       var id = this.$route.query.id
@@ -72,6 +80,7 @@ export default {
             this.busy = false
           }
           this.data = this.data.concat(data.result)
+          this.handleStar(this.data)
         } else {
           // TODO:统一处理弹框
         }

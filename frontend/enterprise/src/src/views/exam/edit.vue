@@ -9,7 +9,7 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">考试信息管理</span> > <span class="f_blue">添加考试</span></span>
         </nav>
         <div class="con_tab">
-          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
+          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
             <el-col :span="8">
               <el-form-item label="考试名称" prop="name">
                 <el-input v-model="form.name" placeholder="考试名称"></el-input>
@@ -52,9 +52,9 @@
                 </el-col>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="考试简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="考试简介"></el-input>
+            <el-col :span="24">
+              <el-form-item label="考试简介" prop="intro" class="input_textarea">
+                <el-input type="textarea" v-model="form.intro" placeholder="考试简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -96,6 +96,14 @@
                   <el-form-item label="课程名称">
                     <el-input v-model="formMaterial.name" placeholder="课程名称"></el-input>
                   </el-form-item>
+                  <el-form-item label="开始时间">
+                    <el-date-picker class="dateTab_width" type="date" placeholder="开始时间"
+                      v-model="formMaterial.start" style="width: 100%;"></el-date-picker>
+                  </el-form-item>
+                  <el-form-item label="结束时间">
+                      <el-date-picker class="dateTab_width" type="date" placeholder="结束时间"
+                      v-model="formMaterial.end" style="width: 100%;"></el-date-picker>
+                  </el-form-item>
                   <el-form-item class="wrapper">
                     <el-button class="update_btn" @click="searchMaterial">查询</el-button>
                   </el-form-item>
@@ -118,11 +126,11 @@
           <div class="mt20 mb30">
             <template>
               <el-table :data="materialSelected" border class="mt20" style="width: 100%">
-                <el-table-column prop="name" label="课程名称" width="">
+                <el-table-column prop="name" align="center" label="课程名称" width="">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作" align="center"  class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="deleteSelectedMaterial(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedMaterial(scope.row.id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -142,9 +150,24 @@
                   </el-form-item>
                 <!--</el-col>-->
                 <!--<el-col :span="12">-->
+                  <!--<el-form-item label="开始时间11">
+                    <el-col>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.start" class="date_input" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                  </el-form-item>
+                  <el-form-item label="结束时间">
+                    <el-col>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.end" class="date_input" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                  </el-form-item>-->
                   <el-form-item label="开始时间">
                     <el-col>
-                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.date" class="date_input" style="width: 100%;"></el-date-picker>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.start" class="date_input" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                  </el-form-item>
+                  <el-form-item label="结束时间">
+                    <el-col>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.end" class="date_input" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                 <!--</el-col>-->
@@ -158,7 +181,7 @@
                 <el-table-column property="id" align="center" width="100" type="selection" @selection-change="examListCheckedChange">
                 </el-table-column>
                 <!--<el-table-column property="num" label="序号" width=""></el-table-column>-->
-                <el-table-column property="name" label="试题名称" width=""></el-table-column>
+                <el-table-column property="name"  label="试题名称" width=""></el-table-column>
                 <el-table-column property="type" label="试题类型" width="">
                   <template scope="scope">
                     {{scope.row.type | formatExamType}}
@@ -177,13 +200,13 @@
             </el-dialog>
             <template>
               <el-table :data="examSelected" border class="mt20" style="width: 100%">
-                <el-table-column type="index" width="50">
+                <el-table-column type="index" align="center"  width="50">
                 </el-table-column>
-                <el-table-column prop="name" label="试题名称" width="">
+                <el-table-column prop="name" align="center"  label="试题名称" width="">
                 </el-table-column>
-                <el-table-column label="操作" class="tc" width="">
+                <el-table-column label="操作" align="center"  class="tc" width="">
                   <template scope="scope">
-                    <el-button @click="deleteSelectedExam(scope.row.id)" type="text" size="small">删除</el-button>
+                    <el-button @click="deleteSelectedExam(scope.row.id)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -191,6 +214,7 @@
           </div>
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " v-on:click="save">保  存</button>
+            <button type="button" class="inf_btn  ml20" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
           </div>
           <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
@@ -256,7 +280,8 @@
           minutes: 60,
           dateStart: '',
           dateEnd: '',
-          intro: ''
+          intro: '',
+          ispublished: ''
         },
         formRules: {
           name: [
@@ -286,7 +311,9 @@
         },
         // 复习资料
         formMaterial: {
-          name
+          name: '',
+          start: '',
+          end: ''
         },
         // 复习资料查询列表 ---- id, name
         materialList: [],
@@ -298,7 +325,9 @@
         // 试题
         formExam: {
           name: '',
-          date: ''
+          // date: ''
+          start: '',
+          end: ''
         },
 
         // 试题查询列表 --- num, name, type, date
@@ -361,7 +390,8 @@
             minutes: currentExam.time_limit,
             dateStart: moment(currentExam.start_date).format('YYYY-MM-DD'),
             dateEnd: moment(currentExam.end_date).format('YYYY-MM-DD'),
-            intro: currentExam.intro
+            intro: currentExam.intro,
+            ispublished: currentExam.ispublished
           }
           this.iconSrc = currentExam.icon
           this.bannerSrc = currentExam.pic
@@ -390,6 +420,27 @@
       })
     },
     methods: {
+      publish () {
+        console.log(this.form.ispublished)
+      // 隐藏传0， 发布传1
+        var _type = 0
+        if (this.form.ispublished === true) {
+          _type = 0
+        } else {
+          _type = 1
+        }
+        api.fetch(api.uri.publishExam, {
+          examid: this.id,
+          publish: _type
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            router.push({name: 'examList'})
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
       materialListCheckedChange (val) {
         this.materialListChecked = val
       },
@@ -409,11 +460,21 @@
         }
       },
       searchMaterial: function () {
+        var start = ''
+        var end = ''
+        if (this.formMaterial.start) {
+          start = moment(this.formMaterial.start).format('YYYY-MM-DD')
+        }
+        if (this.formMaterial.end) {
+          end = moment(this.formMaterial.end).format('YYYY-MM-DD')
+        }
         api.fetch(api.uri.searchCourse, {
           title: this.formMaterial.name,
           priName: '',
-          typeid: 0,
-          pubdate: '',
+          categoryid: 0,
+          // pubdate: '',
+          start: start,
+          end: end,
           take: this.materialTake,
           skip: this.materialTake * (this.materialCurrentPage - 1)
         }).then(data => {
@@ -462,12 +523,22 @@
         })
       },
       searchExam: function () {
+        var start = ''
+        var end = ''
+        if (this.formExam.start) {
+          start = moment(this.formExam.start).format('YYYY-MM-DD')
+        }
+        if (this.formExam.end) {
+          end = moment(this.formExam.end).format('YYYY-MM-DD')
+        }
         api.fetch(api.uri.getQuestionList, {
           title: this.formExam.name,
           typeid: 0,
-          createdat: this.formExam.date ? moment(this.formExam.date).format('YYYY-MM-DD') : '',
+          // createdat: this.formExam.date ? moment(this.formExam.date).format('YYYY-MM-DD') : '',
           take: this.examTake,
-          skip: this.examTake * (this.examCurrentPage - 1)
+          skip: this.examTake * (this.examCurrentPage - 1),
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             var result = data.result

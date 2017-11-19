@@ -44,6 +44,8 @@
                   <el-table-column align="center" prop="itemTitle" label="需求" width="">
                   </el-table-column>
                   <el-table-column  align="center" prop="sponsorName" label="角色" width=""></el-table-column>
+                  <el-table-column align="center" prop="followerCount" label="人数" width="">
+                  </el-table-column>
                   <el-table-column   align="center" prop="sponsorDate" label="时间" width="">
                     <template scope="scope">
                       {{scope.row.sponsorDate | formatDate}}

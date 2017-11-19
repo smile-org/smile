@@ -156,7 +156,8 @@ export default {
     getMyCourseListFinished: '/getMyCourseListFinished',
     // 获取我的任务 -   ---- 只有 一个 api, 返回为开始和进行中的
     getMyTaskListInProgress: '/getMyCourseListInTask',
-
+   // 取消课程
+    cancelCourse: '/deleteEnrollmentMapping',
     // 获取我的任务 - 未开始
     // getMyTaskListNotStart: '',
 

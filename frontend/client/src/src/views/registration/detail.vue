@@ -36,7 +36,7 @@
       <el-tabs class="three_tab" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="课程信息" name="first">
           <ul class="list_border course_con mb3hafe">
-            <li class="">
+            <li class="ellipsis" style="width: 100%;">
               <span>讲师 :</span> {{data.teacher}}
             </li>
             <li>
@@ -50,6 +50,11 @@
               <em class="surplus_num red_full" style="bottom: .2rem;" v-if="data.left_count === 0">已  满</em>
               <em class="surplus_num s_num" style="bottom: .2rem;"
                   v-if="data.left_count > 0">剩 余 {{data.left_count}} 人</em>
+
+            <li class="hidden ">
+              <span class="fl">课程评分 :</span>
+              <el-rate class="fl ml1 show_star2" v-model="data.star" disabled show-text text-color="#ff9900"
+                       text-template="{value}"></el-rate>
             </li>
             <li>
               <span>课程简介 :</span>
@@ -62,8 +67,8 @@
         <el-tab-pane label="课程目录" name="second">
           <ul class="list_border course_con mb3hafe">
             <li v-for="item in courseContent" :key="item.content_id">
-              <p>{{item.content}}</p>
-              <p>{{item.sequnce_title}} </p>
+              <p>{{item.sequnce_num}}. {{item.content}}</p>
+              <p>{{item.sequnce_title | formatDateRange}}</p>
             </li>
           </ul>
         </el-tab-pane>
@@ -74,7 +79,7 @@
               <el-row class="font22">
                 <el-col :span="4"><img class="person_header1" :src="item.user_idAvatar | formatImage"></el-col>
                 <el-col :span="6" class="vm">
-                  <p>{{item.user_idName}}</p>
+                  <p style="margin-top: 0rem;">{{item.user_idName}}</p>
                   <el-rate v-model="item.star" disabled text-color="#ff9900" text-template="{value}">
                   </el-rate>
                 </el-col>
@@ -122,6 +127,7 @@
         if (data.status === 1) {
           this.enrollmentId = data.result.enrollment_id
           this.data = data.result
+          this.handleStar(this.data)
           if (tab === 'comments') {
             this.activeName = 'third'
             this.handleClick({name: 'third'})
@@ -140,9 +146,23 @@
       formatDate (time) {
         var date = new Date(time)
         return formatDate(date, 'yyyy-MM-dd')
+      },
+      formatDateRange (dateRange) {
+        var dr = dateRange.replace(/\d{4}-/g, '')
+        var arr = dr.match(/\d{2}-\d{2} \d{2}:\d{2}/g)
+        return arr[0] + ' - ' + arr[1]
       }
     },
     methods: {
+      handleStar: function (data) {
+        data.star = data.star.toFixed(1)
+//        for (var i = 0; i < data.length; i++) {
+//          var current = data[i]
+//          if (current && current.star) {
+//            current.star = current.star.toFixed(1)
+//          }
+//        }
+      },
       handleClick: function (tab, event) {
         if (tab.name === 'second') {
           api.fetch(api.uri.getEnrollCourseCategory, {periodid: this.id}).then(data => {
@@ -195,7 +215,13 @@
     }
   }
 </script>
-
 <style>
+  .show_star2 span .el-rate__icon {
+    font-size: 0.29rem;
+    margin-right: .15rem;
+  }
 
+  .show_star2 .el-rate__text {
+    font-size: .26rem;
+  }
 </style>

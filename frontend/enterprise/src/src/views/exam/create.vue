@@ -9,7 +9,7 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">考试信息管理</span> > <span class="f_blue">添加考试</span></span>
         </nav>
         <div class="con_tab">
-          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden" label-width="80px">
+          <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
             <el-col :span="8">
               <el-form-item label="考试名称" prop="name">
                 <el-input v-model="form.name" placeholder="考试名称"></el-input>
@@ -53,9 +53,9 @@
                 </el-col>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="考试简介" prop="intro">
-                <el-input v-model="form.intro" placeholder="考试简介"></el-input>
+            <el-col :span="24">
+              <el-form-item label="考试简介" prop="intro"  class="input_textarea">
+                <el-input  type="textarea" v-model="form.intro" placeholder="考试简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
           </el-form>
@@ -96,6 +96,14 @@
                 <el-form :inline="true" :model="formMaterial" class="demo-form-inline mt20">
                   <el-form-item label="课程名称">
                     <el-input v-model="formMaterial.name"  placeholder="课程名称"></el-input>
+                  </el-form-item>
+                  <el-form-item label="开始时间">
+                    <el-date-picker class="dateTab_width" type="date" placeholder="开始时间"
+                      v-model="formMaterial.start" style="width: 100%;"></el-date-picker>
+                  </el-form-item>
+                  <el-form-item label="结束时间">
+                      <el-date-picker class="dateTab_width" type="date" placeholder="结束时间"
+                      v-model="formMaterial.end" style="width: 100%;"></el-date-picker>
                   </el-form-item>
                   <el-form-item class="wrapper">
                     <el-button class="update_btn" @click="searchMaterial">查询</el-button>
@@ -145,7 +153,12 @@
                 <!--<el-col :span="12">-->
                   <el-form-item label="开始时间">
                     <el-col>
-                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.date" class="date_input" style="width: 100%;"></el-date-picker>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.start" class="date_input" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                  </el-form-item>
+                  <el-form-item label="结束时间">
+                    <el-col>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="formExam.end" class="date_input" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                 <!--</el-col>-->
@@ -287,7 +300,9 @@
         },
         // 复习资料
         formMaterial: {
-          name
+          name: '',
+          start: '',
+          end: ''
         },
         // 复习资料查询列表 ---- id, name
         materialList: [],
@@ -299,7 +314,9 @@
         // 试题
         formExam: {
           name: '',
-          date: ''
+          // date: ''
+          start: '',
+          end: ''
         },
 
         // 试题查询列表 --- num, name, type, date
@@ -368,11 +385,21 @@
         }
       },
       searchMaterial: function () {
+        var start = ''
+        var end = ''
+        if (this.formMaterial.start) {
+          start = moment(this.formMaterial.start).format('YYYY-MM-DD')
+        }
+        if (this.formMaterial.end) {
+          end = moment(this.formMaterial.end).format('YYYY-MM-DD')
+        }
         api.fetch(api.uri.searchCourse, {
           title: this.formMaterial.name,
           priName: '',
-          typeid: 0,
-          pubdate: '',
+          categoryid: 0,
+          // pubdate: '',
+          start: start,
+          end: end,
           take: this.materialTake,
           skip: this.materialTake * (this.materialCurrentPage - 1)
         }).then(data => {
@@ -421,12 +448,22 @@
         })
       },
       searchExam: function () {
+        var start = ''
+        var end = ''
+        if (this.formExam.start) {
+          start = moment(this.formExam.start).format('YYYY-MM-DD')
+        }
+        if (this.formExam.end) {
+          end = moment(this.formExam.end).format('YYYY-MM-DD')
+        }
         api.fetch(api.uri.getQuestionList, {
           title: this.formExam.name,
           typeid: 0,
-          createdat: this.formExam.date ? moment(this.formExam.date).format('YYYY-MM-DD') : '',
+          // createdat: this.formExam.date ? moment(this.formExam.date).format('YYYY-MM-DD') : '',
           take: this.examTake,
-          skip: this.examTake * (this.examCurrentPage - 1)
+          skip: this.examTake * (this.examCurrentPage - 1),
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             var result = data.result

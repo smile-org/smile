@@ -19,14 +19,14 @@
         </ul>
         <div class="b_search_input">
           <img class="s_seach" src="../../assets/img/seach_icon.png" />
-          <img class="s_delate" src="../../assets/img/delate.png" v-on:click="goBack"  style="top:.06rem"/>
+          <img class="s_delate" src="../../assets/img/delate.png" v-on:click="goBack"  style="top:.06rem;right: .2rem;"/>
           <input placeholder="选择资源类型搜索更精准" v-model.trim="search" @focus="goBack">
-          <button type="text" class="search_font" v-on:click="search">搜索</button>
+          <!--<button type="text" class="search_font" v-on:click="search">搜索</button>-->
         </div>
       </div>
       <ul class="list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.id">
-          <a  v-if="type===4" v-on:click="goDetail(item.id)">
+          <a  v-if="type===4" v-on:click="goDetail(item.id)" style="width: 100%;">
           <!--<router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">-->
             <div class="p3_line wid100 hidden">
               <img class="person_header fl" :src="item.icon | formatImage">
@@ -41,32 +41,48 @@
                     <!--<span class="icon icon1 vm"></span>-->
                     <!--<span class="vm">{{item.followerCount}}</span>-->
                   <!--</div>-->
+                  <div class="hidden wid100">
+                    <p class="fl">主讲：{{item.person}}</p>
+                    <!--<p class="fr">{{item.sponsorDate | formatDate}}</p>-->
+                    <p class="fr">
+                      {{item.start | formatDate}}<span v-if="item.end">&nbsp;至&nbsp;{{item.end | formatDate}}</span>
+                    </p>
+                  </div>
+                  <div class="home_person">
+                    <span class="icon icon1 vm"></span>
+                    <span class="vm">{{item.count}}</span>
+                  </div>
+                  <!--<ul class="small_icon fr font22">-->
+                    <!--{{item.person}}{{item.count}}-->
+                  <!--</ul>-->
                 </div>
+
               </div>
             </div>
           </a>
-          <a  v-else v-on:click="goDetail(item.id)">
+          <a  v-else v-on:click="goDetail(item.id)" style="width: 100%;">
             <!--<router-link v-bind:to="{name: 'getBooking', query: {id: item.id}}">-->
             <img  :src="item.icon | formatImage" class="fl img_bg">
             <!--<img v-else :src="item.icon | formatImage" class="fl img_bg">-->
             <div class="course_cen">
-              <div class="hidden">
-                <h3 class="fl">{{item.title}}</h3>
-                <!--<ul class="small_icon fr">
+              <div class="hidden person_search">
+                <h3 class="">{{item.title}}</h3>
+                <p class="person_search">主讲：{{item.person}} </p>
+                <p class="exam_explains">
+                  {{item.intro}}
+                </p>
+                <ul class="small_icon fr font22" style="top: .3rem">
                   <li class="fl">
                     <span class="icon icon1"></span>
-                    <span class="green00b">80</span>
+                    <span class="green00b">{{item.count}}</span>
                   </li>
-                  <li class="fl">
-                    <span class="icon icon2"></span>
-                    <span class="redff7">80</span>
-                  </li>
-                </ul>-->
+                </ul>
               </div>
             </div>
-            <p class="exam_explain">
-              {{item.intro}}
-            </p>
+
+            <div class="small_icon exam_explain " style="color: #999;">
+              {{item.start | formatDate}}<span v-if="item.end">&nbsp;至&nbsp;{{item.end | formatDate}}</span>
+            </div>
           </a>
           <!--</router-link>-->
         </li>
@@ -94,6 +110,7 @@
 import commonHeader from '../../components/CommonHeader'
 import api from '../../services/api'
 import axios from 'axios'
+import { formatDate } from '../../common/date'
 import router from '../../router'
 export default {
   data: function () {
@@ -111,12 +128,16 @@ export default {
     commonHeader
   },
   created () {
-    this.type = this.$route.query.type
+    this.type = parseInt(this.$route.query.type)
     this.search = this.$route.query.search
   },
   filters: {
     formatImage: function (uri) {
       return axios.defaults.imageServer + uri
+    },
+    formatDate (time) {
+      var date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
     }
   },
   methods: {
@@ -148,8 +169,9 @@ export default {
       router.go(-1)
     },
     selectModule: function (type) {
+      sessionStorage.removeItem('searchType')
       this.type = type
-      router.push({name: 'search'}, {query: { type: type }})
+      router.push({name: 'search', query: {type: this.type}})
     },
     goBooking: function () {
       router.push({name: 'newBooking'})
@@ -159,7 +181,7 @@ export default {
     },
     goDetail: function (itemId) {
       if (this.type === 1) {
-        router.push({path: '/getCourses', query: {id: itemId}})
+        router.push({path: '/getCourseDetails', query: {id: itemId}})
       } else if (this.type === 2) {
         router.push({name: 'getExamInfo', query: {id: itemId}})
       } else if (this.type === 3) {
@@ -171,3 +193,23 @@ export default {
   }
 }
 </script>
+<style>
+  .person_search p{
+    font-size: .22rem;
+    color: #999;
+    /*margin-top: .1rem;*/
+  }
+  .person_search .exam_explains{
+    font-size: .22rem;
+    color: #999;
+    margin-top: .01rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    /*max-width: 70%;*/
+    min-height:.4rem;
+    margin-left: 0rem;
+    padding-right: .03rem;
+  }
+</style>

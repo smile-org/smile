@@ -367,8 +367,22 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .red_font:hover, .red_font:active {
   color: #eb894a !important;
 }
-
+/*.el-button--primary {*/
+  /*color: #fff;*/
+  /*background-color: #55b761 !important;*/
+  /*border-color: #55b761 !important;*/
+/*}*/
+/*.el-button--primary.is-active, .el-button--primary:active{*/
+  /*background: #55b761 !important;*/
+  /*color: #fff;*/
+/*}*/
+/**/
 .tr {
   text-align: right;
 }
-
+.tl {
+  text-align: left;
+}
+.input_textarea .el-textarea__inner:active,.input_textarea .el-textarea__inner:focus{
+  border-color: #55b761
+}

@@ -19,19 +19,19 @@
               @crop-upload-success="cropUploadSuccess"
               @crop-upload-fail="cropUploadFail"
               :url="uploadUrl"
-              :width="750"
+              :width="80"
               :headers="headers"
-              :height="240"
+              :height="80"
               :value.sync="show"
               :no-circle=true
               img-format="png">
             </my-upload>
           </div>
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px"  class="course_left demo-ruleForm">
             <el-form-item label="课程类别" prop="category_name">
-              <el-input v-model="ruleForm.category_name"></el-input>
+              <el-input v-model="ruleForm.category_name" style="width: 50%;"></el-input>
             </el-form-item>
-            <div class="tc">
+            <div class="" style="margin-left: 100px;margin-top: 40px;">
               <button type="button" class="inf_btn " v-on:click="submitForm('ruleForm')">保  存</button>
             </div>
           </el-form>
@@ -53,6 +53,7 @@
     data: function () {
       return {
         ruleForm: {},
+        labelPosition: 'left',
         rules: {
           category_name: [
             { required: true, message: '请输入课程分类名称', trigger: 'blur' }
@@ -192,5 +193,12 @@
   }
   .el-input__inner:focus{
     border-color: #00b553;
+  }
+
+</style>
+<style>
+  .course_left  .el-form-item__label{
+    text-align: left;
+    margin-left: -5px;
   }
 </style>

@@ -417,6 +417,10 @@ section .form_list input:hover{
   background: url('../img/icon_img.png')no-repeat center center;
   background-size: 100% 100%;
 }
+.media_img5{
+  background: url('../img/icon_pdf.png')no-repeat center center;
+  background-size: 100% 100%;
+}
 /*此处为学课内容图片引用end*/
 /*此处为login 警告样式*/
 .form_warning{
@@ -635,6 +639,7 @@ section .form_list input:hover{
   max-width:.9rem;
   max-height: .9rem;
   border-radius: .9rem;
+  overflow: hidden;
 }
 .person_header1{
   width: .7rem;
@@ -642,12 +647,14 @@ section .form_list input:hover{
   max-width: .7rem;
   max-height: .7rem;
   border-radius: .7rem;
+  overflow: hidden;
 }
 .person_header2{
   width: 1.9rem;
   height: 1.44rem;
   max-width: 1.9rem;
   max-height: 1.44rem;
+  overflow: hidden;
 }
 .bm_time{
   position: absolute;
@@ -1222,9 +1229,11 @@ footer .exam_b .btn span:nth-child(2){
 }
 .b_header li p{
   margin:.1rem 0 0;
+  /*font-size: .24rem;*/
+  height: .35rem;
 }
 .b_header li span{
-  font-size: .24rem;
+  font-size: .22rem;
   color: #666;
 }
 .add_list hr{
@@ -1479,7 +1488,7 @@ footer .exam_b .btn span:nth-child(2){
   font-size:.24rem;
   color: #999;
   float: right;
-  padding-right:.5rem;
+  padding-right:.3rem;
   padding-top:.35rem;
   position: relative;
 }
@@ -1659,14 +1668,14 @@ footer .exam_b .btn span:nth-child(2){
   font-size: .16rem;
   margin-right: .006rem;
 }
-
+/*.show_star2 .three_tab .el-rate__icon {*/
+  /*font-size: 0.29rem;*/
+  /*margin-right: .15rem;*/
+/*}*/
 .three_tab .el-tabs__active-bar {
   width: 0!important;
   transform: translateX(0rem)!important;
 }
-
-
-
 .three_tab .el-tabs__item.is-active:before {
   content: "";
   position: absolute;
@@ -1677,7 +1686,6 @@ footer .exam_b .btn span:nth-child(2){
   background: #00b553;
   z-index: 2;
 }
-
 .three_tab .el-tabs__item {
   padding: 0 .5rem;
   height: .7rem;

@@ -22,7 +22,13 @@
                         </el-form-item>
                         <el-form-item label="开始时间">
                             <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.createdat"
+                                <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.start"
+                                                style="width: 100%;"></el-date-picker>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item label="结束时间">
+                            <el-col>
+                                <el-date-picker type="date" placeholder="选择日期" v-model="formInLine.end"
                                                 style="width: 100%;"></el-date-picker>
                             </el-col>
                         </el-form-item>
@@ -31,12 +37,12 @@
                         </el-form-item>
                         <!--</el-row>-->
                     </el-form>
-                  <div class="tr mb20">
+                  <div class="tr mb20 dc_width">
                     <button type="button" v-on:click="addQuestion()" class="inf_btn mr15">添加试题</button>
                     <button type="button" class="inf_btn mr15" v-on:click="showUploadDialog()">试题导入</button>
                     <a v-bind:href="templateExcelUrl" class="inf_btn mr15 vm dis_in_block">下载导入模板</a>
                     <button type="button" v-on:click="exportQuestionList()" :loading="showloading" class="inf_btn vm export_bor">导  出</button>
-                    <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                    <el-dialog class="tl" title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
                       <div class="tc">
                         <!--<p class="exal">电子表格文件生成成功</p>-->
                         <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;"/>
@@ -48,7 +54,7 @@
                         </button>
                       </div>
                     </el-dialog>
-                    <el-dialog title="试题导入" :visible.sync="dialogUploadVisible">
+                    <el-dialog title="试题导入" class="tl" :visible.sync="dialogUploadVisible">
                       <el-upload class="upload-demo"
                                  ref="uploadContent"
                                  :action="uploadContentAction"
@@ -56,7 +62,7 @@
                                  :before-upload="beforeContentUpload"
                                  :auto-upload="true"
                                  :headers="headers">
-                        <el-button slot="trigger"  size="small" class="update_btn" type="primary">点击上传</el-button>
+                        <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
                         <div slot="tip" class="el-upload__tip">支持类型xlsx，大小不超过100M</div>
                       </el-upload>
                     </el-dialog>
@@ -113,7 +119,9 @@
         total: 0,
         formInLine: {
           title: '',
-          createdat: ''
+          // createdat: ''
+          start: '',
+          end: ''
         },
         options: [{
           value: '1',
@@ -153,21 +161,31 @@
         router.push({name: 'examQuestionCreate'})
       },
       queryQuestionList: function () {
-        console.log(this.formInLine.title, this.formInLine.createdat, this.value)
+        // console.log(this.formInLine.title, this.formInLine.createdat, this.value)
         var typeId = 0
         if (this.value !== '') {
           typeId = parseInt(this.value)
         }
-        var date = ''
-        if (this.formInLine.createdat) {
-          date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // var date = ''
+        // if (this.formInLine.createdat) {
+        //   date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.formInLine.start) {
+          start = moment(this.formInLine.start).format('YYYY-MM-DD')
+        }
+        if (this.formInLine.end) {
+          end = moment(this.formInLine.end).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.getQuestionList, {
           title: this.formInLine.title,
           typeid: typeId,
-          createdat: date,
+          // createdat: date,
           skip: (this.currentPage - 1) * this.take,
-          take: this.take
+          take: this.take,
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             this.tableData = data.result
@@ -185,14 +203,24 @@
         if (this.value !== '') {
           typeId = parseInt(this.value)
         }
-        var date = ''
-        if (this.formInLine.createdat) {
-          date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // var date = ''
+        // if (this.formInLine.createdat) {
+        //   date = moment(this.formInLine.createdat).format('YYYY-MM-DD')
+        // }
+        var start = ''
+        var end = ''
+        if (this.formInLine.start) {
+          start = moment(this.formInLine.start).format('YYYY-MM-DD')
+        }
+        if (this.formInLine.end) {
+          end = moment(this.formInLine.end).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.exportQuestionList, {
           title: this.formInLine.title,
           typeid: typeId,
-          createdat: date
+          // createdat: date
+          start: start,
+          end: end
         }).then(data => {
           if (data.status === 1) {
             console.log(data.result)
@@ -262,25 +290,6 @@
     .download {
         line-height: 38px;
         display: inline-block;
-    }
-
-    .qx_btn {
-        min-width: 120px;
-        height: 38px;
-        text-align: center;
-        color: #fff;
-        background: #a4a4a4;
-        border-radius: 4px;
-        font-size: 16px;
-        letter-spacing: 2px;
-        cursor: pointer;
-        padding: 0 20px;
-    }
-
-    .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-        color: #fff;
-        background: #c3c3c3;
-        outline: none;
     }
 
     /*导出样式end*/

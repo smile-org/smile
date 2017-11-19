@@ -10,7 +10,7 @@
                   class="f_blue">编辑报名</span></span>
         </nav>
         <div class="con_tab">
-          <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden"
+          <el-form ref="form" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width"
                    label-width="80px">
             <el-row>
               <el-col :span="8">
@@ -49,16 +49,16 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="课程简介">
-                  <el-input v-model="form.intro" placeholder="课程简介"></el-input>
-                  <div class="el-form-item__error">{{introErrMsg}}</div>
+                <el-form-item label="地址">
+                  <el-input v-model="form.location" placeholder="地址"></el-input>
+                  <div class="el-form-item__error">{{locationErrMsg}}</div>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-col :span="8">
-              <el-form-item label="地址">
-                <el-input v-model="form.location" placeholder="地址"></el-input>
-                <div class="el-form-item__error">{{locationErrMsg}}</div>
+            <el-col :span="24">
+              <el-form-item label="课程简介" class="input_textarea">
+                <el-input type="textarea" v-model="form.intro" placeholder="课程简介" style="min-width: 545px;"></el-input>
+                <div class="el-form-item__error">{{introErrMsg}}</div>
               </el-form-item>
             </el-col>
 
@@ -92,9 +92,10 @@
           </table>
           <hr class="hr_line">
           <div class="mt30 ">
-            <p class="pos_re">培训内容   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
+            <p class="pos_re">培训内容 <a href="javascript:void(0)" class="green_font" v-on:click="openDialog()" >添加培训内容</a>   <span class="error_font  ml20" style="">{{contentErrMsg}}</span></p>
             <template class="hidden">
-              <el-form :inline="true" :model="formInline" class="demo-form-inline mt20">
+              <el-dialog title="添加/编辑培训内容" :visible.sync="dialogFormVisible">
+              <el-form :inline="true" :model="formInline" class="demo-form-inline  hidden" label-width="80px">
                 <!--<el-col :span="12">-->
                 <el-col :span="12">
                   <el-form-item class="mb10" label="序号">
@@ -104,28 +105,44 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label="起止时间">
-                    <el-date-picker v-model="formInline.dateRange" type="datetimerange" placeholder="选择时间范围"></el-date-picker>
-                    <div class="el-form-item__error">{{dateRangeErrMsg}}</div>
+                  <el-form-item label="讲师">
+                    <el-input v-model="formInline.teacher" placeholder="讲师" style="width: 100%;"></el-input>
+                    <div class="el-form-item__error">{{teacherInContentErrMsg}}</div>
                   </el-form-item>
                 </el-col>
+                <el-col :span="12">
+                  <el-form-item label="开始时间">
+                    <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.startDate" style="width: 100%;"></el-date-picker>
+                    <div class="el-form-item__error">{{startDateInContentErrMsg}}</div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="结束时间">
+                    <el-date-picker class="dateTab_width" type="datetime" placeholder="选择日期" v-model="formInline.endDate" style="width: 100%;"></el-date-picker>
+                    <div class="el-form-item__error">{{endDateInContentErrMsg}}</div>
+                  </el-form-item>
+                </el-col>
+
                 <el-col :span="24">
                   <el-form-item label="主题">
                     <el-input v-model="formInline.topic" placeholder="主题"
-                              style="width:400px;"></el-input>
-                    <el-button :plain="true" type="success" class="ml20" size="primary" v-on:click="addContent()">添加主题</el-button>
+                              style="width:365px;"></el-input>
+                    <el-button :plain="true" type="success" class="ml20" style="margin-left: 20" size="primary" v-on:click="addContent()">添加主题</el-button>
                     <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
                   </el-form-item>
                 </el-col>
               </el-form>
+              </el-dialog>
             </template>
             <template>
               <el-table :data="tableData" class="mt20" border style="width: 100%">
                 <el-table-column prop="sequnce_num" align="center" label="序号" width="100"></el-table-column>
                 <el-table-column prop="content"  align="center" label="主题" width=""></el-table-column>
                 <el-table-column prop="sequnce_title"  align="center" label="起止时间"></el-table-column>
+                <el-table-column prop="teacher" align="center" label="讲师"></el-table-column>
                 <el-table-column prop="" label="操作"  align="center" width="100">
                   <template scope="scope">
+                    <el-button @click="editContent(scope.row.sequnce_num)"   type="text" size="small">编辑</el-button>
                     <el-button @click="deleteContent(scope.row.sequnce_num)" class="red_font" type="text" size="small">删除</el-button>
                   </template>
                 </el-table-column>
@@ -133,9 +150,8 @@
             </template>
           </div>
           <div class="tc btn_margin">
-            <el-button type="button" v-on:click="add()" :loading="showloading"
-                       class="inf_btn ml20 export_bor">保  存
-            </el-button>
+            <button type="button" v-on:click="add()" :loading="showloading" class="inf_btn  mb20">保  存</button>
+            <button type="button" class="inf_btn  ml20" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
           </div>
           <my-upload
             @input="closeIcon"
@@ -190,7 +206,10 @@
         formInline: {
           num: '',
           dateRange: '',
-          topic: ''
+          topic: '',
+          startDate: '',
+          endDate: '',
+          teacher: ''
         },
         form: {
           title: '',
@@ -199,7 +218,8 @@
           startDate: '',
           endDate: '',
           intro: '',
-          location: ''
+          location: '',
+          ispublished: ''
         },
         tableData: [],
         iconSrc: '',
@@ -227,7 +247,12 @@
         uploadUrl: '',
         params: {
           pictype: ''
-        }
+        },
+
+        startDateInContentErrMsg: '',
+        endDateInContentErrMsg: '',
+        teacherInContentErrMsg: '',
+        dialogFormVisible: false
       }
     },
     components: {
@@ -253,10 +278,12 @@
       api.fetch(api.uri.getEnrollmentEditPageInfo, {
         periodid: this.period_id
       }).then(data => {
+        console.log(data)
         if (data.status === 1) {
           console.log(data)
           this.iconSrc = data.result.EnrollmentToBeEidt.icon
           this.bannerSrc = data.result.EnrollmentToBeEidt.pic
+          this.form.ispublished = data.result.EnrollmentPeriodToBeEdit.ispublished
           this.form.title = data.result.EnrollmentToBeEidt.title
           this.form.intro = data.result.EnrollmentToBeEidt.intro
           this.form.teacher = data.result.EnrollmentPeriodToBeEdit.teacher
@@ -270,34 +297,76 @@
       })
     },
     methods: {
+      publish () {
+        console.log(this.form.ispublished)
+      // 隐藏传0， 发布传1
+        var _type = 0
+        if (this.form.ispublished === true) {
+          _type = 0
+        } else {
+          _type = 1
+        }
+        api.fetch(api.uri.publishEnrollment, {
+          periodid: this.period_id,
+          publish: _type
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            router.push({name: 'registrationTrainlist'})
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      openDialog: function () {
+        this.numErrMsg = ''
+        this.topicErrMsg = ''
+        this.startDateInContentErrMsg = ''
+        this.endDateInContentErrMsg = ''
+        this.teacherInContentErrMsg = ''
+        this.formInline.num = 1
+        this.formInline.topic = ''
+        this.formInline.teacher = ''
+        this.formInline.startDate = ''
+        this.formInline.endDate = ''
+        this.dialogFormVisible = true
+      },
       addContent: function () {
         this.numErrMsg = ''
         this.topicErrMsg = ''
-        this.dateRangeErrMsg = ''
+        this.startDateInContentErrMsg = ''
+        this.endDateInContentErrMsg = ''
         if (!this.formInline.num) {
           this.numErrMsg = '序号不能为空'
         }
-        for (var i in this.tableData) {
-          if (this.tableData[i].sequnce_num === this.formInline.num) {
-            this.numErrMsg = '序号不能重复'
-          }
-        }
+//        for (var i in this.tableData) {
+//          if (this.tableData[i].sequnce_num === this.formInline.num) {
+//            this.numErrMsg = '序号不能重复'
+//          }
+//        }
         if (!this.formInline.topic) {
           this.topicErrMsg = '主题不能为空'
         }
-        if (!this.formInline.dateRange[0]) {
-          this.dateRangeErrMsg = '日期范围不能为空'
+        if (!this.formInline.startDate) {
+          this.startDateInContentErrMsg = '开始日期不能为空'
         }
-        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.dateRangeErrMsg !== '') {
+        if (!this.formInline.endDate) {
+          this.endDateInContentErrMsg = '结束日期不能为空'
+        }
+        if (!this.formInline.teacher) {
+          this.teacherInContentErrMsg = '讲师不能为空'
+        }
+        if (this.numErrMsg !== '' || this.topicErrMsg !== '' || this.startDateInContentErrMsg !== '' || this.endDateInContentErrMsg !== '' || this.teacherInContentErrMsg !== '') {
           return
         }
+        this.deleteContent(this.formInline.num)
         var date1 = ''
-        if (this.formInline.dateRange[0]) {
-          date1 = moment(this.formInline.dateRange[0]).format('YYYY-MM-DD HH:mm:ss')
+        if (this.formInline.startDate) {
+          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD HH:mm:ss')
         }
         var date2 = ''
-        if (this.formInline.dateRange[1]) {
-          date2 = moment(this.formInline.dateRange[1]).format('YYYY-MM-DD HH:mm:ss')
+        if (this.formInline.endDate) {
+          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD HH:mm:ss')
         }
 
         var dateRangeString = date1 + ' - ' + date2
@@ -305,13 +374,30 @@
           content_id: 0,
           sequnce_num: parseInt(this.formInline.num),
           sequnce_title: dateRangeString,
-          content: this.formInline.topic
+          content: this.formInline.topic,
+          teacher: this.formInline.teacher
         }
         this.tableData.push(content)
         this.formInline.num = ''
         this.formInline.topic = ''
         this.formInline.dateRange = ''
+        this.formInline.teacher = ''
+        this.formInline.startDate = ''
+        this.formInline.endDate = ''
+        this.dialogFormVisible = false
         console.log(this.tableData)
+      },
+      editContent: function (num) {
+        for (var i in this.tableData) {
+          if (this.tableData[i].sequnce_num === num) {
+            this.dialogFormVisible = true
+            this.formInline.num = this.tableData[i].sequnce_num
+            this.formInline.teacher = this.tableData[i].teacher
+            this.formInline.topic = this.tableData[i].content
+            this.formInline.startDate = this.tableData[i].sequnce_title.split(' - ')[0]
+            this.formInline.endDate = this.tableData[i].sequnce_title.split(' - ')[1]
+          }
+        }
       },
       deleteContent: function (num) {
         this.tableData = _.remove(this.tableData, function (_item) {
@@ -370,6 +456,7 @@
           location: this.form.location,
           contentList: this.tableData
         }).then(data => {
+          console.log(data)
           if (data.status === 1) {
             router.push({name: 'registrationTrainlist'})
 //            this.form.title = ''
@@ -436,22 +523,11 @@
   .el-dialog__body {
     padding: 10px 20px;
   }
-
-  /*.el-button--small {*/
-    /*font-size: 14px;*/
-    /*color: #00b553;*/
-  /*}*/
-
-  /*.el-button--small:hover, .el-button--small:active, .el-button--small:focus {*/
-    /*font-size: 14px;*/
-    /*color: #1DB513;*/
-  /*}*/
-
   .add_topic li span {
     /*width:100%;*/
     /*padding:10px 0;*/
     /*background: #ededed;*/
-    font-size: 14px;
+    font-size: 12px;
     color: #666;
   }
 
@@ -487,29 +563,19 @@
     display: inline-block;
   }
 
-  .qx_btn {
-    min-width: 120px;
-    height: 38px;
-    text-align: center;
-    color: #fff;
-    background: #a4a4a4;
-    border-radius: 4px;
-    font-size: 16px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    padding: 0 20px;
+  .el-dialog__headerbtn .el-dialog__close:hover{
+    color: #55b761;
   }
-
-  .qx_btn:hover, .qx_btn:active, .qx_btn:focus {
-    color: #fff;
-    background: #c3c3c3;
-    outline: none;
+  .el-dialog__headerbtn .el-dialog__close:active{
+    color: #55b761;
   }
-
   /*文字错误提示*/
   .error_font {
     color: #ff4949;
     font-size: 12px;
     margin-left: 10px;
   }
+</style>
+<style>
+
 </style>

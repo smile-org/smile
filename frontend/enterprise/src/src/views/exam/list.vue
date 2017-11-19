@@ -37,7 +37,7 @@
               <button type="button" class="line-btn ml20" v-on:click="queryExamList()">查  询</button>
             </el-form-item>
           </el-form>
-          <div class="fr hidden mb20">
+          <div class="fr hidden mb20 dc_width">
             <button type="button" v-on:click="addExam" class="inf_btn mr10" icon="search">添加考试</button>
             <button type="button" v-on:click="exportExamList()" :loading="showloading" class="inf_btn  export_bor">
               导  出
