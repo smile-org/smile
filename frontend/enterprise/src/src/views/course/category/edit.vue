@@ -19,9 +19,9 @@
               @crop-upload-success="cropUploadSuccess"
               @crop-upload-fail="cropUploadFail"
               :url="uploadUrl"
-              :width="750"
+              :width="80"
               :headers="headers"
-              :height="240"
+              :height="80"
               :value.sync="show"
               :no-circle=true
               img-format="png">
