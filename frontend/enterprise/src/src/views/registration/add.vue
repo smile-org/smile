@@ -128,7 +128,7 @@
                                 <el-col :span="24 " class="mb20">
                                     <el-form-item label="主题">
                                         <el-input v-model="formInline.topic" placeholder="主题" style="width:365px;"></el-input>
-                                        <el-button :plain="true" type="success" class="ml20" size="primary" v-on:click="addContent()">添加主题
+                                        <el-button :plain="true" type="success" class="ml20" style="margin-left: 20px" size="primary" v-on:click="addContent()">添加主题
                                         </el-button>
                                         <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
                                     </el-form-item>
@@ -532,12 +532,12 @@
     }
 
     .el-button--small {
-        font-size: 14px;
+        font-size: 12px;
         color: #00b553;
     }
 
     .el-button--small:hover, .el-button--small:active, .el-button--small:focus {
-        font-size: 14px;
+        font-size: 12px;
         color: #1DB513;
     }
 
@@ -545,7 +545,7 @@
         /*width:100%;*/
         /*padding:10px 0;*/
         /*background: #ededed;*/
-        font-size: 14px;
+        font-size: 12px;
         color: #666;
     }
 
@@ -588,4 +588,12 @@
         font-size: 12px;
         margin-left: 10px;
     }
+</style>
+<style>
+  .el-dialog__headerbtn .el-dialog__close:hover{
+    color: #55b761;
+  }
+  .el-dialog__headerbtn .el-dialog__close:active{
+    color: #55b761;
+  }
 </style>
