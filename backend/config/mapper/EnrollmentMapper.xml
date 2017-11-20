@@ -375,7 +375,7 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
 
     <select id="backGetEnrollmentList"  parameterType="com.dli.entities.backEnrollment"  resultType="com.dli.entities.backEnrollment">
        select * from (
-        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  ,p.created_at from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
+        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  ,p.created_at   , p.ispublished        from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
  where  p.indicator=1 and e.indicator =1 and   e.company_id=#{company_id})t
  where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
@@ -521,6 +521,15 @@ where period_id=#{period_id}
     </update>
 
     <update id="backUpdateEnrollmentPublishStatus">
-        update  enrollment_period  set ispublished =#{status}    ,    publish_date =now() where period_id = #{periodid}
+        update    enrollment_period
+
+        <set>
+            <if test="periodid!=0"> ispublished =#{status}   , </if>
+            <if test="status!=0"> publish_date =now()  </if>
+        </set>
+
+
+
+         where period_id = #{periodid}
     </update>
 </mapper>

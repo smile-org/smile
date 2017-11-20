@@ -108,6 +108,12 @@ public class Helper {
         return result;
     }
 
+    public static String formatDateWithoutTime(Date d) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String result = sdf.format(d);
+        return result;
+    }
+
     public static String getFileNameExtension(String fileName) {
         String[] arr = fileName.split("\\.");
         return arr[arr.length - 1];

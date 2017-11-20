@@ -239,7 +239,9 @@ public class CourseServiceImpl implements CourseService {
         CourseEditPageInfo entity =new CourseEditPageInfo();
 
         entity.CategoryList = courseRepo.getCourseCategoryList(companyid, 0,  Constant.takeMax);
-        entity.AdminList =userRepo.backGetCompanyAdminList( companyid, 0,  Constant.takeMax );
+
+        //entity.AdminList =userRepo.backGetCompanyAdminList( companyid, 0,  Constant.takeMax );
+        entity.AdminList =userRepo.backGetUserList(companyid,null,null,null, null,0, Constant.takeMax);
 
         if(courseid >  0)
         {

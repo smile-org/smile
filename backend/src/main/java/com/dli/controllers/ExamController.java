@@ -1247,88 +1247,114 @@ public class ExamController {
 
         try {
 
-            String title =(String ) body.get("title");
-            int managerid =(int ) body.get("managerid");
-            String start =(String ) body.get("start");
-            String end =(String ) body.get("end");
 
-            int trieslimit =(int ) body.get("trieslimit");
+            int singlechoicescore =(int ) body.get("single_choice_score");
+            int multichoicescore =(int ) body.get("multi_choice_score");
+            int truefalsescore =(int ) body.get("true_false_score");
             int passscore =(int ) body.get("passscore");
-            int timelimit =(int ) body.get("timelimit");
-
-            String intro =(String ) body.get("intro");
-            String icon =(String ) body.get("icon");
-            String pic =(String ) body.get("pic");
-
-            String courseids =  null;
-            Object    obj=  body.get("courseids");
-            if(  obj!=null)
-                courseids  = (String)body.get("courseids");
-
 
             List<LinkedHashMap> questionList = (List<LinkedHashMap>) body.get("questionList");
 
-
-            Exam e = new Exam();
-            e.setExam_title(title);
-            e.setManager_id(managerid);
-            e.setStart_date( Helper.dateParse(start)  );
-            e.setEnd_date( Helper.dateParse(end)  );
-
-            e.setTries_limit(trieslimit);
-            e.setPass_score(passscore);
-            e.setTime_limit(timelimit);
-
-            e.setIntro(intro);
-            e.setIcon(icon);
-            e.setPic(pic);
-            e.setCompany_id(user.getCompany_id());
-
-            SimpleDateFormat sdf= new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String  examNum = sdf.format( new Date());
-            e.setExam_num( examNum );
-
-
-            examService.backAddExam(e);
-
-
-            if (!icon.startsWith("/default")) {
-                String fileName = String.format("%s-icon.png", e.getExam_id());
-                String path = String.format(examicon, user.getCompany_id(), e.getExam_id()).replace(fileName, "");
-
-                FileUtil.renameFile(fileroot + icon, fileroot + path + fileName);
-                e.setIcon(path + fileName);
-                e.setPic(null);
-                examService.backUpdateExamIconAndPic(e);
-            }
-
-            if (!pic.startsWith("/default")) {
-                String fileName = String.format("%s-pic.png", e.getExam_id());
-                String path = String.format(exampic, user.getCompany_id(), e.getExam_id()).replace(fileName, "");
-
-                FileUtil.renameFile(fileroot + pic, fileroot + path + fileName);
-                e.setIcon(null);
-                e.setPic(path + fileName);
-                examService.backUpdateExamIconAndPic(e);
-            }
-
-
-            if( ! Helper.isNullOrEmpty(courseids) ) {
-                String[] courseidList = courseids.split("\\,");
-                for (String courseid : courseidList) {
-                    examService.backAddExamCourseMapping(e.getExam_id(), Integer.parseInt(courseid));
-                }
-            }
-
+            List<Integer>   questionids =   new ArrayList<Integer>();
             for (LinkedHashMap question : questionList) {
-                 int questionid = (int) question.get("question_id");
-                int questionnum  = (int) question.get("question_num");
-                examService.backAddExamQuestionMapping( questionid,e.getExam_id(), questionnum );
+                int questionid = (int) question.get("question_id");
+                questionids.add(questionid);
             }
 
+            List<Question>  questions =  examService.backGetQuestionListByIDs( questionids);
+            int totalScore =examService.getTottalScoreForExam(  questions, singlechoicescore  ,multichoicescore ,truefalsescore);
+            if( passscore > totalScore ){
+                result.put(Constant.status, 0);
+                result.put(Constant.result,  "及格分数不能高于总分");
+            }
+            else {
+                String title = (String) body.get("title");
+                int managerid = (int) body.get("managerid");
+                String start = (String) body.get("start");
+                String end = (String) body.get("end");
 
-            result.put(Constant.status, 1);
-            result.put(Constant.result,  e.getExam_id());
+                int trieslimit = (int) body.get("trieslimit");
+
+                int timelimit = (int) body.get("timelimit");
+
+                String intro = (String) body.get("intro");
+                String icon = (String) body.get("icon");
+                String pic = (String) body.get("pic");
+
+                String courseids = null;
+                Object obj = body.get("courseids");
+                if (obj != null)
+                    courseids = (String) body.get("courseids");
+
+
+                Exam e = new Exam();
+
+                e.setExam_title(title);
+                e.setManager_id(managerid);
+                e.setStart_date(Helper.dateParse(start));
+                e.setEnd_date(Helper.dateParse(end));
+
+                e.setTries_limit(trieslimit);
+                e.setTime_limit(timelimit);
+
+                e.setIntro(intro);
+                e.setIcon(icon);
+                e.setPic(pic);
+
+
+                e.setPass_score(passscore);
+                e.setSingle_choice_score(singlechoicescore);
+                e.setMulti_choice_score(multichoicescore);
+                e.setTrue_false_score(truefalsescore);
+
+                e.setCompany_id(user.getCompany_id());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                String examNum = sdf.format(new Date());
+                e.setExam_num(examNum);
+
+
+                examService.backAddExam(e);
+
+
+                if (!icon.startsWith("/default")) {
+                    String fileName = String.format("%s-icon.png", e.getExam_id());
+                    String path = String.format(examicon, user.getCompany_id(), e.getExam_id()).replace(fileName, "");
+
+                    FileUtil.renameFile(fileroot + icon, fileroot + path + fileName);
+                    e.setIcon(path + fileName);
+                    e.setPic(null);
+                    examService.backUpdateExamIconAndPic(e);
+                }
+
+                if (!pic.startsWith("/default")) {
+                    String fileName = String.format("%s-pic.png", e.getExam_id());
+                    String path = String.format(exampic, user.getCompany_id(), e.getExam_id()).replace(fileName, "");
+
+                    FileUtil.renameFile(fileroot + pic, fileroot + path + fileName);
+                    e.setIcon(null);
+                    e.setPic(path + fileName);
+                    examService.backUpdateExamIconAndPic(e);
+                }
+
+
+                if (!Helper.isNullOrEmpty(courseids)) {
+                    String[] courseidList = courseids.split("\\,");
+                    for (String courseid : courseidList) {
+                        examService.backAddExamCourseMapping(e.getExam_id(), Integer.parseInt(courseid));
+                    }
+                }
+
+                for (LinkedHashMap question : questionList) {
+                    int questionid = (int) question.get("question_id");
+                    int questionnum = (int) question.get("question_num");
+                    examService.backAddExamQuestionMapping(questionid, e.getExam_id(), questionnum);
+                }
+
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, e.getExam_id());
+            }
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -1378,93 +1404,122 @@ public class ExamController {
         }
 
         try {
-            int  examid =  (int ) body.get("examid");
-            String title =(String ) body.get("title");
-            int managerid =(int ) body.get("managerid");
-            String start =(String ) body.get("start");
-            String end =(String ) body.get("end");
 
-            int trieslimit =(int ) body.get("trieslimit");
+            int singlechoicescore =(int ) body.get("single_choice_score");
+            int multichoicescore =(int ) body.get("multi_choice_score");
+            int truefalsescore =(int ) body.get("true_false_score");
             int passscore =(int ) body.get("passscore");
-            int timelimit =(int ) body.get("timelimit");
-
-            String intro =(String ) body.get("intro");
-            String icon =(String ) body.get("icon");
-            String pic =(String ) body.get("pic");
-
-            String courseids =  null;
-            Object    obj=  body.get("courseids");
-            if(  obj!=null)
-                courseids  = (String)body.get("courseids");
-
 
             List<LinkedHashMap> questionList = (List<LinkedHashMap>) body.get("questionList");
 
-
-            Exam e = new Exam();
-            e.setExam_id(examid);
-            e.setExam_title(title);
-            e.setManager_id(managerid);
-            e.setStart_date( Helper.dateParse(start)  );
-            e.setEnd_date( Helper.dateParse(end)  );
-
-            e.setTries_limit(trieslimit);
-            e.setPass_score(passscore);
-            e.setTime_limit(timelimit);
-
-            e.setIntro(intro);
-            e.setIcon(icon);
-            e.setPic(pic);
-
-            examService.backUpdateExam(e);
-
-            if (!icon.startsWith("/default")) {
-                String fileName = String.format("%s-icon.png", examid);
-                String path = String.format(examicon, user.getCompany_id(), examid).replace(fileName, "");
-
-                if (!icon.equals(path + fileName)) {
-                    FileUtil.renameFile(fileroot + icon, fileroot + path + fileName);
-                    e.setIcon(path + fileName);
-                    e.setPic(null);
-                    examService.backUpdateExamIconAndPic(e);
-                }
-            }
-
-
-            if (!pic.startsWith("/default")) {
-                String fileName = String.format("%s-pic.png", examid);
-                String path = String.format(exampic, user.getCompany_id(), examid).replace(fileName, "");
-
-                if (!pic.equals(path + fileName)) {
-                    FileUtil.renameFile(fileroot + pic, fileroot + path + fileName);
-                    e.setIcon(null);
-                    e.setPic(path + fileName);
-                    examService.backUpdateExamIconAndPic(e);
-                }
-            }
-
-            examService.backDeleteExamCourseMapping(examid);
-
-
-            if( !Helper.isNullOrEmpty(courseids) ) {
-                String[] courseidList = courseids.split("\\,");
-                for (String courseid : courseidList) {
-                    examService.backAddExamCourseMapping(examid, Integer.parseInt(courseid));
-                }
-            }
-
-
-            examService.backDeleteExamQuestionMapping(examid);
-
+            List<Integer>   questionids =   new ArrayList<Integer>();
             for (LinkedHashMap question : questionList) {
                 int questionid = (int) question.get("question_id");
-                int questionnum  = (int) question.get("question_num");
-                examService.backAddExamQuestionMapping( questionid,examid, questionnum );
+                questionids.add(questionid);
             }
 
+            List<Question>  questions =  examService.backGetQuestionListByIDs( questionids);
+            int totalScore =examService.getTottalScoreForExam(  questions, singlechoicescore  ,multichoicescore ,truefalsescore);
+            if( passscore > totalScore ){
+                result.put(Constant.status, 0);
+                result.put(Constant.result,  "及格分数不能高于总分");
+            }
+            else {
 
-            result.put(Constant.status, 1);
-            result.put(Constant.result, "更新成功");
+
+                int examid = (int) body.get("examid");
+                String title = (String) body.get("title");
+                int managerid = (int) body.get("managerid");
+                String start = (String) body.get("start");
+                String end = (String) body.get("end");
+
+                int trieslimit = (int) body.get("trieslimit");
+                //int passscore = (int) body.get("passscore");
+                int timelimit = (int) body.get("timelimit");
+
+                String intro = (String) body.get("intro");
+                String icon = (String) body.get("icon");
+                String pic = (String) body.get("pic");
+
+                String courseids = null;
+                Object obj = body.get("courseids");
+                if (obj != null)
+                    courseids = (String) body.get("courseids");
+
+
+                //List<LinkedHashMap> questionList = (List<LinkedHashMap>) body.get("questionList");
+
+
+                Exam e = new Exam();
+                e.setExam_id(examid);
+                e.setExam_title(title);
+                e.setManager_id(managerid);
+                e.setStart_date(Helper.dateParse(start));
+                e.setEnd_date(Helper.dateParse(end));
+
+                e.setTries_limit(trieslimit);
+                //e.setPass_score(passscore);
+                e.setTime_limit(timelimit);
+
+                e.setIntro(intro);
+                e.setIcon(icon);
+                e.setPic(pic);
+
+                e.setPass_score(passscore);
+                e.setSingle_choice_score(singlechoicescore);
+                e.setMulti_choice_score(multichoicescore);
+                e.setTrue_false_score(truefalsescore);
+
+                examService.backUpdateExam(e);
+
+                if (!icon.startsWith("/default")) {
+                    String fileName = String.format("%s-icon.png", examid);
+                    String path = String.format(examicon, user.getCompany_id(), examid).replace(fileName, "");
+
+                    if (!icon.equals(path + fileName)) {
+                        FileUtil.renameFile(fileroot + icon, fileroot + path + fileName);
+                        e.setIcon(path + fileName);
+                        e.setPic(null);
+                        examService.backUpdateExamIconAndPic(e);
+                    }
+                }
+
+
+                if (!pic.startsWith("/default")) {
+                    String fileName = String.format("%s-pic.png", examid);
+                    String path = String.format(exampic, user.getCompany_id(), examid).replace(fileName, "");
+
+                    if (!pic.equals(path + fileName)) {
+                        FileUtil.renameFile(fileroot + pic, fileroot + path + fileName);
+                        e.setIcon(null);
+                        e.setPic(path + fileName);
+                        examService.backUpdateExamIconAndPic(e);
+                    }
+                }
+
+                examService.backDeleteExamCourseMapping(examid);
+
+
+                if (!Helper.isNullOrEmpty(courseids)) {
+                    String[] courseidList = courseids.split("\\,");
+                    for (String courseid : courseidList) {
+                        examService.backAddExamCourseMapping(examid, Integer.parseInt(courseid));
+                    }
+                }
+
+
+                examService.backDeleteExamQuestionMapping(examid);
+
+                for (LinkedHashMap question : questionList) {
+                    int questionid = (int) question.get("question_id");
+                    int questionnum = (int) question.get("question_num");
+                    examService.backAddExamQuestionMapping(questionid, examid, questionnum);
+                }
+
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, "更新成功");
+            }
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -1493,7 +1548,7 @@ public class ExamController {
             examService.backUpdateExamPublishStatus(publish, examid);
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, "状态更新成功");
+            result.put(Constant.result,  "状态更新成功"  );
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());

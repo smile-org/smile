@@ -37,7 +37,9 @@ public interface ExamRepo {
 
        void  updateExamHistoryRecord(@Param("recordid")int recordid,  @Param("isright") Boolean  isright , @Param("status")  String status );
 
-       int getExamHistoryCorrectRecrdCount(int  historyid);
+     //List<ExamRecord>  getExamHistoryCorrectRecordList(int  historyid);
+
+     List<Integer>  getExamHistoryCorrectRecordQuestionIDList(int  historyid);
 
       void  updateExamHistory(@Param("score")int score,  @Param("status")String status  ,@Param("historyid")int historyid);
 
@@ -120,6 +122,10 @@ public interface ExamRepo {
 
 
     void    backUpdateExamPublishStatus( @Param("status")  int   status  , @Param("examid") int  examid );
+
+
+    List<Question>     backGetQuestionListByIDs(  List<Integer>   questionids);
+
 
 
 }

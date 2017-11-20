@@ -22,6 +22,9 @@ public class backEnrollment {
     private   int  countThisPeriod;
     private   int   dateCountNextPeriod;
 
+    private  boolean ispublished;
+
+
     private   int   company_id;
     private   int skip;
     private  int take;
@@ -58,6 +61,14 @@ public class backEnrollment {
         this.end = end;
     }
 
+
+    public boolean isIspublished() {
+        return ispublished;
+    }
+
+    public void setIspublished(boolean ispublished) {
+        this.ispublished = ispublished;
+    }
 
 
     public int getCompany_id() {

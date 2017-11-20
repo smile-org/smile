@@ -1079,7 +1079,7 @@ public class CourseController {
             courseService.backUpdateCoursePublishStatus(publish, courseid);
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, "状态更新成功");
+            result.put(Constant.result,   "状态更新成功" );
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());

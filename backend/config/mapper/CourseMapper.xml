@@ -428,7 +428,7 @@ on result.course_id= o2.course_id
 
 
     <update id="backUpdateCourseContent"   parameterType="com.dli.entities.CourseContent"  >
-        update  course_content
+        update  course_contentf
         <set>
         <if test="sequnce_num!=null">sequnce_num=#{sequnce_num},</if>
         <if test="sequnce_title!=null">sequnce_title=#{sequnce_title},</if>
@@ -469,7 +469,12 @@ where  content_id=#{content_id}
     </update>
 
     <update id="backUpdateCoursePublishStatus">
-        update course set ispublished =#{status}  , publish_date =now() where course_id = #{courseid}
+        update course
+        <set>
+        <if test="courseid!=0"> ispublished =#{status}   , </if>
+        <if test="status!=0"> publish_date =now()  </if>
+        </set>
+        where course_id = #{courseid}
     </update>
 
     <select id="backGetCourseByID" resultType="com.dli.entities.Course">

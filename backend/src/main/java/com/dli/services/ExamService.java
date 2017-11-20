@@ -9,7 +9,7 @@ public interface ExamService {
 
     List<Exam>  getExamList(int companyid ,int skip,  int take);
 
-    Exam  getExambyID( int examid  );
+    //    Exam  getExambyID( int examid  );
 
     Exam  getAllExamInfo( int examid  , int userid );
 
@@ -89,4 +89,8 @@ public interface ExamService {
     List<ExamHistory>  getMyExamHistoryIDsInProcess(    int userid  );
 
     void    backUpdateExamPublishStatus(  int   status  , int  examid );
+
+    List<Question>     backGetQuestionListByIDs(  List<Integer>   questionids);
+
+    int getTottalScoreForExam(List<Question>  lst, int score1 ,int score2, int score3  );
 }

@@ -29,6 +29,11 @@
         <result column="collect_count" property="collect_count"/>
         <result column="manager_idName" property="manager_idName"/>
         <result column="examCollected" property="examCollected"/>
+
+        <result column="single-choice-score" property="single_choice_score"/>
+        <result column="multi-choice-score" property="multi_choice_score"/>
+        <result column="true-false-score" property="true_false_score"/>
+
     </resultMap>
 
 
@@ -187,8 +192,8 @@ left join ( select * from exam_record  where history_id in
         update exam_record set  status= #{status}, is_right=#{isright} where record_id=#{recordid};
     </update>
 
-    <select id="getExamHistoryCorrectRecrdCount"  resultType="int">
-        select count(*) from  exam_record  where history_id=#{historyid} and is_right=1;
+    <select id="getExamHistoryCorrectRecordQuestionIDList"  resultType="int">
+        select question_id from  exam_record  where history_id=#{historyid} and is_right=1;
     </select>
 
     <update id="updateExamHistory">
@@ -346,6 +351,13 @@ update  answer set indicator=0 where answer_id=#{answerid}
         limit #{skip} ,#{take}
     </select>
 
+    <select id="backGetQuestionListByIDs"   resultType="com.dli.entities.Question">
+        select * from question where question_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 
     <select id="backGetQuestionListCount"  parameterType="com.dli.entities.QuestionCondition"  resultType="int">
         select count(*) from(
@@ -474,7 +486,8 @@ where  h.history_id=  #{historyid}  order by    m.question_num
 
 
     <insert id="backAddExam"  parameterType="com.dli.entities.Exam"   useGeneratedKeys="true"   keyProperty="exam_id" >
-         insert  exam  values( 0,  #{exam_num}, #{exam_title},  #{manager_id} ,  #{start_date},  #{end_date},     #{tries_limit} ,#{pass_score}, #{time_limit}, #{intro},      #{icon},   #{pic} , 0 ,null, #{company_id}, 1, now(),  now()  );
+         insert  exam  values( 0,  #{exam_num}, #{exam_title},  #{manager_id} ,  #{start_date},  #{end_date},     #{tries_limit} ,#{pass_score}, #{time_limit}, #{intro},      #{icon},   #{pic} ,
+         #{single_choice_score},#{multi_choice_score}, #{true_false_score},   0 ,null, #{company_id}, 1, now(),  now()  );
     </insert>
 
 
@@ -512,11 +525,21 @@ time_limit=#{time_limit},
 intro=#{intro},
 icon=#{icon},
 pic=#{pic},
+
+`single-choice-score`=#{single_choice_score},
+`multi-choice-score`=#{multi_choice_score},
+`true-false-score`=#{true_false_score},
+
 updated_at=  now()
 where     exam_id =  #{exam_id}
     </update>
 
     <update id="backUpdateExamPublishStatus">
-        update exam set ispublished =#{status}    ,    publish_date =now() where exam_id = #{examid}
+        update exam
+        <set>
+            <if test="examid!=0"> ispublished =#{status}   , </if>
+          <if test="status!=0"> publish_date =now()  </if>
+        </set>
+         where exam_id = #{examid}
     </update>
 </mapper>
