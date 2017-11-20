@@ -79,9 +79,10 @@
             <!--</el-table-column>-->
             <!--<el-table-column align="center" prop="time_limit" label="时间限制" width="100">-->
             <!--</el-table-column>-->
-            <el-table-column align="center" label="操作" class="tc" width="100">
+            <el-table-column align="center" label="操作" class="tc" width="140">
               <template scope="scope">
                 <el-button @click="editExam(scope.row.exam_id)" type="text" size="small">编辑</el-button>
+                <el-button @click="updateState(scope.row)" type="text" size="small">{{scope.row.ispublished ? '隐藏' : '发布'}}</el-button>
                 <el-button @click="deleteExam(scope.row.exam_id)" class="red_font" type="text" size="small">删除
                 </el-button>
               </template>
@@ -142,6 +143,32 @@
     methods: {
       addExam: function () {
         router.push({name: 'examCreate'})
+      },
+      updateState (current) {
+        // 隐藏传0， 发布传1
+        var _type = 0
+        if (current.ispublished === true) {
+          _type = 0
+        } else {
+          _type = 1
+        }
+        api.fetch(api.uri.publishExam, {
+          examid: current.exam_id,
+          publish: _type
+        }).then(data => {
+          if (data.status === 1) {
+            this.$message('操作成功')
+            current.ispublished = !current.ispublished
+            if (current.ispublished) {
+              console.log(moment())
+              current.publish_date = moment().format('YYYY-MM-DD')
+            } else {
+              current.publish_date = ''
+            }
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
       },
       queryExamList: function () {
         var date1 = ''

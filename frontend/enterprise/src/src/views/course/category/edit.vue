@@ -19,6 +19,7 @@
               @crop-upload-success="cropUploadSuccess"
               @crop-upload-fail="cropUploadFail"
               :url="uploadUrl"
+              :no-rotate=false
               :width="80"
               :headers="headers"
               :height="80"
@@ -63,9 +64,7 @@
 
         show: false,
 
-        headers: {
-          token: '666666'
-        },
+        headers: api.getUploadHeaders(),
 
         // 显示的图像， 有可能是url ， 也可能是剪裁后的 base64
         image: '',

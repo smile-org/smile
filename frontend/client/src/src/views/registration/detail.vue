@@ -65,12 +65,7 @@
           </ul>
         </el-tab-pane>
         <el-tab-pane label="课程目录" name="second">
-          <ul class="list_border course_con mb3hafe">
-            <li v-for="item in courseContent" :key="item.content_id">
-              <p>{{item.sequnce_num}}. {{item.content}}</p>
-              <p>{{item.sequnce_title | formatDateRange}}</p>
-            </li>
-          </ul>
+d          </ul>
         </el-tab-pane>
         <el-tab-pane label="课程评价" name="third">
           <ul class="list_border course_con mb3hafe">

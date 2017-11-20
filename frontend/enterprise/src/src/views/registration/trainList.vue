@@ -47,15 +47,15 @@
                    <hr class="hr_line">
                     <!--添加报名导出表格-->
                     <el-table :data="tableData" border class="table_minheight" style="width: 100%">
-                        <el-table-column prop="title"  align="center" label="课程名称" width="">
+                        <el-table-column prop="title"  align="center" label="课程名称" min-width="140">
                         </el-table-column>
                         <el-table-column prop="teacher"  align="center" label="讲师" width="100">
                         </el-table-column>
-                        <el-table-column prop="start"   align="center"label="开始时间" width="140">
+                        <el-table-column prop="start"   align="center"label="开始时间" min-width="100">
                         </el-table-column>
-                        <el-table-column prop="end"  align="center" label="结束时间" width="140">
+                        <el-table-column prop="end"  align="center" label="结束时间" min-width="100">
                         </el-table-column>
-                        <el-table-column prop="count"  align="center" label="人数限制" width="100">
+                        <el-table-column prop="count"  align="center" label="人数限制" min-width="80">
                         </el-table-column>
                         <el-table-column prop="appraise"  width="100" align="center" label="查看评价" >
                             <template scope="scope">
@@ -69,9 +69,10 @@
                             </template>
                         </el-table-column>
 
-                        <el-table-column label="操作"  align="center" class="tc" width="100">
+                        <el-table-column label="操作"  align="center" class="tc" width="140">
                             <template scope="scope">
                                 <el-button @click="editEnrollment(scope.row)" type="text" size="small">编辑</el-button>
+                                <el-button @click="updateState(scope.row)" type="text" size="small">{{scope.row.ispublished ? '隐藏' : '发布'}}</el-button>
                                 <el-button @click="deleteEnrollment(scope.row)" class="red_font" type="text" size="small">删除</el-button>
                             </template>
                         </el-table-column>
@@ -145,6 +146,31 @@
             this.tableData = data.result
             this.total = data.total
           }
+        })
+      },
+      updateState (current) {
+        // 隐藏传0， 发布传1
+        var _type = 0
+        if (current.ispublished === true) {
+          _type = 0
+        } else {
+          _type = 1
+        }
+        api.fetch(api.uri.publishEnrollment, {
+          periodid: current.period_id,
+          publish: _type
+        }).then(data => {
+          if (data.status === 1) {
+            this.$message('操作成功')
+            current.ispublished = !current.ispublished
+            if (current.ispublished) {
+              current.publish_date = moment().format('YYYY-MM-DD')
+            } else {
+              current.publish_date = ''
+            }
+          }
+        }).catch(error => {
+          this.$message(error.message)
         })
       },
       handleCurrentChange (pageNum) {

@@ -151,11 +151,17 @@ export default {
       if (item.isFollow) {
         // TODO: 统一弹框， 已经点过赞了
       } else {
+        var that = this
         api.fetch(api.uri.likeBooking, { appointmentId: this.id, itemId: item.itemId }).then(data => {
           if (data.status === 1) {
             item.isFollow = 1
-            this.data.followerCount++
+            // this.data.followerCount++
             item.followCount++
+            api.fetch(api.uri.getBooking, {appointmentId: that.id}).then(result => {
+              if (result.status === 1) {
+                that.data.followerCount = result.result.followerCount
+              }
+            })
           } else {
             // TODO: 统一处理
           }
