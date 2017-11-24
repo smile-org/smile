@@ -3,11 +3,12 @@
     <div class="logo">
       <!--<img class="vm" :src="companyLogo" />-->
       <img class="vm" src="../assets/img/small_logo.png"/>
-      <span class="vm"  v-on:click="exit()">企业管理后台</span>
+      <span class="vm" v-on:click="exit()">企业管理后台</span>
     </div>
-    <el-dropdown @command="commandClick"  trigger="click">
+    <el-dropdown @command="commandClick" trigger="click">
       <span class="el-dropdown-link vm">
-         <img class="header_rimg" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=547138142,3998729701&fm=27&gp=0.jpg">
+         <img class="header_rimg"
+              src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=547138142,3998729701&fm=27&gp=0.jpg">
          <span>张三</span>
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
@@ -30,12 +31,12 @@
     created () {
     },
     methods: {
-      commandClick(name) {
-          if (name === "exit") {
-            this.exit()
-          }else if ( name === "changePWD"){
-            this.changePWD()
-          }
+      commandClick (name) {
+        if (name === 'exit') {
+          this.exit()
+        } else if (name === 'changePWD') {
+          this.changePWD()
+        }
       },
       routeByName: function (name) {
         router.push({name: name})
@@ -44,7 +45,7 @@
         router.push({name: 'changePWD'})
       },
       exit: function () {
-          console.log("111")
+        console.log('111')
         var storage = window.localStorage
         storage.removeItem('token')
         storage.removeItem('username')
@@ -90,7 +91,8 @@
     vertical-align: middle;
     margin-right: 10px;
   }
-  .el-dropdown-menu{
+
+  .el-dropdown-menu {
     text-align: center;
     font-size: 14px;
     right: 20px;
