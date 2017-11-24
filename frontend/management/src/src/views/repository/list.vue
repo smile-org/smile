@@ -24,14 +24,7 @@
     data: function () {
       return {
         company: {},
-        formInline: {
-          name: '',
-          user: '',
-          // date: '',
-          categoryId: '',
-          start: '',
-          end: ''
-        }
+
       }
     },
     components: {
