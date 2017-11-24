@@ -12,11 +12,21 @@ public class Exam {
     private Date start_date;
     private Date end_date;
     private int tries_limit;
+
     private int pass_score;
+    private  int single_choice_score;
+    private  int multi_choice_score;
+    private  int true_false_score;
+    private  int   total_score;
+
+
     private int time_limit;
     private String intro;
+
+
     private String icon;
     private String pic;
+    private  boolean ispublished;
     private int company_id;
     private boolean indicator;
     private Date created_at;
@@ -27,6 +37,39 @@ public class Exam {
     private   String  manager_idName;
     private   int examCollected;
     private  int history_id;
+
+
+    public int getSingle_choice_score() {
+        return single_choice_score;
+    }
+
+    public void setSingle_choice_score(int single_choice_score) {
+        this.single_choice_score = single_choice_score;
+    }
+
+    public int getMulti_choice_score() {
+        return multi_choice_score;
+    }
+
+    public void setMulti_choice_score(int multi_choice_score) {
+        this.multi_choice_score = multi_choice_score;
+    }
+
+    public int getTrue_false_score() {
+        return true_false_score;
+    }
+
+    public void setTrue_false_score(int true_false_score) {
+        this.true_false_score = true_false_score;
+    }
+
+    public int getTotal_score() {
+        return total_score;
+    }
+
+    public void setTotal_score(int total_score) {
+        this.total_score = total_score;
+    }
 
     public int getHistory_id() {
         return history_id;
@@ -206,5 +249,13 @@ public class Exam {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public boolean isIspublished() {
+        return ispublished;
+    }
+
+    public void setIspublished(boolean ispublished) {
+        this.ispublished = ispublished;
     }
 }

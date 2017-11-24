@@ -8,6 +8,8 @@ public class ExamEditPageInfo {
 
       public   Exam   ExamToBeEdit;
 
+      public   int  HasHistory;
+
       public   List<Course>    CourseList;
 
       public  List<Question>   QuestionList;

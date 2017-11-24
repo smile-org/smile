@@ -13,7 +13,10 @@ public class SearchResult {
 
     private   Date start;
     private Date end;
+
+
     private   int   count;
+    private   String     person;
 
     public int getId() {
         return id;
@@ -71,6 +74,15 @@ public class SearchResult {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+
+    public String getPerson() {
+        return person;
+    }
+
+    public void setPerson(String person) {
+        this.person = person;
     }
 
 }

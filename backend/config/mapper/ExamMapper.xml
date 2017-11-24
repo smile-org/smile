@@ -17,6 +17,8 @@
         <result column="icon" property="icon"/>
         <result column="pic" property="pic"/>
 
+        <result column="ispublished" property="ispublished"/>
+
         <result column="company_id" property="company_id"/>
         <result column="indicator" property="indicator"/>
         <result column="created_at" property="created_at"/>
@@ -27,6 +29,11 @@
         <result column="collect_count" property="collect_count"/>
         <result column="manager_idName" property="manager_idName"/>
         <result column="examCollected" property="examCollected"/>
+
+        <result column="single-choice-score" property="single_choice_score"/>
+        <result column="multi-choice-score" property="multi_choice_score"/>
+        <result column="true-false-score" property="true_false_score"/>
+
     </resultMap>
 
 
@@ -89,6 +96,7 @@
         <result column="start_date" property="start"/>
         <result column="end_date" property="end"/>
         <result column="study_count" property="count"/>
+        <result column="person" property="person"/>
     </resultMap>
 
 
@@ -184,8 +192,8 @@ left join ( select * from exam_record  where history_id in
         update exam_record set  status= #{status}, is_right=#{isright} where record_id=#{recordid};
     </update>
 
-    <select id="getExamHistoryCorrectRecrdCount"  resultType="int">
-        select count(*) from  exam_record  where history_id=#{historyid} and is_right=1;
+    <select id="getExamHistoryCorrectRecordQuestionIDList"  resultType="int">
+        select question_id from  exam_record  where history_id=#{historyid} and is_right=1;
     </select>
 
     <update id="updateExamHistory">
@@ -288,14 +296,15 @@ left join ( select * from exam_record  where history_id in
     <select id="searchExam" resultMap="SearchMap">
            select e.*,
 
-               case when o1.renshu  is not null then o1.renshu else 0 end  as study_count
+               case when o1.renshu  is not null then o1.renshu else 0 end  as study_count,
+                  u.full_name as  person
             from   exam  e
 
               left join (
           select exam_id, count(*)  as  renshu from (
           select  exam_id, user_id from exam_history  group by exam_id, user_id)t group by exam_id)o1
           on e.exam_id=o1.exam_id
-
+         left join   user u on    e.manager_id= u.user_id
 
             where e.exam_title like '%${keyword}%'  and e.company_id=#{companyid} and e.indicator=1  limit #{skip} ,#{take}
     </select>
@@ -337,8 +346,16 @@ update  answer set indicator=0 where answer_id=#{answerid}
         )result  where 1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="type_id!=0">and type_id =#{type_id} </if>
-        <if test="created_at!=null">and created_at1 = #{created_at}</if>
+        <if test="start!=null">and created_at &gt;    #{start} </if>
+        <if test="end!=null">and created_at  &lt;   #{end}</if>
         limit #{skip} ,#{take}
+    </select>
+
+    <select id="backGetQuestionListByIDs"   resultType="com.dli.entities.Question">
+        select * from question where question_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
 
@@ -348,7 +365,8 @@ update  answer set indicator=0 where answer_id=#{answerid}
         )result  where 1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="type_id!=0">and type_id =#{type_id} </if>
-        <if test="created_at!=null">and created_at1 = #{created_at}</if>
+        <if test="start!=null">and created_at &gt;    #{start} </if>
+        <if test="end!=null">and created_at  &lt;   #{end}</if>
     </select>
 
     <select id="backGetExamDetailQuestionAnswer"  resultType="com.dli.entities.Answer">
@@ -371,8 +389,8 @@ where 1=1
         <if test="exam_num!=null">and exam_num like '%${exam_num}%'</if>
         <if test="exam_title!=null">and exam_title   like '%${exam_title}%' </if>
         <if test="manager_idName!=null">and manager_idName    like '%${manager_idName}%'</if>
-        <if test="start_date!=null">and start_date &gt;=    #{start_date} </if>
-        <if test="end_date!=null">and end_date  &lt;=   #{end_date}</if>
+        <if test="start_date!=null">and created_at &gt;    #{start_date} </if>
+        <if test="end_date!=null">and created_at  &lt;   #{end_date}</if>
         limit #{skip} ,#{take}
     </select>
 
@@ -386,8 +404,8 @@ where 1=1
         <if test="exam_num!=null">and exam_num like '%${exam_num}%'</if>
         <if test="exam_title!=null">and exam_title   like '%${exam_title}%' </if>
         <if test="manager_idName!=null">and manager_idName    like '%${manager_idName}%'</if>
-        <if test="start_date!=null">and start_date &gt;=    #{start_date} </if>
-        <if test="end_date!=null">and end_date  &lt;=   #{end_date}</if>
+        <if test="start_date!=null">and created_at &gt;    #{start_date} </if>
+        <if test="end_date!=null">and created_at  &lt;   #{end_date}</if>
     </select>
 
     <update id="backDisableExam">
@@ -468,7 +486,8 @@ where  h.history_id=  #{historyid}  order by    m.question_num
 
 
     <insert id="backAddExam"  parameterType="com.dli.entities.Exam"   useGeneratedKeys="true"   keyProperty="exam_id" >
-         insert  exam  values( 0,  #{exam_num}, #{exam_title},  #{manager_id} ,  #{start_date},  #{end_date},     #{tries_limit} ,#{pass_score}, #{time_limit}, #{intro},      #{icon},   #{pic} ,  #{company_id}, 1, now(),  now()  );
+         insert  exam  values( 0,  #{exam_num}, #{exam_title},  #{manager_id} ,  #{start_date},  #{end_date},     #{tries_limit} ,#{pass_score}, #{time_limit}, #{intro},      #{icon},   #{pic} ,
+         #{single_choice_score},#{multi_choice_score}, #{true_false_score},   0 ,null, #{company_id}, 1, now(),  now()  );
     </insert>
 
 
@@ -506,7 +525,21 @@ time_limit=#{time_limit},
 intro=#{intro},
 icon=#{icon},
 pic=#{pic},
+
+`single-choice-score`=#{single_choice_score},
+`multi-choice-score`=#{multi_choice_score},
+`true-false-score`=#{true_false_score},
+
 updated_at=  now()
 where     exam_id =  #{exam_id}
+    </update>
+
+    <update id="backUpdateExamPublishStatus">
+        update exam
+        <set>
+            <if test="examid!=0"> ispublished =#{status}   , </if>
+          <if test="status!=0"> publish_date =now()  </if>
+        </set>
+         where exam_id = #{examid}
     </update>
 </mapper>

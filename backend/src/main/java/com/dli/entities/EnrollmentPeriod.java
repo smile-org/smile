@@ -16,6 +16,7 @@ public class EnrollmentPeriod {
     private boolean indicator;
     private Date created_at;
     private Date updated_at;
+    private  boolean ispublished;
 
     //append property
     private  int study_count;
@@ -126,4 +127,14 @@ public class EnrollmentPeriod {
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
+
+
+    public boolean isIspublished() {
+        return ispublished;
+    }
+
+    public void setIspublished(boolean ispublished) {
+        this.ispublished = ispublished;
+    }
+
 }

@@ -91,4 +91,7 @@ public interface EnrollmentRepo {
 
     void   backDisableEnrollmentContent(int  contentid);
 
+
+    void    backUpdateEnrollmentPublishStatus( @Param("status")  int   status  , @Param("periodid") int  periodid );
+
 }

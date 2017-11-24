@@ -1,5 +1,8 @@
 package com.dli.entities;
 
+
+import java.util.Date;
+
 public class backEnrollment {
 
     private int period_id;
@@ -8,11 +11,19 @@ public class backEnrollment {
 
     private String teacher;
     private String start;
+
     private String end;
+
+    private Date startCondition;
+    private Date endCondition;
+
     private int count;
 
     private   int  countThisPeriod;
     private   int   dateCountNextPeriod;
+
+    private  boolean ispublished;
+
 
     private   int   company_id;
     private   int skip;
@@ -50,6 +61,14 @@ public class backEnrollment {
         this.end = end;
     }
 
+
+    public boolean isIspublished() {
+        return ispublished;
+    }
+
+    public void setIspublished(boolean ispublished) {
+        this.ispublished = ispublished;
+    }
 
 
     public int getCompany_id() {
@@ -118,5 +137,23 @@ public class backEnrollment {
     public void setEnrollment_id(int enrollment_id) {
         this.enrollment_id = enrollment_id;
     }
+
+
+    public Date getStartCondition() {
+        return startCondition;
+    }
+
+    public void setStartCondition(Date startCondition) {
+        this.startCondition = startCondition;
+    }
+
+    public Date getEndCondition() {
+        return endCondition;
+    }
+
+    public void setEndCondition(Date endCondition) {
+        this.endCondition = endCondition;
+    }
+
 
 }

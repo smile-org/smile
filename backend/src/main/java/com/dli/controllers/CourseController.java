@@ -622,7 +622,8 @@ public class CourseController {
 
 
             String guid = UUID.randomUUID().toString();
-            String fullName = String.format(courseofficeprefix + file.getOriginalFilename(), user.getCompany_id(), guid);
+           // String fullName = String.format(courseofficeprefix + file.getOriginalFilename(), user.getCompany_id(), guid);
+            String fullName = String.format(courseofficeprefix , user.getCompany_id(), guid) + file.getOriginalFilename()  ;
             int lastSlashIndex = fullName.lastIndexOf("/");
             String fileName = fullName.substring(lastSlashIndex + 1);
             String path = fullName.substring(0, lastSlashIndex + 1);
@@ -670,7 +671,8 @@ public class CourseController {
             //4. update link
 
 
-            String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
+            //String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
+            String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
             FileUtil.renameFile(fileroot + attachmentUrl, fileroot + fullName);
             courseService.backUpdateCourseContentPath(fullName, c.getContent_id());
 
@@ -690,7 +692,10 @@ public class CourseController {
                     OfficeUtil.getInstance().ppt2html(fileroot + fullName, fileroot + path1);
                 }
 
-                courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
+               // courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
+
+                String   htmlfilename=  fileName.substring(  0,   fileName.lastIndexOf(".") ) + ".html";
+                courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + htmlfilename, c.getContent_id());
             }
 
             result.put(Constant.status, 1);
@@ -744,7 +749,8 @@ public class CourseController {
             if (!Helper.isNullOrEmpty(attachmentUrl)) {
 
 
-                String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
+              //  String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
+                String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
                 FileUtil.renameFile(fileroot + attachmentUrl, fileroot + fullName);
                 courseService.backUpdateCourseContentPath(fullName, c.getContent_id());
 
@@ -764,7 +770,9 @@ public class CourseController {
                         OfficeUtil.getInstance().ppt2html(fileroot + fullName, fileroot + path1);
                     }
 
-                    courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
+                    //courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
+                    String   htmlfilename=  fileName.substring(  0,   fileName.lastIndexOf(".") ) + ".html";
+                    courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + htmlfilename, c.getContent_id());
                 }
                 else {
                     courseService.backUpdateCourseContentLink(null, c.getContent_id());
@@ -959,8 +967,19 @@ public class CourseController {
             String picPath =(String ) body.get("picPath");
 
             int typeid =(int ) body.get("typeid");
-            String contentids =(String ) body.get("contentids");
-            String whitelsituserids =(String ) body.get("whitelsituserids");
+
+
+
+            String contentids=null;
+            Object   contentidsObj = body.get("contentids");
+            if(contentidsObj !=null)
+             contentids =(String ) body.get("contentids");
+
+            //白名单是可以没有的
+            String whitelsituserids=  null;
+            Object  obj =body.get("whitelsituserids");
+            if(   obj != null )
+             whitelsituserids =(String )obj;
 
             Course c = new Course();
             c.setCategory_id(cateid);
@@ -1018,9 +1037,13 @@ public class CourseController {
             }
             */
 
-            String[] contengidList = contentids.split("\\,");
-            for (String contentid : contengidList) {
-                courseService.backUpdateCourseContentCourseID(c.getCourse_id(), Integer.parseInt(contentid));
+
+            //if( !Helper.isNullOrEmpty(contentids))
+            {
+                String[] contengidList = contentids.split("\\,");
+                for (String contentid : contengidList) {
+                    courseService.backUpdateCourseContentCourseID(c.getCourse_id(), Integer.parseInt(contentid));
+                }
             }
 
             if( !Helper.isNullOrEmpty(whitelsituserids)) {
@@ -1056,7 +1079,7 @@ public class CourseController {
             courseService.backUpdateCoursePublishStatus(publish, courseid);
 
             result.put(Constant.status, 1);
-            result.put(Constant.result, "状态更新成功");
+            result.put(Constant.result,   "状态更新成功" );
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -1095,7 +1118,13 @@ public class CourseController {
 
             int typeid =(int ) body.get("typeid");
             String contentids =(String ) body.get("contentids");
-            String whitelsituserids =(String ) body.get("whitelsituserids");
+
+
+            //白名单是可以没有的
+            String whitelsituserids=  null;
+            Object  obj =body.get("whitelsituserids");
+            if(   obj != null )
+                whitelsituserids =(String )obj;
 
             Course c = new Course();
             c.setCourse_id(courseid);
@@ -1164,7 +1193,9 @@ public class CourseController {
                     courseService.backUpdateCourseContentCourseID(c.getCourse_id(), Integer.parseInt(contentid));
             }
 
-            courseService.backSaveCourseWhilteList(c.getCourse_id(), whitelsituserids.split("\\,"));
+            if( !Helper.isNullOrEmpty(whitelsituserids)) {
+                courseService.backSaveCourseWhilteList(c.getCourse_id(), whitelsituserids.split("\\,"));
+            }
 
 
             result.put(Constant.status, 1);
@@ -1180,7 +1211,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/GetCourseList", method = RequestMethod.GET)
-    public Map backGetCourseList(String title, String priName, int categoryid, String pubdate, int skip, int take, @RequestHeader Map header) {
+    public Map backGetCourseList(String title, String priName, int categoryid, String start ,   String end  , int skip, int take, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -1198,8 +1229,15 @@ public class CourseController {
                 c.setPrincipal_user_idName(priName);
             if (categoryid != 0)
                 c.setCategory_id(categoryid);
-            if (!Helper.isNullOrEmpty(pubdate))
-                c.setPublish_date(pubdate);
+           // if (!Helper.isNullOrEmpty(pubdate))
+           //     c.setPublish_date(pubdate);
+
+            if (!Helper.isNullOrEmpty(start))
+                c.setStart( Helper.dateParse(start));
+
+            if (!Helper.isNullOrEmpty(end)) {
+                c.setEnd(   Helper.addOneDay(end)   );
+            }
 
             c.setCompany_id(user.getCompany_id());
             c.setSkip(skip);
@@ -1226,7 +1264,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/ExportCourseList", method = RequestMethod.GET)
-    public Map backExportCourseList(String title, String priName, int categoryid, String pubdate,
+    public Map backExportCourseList(String title, String priName, int categoryid,  String start ,   String end  ,
                                     //HttpServletRequest request, HttpServletResponse response,
                                     @RequestHeader Map header) {
 
@@ -1247,8 +1285,15 @@ public class CourseController {
                 c.setPrincipal_user_idName(priName);
             if (categoryid != 0)
                 c.setCategory_id(categoryid);
-            if (!Helper.isNullOrEmpty(pubdate))
-                c.setPublish_date(pubdate);
+            //if (!Helper.isNullOrEmpty(pubdate))
+            //    c.setPublish_date(pubdate);
+
+            if (!Helper.isNullOrEmpty(start))
+                c.setStart( Helper.dateParse(start));
+
+            if (!Helper.isNullOrEmpty(end)) {
+                c.setEnd(   Helper.addOneDay(end)   );
+            }
 
             c.setCompany_id(user.getCompany_id());
             c.setSkip(0);

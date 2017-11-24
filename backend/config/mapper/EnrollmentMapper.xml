@@ -37,6 +37,8 @@
         <result column="indicator" property="indicator"/>
         <result column="created_at" property="created_at"/>
         <result column="updated_at" property="updated_at"/>
+
+        <result column="teacher" property="teacher"/>
     </resultMap>
 
     <resultMap type="com.dli.entities.EnrollmentPeriod" id="EnrollmentPeriodMap">
@@ -101,6 +103,7 @@
         <result column="start_date" property="start"/>
         <result column="end_date" property="end"/>
         <result column="study_count" property="count"/>
+        <result column="teacher" property="person"/>
     </resultMap>
 
 
@@ -317,7 +320,8 @@ on result.enrollment_id= o5.enrollment_id
         select result.*  ,
         case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count,
         case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count,
-       case when   now()  &lt; end_date then 0 else 1 end as isFinished
+       case when   now()  &lt; end_date then 0 else 1 end as isFinished,
+          case when o5.pingfen is not null  then o5.pingfen  else 0 end as star
         from(
         select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
         on p.enrollment_id= e.enrollment_id where   p.period_id in(select  item_id from user_favor  where  user_id=#{userid} and item_type='enrollment')
@@ -328,6 +332,11 @@ on result.enrollment_id= o5.enrollment_id
         left join(
         select item_id as period_id,  count(user_id) as userct from  user_favor where item_type='enrollment' group by item_id)o2
         on   result.period_id= o2.period_id
+
+        left join(
+select  enrollment_id,    total/ct as pingfen from (
+select enrollment_id, sum(star) as total , count(comment_id) as ct from enrollment_comment  group by enrollment_id)t)o5
+on result.enrollment_id= o5.enrollment_id
         )t
         order by study_count desc, start_date  desc  limit #{skip},#{take};
 
@@ -358,19 +367,21 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
          select period_id, count(*)  as  renshu from
          user_enrollment   group by  period_id )o1   on  p.period_id =o1.period_id
 
+
+
          where
            p.indicator=1 and e.indicator=1 and e.company_id=#{companyid} and  e.title like '%${keyword}%'  limit #{skip},#{take};
     </select>
 
     <select id="backGetEnrollmentList"  parameterType="com.dli.entities.backEnrollment"  resultType="com.dli.entities.backEnrollment">
        select * from (
-        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
+        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  ,p.created_at   , p.ispublished        from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
  where  p.indicator=1 and e.indicator =1 and   e.company_id=#{company_id})t
  where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="teacher!=null">and teacher like '%${teacher}%' </if>
-        <if test="start!=null">and start =#{start}</if>
-        <if test="end!=null">and end =#{end}</if>
+        <if test="startCondition!=null">and created_at &gt;  #{startCondition}</if>
+        <if test="endCondition!=null">and created_at &lt;   #{endCondition}</if>
         order by    start desc    limit #{skip}, #{take}
     </select>
 
@@ -378,13 +389,13 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
 
     <select id="backGetEnrollmentListCount"  parameterType="com.dli.entities.backEnrollment"  resultType="int">
         select count(*) from (
-        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
+        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count   ,p.created_at from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
         where  p.indicator=1 and e.indicator =1 and   e.company_id=#{company_id})t
         where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="teacher!=null">and teacher like '%${teacher}%' </if>
-        <if test="start!=null">and start =#{start}</if>
-        <if test="end!=null">and end =#{end}</if>
+        <if test="startCondition!=null">and created_at &gt;  #{startCondition}</if>
+        <if test="endCondition!=null">and created_at &lt;   #{endCondition}</if>
     </select>
 
     <select id="backGetEnrollmentCommentList" resultMap="EnrollmentCommentMap">
@@ -405,7 +416,7 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
         case   when   m1.countThisPeriod  is not null then    m1.countThisPeriod    else 0  end   as  countThisPeriod ,
         case when  m2.dateCountNextPeriod  is not null then  m2.dateCountNextPeriod   else 0   end as  dateCountNextPeriod
         from (
-        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
+        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  ,p.created_at from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
         where  p.indicator=1 and e.indicator =1 and   e.company_id=#{company_id})t
         left JOIN
         (select   m.period_id,   count(*)  as countThisPeriod   from   enrollment_period  p join     user_enrollment  m on p.period_id=  m.period_id  group by  m.period_id)m1
@@ -416,15 +427,15 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
         where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="teacher!=null">and teacher like '%${teacher}%' </if>
-        <if test="start!=null">and start =#{start}</if>
-        <if test="end!=null">and end =#{end}</if>
+        <if test="startCondition!=null">and created_at &gt;  #{startCondition}</if>
+        <if test="endCondition!=null">and created_at &lt;   #{endCondition}</if>
         order by    start desc    limit #{skip}, #{take}
     </select>
 
     <select id="backGetEnrollmentResultListCount"  parameterType="com.dli.entities.backEnrollment"  resultType="int">
         select  count(*)
         from (
-        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
+        select  p.period_id,   e.enrollment_id,  e.title, p.teacher,DATE_FORMAT(p.start_date,'%Y-%m-%d')  as   start,  DATE_FORMAT(p.end_date,'%Y-%m-%d')  as end,   p.count  ,p.created_at  from  enrollment_period  p  join enrollment  e   on p.enrollment_id = e.enrollment_id
         where  p.indicator=1 and e.indicator =1 and   e.company_id=#{company_id})t
         left JOIN
         (select   m.period_id,   count(*)  as countThisPeriod   from   enrollment_period  p join     user_enrollment  m on p.period_id=  m.period_id  group by  m.period_id)m1
@@ -435,8 +446,8 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
         where  1=1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="teacher!=null">and teacher like '%${teacher}%' </if>
-        <if test="start!=null">and start =#{start}</if>
-        <if test="end!=null">and end =#{end}</if>
+        <if test="startCondition!=null">and created_at &gt;  #{startCondition}</if>
+        <if test="endCondition!=null">and created_at &lt;   #{endCondition}</if>
     </select>
 
       <select id="backGetUserListThisEnrollmentPeriod"  resultType="com.dli.entities.User">
@@ -480,11 +491,11 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
     </insert>
 
     <insert id="backAddEnrollmentPeriod"  parameterType="com.dli.entities.EnrollmentPeriod"    useGeneratedKeys="true"   keyProperty="period_id">
-        insert   enrollment_period values(  0,  #{enrollment_id},  #{teacher} ,  #{count}  ,   #{start_date}, #{end_date},   #{location} ,1   ,  now(), now() )
+        insert   enrollment_period values(  0,  #{enrollment_id},  #{teacher} ,  #{count}  ,   #{start_date}, #{end_date},   #{location} , 0, null  ,1   ,  now(), now() )
     </insert>
 
     <insert id="backAddEnrollmentContent"  parameterType="com.dli.entities.EnrollmentContent"    useGeneratedKeys="true"   keyProperty="content_id">
-        insert enrollment_content values(  0,  #{sequnce_num},  #{sequnce_title}, #{content},  #{enrollment_id}, 1 ,now(), now() )
+        insert enrollment_content values(  0,  #{sequnce_num},  #{sequnce_title}, #{content}, #{teacher},  #{enrollment_id}, 1 ,now(), now() )
     </insert>
 
     <update id="backUpdateEnrollmentIconAndPic"  parameterType="com.dli.entities.Enrollment">
@@ -502,10 +513,23 @@ where period_id=#{period_id}
     </update>
 
     <update id="backUpdateEnrollmentContent"  parameterType="com.dli.entities.EnrollmentContent">
-        update   enrollment_content  set  sequnce_num=#{sequnce_num}, sequnce_title=#{sequnce_title}, content= #{content}  , updated_at=now() where content_id=#{content_id}
+        update   enrollment_content  set  sequnce_num=#{sequnce_num}, sequnce_title=#{sequnce_title}, content= #{content}  ,  teacher= #{teacher}  ,updated_at=now() where content_id=#{content_id}
     </update>
 
     <update id="backDisableEnrollmentContent">
         update enrollment_content set  indicator =0 where content_id=#{contentid}
+    </update>
+
+    <update id="backUpdateEnrollmentPublishStatus">
+        update    enrollment_period
+
+        <set>
+            <if test="periodid!=0"> ispublished =#{status}   , </if>
+            <if test="status!=0"> publish_date =now()  </if>
+        </set>
+
+
+
+         where period_id = #{periodid}
     </update>
 </mapper>

@@ -40,20 +40,33 @@ public class ExamServiceImpl implements ExamService {
         return examRepo.getExamList(companyid, skip, take);
     }
 
+    /*
     @Override
     public Exam getExambyID(int examid) {
-        return examRepo.getExambyID(examid);
+        Exam  exam = examRepo.getExambyID(examid);
+          int total = this.getTottalScoreForExam(examRepo.getQuestionListByExamid(exam.getExam_id()), exam.getSingle_choice_score(),
+                  exam.getMulti_choice_score(), exam.getTrue_false_score());
+
+          exam.setTotal_score(total);
+
+          return  exam;
     }
 
-    @Override
-    public Exam getAllExamInfo(int examid , int userid) {
-        Exam  e= examRepo.getExambyID(examid);
+    */
 
-        e.setStudy_count( examRepo.getStudyCountByExamid(examid));
-        e.setCollect_count( collectRepo.countAllCollection( "exam"  , examid  )   );
-        e.setManager_idName(   userRepo.getUserByUserID(userid).getFull_name()  );
-        int satus=0;
-        if(collectRepo.countCollection("exam" ,examid,  userid) >0) satus=1;
+    @Override
+    public Exam getAllExamInfo(int examid, int userid) {
+        Exam e = examRepo.getExambyID(examid);
+        int total = this.getTottalScoreForExam(examRepo.getQuestionListByExamid(e.getExam_id()), e.getSingle_choice_score(),
+                e.getMulti_choice_score(), e.getTrue_false_score());
+
+        e.setTotal_score(total);
+
+        e.setStudy_count(examRepo.getStudyCountByExamid(examid));
+        e.setCollect_count(collectRepo.countAllCollection("exam", examid));
+        e.setManager_idName(userRepo.getUserByUserID(userid).getFull_name());
+        int satus = 0;
+        if (collectRepo.countCollection("exam", examid, userid) > 0) satus = 1;
         e.setExamCollected(satus);
 
         //处理histroyid, 如果是第一次  ，histroyid 则为0
@@ -66,9 +79,9 @@ public class ExamServiceImpl implements ExamService {
             }
         }
 
-       // e.setTries_limit(  e.getTries_limit()-  lst.size()   );
+        // e.setTries_limit(  e.getTries_limit()-  lst.size()   );
 
-        return  e;
+        return e;
     }
 
     @Override
@@ -95,7 +108,7 @@ public class ExamServiceImpl implements ExamService {
         if (lst.size() > 0) {
             ExamHistory h = lst.get(lst.size() - 1);
             if (h.getStatus().equals("in-process")) {
-               e.leftSeconds=   e.exam.getTime_limit()*60 -(( new Date().getTime()  -h.getStart_date().getTime())/1000);
+                e.leftSeconds = e.exam.getTime_limit() * 60 - ((new Date().getTime() - h.getStart_date().getTime()) / 1000);
             }
         }
 
@@ -104,13 +117,13 @@ public class ExamServiceImpl implements ExamService {
 
     void addExamRecord(int historyid, int questionid, List<Integer> answeridList, String status) {
 
-        ExamRecord er =new ExamRecord();
+        ExamRecord er = new ExamRecord();
         er.setHistory_id(historyid);
         er.setQuestion_id(questionid);
         er.setStatus(status);
 
-         examRepo.addExamRecord(er);
-        int recordid =er.getRecord_id();
+        examRepo.addExamRecord(er);
+        int recordid = er.getRecord_id();
         for (int answerid : answeridList) {
             examRepo.addExamRecordAnserchoice(recordid, answerid);
         }
@@ -121,13 +134,13 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public int addHistory(int userid, int examid) {
 
-        ExamHistory  h =new ExamHistory();
+        ExamHistory h = new ExamHistory();
         h.setExam_id(examid);
         h.setUser_id(userid);
 
         examRepo.addExamHistroy(h);
-        int historyid =h.getHistory_id();
-      // addExamRecord(historyid, questionid, answeridList, status);
+        int historyid = h.getHistory_id();
+        // addExamRecord(historyid, questionid, answeridList, status);
 
         return historyid;
 
@@ -135,24 +148,23 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public void updateHistory(int historyid, int questionid, List<Integer> answeridList, String status) {
-         ExamRecord  r= examRepo.getExamHistoryRecord(historyid, questionid);
+        ExamRecord r = examRepo.getExamHistoryRecord(historyid, questionid);
 
-         if( r==null) {
-             addExamRecord(historyid, questionid, answeridList, status);
-         }
-         else {
+        if (r == null) {
+            addExamRecord(historyid, questionid, answeridList, status);
+        } else {
 
-             if(r.getStatus() != status){
+            if (r.getStatus() != status) {
 
-                 examRepo.updateExamHistoryRecord( r.getRecord_id(),r.getIs_right(),  status);
-             }
+                examRepo.updateExamHistoryRecord(r.getRecord_id(), r.getIs_right(), status);
+            }
 
-             examRepo.deleteRecordAnswer(r.getRecord_id());
+            examRepo.deleteRecordAnswer(r.getRecord_id());
 
-             for (int answerid : answeridList) {
-                 examRepo.addExamRecordAnserchoice(r.getRecord_id(), answerid);
-             }
-         }
+            for (int answerid : answeridList) {
+                examRepo.addExamRecordAnserchoice(r.getRecord_id(), answerid);
+            }
+        }
     }
 
 
@@ -173,13 +185,18 @@ public class ExamServiceImpl implements ExamService {
                 isRight = true;
             }
 
-            examRepo.updateExamHistoryRecord(er.getRecord_id(), isRight  ,er.getStatus() );
+            examRepo.updateExamHistoryRecord(er.getRecord_id(), isRight, er.getStatus());
         }
 
-        int correct = examRepo.getExamHistoryCorrectRecrdCount(historyid);
-        int score =  100  * correct / questionLst.size() ;
-
         Exam exam = examRepo.getExambyID(examid);
+
+        List<Integer> correctids = examRepo.getExamHistoryCorrectRecordQuestionIDList(historyid);
+        List<Question> correctQuestions = examRepo.backGetQuestionListByIDs(correctids);
+        // getTottalScoreForExam 这个方法  算总分 ，算得分 都可以用
+        int score = this.getTottalScoreForExam(correctQuestions, exam.getSingle_choice_score(),
+                exam.getMulti_choice_score(), exam.getTrue_false_score());
+
+
         String status = "failure";
         if (score >= exam.getPass_score())
             status = "pass";
@@ -224,24 +241,23 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public List<Exam> getMyExamlistNotPassed(int companyid, int userid, int skip, int take) {
-        return  examRepo.getMyExamlistNotPassed(companyid, userid, skip, take);
+        return examRepo.getMyExamlistNotPassed(companyid, userid, skip, take);
     }
 
     @Override
     public List<Exam> getMyCollectionList(int userid, int skip, int take) {
-        return     examRepo.getMyCollectionList(userid,skip,take);
+        return examRepo.getMyCollectionList(userid, skip, take);
     }
 
     @Override
     public List<SearchResult> searchExam(int companyid, String keyword, int skip, int take) {
-        return  examRepo.searchExam(companyid,keyword,skip,take);
+        return examRepo.searchExam(companyid, keyword, skip, take);
     }
 
     @Override
-    public void backAddQuestion(  Question   q,  List<Answer> answerList) {
+    public void backAddQuestion(Question q, List<Answer> answerList) {
         examRepo.backAddExamQuestion(q);
-        for(   Answer  a : answerList  )
-        {
+        for (Answer a : answerList) {
             a.setQuestion_id(q.getQuestion_id());
             examRepo.backAddQuestionAnswer(a);
 
@@ -250,11 +266,11 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public QuestionEditPageInfo backGetQuestionEditPageInfo(int questionid) {
-        QuestionEditPageInfo entity =new QuestionEditPageInfo();
-        entity.QuestionToBeEidt= examRepo.backGetQuestion(questionid);
-        entity.AnswerList =examRepo.backGetQuestionAnswerList(questionid);
+        QuestionEditPageInfo entity = new QuestionEditPageInfo();
+        entity.QuestionToBeEidt = examRepo.backGetQuestion(questionid);
+        entity.AnswerList = examRepo.backGetQuestionAnswerList(questionid);
 
-        return  entity;
+        return entity;
     }
 
     @Override
@@ -262,27 +278,20 @@ public class ExamServiceImpl implements ExamService {
         examRepo.backUpdateQuestion(q);
 
 
+        List<Answer> storedLst = examRepo.backGetQuestionAnswerList(q.getQuestion_id());
 
-        List<Answer>  storedLst = examRepo.backGetQuestionAnswerList(q.getQuestion_id());
-
-        for(Answer  stored : storedLst)
-        {
-            if( !answerList.contains(  stored ))
-            {
-                examRepo.backDisableAnswer(  stored.getAnswer_id());
+        for (Answer stored : storedLst) {
+            if (!answerList.contains(stored)) {
+                examRepo.backDisableAnswer(stored.getAnswer_id());
             }
         }
 
 
-        for(Answer  a  :  answerList)
-        {
-            if(a.getAnswer_id()==0)
-            {
+        for (Answer a : answerList) {
+            if (a.getAnswer_id() == 0) {
                 a.setQuestion_id(q.getQuestion_id());
                 examRepo.backAddQuestionAnswer(a);
-            }
-            else
-            {
+            } else {
                 examRepo.backUpdateAnswer(a);
             }
         }
@@ -292,22 +301,22 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public List<Question> backGetQuestionList(QuestionCondition q) {
-        return  examRepo.backGetQuestionList(q);
+        return examRepo.backGetQuestionList(q);
     }
 
     @Override
     public int backGetQuestionListCount(QuestionCondition q) {
-        return  examRepo.backGetQuestionListCount(q);
+        return examRepo.backGetQuestionListCount(q);
     }
 
     @Override
     public List<Exam> backGetExamList(ExamCondition e) {
-        return   examRepo.backGetExamList(e);
+        return examRepo.backGetExamList(e);
     }
 
     @Override
     public int backGetExamListCount(ExamCondition e) {
-        return  examRepo.backGetExamListCount(e);
+        return examRepo.backGetExamListCount(e);
     }
 
     @Override
@@ -317,46 +326,45 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public void backDisableQuestion(int questionid) {
-           examRepo.backDisableQuestion(questionid);
+        examRepo.backDisableQuestion(questionid);
     }
 
     @Override
     public List<backExamHistory> backGetExamHistoryList(backExamHistory bh) {
-        return   examRepo.backGetExamHistoryList(bh);
+        return examRepo.backGetExamHistoryList(bh);
     }
 
     @Override
     public int backGetExamHistoryListCount(backExamHistory bh) {
-        return  examRepo.backGetExamHistoryListCount(bh);
+        return examRepo.backGetExamHistoryListCount(bh);
     }
 
     @Override
-    public List<Question>  backGetExamHistoryQuestionList(int historyid ,int skip ,int take){
+    public List<Question> backGetExamHistoryQuestionList(int historyid, int skip, int take) {
 
 
-        List<Question>  questions =examRepo.backGetExamHistoryQuestionList(historyid ,skip ,take);
+        List<Question> questions = examRepo.backGetExamHistoryQuestionList(historyid, skip, take);
 
-        for(   Question  q :  questions  )
-        {
-            q.answers =examRepo.backGetExamDetailQuestionAnswer(historyid,  q.getQuestion_id());
+        for (Question q : questions) {
+            q.answers = examRepo.backGetExamDetailQuestionAnswer(historyid, q.getQuestion_id());
         }
 
-        return  questions;
+        return questions;
     }
 
     @Override
     public backExamHistory backGetExamHistory(int historyid) {
-        return   examRepo.backGetExamHistory(historyid);
+        return examRepo.backGetExamHistory(historyid);
     }
 
     @Override
     public int backGetExamHistoryQuestionListCount(int historyid) {
-        return   examRepo.backGetExamHistoryQuestionListCount(historyid);
+        return examRepo.backGetExamHistoryQuestionListCount(historyid);
     }
 
     @Override
     public void backAddExamCourseMapping(int examid, int courseid) {
-         examRepo.backAddExamCourseMapping(examid,courseid);
+        examRepo.backAddExamCourseMapping(examid, courseid);
     }
 
     @Override
@@ -377,18 +385,32 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public ExamEditPageInfo backGetExamEditPageInfo(int examid, int companyid) {
 
-        ExamEditPageInfo  entity =  new ExamEditPageInfo();
+        ExamEditPageInfo entity = new ExamEditPageInfo();
 
-        entity.AdminList = userRepo.backGetCompanyAdminList( companyid, 0,  Constant.takeMax );
+        //entity.AdminList = userRepo.backGetCompanyAdminList(companyid, 0, Constant.takeMax);
+        entity.AdminList=userRepo.backGetUserList(companyid,null,null,null, null,0, Constant.takeMax);
 
-        if( examid>0)
-        {
-            entity.ExamToBeEdit = examRepo.getExambyID(examid);
-            entity.CourseList =examRepo.backGetExamCourseListByExamID(examid);
-            entity.QuestionList =examRepo.backGetExamQuestionListByExamID(examid);
+        if (examid > 0) {
+
+            Exam e = examRepo.getExambyID(examid);
+
+            int total = this.getTottalScoreForExam(examRepo.getQuestionListByExamid(examid), e.getSingle_choice_score(),
+                    e.getMulti_choice_score(), e.getTrue_false_score());
+            e.setTotal_score(total);
+
+            entity.ExamToBeEdit = e;
+
+            int histroycount = examRepo.getStudyCountByExamid(examid);
+            if (histroycount > 0)
+                entity.HasHistory = 1;
+            else
+                entity.HasHistory = 0;
+
+            entity.CourseList = examRepo.backGetExamCourseListByExamID(examid);
+            entity.QuestionList = examRepo.backGetExamQuestionListByExamID(examid);
         }
 
-        return   entity;
+        return entity;
     }
 
     @Override
@@ -398,7 +420,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public void backDeleteExamQuestionMapping(int examid) {
-         examRepo.backDeleteExamQuestionMapping(examid);
+        examRepo.backDeleteExamQuestionMapping(examid);
     }
 
     @Override
@@ -408,6 +430,43 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public List<ExamHistory> getMyExamHistoryIDsInProcess(int userid) {
-        return   examRepo.getMyExamHistoryIDsInProcess(userid);
+        return examRepo.getMyExamHistoryIDsInProcess(userid);
     }
+
+    @Override
+    public void backUpdateExamPublishStatus(int status, int examid) {
+        examRepo.backUpdateExamPublishStatus(status, examid);
+    }
+
+    @Override
+    public List<Question> backGetQuestionListByIDs(List<Integer> questionids) {
+        return examRepo.backGetQuestionListByIDs(questionids);
+    }
+
+    @Override
+    public int getTottalScoreForExam(List<Question> lst, int score1, int score2, int score3) {
+
+
+        int total = 0;
+        for (Question q : lst) {
+            switch (q.getType_id()) {
+                case 1:
+                    total += score1;
+                    break;
+                case 2:
+                    total += score2;
+                    break;
+                case 3:
+                    total += score3;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return total;
+
+    }
+
+
 }

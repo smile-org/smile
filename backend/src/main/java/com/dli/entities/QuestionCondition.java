@@ -8,7 +8,10 @@ public class QuestionCondition {
 
     private String title;
     private int type_id;
-    private String created_at;
+
+    private  Date start;
+    private  Date end ;
+
     int skip;
     int take;
     int company_id;
@@ -45,13 +48,7 @@ public class QuestionCondition {
         this.type_id = type_id;
     }
 
-    public String getCreated_at() {
-        return created_at;
-    }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
 
 
 
@@ -62,6 +59,23 @@ public class QuestionCondition {
     public void setSkip(int skip) {
         this.skip = skip;
     }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
 
 
 }
