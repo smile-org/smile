@@ -6,7 +6,6 @@
       <span class="vm"  v-on:click="exit()">企业管理后台</span>
     </div>
     <el-dropdown @command="commandClick"  trigger="click">
-
       <span class="el-dropdown-link vm">
          <img class="header_rimg" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=547138142,3998729701&fm=27&gp=0.jpg">
          <span>张三</span>
@@ -19,7 +18,6 @@
     </el-dropdown>
   </header>
 </template>
-
 <script>
   import router from '../router'
   export default {
@@ -30,8 +28,6 @@
     },
     props: ['type'],
     created () {
-      // retrieve logo from session storage
-//    this.companyLogo = 'http://ww2.sinaimg.cn/thumb180/8892b46egw1f319hyl0juj20iz0sgq4v.jpg'
     },
     methods: {
       commandClick(name) {
@@ -40,7 +36,6 @@
           }else if ( name === "changePWD"){
             this.changePWD()
           }
-
       },
       routeByName: function (name) {
         router.push({name: name})
