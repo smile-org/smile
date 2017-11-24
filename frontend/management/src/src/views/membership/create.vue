@@ -64,8 +64,9 @@
                 <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511510506103&di=4d32cfe044a5c9a5c9c0d2221b0ef111&imgtype=0&src=http%3A%2F%2Fphoto.img.chem960.com%2Fpl2014%2Fpm4%2F4%2F2r14qa10h734109.jpg">
               </div>
             </el-form-item>
-            <div class="tc">
-              <button class="inf_btn btn_margin" type="button" v-on:click="submitForm('ruleForm')">保  存</button>
+            <div class="tc btn_margin">
+              <button class="inf_btn" type="button" v-on:click="submitForm('ruleForm')">确  定</button>
+              <button class="inf_btn ml20" type="button">返  回</button>
             </div>
           </el-form>
         </div>

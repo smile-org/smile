@@ -6,6 +6,9 @@ import App from './App'
 import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts
 // import MintUI from 'mint-ui'
 // import 'mint-ui/lib/style.css'
 // import vueInfiniteScroll from 'vue-infinite-scroll'

@@ -22,7 +22,7 @@
             </el-form-item>
             <el-form-item class="fr hidden mb20 dc_width">
               <button type="button" class="line-btn ml20">查  询</button>
-              <button type="button" v-on:click="agencyCreate"  class="inf_btn ml20 export_bor">代理商入住</button>
+              <button type="button" v-on:click="agencyCreate"  class="inf_btn ml20 export_bor">代理商入驻</button>
             </el-form-item>
           </el-form>
           <hr class="hr_line">
