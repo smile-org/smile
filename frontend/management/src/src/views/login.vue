@@ -76,8 +76,8 @@
           } else {
             this.msg = '用户名或密码错误'
           }
-        }).catch(() => {
-          console.error('err')
+        }).catch((err) => {
+          console.error(err.message)
         })
       }
     }
