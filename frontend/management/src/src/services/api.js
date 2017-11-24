@@ -58,6 +58,9 @@ export default {
   },
   uri: {
     // *** 登录 ***
-    login: '/back/logon'
+    login: '/back/logon', // change to /admin/logon
+
+    // *** 修改密码 ***
+    updatePassword: 'updatePassword'
   }
 }

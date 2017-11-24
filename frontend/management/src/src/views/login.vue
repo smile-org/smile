@@ -68,6 +68,7 @@
             this.token = data.result
             var storage = window.localStorage
             storage['token'] = this.token
+            storage['fullname'] = data.userInfo.full_name
             if (this.keepAlive) {
               storage['username'] = this.username
               storage['password'] = md5Password

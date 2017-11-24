@@ -9,7 +9,7 @@
       <span class="el-dropdown-link vm">
          <img class="header_rimg"
               src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=547138142,3998729701&fm=27&gp=0.jpg">
-         <span>张三</span>
+         <span>{{fullName}}</span>
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown" style="right: 20px;left: auto">
@@ -24,11 +24,13 @@
   export default {
     data: function () {
       return {
-        companyLogo: ''
+        companyLogo: '',
+        fullName: ''
       }
     },
     props: ['type'],
     created () {
+      this.fullName = window.localStorage['fullname']
     },
     methods: {
       commandClick (name) {
@@ -50,6 +52,7 @@
         storage.removeItem('token')
         storage.removeItem('username')
         storage.removeItem('password')
+        storage.removeItem('fullname')
         this.routeByName('login')
       },
       handleCommand (command) {
