@@ -24,6 +24,9 @@
                   <el-input v-model="ruleForm.employeeNo"></el-input>
                 </el-form-item>
               </el-col>
+              <el-col class="attention_p">
+                <span>注：</span>该人将作为企业管理员添加至系统中，密码将以短信形式发至该手机上。
+              </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
@@ -80,6 +83,7 @@
   import navigator from '../../components/Navigator'
   import router from '../../router'
   import api from '../../services/api'
+//  import ElRow from "element-ui/packages/row/src/row";
 //  import moment from 'moment'
   export default {
     data: function () {
@@ -133,6 +137,7 @@
       }
     },
     components: {
+//      ElRow,
       commonHeader,
       navigator
     },
@@ -181,4 +186,15 @@
     padding:10px;
     border:1px solid #dcdcdc;
   }
+  .attention_p{
+    margin-left: 100px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: #f56d16;
+  }
+  .attention_p span{
+    color: #f56d16;
+  }
+
 </style>
