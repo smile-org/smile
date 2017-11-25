@@ -34,6 +34,12 @@
             </el-table-column>
             <el-table-column prop="email" align="center" label="邮箱" width="">
             </el-table-column>
+            <el-table-column label="操作" class="tc" width="140" align="center">
+              <template scope="scope">
+                <el-button @click="" type="text" size="small">编辑</el-button>
+                <el-button @click=""  class="red_font"  type="text" size="small">{{scope.row.ispublished ? '禁用' : '有效'}}</el-button>
+              </template>
+            </el-table-column>
           </el-table>
           <div class="ds_oq_pageF">
             <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
@@ -59,12 +65,8 @@
         formAdmin: {
           username: '',
           email: '',
-          tel: '',
-          department: ''
-        },
-        formAdminTake: 10,
-        formAdminTotal: 0,
-        formAdminCurrentPage: 1
+          tel: ''
+        }
       }
     },
     components: {
@@ -76,7 +78,7 @@
     },
     methods: {
       queryAdminList: function () {
-        api.fetch(api.uri.getCompanyAdminList, {
+        api.fetch(api.uri.getOperatorList, {
           skip: (this.currentPage - 1) * this.take,
           take: this.take
         }).then(data => {
@@ -93,31 +95,8 @@
       add: function () {
         this.dialogAdminVisible = true
       },
-      handleAdminCurrentChange: function (val) {
-        this.formAdminCurrentPage = val
-        this.searchUser()
-      },
       saveAdmin: function () {
-        console.log(this.multipleTable)
-        var userids = ''
-        for (var i = 0; i < this.multipleTable.length; i++) {
-          userids += this.multipleTable[i].user_id + ','
-        }
-        if (userids === '') {
-          this.$message({
-            type: 'info',
-            message: '请选择员工'
-          })
-          return
-        }
-        userids = userids.substring(0, userids.length - 1)
-        console.log(userids)
-        api.fetch(api.uri.addAdminList, {userids: userids}).then(data => {
-          if (data.status === 1) {
-            this.queryAdminList()
-            this.dialogAdminVisible = false
-          }
-        })
+        console.log('')
       }
     }
   }
