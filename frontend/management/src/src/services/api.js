@@ -58,9 +58,12 @@ export default {
   },
   uri: {
     // *** 登录 ***
-    login: '/back/logon', // change to /admin/logon
+    login: '/back/logon', // TODO:: change to /admin/logon
 
     // *** 修改密码 ***
-    updatePassword: 'updatePassword'
+    updatePassword: 'updatePassword',
+
+    // *** 获取运营人员  ***
+    getOperatorList: '/back/GetCompanyAdminList' // TODO:: change to /admin/getOperatorList
   }
 }
