@@ -10,20 +10,21 @@
         </nav>
         <div class="con_tab">
           <button class="inf_btn" v-on:click="add()">添加运营人员</button>
-          <el-dialog title="添加运营人员" :visible.sync="dialogAdminVisible">
-            <el-form :inline="true" :model="formAdmin" class="demo-form-inline mt20">
-              <el-form-item label="人员姓名">
+          <el-dialog title="添加/编辑运营人员" :visible.sync="dialogAdminVisible">
+            <el-form :inline="true" :model="formAdmin" :rules="rules" class="demo-form-inline mt20">
+              <el-form-item label="人员姓名" prop="username">
                 <el-input v-model="formAdmin.username" placeholder="人员姓名"></el-input>
               </el-form-item>
-              <el-form-item label="手机号码">
+              <el-form-item label="手机号码" prop="tel">
                 <el-input v-model="formAdmin.tel" placeholder="手机号码"></el-input>
               </el-form-item>
-              <el-form-item label="电子邮箱">
+              <el-form-item label="电子邮箱" prop="email">
                 <el-input v-model="formAdmin.email" placeholder="电子邮箱"></el-input>
               </el-form-item>
             </el-form>
             <div class="tc">
-              <button type="button" class="inf_btn mt30 mb20" v-on:click="saveAdmin">保 存
+              <button type="button" class="inf_btn mt30 mb20" v-on:click="save">保 存
+
               </button>
             </div>
           </el-dialog>
@@ -36,13 +37,15 @@
             </el-table-column>
             <el-table-column label="操作" class="tc" width="140" align="center">
               <template scope="scope">
-                <el-button @click="" type="text" size="small">编辑</el-button>
-                <el-button @click=""  class="red_font"  type="text" size="small">{{scope.row.ispublished ? '禁用' : '有效'}}</el-button>
+                <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+                <el-button @click="deleteUser(scope.row.user_id)" class="red_font" type="text" size="small">删除
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
           <div class="ds_oq_pageF">
-            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="take" layout="total, prev, pager, next" :total="total"></el-pagination>
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="take"
+                           layout="total, prev, pager, next" :total="total"></el-pagination>
           </div>
         </div>
       </section>
@@ -65,7 +68,30 @@
         formAdmin: {
           username: '',
           email: '',
-          tel: ''
+          tel: '',
+          userId: 0
+        },
+        saveMode: '',
+        rules: {
+          username: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 2, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          tel: [
+            { required: true, message: '请输入手机号', trigger: 'change' },
+            { len: 11, message: '请输入正确格式的手机号码', trigger: 'blur' },
+            { validator: (rule, value, callback) => {
+              if (/^1[34578]\d{9}$/.test(value) === false) {
+                callback(new Error('请输入正确格式的手机号码'))
+              } else {
+                callback()
+              }
+            },
+              trigger: 'blur'}
+          ],
+          email: [
+            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+          ]
         }
       }
     },
@@ -93,10 +119,69 @@
         this.queryAdminList()
       },
       add: function () {
+        this.formAdmin.username = ''
+        this.formAdmin.tel = ''
+        this.formAdmin.email = ''
         this.dialogAdminVisible = true
+        this.saveMode = 'add'
       },
-      saveAdmin: function () {
-        console.log('')
+      edit: function (row) {
+        this.formAdmin.username = row.full_name
+        this.formAdmin.tel = row.cell_phone
+        this.formAdmin.email = row.email
+        this.dialogAdminVisible = true
+        this.formAdmin.userId = row.user_id
+        this.saveMode = 'edit'
+      },
+      deleteUser: function (id) {
+        this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.fetch(api.uri.deleteUser, {userid: id}).then(data => {
+            this.queryAdminList()
+          }).catch(error => {
+            alert(error.message)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      save: function () {
+        if (this.saveMode === 'add') {
+          console.log('add')
+          api.fetch(api.uri.addOperator, {
+            fullname: this.formAdmin.username,
+            cellphone: this.formAdmin.tel,
+            email: this.formAdmin.email
+          }).then(data => {
+            if (data.status === 1) {
+              this.queryAdminList()
+              this.dialogAdminVisible = false
+            }
+          }).catch(error => {
+            this.$message(error.message)
+          })
+        } else {
+          console.log('edit')
+          api.fetch(api.uri.editOperator, {
+            userid: this.formAdmin.userId,
+            fullname: this.formAdmin.username,
+            cellphone: this.formAdmin.tel,
+            email: this.formAdmin.email
+          }).then(data => {
+            if (data.status === 1) {
+              this.queryAdminList()
+              this.dialogAdminVisible = false
+            }
+          }).catch(error => {
+            this.$message(error.message)
+          })
+        }
       }
     }
   }
@@ -111,7 +196,8 @@
     padding: 10px;
     font-size: 14px;
   }
-  .info_tab tr td:first-child{
+
+  .info_tab tr td:first-child {
     /*font-weight:600;*/
     background: #f2f7f1;
   }

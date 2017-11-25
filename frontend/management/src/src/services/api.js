@@ -58,12 +58,21 @@ export default {
   },
   uri: {
     // *** 登录 ***
-    login: '/back/logon', // TODO:: change to /admin/logon
+    login: '/admin/logon',
 
     // *** 修改密码 ***
     updatePassword: 'updatePassword',
 
     // *** 获取运营人员  ***
-    getOperatorList: '/back/GetCompanyAdminList' // TODO:: change to /admin/getOperatorList
+    getOperatorList: '/admin/GetPlatformUserList',
+
+    // *** 删除运营人员 ***
+    deleteUser: '/back/DisableUserByID',
+
+    // *** 编辑运营人员 ***
+    editOperator: '/admin/UpdatePlatformUser',
+
+    // *** 添加运营人员 ***
+    addOperator: '/admin/AddPlatformUser'
   }
 }
