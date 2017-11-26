@@ -73,6 +73,14 @@ export default {
     editOperator: '/admin/UpdatePlatformUser',
 
     // *** 添加运营人员 ***
-    addOperator: '/admin/AddPlatformUser'
+    addOperator: '/admin/AddPlatformUser',
+
+    // *** 驾驶舱 ***
+    getRepository: '/admin/GetResourceStatistics',
+    getIndustry: '/admin/GetIndustryStatistics',
+    getEmployee: '/admin/GetEmployeeStatistics',
+    getIncresing: '/admin/GetCompanyStatistics  ',
+    getGetCompanyArea: '/admin/GetCompanyAreaStatistics',
+    getGetAgency: '/admin/GetAgencyStatistics'
   }
 }
