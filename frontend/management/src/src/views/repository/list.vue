@@ -134,37 +134,67 @@
         .then((resourceData) => {
           if (resourceData.status === 1) {
             var arr = []
+            var arrName = []
             for (var i = 0; i < resourceData.result.length; i++) {
               var item = resourceData.result[i]
               arr.push(item.count)
+              arrName.push(item.name)
             }
-            this.drawLine2(arr)
+            this.drawLine2(arr, arrName)
           }
         })
-//      api.fetch(api.uri.getEmployee)
-//        .then((resourceData) => {
-//          if (resourceData.status === 1) {
-//            this.drawLine3(resourceData.result)
-//          }
-//        })
-//      api.fetch(api.uri.getIncresing)
-//        .then((resourceData) => {
-//          if (resourceData.status === 1) {
-//            this.drawLine4(resourceData.result)
-//          }
-//        })
-//      api.fetch(api.uri.getGetCompanyArea)
-//        .then((resourceData) => {
-//          if (resourceData.status === 1) {
-//            this.drawLine5(resourceData.result)
-//          }
-//        })
-//      api.fetch(api.uri.getGetAgency)
-//        .then((resourceData) => {
-//          if (resourceData.status === 1) {
-//            this.drawLine4(resourceData.result)
-//          }
-//        })
+      api.fetch(api.uri.getEmployee)
+        .then((resourceData) => {
+          if (resourceData.status === 1) {
+            var arr = []
+            var arrMonth = []
+            for (var i = 0; i < resourceData.result.length; i++) {
+              var item = resourceData.result[i]
+              arr.push(item.count)
+              arrMonth.push(item.month)
+            }
+            this.drawLine3(arr, arrMonth)
+          }
+        })
+      api.fetch(api.uri.getIncreasing)
+        .then((resourceData) => {
+          if (resourceData.status === 1) {
+            var arr = []
+            var arrMonth = []
+            for (var i = 0; i < resourceData.result.length; i++) {
+              var item = resourceData.result[i]
+              arr.push(item.count)
+              arrMonth.push(item.month)
+            }
+            this.drawLine4(arr, arrMonth)
+          }
+        })
+      api.fetch(api.uri.getGetCompanyArea)
+        .then((resourceData) => {
+          if (resourceData.status === 1) {
+            var arr = []
+            var arrName = []
+            for (var i = 0; i < resourceData.result.length; i++) {
+              var item = resourceData.result[i]
+              arr.push(item.count)
+              arrName.push(item.name)
+            }
+            this.drawLine5(arr, arrName)
+          }
+        })
+      api.fetch(api.uri.getGetAgency)
+        .then((resourceData) => {
+          if (resourceData.status === 1) {
+            var arr = []
+            var arrName = []
+            for (var i = 0; i < resourceData.result.length; i++) {
+              var item = resourceData.result[i]
+              arr.push(item.count)
+              arrName.push(item.name)
+            }
+            this.drawLine6(arr, arrName)
+          }
+        })
     },
     methods: {
       drawLine (data) {
@@ -208,11 +238,11 @@
           ]
         })
       },
-      drawLine2 (data) {
+      drawLine2 (data, data2) {
         let myChart2 = echarts.init(document.getElementById('myChart2'))
         myChart2.setOption({
           title: {
-            text: '行业统计是',
+            text: '行业统计',
             x: 'center',
             textStyle: {
               color: '#55b761',
@@ -224,16 +254,21 @@
           tooltip: {},
           grid: {
             x: 80,
-            y2: 100
+            y2: 110
           },
           xAxis: {
-            data: ['IT互联网/通信/电子', '金融/会计/银行/保险', '房地产/建筑业', '咨询/翻译/中介', '教育/培训', '广告/媒体', '消费品/贸易/批发/零售', '加工制造/仪器仪表', '交通/物流/运输', '制药/医疗', '能源/采掘/化工/环保', '政府/农林牧渔', '其他'],
+            type: 'category',
+            data: data2,
             axisLabel: {
               interval: 0,
               rotate: 50
             }
           },
-          yAxis: {},
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
           series: [
             {
               name: '课程',
@@ -249,7 +284,7 @@
           ]
         })
       },
-      drawLine3 (data) {
+      drawLine3 (data, data3) {
         let myChart3 = echarts.init(document.getElementById('myChart3'))
         // 绘制图表
         myChart3.setOption({
@@ -263,16 +298,24 @@
               fontSize: 18
             }
           },
+          grid: {
+            x: 40,
+            y2: 80
+          },
           tooltip: {},
           xAxis: {
-            data: ['201701', '201702', '201703', '201704', '201705', '201706', '201707', '201708', '201709', '201710', '201711', '201712'],
+            type: 'category',
+            data: data3,
             axisLabel: {
-//              interval: 0,
-//              rotate: 40
-              interval: 0
+              interval: 0,
+              rotate: 40
             }
           },
-          yAxis: {},
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
           series: [
             {
               name: '课程',
@@ -288,7 +331,7 @@
           ]
         })
       },
-      drawLine4 (data) {
+      drawLine4 (data, data4) {
         let myChart4 = echarts.init(document.getElementById('myChart4'))
         // 绘制图表
         myChart4.setOption({
@@ -302,15 +345,24 @@
               fontSize: 18
             }
           },
+          grid: {
+            x: 40,
+            y2: 80
+          },
           tooltip: {},
           xAxis: {
-            data: ['201701', '201702', '201703', '201704'],
+            type: 'category',
+            data: data4,
             axisLabel: {
-//              interval: 0,
-//              rotate: 40
+              interval: 0,
+              rotate: 40
             }
           },
-          yAxis: {},
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
           series: [
             {
               name: '课程',
@@ -326,7 +378,7 @@
           ]
         })
       },
-      drawLine5 (data) {
+      drawLine5 (data, data5) {
         let myChart5 = echarts.init(document.getElementById('myChart5'))
         // 绘制图表
         myChart5.setOption({
@@ -340,15 +392,24 @@
               fontSize: 18
             }
           },
+          grid: {
+            x: 80,
+            y2: 110
+          },
           tooltip: {},
           xAxis: {
-            data: ['201701', '201702', '201703', '201704'],
+            type: 'category',
+            data: data5,
             axisLabel: {
-//              interval: 0,
-//              rotate: 40
+              interval: 0,
+              rotate: 50
             }
           },
-          yAxis: {},
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
           series: [
             {
               name: '代理商统计',
@@ -364,7 +425,7 @@
           ]
         })
       },
-      drawLine6 (data) {
+      drawLine6 (data, data6) {
         let myChart6 = echarts.init(document.getElementById('myChart6'))
         // 绘制图表
         myChart6.setOption({
@@ -378,15 +439,24 @@
               fontSize: 18
             }
           },
+          grid: {
+            x: 80,
+            y2: 110
+          },
           tooltip: {},
           xAxis: {
-            data: ['201701', '201702', '201703', '201704'],
+            type: 'category',
+            data: data6,
             axisLabel: {
-//              interval: 0,
-//              rotate: 40
+              interval: 0,
+              rotate: 50
             }
           },
-          yAxis: {},
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
           series: [
             {
               name: '课程',

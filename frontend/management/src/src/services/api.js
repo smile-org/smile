@@ -79,7 +79,7 @@ export default {
     getRepository: '/admin/GetResourceStatistics',
     getIndustry: '/admin/GetIndustryStatistics',
     getEmployee: '/admin/GetEmployeeStatistics',
-    getIncresing: '/admin/GetCompanyStatistics  ',
+    getIncreasing: '/admin/GetCompanyStatistics  ',
     getGetCompanyArea: '/admin/GetCompanyAreaStatistics',
     getGetAgency: '/admin/GetAgencyStatistics'
   }
