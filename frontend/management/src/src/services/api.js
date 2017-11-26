@@ -83,6 +83,13 @@ export default {
     getGetCompanyArea: '/admin/GetCompanyAreaStatistics',
     getGetAgency: '/admin/GetAgencyStatistics',
 
+    // *** 代理商管理 ***
+    getAgencyList: '/admin/GetAgencyList',
+    addAgency: '/admin/AddAgency',
+    getAgency: '/admin/GetAgencyByID',
+    updateAgency: '/admin/Updateagency',
+    updateAgencyStatus: '/admin/UpdateAgencyStatusByID',
+
     // *** 企业会员  ***
     // getOperatorList: '/back/GetCompanyAdminList', // TODO:: change to /admin/getOperatorList
     getCompanyList: '/admin/GetCompanyList',
