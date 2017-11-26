@@ -81,6 +81,21 @@ export default {
     getEmployee: '/admin/GetEmployeeStatistics',
     getIncreasing: '/admin/GetCompanyStatistics  ',
     getGetCompanyArea: '/admin/GetCompanyAreaStatistics',
-    getGetAgency: '/admin/GetAgencyStatistics'
+    getGetAgency: '/admin/GetAgencyStatistics',
+
+    // *** 企业会员  ***
+    // getOperatorList: '/back/GetCompanyAdminList', // TODO:: change to /admin/getOperatorList
+    getCompanyList: '/admin/GetCompanyList',
+    getProvinceAndBusiness: '/admin/GetCompanyEidtPageInfo',
+    uploadLicense: '/admin/UploadCompanyBusinessLicence',
+    updateCompanyStatus: '/admin/UpdateCompanyStatusByID'
+    // createCompany: '/admin/AddCompany'
+  },
+
+  getUploadHeaders: function () {
+    var token = window.localStorage.getItem('token')
+    return {
+      token: token
+    }
   }
 }
