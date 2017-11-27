@@ -21,29 +21,29 @@
             <el-col :span="11">
               <div class="aa">
                 <div class="bb">企业资源统计</div>
-                <div id="myChart" style="height: 300px;"></div>
+                <div id="myChart" style="height: 300px;width: 100%;"></div>
               </div>
             </el-col>
             <el-col :span="2"></el-col>
             <el-col :span="11" class="fr">
               <div class="aa">
                 <div class="bb"> 企业行业分布统计</div>
-                <div id="myChart2" style="height:270px;"></div>
+                <div id="myChart2" style="height:270px;width: 100%;"></div>
               </div>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="11">
               <div class="aa">
-                <div class="bb">当前员工数量：<span>333</span></div>
-                <div id="myChart3" style="height: 300px;"></div>
+                <div class="bb">当前员工数量：<span>{{count}}</span></div>
+                <div id="myChart3" style="height: 300px;width: 100%;"></div>
               </div>
             </el-col>
             <el-col :span="2"></el-col>
             <el-col :span="11" class="fr">
               <div class="aa">
-                <div class="bb">当前企业数量：<span>22</span></div>
-                <div id="myChart4" style="height:300px;"></div>
+                <div class="bb">当前企业数量：<span>{{count1}}</span></div>
+                <div id="myChart4" style="height:300px;width: 100%;"></div>
               </div>
             </el-col>
           </el-row>
@@ -51,7 +51,7 @@
             <el-col :span="24">
               <div class="aa">
                 <div class="bb">企业地区分布统计</div>
-                <div id="myChart5" style="height: 300px;"></div>
+                <div id="myChart5" style="height: 300px;width: 100%;"></div>
               </div>
             </el-col>
           </el-row>
@@ -59,7 +59,7 @@
             <el-col :span="24">
               <div class="aa">
                 <div class="bb">代理商统计</div>
-                <div id="myChart6" style="height: 300px;"></div>
+                <div id="myChart6" style="height: 300px;width: 100%;"></div>
               </div>
             </el-col>
           </el-row>
@@ -86,8 +86,9 @@
   export default {
     data: function () {
       return {
-        company: {}
-
+        company: {},
+        count: 0,
+        count1: 0
       }
     },
     mounted () {
@@ -97,6 +98,10 @@
       this.drawLine4()
       this.drawLine5()
       this.drawLine6()
+//      let self = this
+//      window.setTimeout(function () {
+//        self.count = 11
+//      }, 2000)
     },
     components: {
       commonHeader,
@@ -152,6 +157,9 @@
               var item = resourceData.result[i]
               arr.push(item.count)
               arrMonth.push(item.month)
+              if (resourceData.result.length - 1 === i) {
+                this.count = item.count
+              }
             }
             this.drawLine3(arr, arrMonth)
           }
@@ -165,6 +173,9 @@
               var item = resourceData.result[i]
               arr.push(item.count)
               arrMonth.push(item.month)
+              if (resourceData.result.length - 1 === i) {
+                this.count1 = item.count
+              }
             }
             this.drawLine4(arr, arrMonth)
           }
@@ -226,10 +237,11 @@
           series: [
             {
               name: '课程',
+              barMaxWidth: '30',
               type: 'bar',
               itemStyle: {
                 normal: {
-                  color: 'blue',
+                  color: '#55b761',
                   barBorderRadius: 0
                 }
               },
@@ -275,7 +287,7 @@
               type: 'bar',
               itemStyle: {
                 normal: {
-                  color: 'blue',
+                  color: '#55b761',
                   barBorderRadius: 0
                 }
               },
@@ -322,7 +334,7 @@
               type: 'line',
               itemStyle: {
                 normal: {
-                  color: 'blue',
+                  color: '#55b761',
                   barBorderRadius: 0
                 }
               },
@@ -369,7 +381,7 @@
               type: 'line',
               itemStyle: {
                 normal: {
-                  color: 'blue',
+                  color: '#55b761',
                   barBorderRadius: 0
                 }
               },
@@ -414,9 +426,10 @@
             {
               name: '代理商统计',
               type: 'bar',
+              barMaxWidth: '40',
               itemStyle: {
                 normal: {
-                  color: 'blue',
+                  color: '#55b761',
                   barBorderRadius: 0
                 }
               },
@@ -461,9 +474,10 @@
             {
               name: '课程',
               type: 'bar',
+              barMaxWidth: '50',
               itemStyle: {
                 normal: {
-                  color: 'blue',
+                  color: '#55b761',
                   barBorderRadius: 0
                 }
               },
@@ -496,6 +510,7 @@
     border: 1px solid #dcdcdc;
     position: relative;
     margin-top: 30px;
+    overflow: hidden;
   }
 
   .bb {
