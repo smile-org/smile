@@ -10,6 +10,7 @@ import repositoryList from '@/views/repository/list'
 // 企业会员管理
 import membershipList from '@/views/membership/list'
 import membershipCreate from '@/views/membership/create'
+import membershipEdit from '@/views/membership/edit'
 // 约课信息管理
 import bookingList from '@/views/booking/list'
 import bookingDetail from '@/views/booking/detail'
@@ -98,6 +99,12 @@ export default new Router({
       path: '/membership/create',
       name: 'membershipCreate',
       component: membershipCreate,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/membership/edit',
+      name: 'membershipEdit',
+      component: membershipEdit,
       meta: {requiresAuth: requiresAuth}
     }
   ]

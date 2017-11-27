@@ -83,7 +83,7 @@
             </el-table-column>
             <el-table-column label="操作" class="tc" width="140" align="center">
               <template scope="scope">
-                <el-button @click="edit(scope.row.course_id)" type="text" size="small">编辑</el-button>
+                <el-button @click="edit(scope.row.company_id)" type="text" size="small">编辑</el-button>
                 <el-button @click="updateState(scope.row)"  class="red_font"  type="text" size="small">{{scope.row.indicator ? '禁用' : '生效'}}</el-button>
               </template>
             </el-table-column>
@@ -168,7 +168,7 @@
         this.search()
       },
       edit: function (id) {
-        router.push({name: 'courseEdit', query: {id: id}})
+        router.push({name: 'membershipEdit', query: {id: id}})
       },
       // 查询列表
       search: function () {

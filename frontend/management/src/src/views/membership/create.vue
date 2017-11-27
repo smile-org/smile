@@ -2,11 +2,11 @@
   <div>
     <common-header type="booking"></common-header>
     <div class="con_main">
-      <navigator menu="agency"></navigator>
+      <navigator menu="membership"></navigator>
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="f_blue">代理商管理</span></span>
+          <span class="vm">您的当前位置 : <span class="f_blue">企业会员管理</span></span>
         </nav>
         <div class="con_tab">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -211,6 +211,7 @@
         api.fetch(api.uri.getCityList, {provinceid: this.ruleForm.province}).then(data => {
           if (data.status === 1) {
             this.cityList = data.result
+            this.ruleForm.city = ''
           }
         })
       },

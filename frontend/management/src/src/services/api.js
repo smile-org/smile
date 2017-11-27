@@ -96,7 +96,9 @@ export default {
     uploadLicense: '/admin/UploadCompanyBusinessLicence',
     updateCompanyStatus: '/admin/UpdateCompanyStatusByID',
     getCityList: '/admin/GetCityList',
-    createCompany: '/admin/AddCompany'
+    createCompany: '/admin/AddCompany',
+    getCompanyInfo: '/admin/GetCompanyEidtPageInfo',
+    updateCompanyInfo: '/admin/UpdateCompanyByID'
   },
 
   getUploadHeaders: function () {
