@@ -42,7 +42,7 @@
             <el-col :span="2"></el-col>
             <el-col :span="11" class="fr">
               <div class="aa">
-                <div class="bb">当前企业数量：<span>{{count1}}</span></div>
+                <div class="bb">当前企业数量：<span>{{company_count}}</span></div>
                 <div id="myChart4" style="height:300px;width: 100%;"></div>
               </div>
             </el-col>
@@ -88,7 +88,7 @@
       return {
         company: {},
         count: 0,
-        count1: 0
+        company_count: 0
       }
     },
     mounted () {
@@ -174,7 +174,7 @@
               arr.push(item.count)
               arrMonth.push(item.month)
               if (resourceData.result.length - 1 === i) {
-                this.count1 = item.count
+                this.company_count = item.count
               }
             }
             this.drawLine4(arr, arrMonth)
@@ -284,6 +284,7 @@
           series: [
             {
               name: '课程',
+              barMaxWidth: '30',
               type: 'bar',
               itemStyle: {
                 normal: {
@@ -298,7 +299,6 @@
       },
       drawLine3 (data, data3) {
         let myChart3 = echarts.init(document.getElementById('myChart3'))
-        // 绘制图表
         myChart3.setOption({
           title: {
             text: '员工增速曲线图',
