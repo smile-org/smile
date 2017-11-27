@@ -91,12 +91,12 @@ export default {
     updateAgencyStatus: '/admin/UpdateAgencyStatusByID',
 
     // *** 企业会员  ***
-    // getOperatorList: '/back/GetCompanyAdminList', // TODO:: change to /admin/getOperatorList
     getCompanyList: '/admin/GetCompanyList',
     getProvinceAndBusiness: '/admin/GetCompanyEidtPageInfo',
     uploadLicense: '/admin/UploadCompanyBusinessLicence',
-    updateCompanyStatus: '/admin/UpdateCompanyStatusByID'
-    // createCompany: '/admin/AddCompany'
+    updateCompanyStatus: '/admin/UpdateCompanyStatusByID',
+    getCityList: '/admin/GetCityList',
+    createCompany: '/admin/AddCompany'
   },
 
   getUploadHeaders: function () {

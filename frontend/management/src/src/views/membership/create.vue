@@ -10,17 +10,17 @@
         </nav>
         <div class="con_tab">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="企业名称" prop="name">
+            <el-form-item label="企业名称" prop="companyName">
               <el-input v-model="ruleForm.companyName"></el-input>
             </el-form-item>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="联系人" prop="user">
+                <el-form-item label="联系人" prop="contacts">
                   <el-input v-model="ruleForm.contacts"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item :span="12" label="联系电话" prop="mobile">
+                <el-form-item :span="12" label="联系电话" prop="phone">
                   <el-input v-model="ruleForm.phone"></el-input>
                 </el-form-item>
               </el-col>
@@ -30,29 +30,47 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="省份" prop="user">
-                  <el-input v-model="ruleForm.province"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item :span="12" label="城市" prop="contacts">
-                  <el-input v-model="ruleForm.city"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="主营行业" prop="industry">
-                  <el-select class="dateTab_width"  placeholder="请选择主营行业">
-                    <el-option>
+                <el-form-item label="省份" prop="province">
+                  <el-select class="dateTab_width" v-model="ruleForm.province" @change="getCity"  placeholder="请选择省份">
+                    <el-option v-for="item in provinceList"
+                      :key="item.province_id"
+                      :label="item.province_name"
+                      :value="item.province_id">
                     </el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="代理商" prop="agent">
-                  <el-select class="dateTab_width"  placeholder="请选择代理商">
-                    <el-option>
+                <el-form-item label="城市" prop="city" >
+                  <el-select class="dateTab_width" v-model="ruleForm.city"  placeholder="请选择城市">
+                    <el-option v-for="item in cityList"
+                        :key="item.city_id"
+                        :label="item.city_name"
+                        :value="item.city_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="主营行业" prop="business_id">
+                  <el-select class="dateTab_width" v-model="ruleForm.business_id"  placeholder="请选择主营行业">
+                    <el-option v-for="item in businessList"
+                      :key="item.business_id"
+                      :label="item.business_name"
+                      :value="item.business_id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="代理商" prop="agency_id">
+                  <el-select class="dateTab_width" v-model="ruleForm.agency_id" placeholder="请选择代理商">
+                    <el-option v-for="item in agencyList"
+                      :key="item.agency_id"
+                      :label="item.agency_name"
+                      :value="item.agency_id">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -61,28 +79,29 @@
             <el-form-item label="企业地址" prop="address">
               <el-input v-model="ruleForm.address"></el-input>
             </el-form-item>
-            <el-form-item label="营业执照" prop="license">
+            <el-form-item label="营业执照" prop="src">
               <el-upload
                 class="upload-demo"
                 :action=imgUrl
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :on-success="handleSuccess"
-                multiple
+                :before-upload="beforeUpload"
                 :limit="1"
+                :on-change="changeUpload"
                 :on-exceed="handleExceed"
                 :file-list="fileList"
                 :headers="headers">
                 <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2MB</div>
               </el-upload>
               <div class="license_width">
-                <img v-bind:src="src">
+                <img v-show="ruleForm.src !== ''" v-bind:src="ruleForm.src | formatImage">
               </div>
             </el-form-item>
             <div class="tc btn_margin">
               <button class="inf_btn" type="button" v-on:click="submitForm('ruleForm')">确  定</button>
-              <button class="inf_btn ml20" type="button">返  回</button>
+              <button class="inf_btn ml20" type="button" v-on:click="goBack()">返  回</button>
             </div>
           </el-form>
         </div>
@@ -102,30 +121,33 @@
   export default {
     data: function () {
       return {
+        fileList: [],
         imgUrl: axios.defaults.baseURL + api.uri.uploadLicense,
         headers: {},
-        src: '',
+        // src: '',
+        businessList: [],
+        agencyList: [],
+        provinceList: [],
+        cityList: [],
         ruleForm: {
           companyName: '',
           contacts: '',
           phone: '',
-          provience: '',
+          province: '',
           city: '',
           business_id: '',
           agency_id: '',
-          address: ''
+          address: '',
+          src: ''
         },
         rules: {
-          name: [
+          companyName: [
             { required: true, message: '代理商名称', trigger: 'blur' }
           ],
-          user: [
+          contacts: [
             { required: true, message: '请输入联系人', trigger: 'blur' }
           ],
-//          contacts: [
-//            { required: true, message: '请输入联系人电话', trigger: 'blur' }
-//          ],
-          mobile: [
+          phone: [
             { required: true, message: '请输入联系人电话', trigger: 'change' },
             { len: 11, message: '请输入正确格式的手机号码', trigger: 'blur' },
             { validator: (rule, value, callback) => {
@@ -137,46 +159,111 @@
             },
               trigger: 'blur'}
           ],
-          department: [
-            { required: true, message: '请输入代理区域', trigger: 'blur' }
+          province: [
+            { type: 'number', required: true, message: '请选择省份', trigger: 'change' }
           ],
-          industry: [
-            { required: true, message: '请选择主营行业', trigger: 'blur' }
+          city: [
+            { type: 'number', required: true, message: '请选择城市', trigger: 'change' }
+          ],
+          business_id: [
+            { type: 'number', required: true, message: '请选择主营行业', trigger: 'change' }
+          ],
+          agency_id: [
+            { type: 'number', required: true, message: '请选择代理商', trigger: 'change' }
           ],
           address: [
-            { required: true, message: '请输入详细地址', trigger: 'blur' }
+            { required: true, message: '请输入地址', trigger: 'trigger' }
           ],
-          agent: [
-            { required: true, message: '请选择代理商', trigger: 'blur' }
+          src: [
+            { required: true, message: '请上传企业执照', trigger: 'trigger' }
           ]
         }
       }
     },
     components: {
-//      ElRow,
       commonHeader,
       navigator,
       axios
     },
+    filters: {
+      formatImage: function (url) {
+        return axios.defaults.imageServer + url
+      }
+    },
     created () {
       this.headers = api.getUploadHeaders()
+      api.fetch(api.uri.getProvinceAndBusiness, {companyid: 0}).then(data => {
+        if (data.status === 1) {
+          this.businessList = data.result.BusinessList
+          this.provinceList = data.result.ProvinceList
+          this.agencyList = data.result.AgencyList
+        }
+      })
     },
     methods: {
+      changeUpload (file, fileList) {
+        // 保证页面显示一个附件
+        if (fileList.length > 0) {
+          this.fileList = [file]
+        }
+      },
+      getCity () {
+        api.fetch(api.uri.getCityList, {provinceid: this.ruleForm.province}).then(data => {
+          if (data.status === 1) {
+            this.cityList = data.result
+          }
+        })
+      },
+      goBack () {
+        router.push({name: 'membershipList'})
+      },
+      beforeUpload (file) {
+        // 判断大小与格式
+        if (file.name.indexOf('.') !== -1) {
+          var arrLen = file.name.split('.').length - 1
+          var extension = file.name.split('.')[arrLen].toUpperCase()
+          if (['JPG', 'PNG'].indexOf(extension) === -1) {
+            this.$message({
+              type: 'info',
+              message: '不支持的上传文件格式'
+            })
+            this.fileList = []
+            return false
+          }
+        } else {
+          this.$message({
+            type: 'info',
+            message: '不支持的上传文件格式'
+          })
+          this.fileList = []
+          return false
+        }
+        if (file.size > 2 * 1024 * 1024) {
+          this.$message({
+            type: 'info',
+            message: '上传文件不能大于2MB'
+          })
+          this.fileList = []
+          return false
+        }
+      },
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            api.fetch(api.uri.settled, {
-              company_name: this.ruleForm.name,
+            api.post(api.uri.createCompany, {
+              company_name: this.ruleForm.companyName,
               contact_person: this.ruleForm.contacts,
               phone_number: this.ruleForm.phone,
-              province_id: this.ruleForm.department,
-              city: this.ruleForm.dsvalue1,
+              province_id: this.ruleForm.province,
+              city_id: this.ruleForm.city,
               business_id: this.ruleForm.business_id,
               agency_id: this.ruleForm.agency_id,
               address: this.ruleForm.address,
-              LincenceUrl: this.src
+              LincenceUrl: this.ruleForm.src
             }).then(data => {
-              router.push({name: 'agencyList'})
+              if (data.status === 1) {
+                router.push({name: 'membershipList'})
+              }
             })
           } else {
             return false
@@ -188,8 +275,7 @@
       },
       // 上传成功后赋给src
       handleSuccess (response, file, fileList) {
-        console.log(response)
-        this.src = axios.defaults.imageServer + response.result
+        this.ruleForm.src = response.result
       },
       handleRemove (file, fileList) {
         console.log(file, fileList)
