@@ -3,7 +3,7 @@
     <div class="logo">
       <!--<img class="vm" :src="companyLogo" />-->
       <img class="vm" src="../assets/img/small_logo.png"/>
-      <span class="vm" v-on:click="exit()">企业管理后台</span>
+      <span class="vm">企业管理后台</span>
     </div>
     <el-dropdown @command="commandClick" trigger="click">
       <span class="el-dropdown-link vm">
