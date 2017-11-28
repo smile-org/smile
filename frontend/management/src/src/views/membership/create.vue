@@ -310,7 +310,7 @@
   }
   .attention_p{
     margin-left: 100px;
-    margin-top: -10px;
+    margin-top: -5px;
     margin-bottom: 20px;
     font-size: 12px;
     color: #f56d16;

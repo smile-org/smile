@@ -18,7 +18,7 @@
               <el-form-item label="手机号码" prop="tel">
                 <el-input v-model="formAdmin.tel" placeholder="手机号码"></el-input>
               </el-form-item>
-              <el-form-item label="电子邮箱" prop="email">
+              <el-form-item style="margin-left:10px" label="电子邮箱" prop="email">
                 <el-input v-model="formAdmin.email" placeholder="电子邮箱"></el-input>
               </el-form-item>
             </el-form>
