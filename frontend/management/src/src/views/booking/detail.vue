@@ -72,7 +72,6 @@
             </li>
             <li>
               <span class="tit">需求列表 :</span>
-
               <div class="con">
                 <el-table :data="data.itemList" border class="mt20 " style="width: 100%">
                   <el-table-column type="index" width="50">

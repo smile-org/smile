@@ -28,13 +28,13 @@
             <el-form-item label="代理权有效期" >
               <el-col :span="11">
                 <el-form-item prop="agent_start_date">
-                  <el-date-picker v-model="ruleForm.agent_start_date" prop="agent_start_date" type="date" placeholder="开始时间" style="width: 100%;" format="yyyy-MM-dd" @change="getNormalTime1_com"></el-date-picker>
+                  <el-date-picker v-model="ruleForm.agent_start_date" prop="agent_start_date" type="date" placeholder="开始时间" style="width: 100%;" format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
               </el-col>
               <el-col class="line ml_10style" :span="2">—</el-col>
               <el-col :span="11">
                 <el-form-item prop="agent_end_date">
-                  <el-date-picker v-model="ruleForm.agent_end_date" prop="agent_end_date" type="date" placeholder="结束时间" style="width: 100%;" format="yyyy-MM-dd" @change="getNormalTime2_com"></el-date-picker>
+                  <el-date-picker v-model="ruleForm.agent_end_date" prop="agent_end_date" type="date" placeholder="结束时间" style="width: 100%;" format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-form-item>
@@ -91,13 +91,13 @@
           ],
           agent_area: [
             { required: true, message: '请输入代理区域', trigger: 'blur' }
-          ]// ,
-//          agent_start_date: [
-//            { required: true, message: '请输入开始时间', trigger: 'blur' }
-//          ],
-//          agent_end_date: [
-//            { required: true, message: '请输入结束时间', trigger: 'blur' }
-//          ]
+          ],
+          agent_start_date: [
+            { type: 'date', required: true, message: '请输入开始时间', trigger: 'change' }
+          ],
+          agent_end_date: [
+            { type: 'date', required: true, message: '请输入结束时间', trigger: 'change' }
+          ]
         }
       }
     },
