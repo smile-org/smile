@@ -98,7 +98,11 @@ export default {
     getCityList: '/admin/GetCityList',
     createCompany: '/admin/AddCompany',
     getCompanyInfo: '/admin/GetCompanyEidtPageInfo',
-    updateCompanyInfo: '/admin/UpdateCompanyByID'
+    updateCompanyInfo: '/admin/UpdateCompanyByID',
+
+    // *** 约课 ***
+    getAppointments: '/appointment/adminGetAppointmentList',
+    getAppointment: '/appointment/adminGetAppointment'
   },
 
   getUploadHeaders: function () {

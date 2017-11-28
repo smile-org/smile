@@ -13,7 +13,7 @@
             <li>
               <span class="tit">企业名称 :</span>
               <div class="con">
-                <span>北京玖點致新科技有限公司</span>
+                <span>{{data.company_name}}</span>
               </div>
             </li>
             <li>
@@ -25,56 +25,56 @@
             <li>
               <span class="tit">约课主题 :</span>
               <div class="con">
-                <span>{{appointmentTitle}}</span>
+                <span>{{data.appointment_title}}</span>
               </div>
             </li>
             <li>
               <span class="tit">关键字 :</span>
               <div class="con">
-                <span>{{appointmentTitle}}</span>
+                <span>{{data.key_word}}</span>
               </div>
             </li>
             <li>
               <span class="tit">发起人 :</span>
               <div class="con">
-                <span>{{sponsorName}}</span>
+                <span>{{data.sponsor_idfull_name}}</span>
               </div>
             </li>
             <li>
               <span class="tit">发起人联系方式 :</span>
               <div class="con">
-                <span>13800001111</span>
+                <span>{{data.sponsor_idcell_phone}}</span>
               </div>
             </li>
             <li>
               <span class="tit">企业联系人 :</span>
               <div class="con">
-                <span>张小娴</span>
+                <span>{{data.contact_person}}</span>
               </div>
             </li>
             <li>
               <span class="tit">企业联系方式 :</span>
               <div class="con">
-                <span>13800001111</span>
+                <span>{{data.phone_number}}</span>
               </div>
             </li>
             <li>
               <span class="tit">发起时间 :</span>
               <div class="con">
-                <span>{{sponsorDate | formatDate}}</span>
+                <span>{{data.sponsorDate | formatDate}}</span>
               </div>
             </li>
             <li>
               <span class="tit">参与人数 :</span>
               <div class="con">
-                <span>88</span>
+                <span>{{data.follow_count}}</span>
               </div>
             </li>
             <li>
               <span class="tit">需求列表 :</span>
 
               <div class="con">
-                <el-table :data="itemList" border class="mt20 " style="width: 100%">
+                <el-table :data="data.itemList" border class="mt20 " style="width: 100%">
                   <el-table-column type="index" width="50">
                   </el-table-column>
                   <el-table-column align="center" prop="itemTitle" label="约课需求" width=""></el-table-column>
@@ -89,7 +89,7 @@
             </li>
           </ul>
           <div class="tc btn_margin">
-            <button type="button" class="inf_btn  " @click="closeAppointment()">返  回</button>
+            <button type="button" class="inf_btn  " @click="goBack">返  回</button>
           </div>
         </div>
       </section>
@@ -102,17 +102,12 @@
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
   import moment from 'moment'
+  import router from '../../router'
   export default {
     data: function () {
       return {
-        tableData: [],
-        id: '',
-        appointmentTitle: '',
-        keywords: [],
-        sponsorName: '',
-        sponsorDate: '',
-        itemList: [],
-        followerCount: ''
+        data: '',
+        id: ''
       }
     },
     components: {
@@ -121,20 +116,11 @@
     },
     created () {
       this.id = parseInt(this.$route.query.id)
-      console.log(this.id)
-      api.fetch(api.uri.backAppointment, {appointmentId: this.id}).then(data => {
+      api.fetch(api.uri.getAppointment, {
+        appointmentid: this.id
+      }).then(data => {
         if (data.status === 1) {
-          this.appointmentTitle = data.result.appointmentTitle
-          this.keywords = data.result.keyWord.split(',')
-          this.sponsorName = data.result.sponsorName
-          this.sponsorDate = data.result.sponsorDate
-          this.itemList = data.result.itemList
-        }
-      })
-      api.fetch(api.uri.backAppointmentFollowers, {appointmentId: this.id}).then(data => {
-        if (data.status === 1) {
-          this.tableData = data.result
-          this.followerCount = data.result.length
+          this.data = data.result
         }
       })
     },
@@ -145,27 +131,8 @@
       }
     },
     methods: {
-      closeAppointment () {
-        console.log(this.id)
-        this.$confirm('此操作将关闭该约课需求，是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          api.fetch(api.uri.closeAppointment, {appointmentId: this.id}).then(data => {
-            if (data.status === 1) {
-              this.$message({
-                type: 'success',
-                message: '关闭成功!'
-              })
-            }
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消关闭'
-          })
-        })
+      goBack: function () {
+        router.push({name: 'bookingList'})
       }
     }
   }

@@ -14,12 +14,17 @@
               <el-input v-model="formInline.name" placeholder="企业名称"></el-input>
             </el-form-item>
             <el-form-item label="主营行业">
-              <el-select class="dateTab_width" v-model="formInline.categoryId" placeholder="请选择主营行业">
-
+              <el-select class="dateTab_width" v-model="formInline.businessId" placeholder="请选择主营行业">
+                <el-option
+                  v-for="item in businessList"
+                  :key="item.business_id"
+                  :label="item.business_name"
+                  :value="item.business_id">
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="约课主题">
-              <el-input v-model="formInline.user" placeholder="约课主题"></el-input>
+              <el-input v-model="formInline.title" placeholder="约课主题"></el-input>
             </el-form-item>
             <el-form-item label="开始时间">
               <el-date-picker class="dateTab_width" type="date" placeholder="开始时间"
@@ -30,21 +35,25 @@
                               v-model="formInline.end" style="width: 100%;"></el-date-picker>
             </el-form-item>
             <el-form-item>
-              <button type="button" class="line-btn ml20" >查  询</button>
+              <button type="button" class="line-btn ml20" v-on:click="search" >查  询</button>
             </el-form-item>
           </el-form>
           <template>
             <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="date" label="约课主题"  align="center" min-width="180"></el-table-column>
-              <el-table-column prop="name" label="企业名称"  align="center" width="180"></el-table-column>
-              <el-table-column prop="address" label="主营行业"  align="center" width="180"></el-table-column>
-              <el-table-column prop="date" label="发起者"  align="center" width="180"></el-table-column>
-              <el-table-column prop="name" label="发起人联系方式"  align="center" width="180"></el-table-column>
-              <el-table-column prop="address" label="企业联系人"  align="center" width="180"></el-table-column>
-              <el-table-column prop="date" label="发起时间"  align="center" width="180"></el-table-column>
+              <el-table-column prop="appointment_title" label="约课主题"  align="center" min-width="180"></el-table-column>
+              <el-table-column prop="company_name" label="企业名称"  align="center" width="180"></el-table-column>
+              <el-table-column prop="business_name" label="主营行业"  align="center" width="180"></el-table-column>
+              <el-table-column prop="sponsor_idfull_name" label="发起者"  align="center" width="180"></el-table-column>
+              <el-table-column prop="sponsor_idcell_phone" label="发起人联系方式"  align="center" width="180"></el-table-column>
+              <el-table-column prop="contact_person" label="企业联系人"  align="center" width="180"></el-table-column>
+              <el-table-column prop="sponsor_date" label="发起时间"  align="center" width="180">
+                <template scope="scope">
+                  {{scope.row.sponsor_date | formatDate}}
+                </template>
+              </el-table-column>
               <el-table-column label="操作" class="tc" width="100" align="center">
                 <template scope="scope">
-                  <el-button  v-on:click="bookingDetail" type="text" size="small">查看</el-button>
+                  <el-button  v-on:click="goDetail(scope.row.appointment_id)" type="text" size="small">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -64,38 +73,25 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import router from '../../router'
-  //  import api from '../../servi_withTaskces/api'
+  import api from '../../services/api'
+  import moment from 'moment'
   export default {
     data: function () {
       return {
-        company: {},
-        currentPage: 0,
+        currentPage: 1,
         take: 10,
         total: 0,
         formInline: {
           name: '',
-          user: '',
-          // date: '',
-          categoryId: '',
+          businessId: 0,
           start: '',
-          end: ''
+          end: '',
+          title: ''
         },
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+        tableData: [],
+        businessList: [{
+          business_id: 0,
+          business_name: '请选择'
         }]
       }
     },
@@ -104,15 +100,43 @@
       navigator
     },
     created () {
-
+      api.fetch(api.uri.getProvinceAndBusiness, {companyid: 0}).then(data => {
+        if (data.status === 1) {
+          this.businessList = this.businessList.concat(data.result.BusinessList)
+          this.search()
+        }
+      })
+    },
+    filters: {
+      formatDate: function (time) {
+        var date = new Date(time)
+        console.log(date)
+        return moment(date).format('YYYY-MM-DD hh:mm:ss')
+      }
     },
     methods: {
-      bookingDetail: function () {
-        router.push({name: 'bookingDetail'})
+      goDetail: function (id) {
+        router.push({name: 'bookingDetail', query: {id: id}})
       },
       handleCurrentChange: function (val) {
         this.currentPage = val
         this.search()
+      },
+      search: function () {
+        api.fetch(api.uri.getAppointments, {
+          companyname: this.formInline.name,
+          businessid: this.formInline.businessId,
+          appointmenttitle: this.formInline.title,
+          start: this.formInline.start,
+          end: this.formInline.end,
+          skip: this.take * (this.currentPage - 1),
+          take: this.take
+        }).then(data => {
+          if (data.status === 1) {
+            this.tableData = data.result
+            this.total = data.total
+          }
+        })
       }
     }
   }
