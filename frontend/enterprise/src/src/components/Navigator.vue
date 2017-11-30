@@ -1,7 +1,7 @@
 <template>
   <aside>
     <div class="a_tit">
-      <span class="h_icon aside_icon01 vm"></span>
+      <span :class="['h_icon','vm',navigator.icon]"></span>
       <span class="vm">{{navigator.name}}</span>
     </div>
     <ul class="tc">
@@ -27,6 +27,7 @@ export default {
     }
     if (this.module === 'information') {
       this.navigator = {
+        icon: 'aside_icon01',
         name: '公司基本信息',
         items: [{
           text: '公司基本信息',
@@ -40,6 +41,7 @@ export default {
       }
     } else if (this.module === 'user') {
       this.navigator = {
+        icon: 'aside_icon02',
         name: '员工管理',
         items: [{
           text: '员工信息管理',
@@ -53,6 +55,7 @@ export default {
       }
     } else if (this.module === 'course') {
       this.navigator = {
+        icon: 'aside_icon03',
         name: '课程管理',
         items: [{
           text: '课程类别管理',
@@ -70,6 +73,7 @@ export default {
       }
     } else if (this.module === 'exam') {
       this.navigator = {
+        icon: 'aside_icon04',
         name: '考试管理',
         items: [{
           text: '考试信息管理',
@@ -87,6 +91,7 @@ export default {
       }
     } else if (this.module === 'registration') {
       this.navigator = {
+        icon: 'aside_icon05',
         name: '培训报名管理',
         items: [{
           text: '培训报名管理',
@@ -100,6 +105,7 @@ export default {
       }
     } else if (this.module === 'booking') {
       this.navigator = {
+        icon: 'aside_icon06',
         name: '约课管理',
         items: [{
           text: '约课信息管理',
@@ -109,6 +115,7 @@ export default {
       }
     } else {
       this.navigator = {
+        icon: 'aside_icon07',
         name: '系统管理',
         items: [{
           text: '公司管理员',
