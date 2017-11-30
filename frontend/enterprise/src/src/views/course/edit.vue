@@ -43,13 +43,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="有效期" prop="expiration_date">
-                  <el-date-picker
-                    v-model="currentCourse.expiration_date"
-                    type="date"
-                    placeholder="选择日期"
-                    style="width: 100%;"
-                    >
-                  </el-date-picker>
+                  <el-date-picker v-model="currentCourse.expiration_date" type="date" placeholder="选择日期" style="width: 100%;"></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>

@@ -128,7 +128,7 @@
                                 <el-col :span="24 " class="mb20">
                                     <el-form-item label="主题">
                                         <el-input v-model="formInline.topic" placeholder="主题" style="width:365px;"></el-input>
-                                        <el-button :plain="true" type="success" class="ml20" style="margin-left: 20px" size="primary" v-on:click="addContent()">添加主题
+                                        <el-button :plain="true" type="success" class="ml20" style="margin-left: 20px;color: #fff" size="primary" v-on:click="addContent()">添加主题
                                         </el-button>
                                         <div class="el-form-item__error mb20">{{topicErrMsg}}</div>
                                     </el-form-item>
