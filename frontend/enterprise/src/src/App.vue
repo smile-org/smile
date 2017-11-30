@@ -11,6 +11,7 @@
 <style>
 @import './assets/css/common.css';
 @import './assets/css/style.css';
+@import './assets/css/mend.css';
 .el-input__inner:focus,el-input:focus{
   border-color: #55b761!important;
 }
