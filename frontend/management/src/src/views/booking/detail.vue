@@ -61,7 +61,7 @@
             <li>
               <span class="tit">发起时间 :</span>
               <div class="con">
-                <span>{{data.sponsorDate | formatDate}}</span>
+                <span>{{data.sponsor_date | formatDate}}</span>
               </div>
             </li>
             <li>
