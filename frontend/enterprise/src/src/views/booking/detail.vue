@@ -78,6 +78,7 @@
             </li>
           </ul>
           <div class="tc btn_margin">
+            <button type="button" class="line-btn mr20" v-on:click="bookingList">返  回</button>
             <button type="button" class="inf_btn  " @click="closeAppointment()">关闭约课</button>
           </div>
         </div>
@@ -90,6 +91,7 @@
   import commonHeader from '../../components/CommonHeader'
   import navigator from '../../components/Navigator'
   import api from '../../services/api'
+  import router from '../../router'
   import moment from 'moment'
   export default {
     data: function () {
@@ -134,6 +136,9 @@
       }
     },
     methods: {
+      bookingList: function () {
+        router.push({name: 'bookingList'})
+      },
       closeAppointment () {
         console.log(this.id)
         this.$confirm('此操作将关闭该约课需求，是否继续?', '提示', {
