@@ -34,7 +34,7 @@
 
 
     <insert id="backAddUser"    parameterType="com.dli.entities.User"   useGeneratedKeys="true"   keyProperty="user_id" >
-        insert  user values(  0, #{cell_phone}, null,#{email}, #{job_number}, #{avatar},#{full_name}, #{department} ,#{area},null,#{company_id},1,now(),now())
+        insert  user values(  0, #{cell_phone}, null,#{email}, #{job_number}, #{avatar},#{full_name}, #{department} ,#{area},  #{token},#{company_id},1,now(),now())
     </insert>
 
     <insert id="backAddUserRoleMapping"  >
@@ -101,6 +101,59 @@ where user_id=#{user_id}
         select  count(*) from user  u join user_role   m on u.user_id = m.user_id where m.role_id =1 and u.company_id =#{companyid}  and  indicator=1
 
         <if test="fullname!=null">   and u.full_name like '%${fullname}%'</if>
+    </select>
+
+     <insert id="adminAddPlatformUser"    parameterType="com.dli.entities.User"   useGeneratedKeys="true"   keyProperty="user_id"  >
+            insert  user values(  0, #{cell_phone}, null,#{email}, null, #{avatar},#{full_name}, null ,null,   #{token} , null,1,now(),now())
+     </insert>
+
+
+
+    <update id="adminUpdatePlatformUser"  parameterType="com.dli.entities.User" >
+        update  user
+        set  cell_phone =#{cell_phone},
+        email=#{email},
+
+        full_name=#{full_name},
+
+        updated_at =now()
+        where user_id=#{user_id}
+    </update>
+
+    <select id="adminGetPlatformUserList"  resultMap="UserMap">
+        select * from user   u join user_role  m  on m.user_id =u.user_id   where m.role_id=3 and  u.indicator=1
+        limit #{skip}, #{take}
+    </select>
+
+
+    <select id="adminGetPlatformUserListCount"   resultType="int">
+        select count(*) from user   u join user_role  m  on m.user_id =u.user_id   where m.role_id=3 and  u.indicator=1
+        limit #{skip}, #{take}
+    </select>
+
+
+    <select id="adminGetEmployeeStatistics"  resultType="com.dli.entities.adminMonthCountStatistics">
+      select a.m1 as month ,
+  case   when   b.count   is not null then  b.count   else  0  end as   count
+  from (
+ select  DATE_FORMAT( date_add( now() , interval -11 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -10 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -9 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -8 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -7 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -6 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -5 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -4 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -3 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -2 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -1 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -0 month   ) ,'%Y-%m') as m1  )a
+left  join
+(select month , count(user_id) as count from (
+select  u.user_id,  DATE_FORMAT(u.created_at,'%Y-%m') as month  from  user   u join   user_role m  on m.user_id = u.user_id where  u.indicator=1  and  m.role_id !=3
+ and u.created_at >=
+  DATE_FORMAT( date_add( date_add( now(), interval - day( now()) + 1 day  ) , interval -11 month   ) ,'%Y-%m-%d')
+)t  group by  month  )b  on a.m1 =b.month  order by a.m1
     </select>
 
 

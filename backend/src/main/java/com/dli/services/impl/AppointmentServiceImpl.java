@@ -130,4 +130,33 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void closeAppointment(int appointmentId) {
         appointmentRepo.closeAppointment(appointmentId);
     }
+
+    @Override
+    public List<adminAppointment> adminGetAppointmentList(adminAppointment a) {
+        return   appointmentRepo.adminGetAppointmentList(a);
+    }
+
+    @Override
+    public int adminGetAppointmentListCount(adminAppointment a) {
+        return   appointmentRepo.adminGetAppointmentListCount(a);
+    }
+
+    @Override
+    public adminAppointmentDetail adminGetAppointment(int appointmentId) {
+        adminAppointmentDetail  a = appointmentRepo.adminGetAppointment(appointmentId);
+
+
+        List<BackAppointmentDetailItem> itemList = appointmentRepo.getBackAppointmentItem(appointmentId);
+        a.setItemList(itemList);
+
+        return  a;
+
+    }
+
+    @Override
+    public int adminGetAppointmentResource() {
+        return    appointmentRepo.adminGetAppointmentResource();
+    }
+
+
 }

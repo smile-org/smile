@@ -2,6 +2,7 @@ package com.dli.services.impl;
 
 
 import com.dli.entities.SearchHistory;
+import com.dli.entities.adminResourceStatistics;
 import com.dli.repositories.SearchRepo;
 import com.dli.services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,6 @@ public class SearchServiceImpl implements SearchService {
     public void deleteSearchHistory(String type, int userid) {
         searchRepo.deleteSearchHistory(type, userid);
     }
+
 
 }

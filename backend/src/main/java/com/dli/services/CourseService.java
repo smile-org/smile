@@ -26,7 +26,7 @@ public interface CourseService {
 
     String ClickCourseContent(int courseid, int contentid, int userid);
 
-    List<SearchResult> searchCourse(int companyid,  String keyword,    int skip,  int take);
+    List<SearchResult> searchCourse(int companyid,  String keyword,    int skip,  int take,    int userid);
 
     List<Course> getCourseListByExamid(int examid);
 
@@ -90,4 +90,6 @@ public interface CourseService {
     List<CourseComment> backgetCourseCommentList(   int courseid  ,  int skip,  int take );
 
     int  backGetCourseCommentListCount(int courseid );
+
+    int adminGetCourseResource();
 }

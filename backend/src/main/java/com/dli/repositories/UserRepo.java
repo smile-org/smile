@@ -3,6 +3,7 @@ package com.dli.repositories;
 
 import com.dli.entities.Demo;
 import com.dli.entities.User;
+import com.dli.entities.adminMonthCountStatistics;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -42,4 +43,19 @@ public interface UserRepo {
    int   backGetCompanyEmployeeListCount (  @Param("fullname") String fullname,  @Param("companyid") int companyid);
 
       void     UpdateUserPic(  @Param("avatar")  String  avatar,   @Param("userid") int userid );
+
+      void   adminAddPlatformUser(User  u);
+
+
+      void  adminUpdatePlatformUser( User u);
+
+      List<User>  adminGetPlatformUserList( @Param("skip") int skip ,  @Param("take") int take);
+
+
+
+
+    int   adminGetPlatformUserListCount( @Param("skip") int skip ,  @Param("take") int take);
+
+    List<adminMonthCountStatistics>    adminGetEmployeeStatistics();
+
 }

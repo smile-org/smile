@@ -93,4 +93,6 @@ public interface ExamService {
     List<Question>     backGetQuestionListByIDs(  List<Integer>   questionids);
 
     int getTottalScoreForExam(List<Question>  lst, int score1 ,int score2, int score3  );
+
+    int adminGetExamResource();
 }

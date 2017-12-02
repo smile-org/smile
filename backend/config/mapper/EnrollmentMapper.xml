@@ -118,7 +118,7 @@
             from(
          select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
          on p.enrollment_id= e.enrollment_id where    now()  &gt;=start_date  and   now()  &lt; end_date
-         and    p.indicator=1 and e.indicator=1 and e.company_id=#{companyid})result
+         and    p.indicator=1 and e.indicator=1  and p.ispublished=1 and e.company_id=#{companyid})result
          left join (
          select period_id, count(*)  as  renshu from
          user_enrollment   group by  period_id )o1   on  result.period_id =o1.period_id
@@ -149,7 +149,7 @@ on result.enrollment_id= o3.enrollment_id
             from(
          select  p.*  ,   e.title, e.intro, e.icon, e.pic,e.company_id from enrollment_period  p   join   enrollment   e
          on p.enrollment_id= e.enrollment_id where
-           p.indicator=1 and e.indicator=1 and e.company_id=#{companyid})result
+           p.indicator=1  and p.ispublished=1 and e.indicator=1 and e.company_id=#{companyid})result
          left join (
          select period_id, count(*)  as  renshu from
          user_enrollment  group by  period_id )o1   on  result.period_id =o1.period_id
@@ -370,7 +370,7 @@ on o1.enrollment_id =o2.enrollment_id  where  o1.period_id != o2.period_id
 
 
          where
-           p.indicator=1 and e.indicator=1 and e.company_id=#{companyid} and  e.title like '%${keyword}%'  limit #{skip},#{take};
+           p.indicator=1  and p.ispublished=1 and e.indicator=1 and e.company_id=#{companyid} and  e.title like '%${keyword}%'  limit #{skip},#{take};
     </select>
 
     <select id="backGetEnrollmentList"  parameterType="com.dli.entities.backEnrollment"  resultType="com.dli.entities.backEnrollment">
@@ -532,4 +532,9 @@ where period_id=#{period_id}
 
          where period_id = #{periodid}
     </update>
+
+
+    <select id="adminGetEnrollmentResource"  resultType="int">
+        select  count(*)  as  enrollment_count from enrollment_period where indicator=1;
+    </select>
 </mapper>

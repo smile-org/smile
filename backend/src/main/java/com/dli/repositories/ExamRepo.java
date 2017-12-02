@@ -126,7 +126,7 @@ public interface ExamRepo {
 
     List<Question>     backGetQuestionListByIDs(  List<Integer>   questionids);
 
-
+  int adminGetExamResource();
 
 }
 

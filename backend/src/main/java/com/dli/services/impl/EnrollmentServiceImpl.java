@@ -284,5 +284,10 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         enrollmentRepo.backUpdateEnrollmentPublishStatus( status, periodid);
     }
 
+    @Override
+    public int adminGetEnrollmentResource() {
+        return   enrollmentRepo.adminGetEnrollmentResource();
+    }
+
 
 }

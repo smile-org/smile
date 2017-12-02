@@ -3,6 +3,7 @@ package com.dli.services;
 
 import com.dli.entities.Demo;
 import com.dli.entities.User;
+import com.dli.entities.adminMonthCountStatistics;
 
 import java.util.List;
 
@@ -36,4 +37,13 @@ public interface UserService {
     int   backGetCompanyEmployeeListCount ( String fullname,  int companyid);
 
     void     UpdateUserPic(  String  avatar,   int userid );
+
+    void   adminAddPlatformUser(User  u);
+
+    void  adminUpdatePlatformUser( User u);
+
+    List<User>  adminGetPlatformUserList(  int skip ,   int take);
+  int   adminGetPlatformUserListCount(  int skip ,   int take);
+
+    List<adminMonthCountStatistics>    adminGetEmployeeStatistics();
 }

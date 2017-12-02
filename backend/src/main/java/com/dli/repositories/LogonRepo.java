@@ -38,4 +38,8 @@ public interface LogonRepo {
 
     int backGetLogonHistoryListCount(LogonHistory   h);
 
+
+
+    int adminlogon(@Param("pwd") String  pwd,@Param("cellphone") String  cellphone);
+
 }

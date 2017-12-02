@@ -3,6 +3,7 @@ package com.dli.helper;
 import com.dli.entities.User;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import sun.misc.BASE64Encoder;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -171,6 +173,18 @@ public class Helper {
         catch (Exception ex) {
             throw ex;
         }
+    }
+
+
+    public  static   String  GenerateToken(  String   phone ) throws Exception{
+
+        String randmom = String.valueOf(Helper.getRandNum(0, 999999));
+           String str= phone + randmom;
+           MessageDigest md5= MessageDigest.getInstance("MD5");
+            BASE64Encoder base64en = new BASE64Encoder();
+
+           String newstr=base64en.encode(md5.digest(str.getBytes("utf-8")));
+           return newstr;
     }
 
     /*

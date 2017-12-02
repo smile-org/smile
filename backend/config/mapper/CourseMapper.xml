@@ -101,7 +101,7 @@
    case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
          from (
 select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
-  where indicator=1 and category_id=#{cateid} and
+  where indicator=1  and ispublished=1 and category_id=#{cateid} and
 ( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
 
 left join (
@@ -175,13 +175,15 @@ select  sum(star) as total , count(comment_id) as ct from course_comment   where
           select c.*,
              case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count ,
                 u.full_name as  person
-           from  course c
+           from  course c    left join course_whitelist w on c.course_id=w.course_id
            left join (
 select course_id, count(*)  as  renshu from (
 select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
 on c.course_id =o1.course_id
         left join   user u on    c.principal_user_id= u.user_id
-           where c.title like '%${keyword}%'    and  c.indicator=1     and   c.company_id=#{companyid} limit #{skip}, #{take}
+           where c.title like '%${keyword}%'    and  c.indicator=1   and c.ispublished=1
+             and( c.type_id=1   or   (  c.type_id=2  and  w.user_id=#{userid}  ))
+             and   c.company_id=#{companyid} limit #{skip}, #{take}
     </select>
 
     <select id="getCourseListByExamid" resultMap="CourseMap">
@@ -277,7 +279,7 @@ on  a.course_id =b. course_id   and   a.count =b.count)o4
            case when o5.pingfen is not null  then o5.pingfen  else 0 end as star
         from (
         select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
-        where indicator=1   and  company_id=#{companyid}   and
+        where indicator=1   and ispublished=1  and  company_id=#{companyid}   and
         type_id=2  and  w.user_id=#{userid}  )result
 
         left join (
@@ -367,7 +369,7 @@ where created_at
         case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
         from (
         select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
-        where indicator=1 and  created_at > #{scope}  and company_id=#{companyid}   and
+        where indicator=1 and ispublished=1 and  created_at > #{scope}  and company_id=#{companyid}   and
         ( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
 
         left join (
@@ -428,7 +430,7 @@ on result.course_id= o2.course_id
 
 
     <update id="backUpdateCourseContent"   parameterType="com.dli.entities.CourseContent"  >
-        update  course_contentf
+        update  course_content
         <set>
         <if test="sequnce_num!=null">sequnce_num=#{sequnce_num},</if>
         <if test="sequnce_title!=null">sequnce_title=#{sequnce_title},</if>
@@ -577,5 +579,9 @@ join course_content   ct on p.content_id = ct.content_id
     <select id="backGetCourseCommentListCount" resultType="int">
         select  count(*) from   course_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
         and  course_id=#{courseid}
+    </select>
+
+    <select id="adminGetCourseResource"  resultType="int">
+        select count( *)  as course_count   from course  where indicator=1;
     </select>
 </mapper>

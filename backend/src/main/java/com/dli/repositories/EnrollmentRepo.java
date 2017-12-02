@@ -94,4 +94,6 @@ public interface EnrollmentRepo {
 
     void    backUpdateEnrollmentPublishStatus( @Param("status")  int   status  , @Param("periodid") int  periodid );
 
+    int  adminGetEnrollmentResource();
+
 }

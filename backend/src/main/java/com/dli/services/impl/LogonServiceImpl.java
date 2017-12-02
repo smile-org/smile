@@ -121,5 +121,14 @@ public class LogonServiceImpl implements LogonService {
         return    logonRepo.backGetLogonHistoryListCount(h);
     }
 
+    @Override
+    public boolean adminlogon(String pwd, String cellphone) {
+        int count = logonRepo.adminlogon(pwd, cellphone);
+        if (count > 0)
+            return true;
+        else
+            return false;
+    }
+
 
 }

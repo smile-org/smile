@@ -270,4 +270,36 @@ public class LogonController {
 
 
 
+    @RequestMapping(value = "/admin/logon", method = RequestMethod.POST)
+    public Map adminlogon(@RequestBody Map body) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        try {
+            String  pwd =(String)  body.get("pwd");
+            String   cellphone=(String)  body.get("cellphone");
+
+            if (logonService.adminlogon(pwd, cellphone)) {
+
+                result.put(Constant.status, 1);
+                User user = logonService.getUserByPhoneNumber(cellphone);
+                result.put(Constant.result, user.getToken());
+                result.put("userInfo", user);
+
+            } else {
+
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "用户名或密码错误");
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
 }

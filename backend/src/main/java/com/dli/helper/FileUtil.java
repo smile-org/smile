@@ -31,6 +31,23 @@ public class FileUtil {
      return   toBeRenamed.renameTo(newFile);
 
     }
+
+    public  static  boolean moveFile( String scrfile, String targetpath ){
+
+
+        File file = new File(scrfile);
+
+
+        File dir = new File( targetpath);
+
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        // Move file to new directory
+        boolean sucess=   file.renameTo(new File(dir, file.getName()));
+
+        return     sucess;
+    }
 }
 
 

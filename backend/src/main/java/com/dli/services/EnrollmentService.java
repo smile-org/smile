@@ -77,4 +77,6 @@ public interface EnrollmentService {
     void  backSaveContentList(int  enrollmentid,   List<EnrollmentContent>   contentList);
 
     void    backUpdateEnrollmentPublishStatus(   int   status  , int  periodid );
+
+    int  adminGetEnrollmentResource();
 }

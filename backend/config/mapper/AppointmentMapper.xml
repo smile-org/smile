@@ -254,4 +254,70 @@ where       follower_type =  'follower'  or   follower_type = 'item_sponsor'  gr
         update appointment set indicator = 0 where appointment_id=#{appointmentId}
     </update>
 
+
+    <select id="adminGetAppointmentList"   parameterType="com.dli.entities.adminAppointment"  resultType="com.dli.entities.adminAppointment">
+        select  a.appointment_id ,  a.appointment_title , c.company_name,  b.business_id,  b.business_name, u.full_name as sponsor_idfull_name,
+u.cell_phone as sponsor_idcell_phone ,  i.contact_person, i.phone_number,  a.sponsor_date  from  appointment a
+join company  c on a.company_id = c.company_id
+join   company_info i on c.company_id = i.company_id
+join   business   b on c.business_id=  b.business_id
+join user u  on  a.sponsor_id = u.user_id
+
+ where   a.indicator=1
+        <if test="company_name!=null"> AND c.company_name LIKE '%${company_name}%'</if>
+        <if test="appointment_title!=null"> AND a.appointment_title LIKE '%${appointment_title}%'</if>
+        <if test="business_id!=0">  AND  b.business_id  = #{business_id}</if>
+
+        <if test="start!=null">and a.sponsor_date  &gt; #{start}</if>
+        <if test="end!=null">and a.sponsor_date &lt; #{end}</if>
+  LIMIT #{skip}, #{take}
+
+    </select>
+
+
+
+
+
+    <select id="adminGetAppointmentListCount"   parameterType="com.dli.entities.adminAppointment"  resultType="int">
+        select  count(*)   from  appointment a
+        join company  c on a.company_id = c.company_id
+        join   company_info i on c.company_id = i.company_id
+        join   business   b on c.business_id=  b.business_id
+        join user u  on  a.sponsor_id = u.user_id
+
+        where   a.indicator=1
+        <if test="company_name!=null"> AND c.company_name LIKE '%${company_name}%'</if>
+        <if test="appointment_title!=null"> AND a.appointment_title LIKE '%${appointment_title}%'</if>
+        <if test="business_id!=0">  AND  b.business_id  = #{business_id}</if>
+
+        <if test="start!=null">and a.sponsor_date  &gt; #{start}</if>
+        <if test="end!=null">and a.sponsor_date &lt; #{end}</if>
+
+
+    </select>
+
+    <select id="adminGetAppointment"   resultType="com.dli.entities.adminAppointmentDetail"  >
+        select  c.company_name , b.business_name  ,   a.appointment_title,  ak.key_word   ,
+u.full_name   as sponsor_idfull_name , u.cell_phone   as sponsor_idcell_phone ,    i. contact_person,  i.phone_number  , a.sponsor_date   ,af.follow_count from
+appointment a join company c on a.company_id =c.company_id
+join company_info i on   a.company_id=i.company_id
+join business b    on  c.business_id= b.business_id
+join  user u on    a.sponsor_id = u.user_id
+
+  join (
+select appointment_id, group_concat(word) key_word from appointment_keyword group by  appointment_id
+) ak on a.appointment_id = ak.appointment_id
+
+
+ join (select appointment_id  , count( DISTINCT follower_id)  as follow_count  from  appointment_follower  group by appointment_id)af
+ on a.appointment_id = af.appointment_id
+
+
+where a.appointment_id= #{appointmentid}
+    </select>
+
+    <select id="adminGetAppointmentResource"  resultType="int">
+        select    count(*)  as  appointment_count from    appointment where indicator=1;
+    </select>
+
 </mapper>
