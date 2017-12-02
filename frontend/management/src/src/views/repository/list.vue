@@ -521,4 +521,7 @@
     background: #dcdcdc;
     margin-bottom: 20px;
   }
+  .fr{
+    float: right;
+  }
 </style>

@@ -575,35 +575,35 @@ table {
   margin: 20px 0;
 }
 
-.dateTab_width .el-input__icon + .el-input__inner {
-  padding-right: 10px;
-}
-.el-input__icon+.el-input__inner {
-  padding-right: 10px;
-}
-输入框宽度统一
-.add_width .el-form-item__content{
-  width: 70%;
-  /*magin-right:10px;*/
-}
-.add_width .el-form-item{
-  width:100%;
-}
-.add_width .el-form-item__content {
-  width: 70%;
-}
-.add_width .el-input-number {
-  /*display: inline-block;*/
-  width: 100%;
-  /*position: relative;*/
-  /*line-height: normal;*/
-}
-.add_width .el-select{
-  width:100%;
-}
-.input_textarea .el-form-item__content{
-  width:90%;
-}
+/*.dateTab_width .el-input__icon + .el-input__inner {*/
+  /*padding-right: 10px;*/
+/*}*/
+/*.el-input__icon+.el-input__inner {*/
+  /*padding-right: 10px;*/
+/*}*/
+/*输入框宽度统一*/
+/*.add_width .el-form-item__content{*/
+  /*width: 70%;*/
+  /*!*magin-right:10px;*!*/
+/*}*/
+/*.add_width .el-form-item{*/
+  /*width:100%;*/
+/*}*/
+/*.add_width .el-form-item__content {*/
+  /*width: 70%;*/
+/*}*/
+/*.add_width .el-input-number {*/
+  /*!*display: inline-block;*!*/
+  /*width: 100%;*/
+  /*!*position: relative;*!*/
+  /*!*line-height: normal;*!*/
+/*}*/
+/*.add_width .el-select{*/
+  /*width:100%;*/
+/*}*/
+/*.input_textarea .el-form-item__content{*/
+  /*width:90%;*/
+/*}*/
 /*.el-input__icon+.el-input__inner {*/
 /*width:160px;*/
 /*}*/
@@ -618,43 +618,11 @@ table {
   box-sizing: border-box;
 }
 
-/*分页颜色*/
-.el-pager li.active, .el-pager li.active:hover {
-  border-color: #55b761 !important;
-  background-color: #55b761 !important;
-  color: #fff;
-  cursor: default;
-}
+/*!*分页颜色*!*/
+/*.el-pager li.active, .el-pager li.active:hover {*/
+  /*border-color: #55b761 !important;*/
+  /*background-color: #55b761 !important;*/
+  /*color: #fff;*/
+  /*cursor: default;*/
+/*}*/
 
-/*判断符号*/
-.el-icon-check {
-  color: #55b761;
-}
-
-.el-icon-close {
-  color: rgb(245, 90, 16);
-}
-
-.el-icon-plus {
-  color: #8391a5;
-}
-
-.el-icon-minus {
-  color: #8391a5;
-}
-/*导出样式*/
-.dc_width .el-dialog--small {
-  min-width: 40%;
-  width: 40%;
-
-}
- .el-dialog__headerbtn .el-dialog__close:hover{
-  color: #55b761;
-}
- .el-dialog__headerbtn .el-dialog__close:active{
-  color: #55b761;
-}
-.el-dialog{
-  border:none;
-  border-top:4px solid #55b761;
-}

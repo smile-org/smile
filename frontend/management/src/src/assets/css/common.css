@@ -15,7 +15,6 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 
 .fl {
   float: left;
-  float: left;
 }
 
 .fr {
@@ -343,23 +342,23 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
   cursor: pointer;
 }
 
-.el-button--text {
-  color: #55b761!important;
-}
+/*.el-button--text {*/
+  /*color: #55b761!important;*/
+/*}*/
 
-.el-button--text:active {
-  color: #55b761 !important;
-}
+/*.el-button--text:active {*/
+  /*color: #55b761 !important;*/
+/*}*/
 
-.el-button--text:focus, .el-button--text:hover {
-  color: #55b761 !important;
-}
+/*.el-button--text:focus, .el-button--text:hover {*/
+  /*color: #55b761 !important;*/
+/*}*/
 
-.el-button:active {
-  color: #55b761 !important;
-  border-color: #55b761 !important;
-  outline: 0;
-}
+/*.el-button:active {*/
+  /*color: #55b761 !important;*/
+  /*border-color: #55b761 !important;*/
+  /*outline: 0;*/
+/*}*/
 .red_font {
   color: #f56d16 !important;
 }
@@ -383,6 +382,6 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .tl {
   text-align: left;
 }
-.input_textarea .el-textarea__inner:active,.input_textarea .el-textarea__inner:focus{
-  border-color: #55b761
-}
+/*.input_textarea .el-textarea__inner:active,.input_textarea .el-textarea__inner:focus{*/
+  /*border-color: #55b761*/
+/*}*/
