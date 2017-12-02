@@ -20,11 +20,6 @@
                 <el-input-number v-model="form.times" :min="1" label="次数限制"></el-input-number>
               </el-form-item>
             </el-col>
-            <el-col :span="8" >
-              <el-form-item label="通过分数" prop="score">
-                <el-input-number v-model="form.score" :min="1" label="通过分数"></el-input-number>
-              </el-form-item>
-            </el-col>
             <el-col :span="8">
               <el-form-item label="责任人" prop="admin">
                 <el-select  class="dateTab_width" v-model="form.admin" placeholder="请选择责任人">
@@ -51,6 +46,31 @@
                   <el-date-picker class="dateTab_width" type="date" :picker-options="pickerOptions0" @change="changeDateEnd" placeholder="选择日期" v-model="form.dateEnd" style="width: 100%;">
                   </el-date-picker>
                 </el-col>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" >
+              <el-form-item label="单选分值" prop="single">
+                <el-input-number v-model="form.single" @change="changeSingle" :min="1" label="单选分值"></el-input-number>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" >
+              <el-form-item label="多选分值" prop="multi">
+                <el-input-number v-model="form.multi" @change="changeMulti" :min="1" label="多选分值"></el-input-number>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" >
+              <el-form-item label="是非分值" prop="truefalse">
+                <el-input-number v-model="form.truefalse" @change="changeTruefalse" :min="1" label="是非分值"></el-input-number>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" >
+              <el-form-item label="总分">
+                {{form.totalScore}}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" >
+              <el-form-item label="通过分数" prop="score">
+                <el-input-number v-model="form.score" :min="1" label="通过分数"></el-input-number>
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -263,14 +283,18 @@
           // 次数限制
           times: 10,
           // 通过分数
-          score: 60,
+          score: 0,
           // 责任人
           admin: '',
           // 时间限制
           minutes: 60,
           dateStart: '',
           dateEnd: '',
-          intro: ''
+          intro: '',
+          single: 0,
+          multi: 0,
+          truefalse: 0,
+          totalScore: 0
         },
         formRules: {
           name: [
@@ -492,13 +516,15 @@
             this.examSelected.push({
               id: spec.id,
               name: spec.name,
-              num: spec.num
+              num: spec.num,
+              type: spec.type
             })
           }
         }
+        this.changeQuestionScore()
       },
       deleteSelectedExam (id) {
-        this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
+        this.$confirm('此操作将删除该试题, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -506,6 +532,7 @@
           this.examSelected = _.filter(this.examSelected, function (item) {
             return item.id !== id
           })
+          this.changeQuestionScore()
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -531,7 +558,10 @@
               icon: this.iconSrc,
               pic: this.bannerSrc,
               courseids: '',
-              questionList: []
+              questionList: [],
+              single_choice_score: this.form.single,
+              multi_choice_score: this.form.multi,
+              true_false_score: this.form.truefalse
             }
             var courseArray = []
             for (var i = 0; i < this.materialSelected.length; i++) {
@@ -602,6 +632,34 @@
           this.iconSrc = api.image.exam.icon
         } else {
           this.bannerSrc = api.image.exam.banner
+        }
+      },
+
+      changeSingle (val) {
+        this.form.single = val
+        this.changeQuestionScore()
+      },
+
+      changeMulti (val) {
+        this.form.multi = val
+        this.changeQuestionScore()
+      },
+
+      changeTruefalse (val) {
+        this.form.truefalse = val
+        this.changeQuestionScore()
+      },
+      changeQuestionScore () {
+        this.form.totalScore = 0
+        for (var i = 0; i < this.examSelected.length; i++) {
+          var current = this.examSelected[i]
+          if (current.type === 1) {
+            this.form.totalScore += this.form.single
+          } else if (current.type === 2) {
+            this.form.totalScore += this.form.multi
+          } else {
+            this.form.totalScore += this.form.truefalse
+          }
         }
       }
     }

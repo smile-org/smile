@@ -81,7 +81,7 @@
             <!--</el-table-column>-->
             <el-table-column align="center" label="操作" class="tc" width="140">
               <template scope="scope">
-                <el-button @click="editExam(scope.row.exam_id)" type="text" size="small">编辑</el-button>
+                <el-button @click="editExam(scope.row.exam_id, scope.row.HasHistory)" type="text" size="small">编辑</el-button>
                 <el-button @click="updateState(scope.row)" type="text" size="small">{{scope.row.ispublished ? '隐藏' : '发布'}}</el-button>
                 <el-button @click="deleteExam(scope.row.exam_id)" class="red_font" type="text" size="small">删除
                 </el-button>
@@ -226,7 +226,7 @@
           }
         })
       },
-      editExam: function (examId) {
+      editExam: function (examId, hasHistory) {
         router.push({name: 'examEdit', query: {id: examId}})
       },
       deleteExam: function (examId) {
