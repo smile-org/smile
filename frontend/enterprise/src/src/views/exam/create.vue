@@ -65,7 +65,8 @@
             </el-col>
             <el-col :span="8" >
               <el-form-item label="总分">
-                {{form.totalScore}}
+                <el-input v-model="form.totalScore" placeholder="总分" ></el-input>
+                <!--{{form.totalScore}}-->
               </el-form-item>
             </el-col>
             <el-col :span="8" >

@@ -9,6 +9,7 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">考试信息管理</span> > <span class="f_blue">添加考试</span></span>
         </nav>
         <div class="con_tab">
+          <span v-show="hasHistory === 1" class="red_font" >考试已经开始， 不允许编辑</span>
           <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
             <el-col :span="8">
               <el-form-item label="考试名称" prop="name">
@@ -64,7 +65,8 @@
             </el-col>
             <el-col :span="8" >
               <el-form-item label="总分">
-                {{form.totalScore}}
+                <el-input v-model="form.totalScore" placeholder="总分" disabled=""></el-input>
+                <!--{{form.totalScore}}-->
               </el-form-item>
             </el-col>
             <el-col :span="8" >
@@ -231,10 +233,11 @@
                 </el-table-column>
               </el-table>
             </template>
+
           </div>
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " v-bind:disabled="hasHistory === 0" v-on:click="save">保  存</button>
-            <span v-show="hasHistory === 0">考试已经开始， 不允许编辑</span>
+
             <button type="button" class="inf_btn  ml20" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
           </div>
           <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="280" :headers="headers" :height="194" :value.sync="showIcon" :no-circle=true img-format="png">
