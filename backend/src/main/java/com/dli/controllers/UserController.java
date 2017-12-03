@@ -2,6 +2,7 @@ package com.dli.controllers;
 
 import com.dli.entities.Demo;
 import com.dli.entities.User;
+import com.dli.entities.adminMonthCountStatistics;
 import com.dli.helper.Constant;
 import com.dli.helper.FileUtil;
 import com.dli.helper.Helper;
@@ -97,6 +98,8 @@ public class UserController {
 
             u.setAvatar(defaultheader);
             u.setCompany_id(user.getCompany_id());
+
+            u.setToken(Helper.GenerateToken(cellphone));
 
             userService.backAddEmployee(u);
             result.put(Constant.status, 1);
@@ -485,6 +488,7 @@ public class UserController {
 
                 u.setAvatar(defaultheader);
                 u.setCompany_id(user.getCompany_id());
+                u.setToken(Helper.GenerateToken( String.valueOf(arr[0])  ));
 
                 userService.backAddEmployee(u);
 
@@ -539,6 +543,140 @@ public class UserController {
         }
         return result;
     }
+
+
+    @RequestMapping(value = "/admin/AddPlatformUser", method = RequestMethod.GET)
+    public Map adminAddPlatformUser(@RequestParam String cellphone, @RequestParam String email, @RequestParam String fullname, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            User u = new User();
+
+            u.setCell_phone(cellphone);
+            u.setEmail(email);
+            u.setFull_name(fullname);
+
+            u.setAvatar(defaultheader);
+
+             u.setToken( Helper.GenerateToken(cellphone));
+
+
+            userService.adminAddPlatformUser(u);
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "员工添加成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+    @RequestMapping(value = "/admin/UpdatePlatformUser", method = RequestMethod.GET)
+    public Map adminUpdatePlatformUser(@RequestParam int userid, @RequestParam String cellphone, @RequestParam String email,
+                                  @RequestParam String fullname, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            User u = new User();
+            u.setUser_id(userid);
+            u.setCell_phone(cellphone);
+            u.setEmail(email);
+
+            u.setFull_name(fullname);
+
+
+
+            userService.adminUpdatePlatformUser(u);
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "员工更新成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+    @RequestMapping(value = "/admin/GetPlatformUserList", method = RequestMethod.GET)
+    public Map adminGetPlatformUserList( int skip, int take, @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+
+
+
+           List<User>   lst=  userService.adminGetPlatformUserList(skip,take);
+           int   total  =userService.adminGetPlatformUserListCount(skip,take);
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+            result.put(Constant.total, total);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+    @RequestMapping(value = "/admin/GetEmployeeStatistics", method = RequestMethod.GET)
+    public Map adminGetEmployeeStatistics( @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            List<adminMonthCountStatistics>   lst =userService.adminGetEmployeeStatistics();
+            result.put(Constant.status, 1);
+            result.put(Constant.result, lst);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
 
 
 }

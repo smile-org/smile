@@ -107,7 +107,7 @@
           case when o1.renshu  is not null then o1.renshu else 0 end  as study_count,
           case when  o2.userct is not null then  o2.userct else 0  end   as collect_count
           from (
-          select * from exam  where indicator =1   and company_id=#{companyid}   and   now() &lt; end_date
+          select * from exam  where indicator =1  and ispublished=1   and company_id=#{companyid}   and   now() &lt; end_date
           )result
 
           left join (
@@ -306,7 +306,7 @@ left join ( select * from exam_record  where history_id in
           on e.exam_id=o1.exam_id
          left join   user u on    e.manager_id= u.user_id
 
-            where e.exam_title like '%${keyword}%'  and e.company_id=#{companyid} and e.indicator=1  limit #{skip} ,#{take}
+            where e.exam_title like '%${keyword}%'  and e.company_id=#{companyid} and e.indicator=1   and e.ispublished=1 limit #{skip} ,#{take}
     </select>
 
     <insert id="backAddExamQuestion"  parameterType="com.dli.entities.Question"    useGeneratedKeys="true"   keyProperty="question_id">
@@ -542,4 +542,8 @@ where     exam_id =  #{exam_id}
         </set>
          where exam_id = #{examid}
     </update>
+
+    <select id="adminGetExamResource"  resultType="int">
+        select count(*)   as  exam_count from  exam  where indicator=1;
+    </select>
 </mapper>

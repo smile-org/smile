@@ -671,8 +671,11 @@ public class CourseController {
             //4. update link
 
 
+            String guid =UUID.randomUUID().toString();
             //String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
-            String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
+            //String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
+            String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +
+                    guid +  "."  +ext ;
             FileUtil.renameFile(fileroot + attachmentUrl, fileroot + fullName);
             courseService.backUpdateCourseContentPath(fullName, c.getContent_id());
 
@@ -694,7 +697,8 @@ public class CourseController {
 
                // courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
 
-                String   htmlfilename=  fileName.substring(  0,   fileName.lastIndexOf(".") ) + ".html";
+               // String   htmlfilename=  fileName.substring(  0,   fileName.lastIndexOf(".") ) + ".html";
+                String   htmlfilename= guid  + ".html";
                 courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + htmlfilename, c.getContent_id());
             }
 
@@ -748,9 +752,11 @@ public class CourseController {
 
             if (!Helper.isNullOrEmpty(attachmentUrl)) {
 
-
+                String guid =UUID.randomUUID().toString();
               //  String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
-                String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
+               // String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
+                String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +
+                        guid +  "."  +ext ;
                 FileUtil.renameFile(fileroot + attachmentUrl, fileroot + fullName);
                 courseService.backUpdateCourseContentPath(fullName, c.getContent_id());
 
@@ -771,7 +777,8 @@ public class CourseController {
                     }
 
                     //courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + fileName.replace(ext, "html"), c.getContent_id());
-                    String   htmlfilename=  fileName.substring(  0,   fileName.lastIndexOf(".") ) + ".html";
+                   // String   htmlfilename=  fileName.substring(  0,   fileName.lastIndexOf(".") ) + ".html";
+                    String   htmlfilename= guid  + ".html";
                     courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + htmlfilename, c.getContent_id());
                 }
                 else {

@@ -8,8 +8,8 @@
 
         <result column="contact_person" property="contact_person"/>
         <result column="phone_number" property="phone_number"/>
-        <result column="province" property="province"/>
-        <result column="city" property="city"/>
+        <result column="province_name" property="province"/>
+        <result column="city_name" property="city"/>
         <result column="address" property="address"/>
 
         <result column="logo" property="logo"/>
@@ -18,7 +18,10 @@
 
     <select id="backGetCompanyByID" resultMap="CompanyMap">
         select * from (
-select  c.company_id, c.company_name, i.contact_person,i.phone_number,i.province,i.city,i.address  from company c join company_info i on c.company_id=i.company_id
+select  c.company_id, c.company_name, i.contact_person,i.phone_number,p.province_name,city.city_name,i.address
+from company c join company_info i on c.company_id=i.company_id
+join  city on   i.city_id = city.city_id
+join province p on i.province_id =p.province_id
 where  c.company_id=#{companyid})result join
 (
 select pic_url as  banner from company_pic
@@ -32,4 +35,136 @@ where  company_id=#{companyid}  and pic_type='logo') logo on 1=1
         update  company_pic  set pic_url=#{picurl}  ,updated_at=NOW()
 where company_id=#{companyid} and pic_type=#{pictype}
     </update>
+
+
+    <insert id="adminAddCompany"  parameterType="com.dli.entities.adminCompany"  useGeneratedKeys="true"   keyProperty="company_id">
+        insert company values( 0,  #{company_name}, 1, now(), now() ,  #{business_id},  #{agency_id} )
+    </insert>
+
+    <insert id="adminAddCompanyInfo"  parameterType="com.dli.entities.adminCompany">
+        insert  company_info values( #{company_id},  #{contact_person}, #{phone_number}, #{province_id}, #{city_id}, #{address}, now(),  now()   )
+    </insert>
+
+    <insert id="adminAddCompanyPic"  parameterType="com.dli.entities.adminCompany">
+        insert   company_pic values(#{company_id}, #{pic_url},  #{pic_type}, now(),now())
+    </insert>
+
+    <select id="adminGetProvinceList"  resultType="com.dli.entities.Province">
+        select * from province
+    </select>
+
+    <select id="adminGetCityList"  resultType="com.dli.entities.City">
+        select * from city where province_id = #{provinceid}
+    </select>
+
+    <select id="adminGetBusinessList"   resultType="com.dli.entities.Business">
+        select * from business
+    </select>
+
+    <select id="adminGetAgencyList"   resultType="com.dli.entities.Agency" >
+        select * from agency where indicator=1
+    </select>
+
+    <select id="adminGetCompanyByID" parameterType="int"   resultType="com.dli.entities.adminCompany">
+        select   c.company_name,  c.business_id, c.agency_id, i.*, p.pic_url as pic_url  from company  c  join   company_info  i on c.company_id = i. company_id
+          join  company_pic  p on  c.company_id = p. company_id and p.pic_type= 'business_licence' where c.company_id= #{companyid}
+    </select>
+
+    <update id="adminUpdateCompany"   parameterType="com.dli.entities.adminCompany">
+        update  company set company_name=#{company_name} , business_id=#{business_id} ,
+            agency_id =#{agency_id} where  company_id= #{company_id}
+    </update>
+
+    <update id="adminUpdateCompanyInfo"  parameterType="com.dli.entities.adminCompany">
+        update  company_info set contact_person=#{contact_person},  phone_number=#{phone_number},
+        province_id=#{province_id}, city_id=#{city_id}, address= #{address} where    company_id= #{company_id}
+    </update>
+
+    <update id="adminUpdateCompanyPic"  parameterType="com.dli.entities.adminCompany">
+        update  company_pic set  pic_url =#{pic_url}  where    company_id= #{company_id} and  pic_type = #{pic_type}
+    </update>
+
+     <select id="adminGetCompanyList"  parameterType="com.dli.entities.adminCompany"  resultType="com.dli.entities.adminCompany">
+         select   c.company_id,  c.company_name, i.contact_person , i.phone_number ,
+p.province_name as province , b.business_name as  business ,a.agency_name as  agency,
+ c.created_at as start ,c.indicator
+ from company c join company_info i on c.company_id =i.company_id
+join province p on i.province_id =p.province_id
+join business b on c.business_id =b.business_id
+join  agency  a on c.agency_id =a.agency_id
+         where  1=1
+         <if test="company_name!=null">and c.company_name like '%${company_name}%'</if>
+         <if test="province_id!=0">and i.province_id =#{province_id} </if>
+         <if test="business_id!=0">and c.business_id=#{business_id} </if>
+         <if test="agency_id!=0">and c.agency_id =#{agency_id} </if>
+
+         <if test="start!=null">and c.created_at  &gt; #{start}</if>
+         <if test="end!=null">and c.created_at &lt; #{end}</if>
+   LIMIT #{skip},#{take};
+     </select>
+
+
+    <select id="adminGetCompanyListCount"  parameterType="com.dli.entities.adminCompany"  resultType="int">
+        select  count(*)
+        from company c join company_info i on c.company_id =i.company_id
+        join province p on i.province_id =p.province_id
+        join business b on c.business_id =b.business_id
+        join  agency  a on c.agency_id =a.agency_id
+        where  1=1
+        <if test="company_name!=null">and c.company_name like '%${company_name}%'</if>
+        <if test="province_id!=0">and i.province_id =#{province_id} </if>
+        <if test="business_id!=0">and c.business_id=#{business_id} </if>
+        <if test="agency_id!=0">and c.agency_id =#{agency_id} </if>
+
+        <if test="start!=null">and c.created_at  &gt; #{start}</if>
+        <if test="end!=null">and c.created_at &lt; #{end}</if>
+
+    </select>
+
+    <update id="adminUpdateCompanyStatusByID">
+        update  company set indicator = #{status}  where company_id =  #{companyid}
+    </update>
+
+    <select id="adminGetIndustryStatistics"  resultType="com.dli.entities.adminNameCountStatistics">
+        select   b.business_name  as name,
+case  when  t.count   is not null then  t.count else 0  end as count from business   b left join (
+select   business_id ,  count(*)  count from company where indicator=1  group  by business_id)t
+ on b.business_id = t.business_id order by b.business_id
+    </select>
+
+     <select id="adminGetCompanyStatistics"  resultType="com.dli.entities.adminMonthCountStatistics">
+     select a.m1 as month ,
+  case   when   b.count   is not null then  b.count   else  0  end as   count
+  from (
+ select  DATE_FORMAT( date_add( now() , interval -11 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -10 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -9 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -8 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -7 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -6 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -5 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -4 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -3 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -2 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -1 month   ) ,'%Y-%m') as m1  union
+ select  DATE_FORMAT( date_add( now() , interval -0 month   ) ,'%Y-%m') as m1  )a
+ left  join (
+  select month , count(company_id) as count from (
+select   company_id,  DATE_FORMAT(created_at,'%Y-%m') as month  from  company  where indicator =1
+and created_at >=
+  DATE_FORMAT( date_add( date_add( now(), interval - day( now()) + 1 day  ) , interval -11 month   ) ,'%Y-%m-%d')
+)t  group by  month  )b  on a.m1 =b.month  order by a.m1
+     </select>
+
+      <select id="adminGetCompanyAreaStatistics"  resultType="com.dli.entities.adminNameCountStatistics">
+          select  p.province_name  as name  ,
+ case when  t.count    is not null then  t.count  else  0 end  as count
+  from    province   p
+
+left join (
+
+select   i.province_id, count(   c.company_id) as count  from company   c join  company_info i on c.company_id=i.company_id
+  where  c.indicator =1  GROUP BY  i.province_id  ) t
+ on p.province_id = t.province_id  order by p.province_id
+      </select>
 </mapper>

@@ -138,7 +138,7 @@ public class SearchController {
 
             switch (typeid) {
                 case 1:
-                    List<SearchResult> lst = courseService.searchCourse(  user.getCompany_id(),query,skip,take);
+                    List<SearchResult> lst = courseService.searchCourse(  user.getCompany_id(),query,skip,take   , user.getUser_id());
                     result.put(Constant.status, 1);
                     result.put(Constant.result, lst);
                     break;
@@ -199,6 +199,40 @@ public class SearchController {
         }
         return result;
     }
+
+
+
+    @RequestMapping(value = "/admin/GetResourceStatistics", method = RequestMethod.GET)
+    public Map adminGetResourceStatistics( @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+        try {
+
+            adminResourceStatistics    resource = new   adminResourceStatistics();
+
+            resource.setCourse_count( courseService.adminGetCourseResource()  );
+            resource.setExam_count( examService.adminGetExamResource()  );
+            resource.setEnrollment_count( enrollmentService.adminGetEnrollmentResource()  );
+            resource.setAppointment_count( appointmentService.adminGetAppointmentResource()  );
+
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, resource);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
 
 
 }

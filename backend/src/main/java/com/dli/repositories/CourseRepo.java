@@ -32,7 +32,7 @@ public interface CourseRepo {
 
     void  updateLearnProgress(  @Param("userid")  int userid,  @Param("contentid")  int contentid);
 
-    List<SearchResult>  searchCourse(@Param("companyid") int companyid,  @Param("keyword")String keyword,   @Param("skip") int skip,@Param("take")  int take);
+    List<SearchResult>  searchCourse(@Param("companyid") int companyid,  @Param("keyword")String keyword,   @Param("skip") int skip,@Param("take")  int take  ,  @Param("userid")  int userid);
 
     List<Course>  getCourseListByExamid( int  examid);
 
@@ -105,4 +105,6 @@ public interface CourseRepo {
     List<CourseComment> backgetCourseCommentList(  @Param("courseid" ) int courseid  ,  @Param("skip" )int skip,  @Param("take" )int take );
 
     int  backGetCourseCommentListCount(int courseid );
+
+    int adminGetCourseResource();
 }

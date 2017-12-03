@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.AgencyRepo">
+
+
+  <insert id="adminAddAgency" parameterType="com.dli.entities.Agency"   useGeneratedKeys="true"   keyProperty="agency_id">
+      insert  agency values( 0, #{agency_name} , #{legal_person} , #{contact_person} , #{contact_phone} , #{agent_area} , #{agent_start_date} , #{agent_end_date} ,1,   now(),  now())
+  </insert>
+
+    <select id="adminGetAgencyByID" resultType="com.dli.entities.Agency">
+        select * from agency where agency_id= #{agencyid}
+    </select>
+
+    <update id="adminUpdateAgency"   parameterType="com.dli.entities.Agency">
+        update   agency
+set  agency_name =#{agency_name}  ,
+legal_person =#{legal_person},
+contact_person = #{contact_person} ,
+contact_phone =#{contact_phone},
+agent_area =#{agent_area},
+agent_start_date =#{agent_start_date} ,
+agent_end_date =#{agent_end_date}  , updated_at =now() where agency_id = #{agency_id}
+    </update>
+
+    <select id="adminGetAgencyList"    parameterType="com.dli.entities.Agency"   resultType="com.dli.entities.Agency">
+        select a.*,
+        case  when   t.company_count  is not null then t.company_count else 0  end  as company_count
+        from agency a  left join
+        (select agency_id  , count(*)   as  company_count from company GROUP BY  agency_id)t on a.agency_id= t.agency_id
+        where  a.indicator =1
+        <if test="agency_name!=null">and agency_name like '%${agency_name}%'</if>
+        <if test="agent_area!=null">and agency_name like '%${agent_area}%' </if>
+        <if test="agent_end_date!=null">and agent_end_date  &lt; #{agent_end_date} </if>
+
+        LIMIT #{skip},#{take};
+    </select>
+
+
+
+    <select id="adminGetAgencyListCount"    parameterType="com.dli.entities.Agency"   resultType="int">
+        select count(*)
+        from agency a  left join
+        (select agency_id  , count(*)   as  company_count from company GROUP BY  agency_id)t on a.agency_id= t.agency_id
+        where  a.indicator=1
+        <if test="agency_name!=null">and agency_name like '%${agency_name}%'</if>
+        <if test="agent_area!=null">and agency_name like '%${agent_area}%' </if>
+        <if test="agent_end_date!=null">and agent_end_date  &lt; #{agent_end_date} </if>
+
+    </select>
+
+    <update id="adminUpdateAgencyStatusByID">
+        update  agency set indicator = #{status}  where agency_id =  #{agencyid}
+    </update>
+
+    <select id="adminGetAgencyStatistics" resultType="com.dli.entities.adminNameCountStatistics">
+
+select   a.agency_name as name ,
+case  when   t.count is not null then count else 0  end as count
+ from  agency  a
+
+left  join (
+
+select   agency_id  , count(company_id)  as count from company  where indicator=1   group by agency_id)t
+
+on     a.agency_id =  t.agency_id where a.indicator=1
+    </select>
+</mapper>

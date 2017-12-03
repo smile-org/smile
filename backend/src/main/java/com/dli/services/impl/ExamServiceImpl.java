@@ -468,5 +468,10 @@ public class ExamServiceImpl implements ExamService {
 
     }
 
+    @Override
+    public int adminGetExamResource() {
+        return   examRepo.adminGetExamResource();
+    }
+
 
 }

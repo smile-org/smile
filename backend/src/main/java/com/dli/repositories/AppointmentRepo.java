@@ -47,4 +47,13 @@ void  cancelFollow(@Param("appointmentId") int appointmentId, @Param("itemId") I
     List<BackAppointmentFollower> getBackAppointmentFollowers(int appointmentId);
 
     void closeAppointment(int appointmentId);
+
+    List<adminAppointment>  adminGetAppointmentList( adminAppointment a);
+
+    int  adminGetAppointmentListCount(adminAppointment a);
+
+   adminAppointmentDetail  adminGetAppointment( int  appointmentId);
+
+
+    int  adminGetAppointmentResource();
 }

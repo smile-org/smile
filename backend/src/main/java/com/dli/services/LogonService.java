@@ -35,4 +35,6 @@ public interface LogonService {
     List<LogonHistory>  backGetLogonHistoryList(LogonHistory   h);
 
     int backGetLogonHistoryListCount(LogonHistory   h);
+
+    boolean adminlogon(String  pwd, String  cellphone);
 }

@@ -3,6 +3,7 @@ package com.dli.services.impl;
 
 import com.dli.entities.Demo;
 import com.dli.entities.User;
+import com.dli.entities.adminMonthCountStatistics;
 import com.dli.repositories.DemoRepo;
 import com.dli.repositories.UserRepo;
 import com.dli.services.DemoService;
@@ -77,6 +78,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public void UpdateUserPic(String avatar, int userid) {
         userRepo. UpdateUserPic(avatar,userid);
+    }
+
+    @Override
+    public void adminAddPlatformUser(User u) {
+        userRepo.adminAddPlatformUser(u);
+        userRepo.backAddUserRoleMapping(u.getUser_id(), 3);
+
+    }
+
+    @Override
+    public void adminUpdatePlatformUser(User u) {
+        userRepo.adminUpdatePlatformUser(u);
+    }
+
+    @Override
+    public List<User> adminGetPlatformUserList(int skip, int take) {
+        return    userRepo.adminGetPlatformUserList( skip, take);
+    }
+
+    @Override
+    public int adminGetPlatformUserListCount(int skip, int take) {
+        return   userRepo.adminGetPlatformUserListCount(skip,take);
+    }
+
+    @Override
+    public List<adminMonthCountStatistics> adminGetEmployeeStatistics() {
+        return   userRepo.adminGetEmployeeStatistics();
     }
 
    /* @Override

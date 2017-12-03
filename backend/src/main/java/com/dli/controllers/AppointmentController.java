@@ -435,4 +435,108 @@ public class AppointmentController {
     }
 
 
+
+
+
+    @RequestMapping(value = "/adminGetAppointmentList", method = RequestMethod.GET)
+    public Map adminGetAppointmentList(@RequestHeader Map header,
+                                       @RequestParam String companyname,  @RequestParam String appointmenttitle, @RequestParam int businessid,
+                                       @RequestParam String start,  @RequestParam   String end, @RequestParam int skip, @RequestParam int take) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            adminAppointment a =   new  adminAppointment();
+
+
+            if(  !Helper.isNullOrEmpty( companyname) )
+                a.setCompany_name(companyname);
+            if(  !Helper.isNullOrEmpty( appointmenttitle) )
+                a.setAppointment_title(appointmenttitle);
+
+            if(   businessid  !=0 )
+                a.setBusiness_id(businessid);
+
+            if(  !Helper.isNullOrEmpty( start) )
+                a.setStart(  Helper.dateParse( start));
+            if(  !Helper.isNullOrEmpty( end) )
+                a.setEnd(   Helper.addOneDay( end));
+
+
+            a.setSkip(skip);
+            a.setTake(take);
+
+
+
+
+          //  int total = appointmentService.getBackAppointmentCount(companyId, title, startCondition,endCondition);
+
+           // List<BackAppointment> backAppointments = appointmentService.getBackAppointmentList(companyId, title, startCondition ,endCondition, skip, take);
+
+
+            List<  adminAppointment >   lst =appointmentService.adminGetAppointmentList(a);
+            int total =  appointmentService.adminGetAppointmentListCount(a);
+
+            result.put(Constant.status, 1);
+
+            result.put(Constant.result, lst);
+            result.put("total", total);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+
+        return result;
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/adminGetAppointment", method = RequestMethod.GET)
+    public Map adminGetAppointment(@RequestHeader Map header,
+                                       @RequestParam int appointmentid) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+
+              adminAppointmentDetail    a   =appointmentService.adminGetAppointment(appointmentid);
+
+
+            result.put(Constant.status, 1);
+
+            result.put(Constant.result, a);
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+
+        return result;
+    }
+
+
+
+
+
 }

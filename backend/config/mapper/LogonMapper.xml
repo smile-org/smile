@@ -54,7 +54,9 @@
     </update>
 
     <select id="logon"  resultType="int">
-        select count(*) from user u join  user_role  m on u.user_id =m.user_id where  m.role_id in (1,2)  and  cell_phone=#{cellphone} and password=#{pwd}
+        select count(*) from user u join  user_role  m on u.user_id =m.user_id
+          join  company c on u.company_id=c.company_id
+        where  m.role_id in (1,2)  and  cell_phone=#{cellphone} and password=#{pwd} and c.indicator=1
     </select>
 
 
@@ -75,7 +77,8 @@
     </select>
 
     <select id="backlogon"  resultType="int">
-        select count(*) from user u join user_role m on u.user_id= m.user_id where  m.role_id=2 and cell_phone=#{cellphone} and password=#{pwd}
+        select count(*) from user u join user_role m on u.user_id= m.user_id  join  company c on u.company_id=c.company_id
+         where  m.role_id=2 and cell_phone=#{cellphone} and password=#{pwd} and c.indicator=1
     </select>
 
     <insert id="addLogonHistory">
@@ -103,6 +106,12 @@
         <if test="area!=null">and  u.area like '%${area}%'</if>
         <if test="start!=null">and  h.logon_at &gt; #{start}</if>
         <if test="end!=null">and  h.logon_at &lt; #{end}</if>
+    </select>
+
+
+
+    <select id="adminlogon"  resultType="int">
+        select count(*) from user u join user_role m on u.user_id= m.user_id where  m.role_id=3 and cell_phone=#{cellphone} and password=#{pwd}
     </select>
 
 </mapper>

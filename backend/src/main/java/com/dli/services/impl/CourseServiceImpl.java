@@ -108,8 +108,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<SearchResult> searchCourse(int companyid, String keyword, int skip, int take) {
-        return courseRepo.searchCourse(companyid, keyword, skip, take);
+    public List<SearchResult> searchCourse(int companyid, String keyword, int skip, int take , int userid  ) {
+        return courseRepo.searchCourse(companyid, keyword, skip, take ,userid);
     }
 
 
@@ -307,6 +307,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int backGetCourseCommentListCount(int courseid) {
         return    courseRepo.backGetCourseCommentListCount(courseid);
+    }
+
+    @Override
+    public int adminGetCourseResource() {
+        return  courseRepo.adminGetCourseResource();
     }
 
 
