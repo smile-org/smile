@@ -40,7 +40,7 @@ header .logo_c a .logo1{
 }
 header .search_c{
   height:1.2rem;
-  line-height:0.2rem;
+  line-height:0.1rem;
   display:flex;/*设为伸缩容器*/
   flex-flow:row;/*伸缩项目单行排列*/
   align-items: center;
@@ -85,7 +85,7 @@ header .search_c .search_input input{
 .search_input img{
   width: 0.29rem;
   position: absolute;
-  top: .24rem;
+  top: .17rem;
   right:.2rem;
 
 }
@@ -464,6 +464,7 @@ section .form_list input:hover{
 .course_line .line_only a{
   padding-left: .3rem;
   display: block;
+  padding-top: .02rem;
 }
 .line_only .p3_line{
   /*padding-left: .3rem;*/
@@ -790,7 +791,7 @@ section .form_list input:hover{
   overflow: hidden;/*超出部分隐藏*/
   white-space: nowrap;/*不换行*/
   text-overflow:ellipsis;/*超出部分文字以...显示*/
-  margin-top: -.05rem;
+  /*margin-top: -.05rem;*/
   padding-right: .3rem;
   max-width:4.2rem;
   /*max-width:-moz-calc(100% - (3.5rem ));
@@ -1088,7 +1089,7 @@ footer .exam_b .btn span:nth-child(2){
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-top: -.05rem;
+  /*margin-top: -.05rem;*/
   max-width: 3.5rem;
 }
 .bm_font p{

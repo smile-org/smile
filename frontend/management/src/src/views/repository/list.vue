@@ -57,7 +57,7 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <div class="aa">
+              <div class="ccc" style="">
                 <div class="bb">代理商统计</div>
                 <div id="myChart6" style="height: 300px;width: 100%;"></div>
               </div>
@@ -512,7 +512,14 @@
     margin-top: 30px;
     overflow: hidden;
   }
-
+  .ccc {
+    min-height: 340px;
+    border: 1px solid #dcdcdc;
+    position: relative;
+    margin-top: 30px;
+    padding-bottom: 15px;
+    overflow: hidden;
+  }
   .bb {
     width: 100%;
     height: 40px;
