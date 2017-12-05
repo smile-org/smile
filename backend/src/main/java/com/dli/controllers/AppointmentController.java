@@ -539,4 +539,99 @@ public class AppointmentController {
 
 
 
+
+
+
+
+
+    @RequestMapping(value = "/adminExportAppointment", method = RequestMethod.GET)
+    public Map adminExportAppointment(@RequestHeader Map header,
+                                      @RequestParam String companyname,
+                                      @RequestParam String appointmenttitle,
+                                      @RequestParam int businessid,
+                                      @RequestParam String start,  @RequestParam   String end){
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+        try {
+
+            adminAppointment a =   new  adminAppointment();
+
+
+            if(  !Helper.isNullOrEmpty( companyname) )
+                a.setCompany_name(companyname);
+            if(  !Helper.isNullOrEmpty( appointmenttitle) )
+                a.setAppointment_title(appointmenttitle);
+
+            if(   businessid  !=0 )
+                a.setBusiness_id(businessid);
+
+            if(  !Helper.isNullOrEmpty( start) )
+                a.setStart(  Helper.dateParse( start));
+            if(  !Helper.isNullOrEmpty( end) )
+                a.setEnd(   Helper.addOneDay( end));
+
+
+            a.setSkip(0);
+            a.setTake(Constant.takeMax);
+
+            List<  adminAppointment >   lst =appointmentService.adminGetAppointmentList(a);
+
+            //导出到服务器
+            String sheetName = "sheet1";
+            List<String> rowNameList = new ArrayList<>();
+
+            rowNameList.add("约课主题");
+            rowNameList.add("企业名称");
+            rowNameList.add("主营行业");
+            rowNameList.add("发起者");
+
+            rowNameList.add("发起人联系方式");
+            rowNameList.add("企业联系人");
+            rowNameList.add("发起时间");
+
+
+            List<Object[]> dataList = new ArrayList<>();
+
+            for (adminAppointment  adm : lst) {
+                Object[] dataArray = new Object[7];
+
+                dataArray[0] = adm.getAppointment_title();
+                dataArray[1] = adm.getCompany_name();
+                dataArray[2] = adm.getBusiness_name();
+                dataArray[3] = adm.getSponsor_idfull_name();
+
+                dataArray[4] = adm.getSponsor_idcell_phone();
+                dataArray[5] = adm.getContact_person();
+                dataArray[6] =  Helper.formatDate( adm.getSponsor_date() );
+         ;
+
+                dataList.add(dataArray);
+            }
+
+            String url = Helper.Export(rowNameList, dataList, "PlatformAppointment-", fileroot, exportfolder);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, url);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+
+
+
 }

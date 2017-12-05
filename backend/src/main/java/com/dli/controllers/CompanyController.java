@@ -349,6 +349,9 @@ public class CompanyController {
     }
 
 
+    @Value("${exportfolder}")
+    private String exportfolder;
+
 
     @RequestMapping(value = "/admin/GetCompanyList", method = RequestMethod.GET)
     public Map adminGetCompanyList(String companyname,  int provinceid, int businessid, int agencyid, String start ,   String end  , int skip, int take, @RequestHeader Map header) {
@@ -396,6 +399,90 @@ public class CompanyController {
         }
         return result;
     }
+
+
+
+
+
+    @RequestMapping(value = "/admin/ExportCompanyList", method = RequestMethod.GET)
+    public Map adminExportCompanyList(String companyname,  int provinceid, int businessid, int agencyid, String start ,   String end  , @RequestHeader Map header) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+        try {
+            adminCompany c = new adminCompany();
+            if (!Helper.isNullOrEmpty(companyname))
+                c.setCompany_name(companyname);
+
+            c.setProvince_id(provinceid);
+            c.setBusiness_id(businessid);
+            c.setAgency_id(agencyid);
+
+
+            if (!Helper.isNullOrEmpty(start))
+                c.setStart( Helper.dateParse(start));
+
+            if (!Helper.isNullOrEmpty(end)) {
+                c.setEnd(   Helper.addOneDay(end)   );
+            }
+
+
+            c.setSkip(0);
+            c.setTake(Constant.takeMax);
+
+            List<adminCompany> lst = companyService.adminGetCompanyList(c);
+
+            //导出到服务器
+            String sheetName = "sheet1";
+            List<String> rowNameList = new ArrayList<>();
+
+            rowNameList.add("企业名称");
+            rowNameList.add("联系人");
+            rowNameList.add("联系电话");
+            rowNameList.add("省份");
+
+            rowNameList.add("主营行业");
+            rowNameList.add("代理商");
+            rowNameList.add("入驻时间");
+            rowNameList.add("状态");
+
+            List<Object[]> dataList = new ArrayList<>();
+
+            for (adminCompany  a : lst) {
+                Object[] dataArray = new Object[8];
+
+                dataArray[0] = a.getCompany_name();
+                dataArray[1] = a.getContact_person();
+                dataArray[2] = a.getPhone_number();
+                dataArray[3] = a.getProvince();
+
+                dataArray[4] = a.getBusiness();
+                dataArray[5] = a.getAgency();
+                dataArray[6] = Helper.formatDate( a.getStart());
+                dataArray[7] = ( a.getIndicator()==1?"生效":"禁用"   );
+
+                dataList.add(dataArray);
+            }
+
+            String url = Helper.Export(rowNameList, dataList, "CompanyList-", fileroot, exportfolder);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, url);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
 
 
 

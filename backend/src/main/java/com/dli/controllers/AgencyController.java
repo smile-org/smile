@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/")
@@ -217,6 +214,95 @@ public class AgencyController {
         }
         return result;
     }
+
+
+
+
+
+    @Value("${exportfolder}")
+    private String exportfolder;
+    @Value("${fileroot}")
+    private String fileroot;
+
+
+
+    @RequestMapping(value = "/admin/ExportAgencyList", method = RequestMethod.GET)
+    public Map adminExportAgencyList(String agencyname,  String agentarea  , String end  , @RequestHeader Map header){
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+        try {
+
+            Agency a = new Agency();
+            if (!Helper.isNullOrEmpty(agencyname))
+                a.setAgency_name(agencyname);
+
+            if (!Helper.isNullOrEmpty(agentarea))
+                a.setAgent_area(agentarea);
+
+            if (!Helper.isNullOrEmpty(end))
+                a.setAgent_end_date( Helper.addOneDay(end)  );
+
+            a.setSkip(0);
+            a.setTake(  Constant.takeMax);
+
+            List<Agency> lst = agencyService.adminGetAgencyList(a);
+
+            //导出到服务器
+            String sheetName = "sheet1";
+            List<String> rowNameList = new ArrayList<>();
+
+            rowNameList.add("代理商名称");
+            rowNameList.add("法人");
+            rowNameList.add("联系人");
+            rowNameList.add("联系方式");
+
+            rowNameList.add("代理区域");
+            rowNameList.add("代理权开始日期");
+            rowNameList.add("代理权截止日期");
+            rowNameList.add("服务企业数量");
+
+
+
+            List<Object[]> dataList = new ArrayList<>();
+
+            for (Agency  ag : lst) {
+                Object[] dataArray = new Object[8];
+
+                dataArray[0] = ag.getAgency_name();
+                dataArray[1] = ag.getLegal_person();
+                dataArray[2] = ag.getContact_person();
+                dataArray[3] = ag.getContact_phone();
+
+                dataArray[4] = ag.getAgent_area();
+                dataArray[5] =  Helper.formatDate( ag.getAgent_start_date() );
+                dataArray[6] = Helper.formatDate( ag.getAgent_end_date() );
+                dataArray[7] =     ag.getCompany_count()
+                ;
+
+                dataList.add(dataArray);
+            }
+
+            String url = Helper.Export(rowNameList, dataList, "AgencyList-", fileroot, exportfolder);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, url);
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
 
 
 
