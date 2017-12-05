@@ -236,7 +236,7 @@
 
           </div>
           <div class="tc btn_margin">
-            <button type="button" class="inf_btn  " v-bind:disabled="hasHistory === 0" v-on:click="save">保  存</button>
+            <button type="button" class="inf_btn  " v-bind:disabled="hasHistory === 1" v-on:click="save">保  存</button>
 
             <button type="button" class="inf_btn  ml20" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
           </div>

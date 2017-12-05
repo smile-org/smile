@@ -58,7 +58,7 @@
                   <div class="hidden bm_font ml2">
                     <h3 class="">{{item.appointmentTitle}}</h3>
                     <div class="hidden wid100">
-                      <p class="fl zj_ellipsis">主讲：{{item.sponsorName}}</p>
+                      <p class="fl zj_ellipsis">发起者：{{item.sponsorName}}</p>
                       <p class="fr">{{item.sponsorDate | formatDate}}</p>
                     </div>
                     <div class="home_person">
