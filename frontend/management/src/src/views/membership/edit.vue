@@ -30,6 +30,26 @@
             </el-row>
             <el-row>
               <el-col :span="12">
+                <el-form-item label="授权用户" prop="userCount">
+                  <el-input-number v-model="ruleForm.userCount" :min="1" label="授权用户"></el-input-number>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="服务截止" prop="dateEnd">
+                  <el-col>
+                    <el-date-picker
+                      format="yyyy-MM-dd"
+                      class="dateTab_width"
+                      type="date"
+                      placeholder="选择服务截止日期"
+                      v-model="ruleForm.dateEnd"
+                      style="width: 100%;"></el-date-picker>
+                  </el-col>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
                 <el-form-item label="省份" prop="province">
                   <el-select class="dateTab_width" v-model="ruleForm.province" @change="getCity"  placeholder="请选择省份">
                     <el-option v-for="item in provinceList"
@@ -140,7 +160,9 @@
           business_id: '',
           agency_id: '',
           address: '',
-          src: ''
+          src: '',
+          userCount: 0,
+          dateEnd: ''
         },
         rules: {
           companyName: [
@@ -178,6 +200,12 @@
           ],
           src: [
             { required: true, message: '请上传企业执照', trigger: 'trigger' }
+          ],
+          dateEnd: [
+            { type: 'date', required: true, message: '请输入服务截止日期', trigger: 'change' }
+          ],
+          userCount: [
+            { type: 'number', required: true, message: '请输入授权用户数', trigger: 'change' }
           ]
         }
       }
@@ -211,7 +239,9 @@
             business_id: obj.business_id,
             agency_id: obj.agency_id,
             address: obj.address,
-            src: obj.pic_url
+            src: obj.pic_url,
+            dateEnd: obj.expiration_date,
+            userCount: obj.user_limit
           }
         }
       })
@@ -281,7 +311,9 @@
               business_id: this.ruleForm.business_id,
               agency_id: this.ruleForm.agency_id,
               address: this.ruleForm.address,
-              LincenceUrl: this.ruleForm.src
+              LincenceUrl: this.ruleForm.src,
+              user_limit: this.ruleForm.userCount,
+              expiration_date: this.ruleForm.dateEnd
             }).then(data => {
               if (data.status === 1) {
                 router.push({name: 'membershipList'})

@@ -65,6 +65,13 @@
             </el-table-column>
             <el-table-column prop="phone_number" align="center" label="联系电话" width="120">
             </el-table-column>
+            <el-table-column prop="user_limit" label="授权用户" align="center" min-width="100">
+            </el-table-column>
+            <el-table-column prop="expiration_date" label="服务截止" align="center" min-width="120">
+              <template scope="scope">
+                {{scope.row.expiration_date | formatExpirationDate}}
+              </template>
+            </el-table-column>
             <el-table-column prop="province" label="省份" align="center" min-width="100">
             </el-table-column>
             <el-table-column prop="business" label="主营行业" align="center" min-width="120">
@@ -144,6 +151,10 @@
       formatDate: function (time) {
         var date = new Date(time)
         return moment(date).format('YYYY-MM-DD hh:mm:ss')
+      },
+      formatExpirationDate: function (time) {
+        var date = new Date(time)
+        return moment(date).format('YYYY-MM-DD')
       }
     },
     created () {

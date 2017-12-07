@@ -187,6 +187,8 @@ export default {
     getRecommanedKeyWords: '/getRecommanedKeyWords',
     addSearchHistory: '/addSearchHistory',
     deleteSearchHistory: '/deleteSearchHistory',
-    search: '/search'
+    search: '/search',
+
+    getBannerAndLogo: '/GetCompanyPic'
   }
 }

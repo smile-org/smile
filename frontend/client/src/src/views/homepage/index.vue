@@ -3,7 +3,7 @@
     <header>
       <div class="search_c">
         <a class="seach_tit tl" href="##">
-          <img src="../../assets/img/logo.png" style="width:.8rem"/>
+          <img :src="logo | formatImage" style="width:.8rem"/>
         </a>
         <div class="search_input" style="margin-left: .1rem;margin-right: -.15rem;">
           <img src="../../assets/img/seach_icon.png"/>
@@ -15,7 +15,7 @@
       </div>
     </header>
     <section>
-      <img class="banner_bg" src="../../assets/img/banner_bg.png"/>
+      <img class="banner_bg" :src="banner | formatImage"/>
       <el-row class="home_sec tc">
         <el-col :span="6" class="home_icon">
           <router-link v-bind:to="{name: 'myTask'}">
@@ -295,7 +295,9 @@
         nav1: false,
         username: '',
 //      value5: 3.7,
-        userAvatar: ''
+        userAvatar: '',
+        logo: '',
+        banner: ''
       }
     },
     filters: {
@@ -316,8 +318,9 @@
         api.fetch(api.uri.getHomepageCourse, {scopeid: 2, skip: 0, take: 3}),
         api.fetch(api.uri.getHomepageCourse, {scopeid: 3, skip: 0, take: 3}),
         api.fetch(api.uri.getExamList, {skip: 0, take: 3}),
-        api.fetch(api.uri.getEnrollList, {skip: 0, take: 3})
-      ]).then(axios.spread((bookingData, courseWeekData, courseMonthData, courseTotalData, examData, enrollData) => {
+        api.fetch(api.uri.getEnrollList, {skip: 0, take: 3}),
+        api.fetch(api.uri.getBannerAndLogo)
+      ]).then(axios.spread((bookingData, courseWeekData, courseMonthData, courseTotalData, examData, enrollData, pic) => {
         if (bookingData.status === 1) {
           this.booking = bookingData.result
         }
@@ -339,6 +342,10 @@
         if (enrollData.status === 1) {
           this.enroll = enrollData.result
           this.handleStar(this.enroll)
+        }
+        if (pic.status === 1) {
+          this.logo = pic.logo
+          this.banner = pic.banner
         }
       }))
     },

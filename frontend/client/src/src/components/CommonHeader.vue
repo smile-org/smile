@@ -5,7 +5,7 @@
         <img src="../assets/img/back.png" alt="返回" v-show="routeName!=='startExam' && routeName!=='examFailed' && routeName !== 'examSuccess'" v-on:click="goBack" />
       </a>
       <!--<router-link v-bind:to="{name: 'homepage'}">-->
-      <a><img src="../assets/img/logo.png" alt="smile" class="logo1" v-on:click="goHome" /></a>
+      <a><img :src="logo | formatImage"  class="logo1" v-on:click="goHome" /></a>
       <!--</router-link>-->
       <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)">
         <img src="../assets/img/home.png" alt="更多" v-show="routeName!=='startExam'" />
@@ -44,15 +44,24 @@
 <script>
 import axios from 'axios'
 import router from '../router'
+import api from '../services/api'
 export default {
   data: function () {
     return {
       nav1: false,
       userAvatar: '',
-      routeName: ''
+      routeName: '',
+      logo: '',
+      banner: ''
     }
   },
   created () {
+    api.fetch(api.uri.getBannerAndLogo).then(data => {
+      if (data.status === 1) {
+        this.logo = data.logo
+        this.banner = data.banner
+      }
+    })
     this.routeName = this.$route.name
     this.userAvatar = axios.defaults.imageServer + sessionStorage.getItem('userAvatar')
   },
@@ -70,7 +79,13 @@ export default {
         router.push({name: 'homepage'})
       }
     }
+  },
+  filters: {
+    formatImage: function (uri) {
+      return axios.defaults.imageServer + uri
+    }
   }
+
 }
 </script>
 
