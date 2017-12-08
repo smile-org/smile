@@ -55,6 +55,17 @@
             <el-form-item class="fr hidden mb20 dc_width">
               <button type="button" class="line-btn ml20" @click="search">查  询</button>
               <button type="button" v-on:click="membershipCreate"  class="inf_btn ml20 export_bor">企业入驻</button>
+              <button type="button" v-on:click="exportList" :loading="showloading" class="inf_btn ml20 export_bor">导  出</button>
+              <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                <div class="tc">
+                  <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;" />
+                </div>
+                <div class="tc">
+                  <a v-bind:href="exportExcelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下 载</a>
+                  <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
+                  </button>
+                </div>
+              </el-dialog>
             </el-form-item>
           </el-form>
           <hr class="hr_line">
@@ -113,7 +124,7 @@
   import api from '../../services/api'
   import moment from 'moment'
   import router from '../../router'
-  // import axios from 'axios'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
@@ -140,7 +151,10 @@
           agency_id: 0,
           agency_name: '请选择'
         }],
-        tableData: []
+        tableData: [],
+        showloading: false,
+        exportExcelUrl: '',
+        dialogTableVisible: false
       }
     },
     components: {
@@ -224,6 +238,32 @@
           if (data.status === 1) {
             this.$message('操作成功')
             item.indicator = !item.indicator
+          }
+        })
+      },
+      exportList () {
+        var start = ''
+        var end = ''
+        if (this.formInline.start) {
+          start = moment(this.formInline.start).format('YYYY-MM-DD')
+        }
+        if (this.formInline.end) {
+          end = moment(this.formInline.end).format('YYYY-MM-DD')
+        }
+        this.showloading = true
+        api.fetch(api.uri.exportCompany, {
+          companyname: this.formInline.name,
+          agencyid: this.formInline.agencyId,
+          businessid: this.formInline.businessId,
+          provinceid: this.formInline.provinceId,
+          start: start,
+          end: end
+        }).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.exportExcelUrl = axios.defaults.imageServer + data.result
+            this.showloading = false
+            this.dialogTableVisible = true
           }
         })
       }

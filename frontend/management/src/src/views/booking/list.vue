@@ -36,6 +36,17 @@
             </el-form-item>
             <el-form-item>
               <button type="button" class="line-btn ml20" v-on:click="search" >查  询</button>
+              <button type="button" v-on:click="exportList" :loading="showloading" class="inf_btn ml20 export_bor">导  出</button>
+              <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                <div class="tc">
+                  <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;" />
+                </div>
+                <div class="tc">
+                  <a v-bind:href="exportExcelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下 载</a>
+                  <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
+                  </button>
+                </div>
+              </el-dialog>
             </el-form-item>
           </el-form>
           <template>
@@ -75,6 +86,7 @@
   import router from '../../router'
   import api from '../../services/api'
   import moment from 'moment'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
@@ -92,7 +104,10 @@
         businessList: [{
           business_id: 0,
           business_name: '请选择'
-        }]
+        }],
+        showloading: false,
+        exportExcelUrl: '',
+        dialogTableVisible: false
       }
     },
     components: {
@@ -135,6 +150,22 @@
           if (data.status === 1) {
             this.tableData = data.result
             this.total = data.total
+          }
+        })
+      },
+      exportList () {
+        this.showloading = true
+        api.fetch(api.uri.exportAppointment, {
+          companyname: this.formInline.name,
+          businessid: this.formInline.businessId,
+          appointmenttitle: this.formInline.title,
+          start: this.formInline.start,
+          end: this.formInline.end
+        }).then(data => {
+          if (data.status === 1) {
+            this.exportExcelUrl = axios.defaults.imageServer + data.result
+            this.showloading = false
+            this.dialogTableVisible = true
           }
         })
       }

@@ -23,6 +23,17 @@
             <el-form-item class="fr hidden mb20 dc_width">
               <button type="button" v-on:click="queryAgencyList()" class="line-btn ml20">查  询</button>
               <button type="button" v-on:click="agencyCreate"  class="inf_btn ml20 export_bor">代理商入驻</button>
+              <button type="button" v-on:click="exportList" :loading="showloading" class="inf_btn ml20 export_bor">导  出</button>
+              <el-dialog title="电子表格文件生成成功" :visible.sync="dialogTableVisible">
+                <div class="tc">
+                  <img src="../../assets/img/face_img1.png" class="mb20" style="width: 100px;" />
+                </div>
+                <div class="tc">
+                  <a v-bind:href="exportExcelUrl" v-on:click="dialogTableVisible = false" class="inf_btn download" style="display: inline-block;">下 载</a>
+                  <button v-on:click="dialogTableVisible = false" type="button" class="qx_btn ml20">取 消
+                  </button>
+                </div>
+              </el-dialog>
             </el-form-item>
           </el-form>
           <hr class="hr_line">
@@ -69,6 +80,7 @@
   import router from '../../router'
   import api from '../../services/api'
   import moment from 'moment'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
@@ -80,7 +92,10 @@
           area: '',
           date: ''
         },
-        tableData: []
+        tableData: [],
+        showloading: false,
+        exportExcelUrl: '',
+        dialogTableVisible: false
       }
     },
     components: {
@@ -143,6 +158,24 @@
       handleCurrentChange: function (val) {
         this.currentPage = val
         this.queryAgencyList()
+      },
+      exportList () {
+        this.showloading = true
+        var date1 = ''
+        if (this.formInline.date) {
+          date1 = moment(this.formInline.date).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.exportAgency, {
+          agencyname: this.formInline.name,
+          agentarea: this.formInline.area,
+          end: date1
+        }).then(data => {
+          if (data.status === 1) {
+            this.exportExcelUrl = axios.defaults.imageServer + data.result
+            this.showloading = false
+            this.dialogTableVisible = true
+          }
+        })
       }
     }
   }

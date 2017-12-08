@@ -89,6 +89,7 @@ export default {
     getAgency: '/admin/GetAgencyByID',
     updateAgency: '/admin/Updateagency',
     updateAgencyStatus: '/admin/UpdateAgencyStatusByID',
+    exportAgency: '/admin/ExportAgencyList',
 
     // *** 企业会员  ***
     getCompanyList: '/admin/GetCompanyList',
@@ -99,10 +100,12 @@ export default {
     createCompany: '/admin/AddCompany',
     getCompanyInfo: '/admin/GetCompanyEidtPageInfo',
     updateCompanyInfo: '/admin/UpdateCompanyByID',
+    exportCompany: '/admin/ExportCompanyList',
 
     // *** 约课 ***
     getAppointments: '/appointment/adminGetAppointmentList',
-    getAppointment: '/appointment/adminGetAppointment'
+    getAppointment: '/appointment/adminGetAppointment',
+    exportAppointment: '/appointment/adminExportAppointment'
   },
 
   getUploadHeaders: function () {
