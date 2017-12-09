@@ -130,7 +130,7 @@
             var resourceArray = []
             resourceArray.push(resourceData.result.course_count)
             resourceArray.push(resourceData.result.exam_count)
-            resourceArray.push(resourceData.result.enrollment_coun)
+            resourceArray.push(resourceData.result.enrollment_count)
             resourceArray.push(resourceData.result.appointment_count)
             this.drawLine(resourceArray)
           }
