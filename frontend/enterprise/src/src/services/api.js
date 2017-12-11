@@ -170,6 +170,8 @@ export default {
     addQuestion: '/back/AddQuestion',
     // 编辑试题
     editQuestion: '/back/UpdateQuestion',
+    // 删除试题
+    deleteQuestion: '/back/DisableQuestion',
     // 获取试题
     getQuestion: '/back/GetQuestionEditPageInfo',
     uploadExamIcon: axios.defaults.baseURL + '/back/UploadExamIcon',
