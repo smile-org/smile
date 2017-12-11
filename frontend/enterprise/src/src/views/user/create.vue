@@ -96,7 +96,14 @@
               department: this.ruleForm.department,
               area: this.ruleForm.area
             }).then(data => {
-              router.push({name: 'userList'})
+              if (data.status === 1) {
+                router.push({name: 'userList'})
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: data.result
+                })
+              }
             })
           } else {
             return false

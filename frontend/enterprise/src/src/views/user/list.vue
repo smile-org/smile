@@ -150,21 +150,7 @@
     created () {
       this.headers = api.getUploadHeaders()
       console.log(this.formInLine)
-      api.fetch(api.uri.searchUserList, {
-        fullname: this.formInLine.name,
-        cellphone: this.formInLine.mobile,
-        department: this.formInLine.department,
-        area: this.formInLine.area,
-        skip: 0,
-        take: this.take
-      }).then(data => {
-        if (data.status === 1) {
-          this.data = data.result
-          this.total = data.total
-        }
-      }).catch(error => {
-        console.error(error.message)
-      })
+      this.loadUser()
     },
     filters: {
       formatDate: function (time) {
@@ -173,6 +159,23 @@
       }
     },
     methods: {
+      loadUser: function () {
+        api.fetch(api.uri.searchUserList, {
+          fullname: this.formInLine.name,
+          cellphone: this.formInLine.mobile,
+          department: this.formInLine.department,
+          area: this.formInLine.area,
+          skip: 0,
+          take: this.take
+        }).then(data => {
+          if (data.status === 1) {
+            this.data = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          console.error(error.message)
+        })
+      },
       editUser: function (id) {
         router.push({name: 'userEdit', query: {id: id}})
       },
@@ -237,6 +240,14 @@
       },
       onContentSuccess (response, file) {
         this.dialogUploadVisible = false
+        if (response.status === 1) {
+          this.loadUser()
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.result
+          })
+        }
       },
       beforeContentUpload (file) {
         if (file.name.indexOf('.xlsx') < 0) {
