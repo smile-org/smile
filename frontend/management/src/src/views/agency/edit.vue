@@ -53,7 +53,7 @@
   import navigator from '../../components/Navigator'
   import router from '../../router'
   import api from '../../services/api'
-  //  import moment from 'moment'
+  import moment from 'moment'
   export default {
     data: function () {
       return {
@@ -132,8 +132,8 @@
               contact_person: this.ruleForm.contact_person,
               contact_phone: this.ruleForm.contact_phone,
               agent_area: this.ruleForm.agent_area,
-              agent_start_date: this.ruleForm.agent_start_date,
-              agent_end_date: this.ruleForm.agent_end_date
+              agent_start_date: moment(this.ruleForm.agent_start_date).format('YYYY-MM-DD'),
+              agent_end_date: moment(this.ruleForm.agent_end_date).format('YYYY-MM-DD')
             }).then(data => {
               router.push({name: 'agencyList'})
             })

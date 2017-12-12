@@ -136,8 +136,7 @@
   import router from '../../router'
   import api from '../../services/api'
   import axios from 'axios'
-//  import ElRow from "element-ui/packages/row/src/row";
-//  import moment from 'moment'
+  import moment from 'moment'
   export default {
     data: function () {
       return {
@@ -146,6 +145,7 @@
         imgUrl: axios.defaults.baseURL + api.uri.uploadLicense,
         headers: {},
         firstLoad: true,
+        oriCity: '',
         // src: '',
         businessList: [],
         agencyList: [],
@@ -240,7 +240,7 @@
             agency_id: obj.agency_id,
             address: obj.address,
             src: obj.pic_url,
-            dateEnd: obj.expiration_date,
+            dateEnd: new Date(obj.expiration_date),
             userCount: obj.user_limit
           }
         }
@@ -259,6 +259,7 @@
             this.cityList = data.result
             if (this.firstLoad) {
               this.firstLoad = false
+              this.ruleForm.city = this.oriCity
             } else {
               this.ruleForm.city = ''
             }
@@ -313,13 +314,14 @@
               address: this.ruleForm.address,
               LincenceUrl: this.ruleForm.src,
               user_limit: this.ruleForm.userCount,
-              expiration_date: this.ruleForm.dateEnd
+              expiration_date: moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
             }).then(data => {
               if (data.status === 1) {
                 router.push({name: 'membershipList'})
               }
             })
           } else {
+            console.log('invalid')
             return false
           }
         })

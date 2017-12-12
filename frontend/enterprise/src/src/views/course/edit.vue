@@ -561,7 +561,7 @@ export default {
             title: this.currentCourse.title,
             adminid: this.currentCourse.principal_user_id,
             depart: this.currentCourse.department,
-            expdate: moment(this.currentCourse.expdate).format('YYYY-MM-DD'),
+            expdate: moment(this.currentCourse.expiration_date).format('YYYY-MM-DD'),
             intro: this.currentCourse.intro,
             iconPath: this.iconSrc,
             picPath: this.bannerSrc
