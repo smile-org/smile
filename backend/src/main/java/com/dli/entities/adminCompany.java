@@ -10,6 +10,8 @@ public class adminCompany {
     private int business_id;
     private int agency_id;
     private int province_id;
+    private  int user_limit;
+    private   Date  expiration_date;
 
     private String business;
     private String agency;
@@ -172,6 +174,22 @@ public class adminCompany {
     }
 
 
+
+    public int getUser_limit() {
+        return user_limit;
+    }
+
+    public void setUser_limit(int user_limit) {
+        this.user_limit = user_limit;
+    }
+
+    public Date getExpiration_date() {
+        return expiration_date;
+    }
+
+    public void setExpiration_date(Date expiration_date) {
+        this.expiration_date = expiration_date;
+    }
 
 
 

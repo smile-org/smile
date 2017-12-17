@@ -5,6 +5,7 @@ import com.dli.entities.LogonHistory;
 import com.dli.entities.User;
 import com.dli.helper.Constant;
 import com.dli.helper.Helper;
+import com.dli.services.CompanyService;
 import com.dli.services.LogonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/")
@@ -122,6 +124,8 @@ public class LogonController {
                 User user = logonService.getUserByPhoneNumber(cellphone);
                 result.put(Constant.result, user.getToken());
                 result.put("userInfo", user);
+                //result.put("banner",  companyService.getPicUrl( user.getCompany_id(), "banner"));
+               // result.put("logo",  companyService.getPicUrl( user.getCompany_id(), "logo"));
 
                  logonService.addLogonHistory(user.getUser_id());
 

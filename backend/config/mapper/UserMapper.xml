@@ -156,5 +156,9 @@ select  u.user_id,  DATE_FORMAT(u.created_at,'%Y-%m') as month  from  user   u j
 )t  group by  month  )b  on a.m1 =b.month  order by a.m1
     </select>
 
+    <select id="backGetUserCountByCompanyID"  resultType="int">
+        select count(*) from  user where company_id=#{companyid} and indicator =1
+    </select>
+
 
 </mapper>

@@ -51,4 +51,7 @@ public interface CompanyRepo {
 
     List<  adminNameCountStatistics>   adminGetCompanyAreaStatistics();
 
+   String   getPicUrl( @Param("companyid")  int  companyid,  @Param("pictype") String pictype );
+
+
 }

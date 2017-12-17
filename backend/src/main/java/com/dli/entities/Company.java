@@ -1,10 +1,31 @@
 package com.dli.entities;
 
 
+import java.util.Date;
+
 public class Company {
 
     private int company_id;
     private String company_name;
+
+    private  int user_limit;
+    private Date expiration_date;
+
+    public int getUser_limit() {
+        return user_limit;
+    }
+
+    public void setUser_limit(int user_limit) {
+        this.user_limit = user_limit;
+    }
+
+    public Date getExpiration_date() {
+        return expiration_date;
+    }
+
+    public void setExpiration_date(Date expiration_date) {
+        this.expiration_date = expiration_date;
+    }
 
     private String contact_person;
     private String phone_number;

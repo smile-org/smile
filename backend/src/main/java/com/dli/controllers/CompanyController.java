@@ -198,6 +198,9 @@ public class CompanyController {
             String address = (String) body.get("address");
             String LincenceUrl = (String) body.get("LincenceUrl");
 
+            int user_limit = (int) body.get("user_limit");
+            String expiration_date = (String) body.get("expiration_date");
+
 
             adminCompany c = new adminCompany();
             c.setCompany_name(company_name);
@@ -209,6 +212,8 @@ public class CompanyController {
             c.setAgency_id(agency_id);
             c.setAddress(address);
             //c.setLincenceUrl(LincenceUrl);
+            c.setUser_limit(user_limit);
+            c.setExpiration_date(   Helper.dateParse(expiration_date) );
 
             companyService.adminAddCompany(c);
 
@@ -305,6 +310,10 @@ public class CompanyController {
             String LincenceUrl = (String) body.get("LincenceUrl");
 
 
+            int user_limit = (int) body.get("user_limit");
+            String expiration_date = (String) body.get("expiration_date");
+
+
             adminCompany c = new adminCompany();
             c.setCompany_id(company_id);
             c.setCompany_name(company_name);
@@ -316,6 +325,9 @@ public class CompanyController {
             c.setAgency_id(agency_id);
             c.setAddress(address);
             //c.setLincenceUrl(LincenceUrl);
+
+            c.setUser_limit(user_limit);
+            c.setExpiration_date(   Helper.dateParse(expiration_date) );
 
             companyService.adminUpdateCompany(c);
             companyService.adminUpdateCompanyInfo(c);
@@ -452,10 +464,13 @@ public class CompanyController {
             rowNameList.add("入驻时间");
             rowNameList.add("状态");
 
+            rowNameList.add("授权用户");
+            rowNameList.add("服务截至日期");
+
             List<Object[]> dataList = new ArrayList<>();
 
             for (adminCompany  a : lst) {
-                Object[] dataArray = new Object[8];
+                Object[] dataArray = new Object[10];
 
                 dataArray[0] = a.getCompany_name();
                 dataArray[1] = a.getContact_person();
@@ -466,6 +481,9 @@ public class CompanyController {
                 dataArray[5] = a.getAgency();
                 dataArray[6] = Helper.formatDate( a.getStart());
                 dataArray[7] = ( a.getIndicator()==1?"生效":"禁用"   );
+
+                dataArray[8] =  a.getUser_limit();
+                dataArray[9] =  (a.getExpiration_date()==null?  "":  Helper.formatDateWithoutTime( a.getExpiration_date() ) ) ;
 
                 dataList.add(dataArray);
             }
@@ -635,6 +653,41 @@ public class CompanyController {
 
             result.put(Constant.status, 1);
             result.put(Constant.result, lst);
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
+
+    @RequestMapping(value = "/GetCompanyPic", method = RequestMethod.GET)
+    public Map getCompanyPic( @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+
+            String bannerUrl =  companyService.getPicUrl( user.getCompany_id(), "banner");
+
+            String   logoUrl= companyService.getPicUrl( user.getCompany_id(), "logo");
+
+
+            result.put(Constant.status, 1);
+            result.put("banner",  bannerUrl);
+            result.put("logo",logoUrl);
 
 
         } catch (Exception ex) {

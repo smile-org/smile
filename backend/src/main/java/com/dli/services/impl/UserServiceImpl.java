@@ -103,6 +103,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int backGetUserCountByCompanyID(int companyid) {
+        return    userRepo.backGetUserCountByCompanyID(companyid);
+    }
+
+    @Override
     public List<adminMonthCountStatistics> adminGetEmployeeStatistics() {
         return   userRepo.adminGetEmployeeStatistics();
     }

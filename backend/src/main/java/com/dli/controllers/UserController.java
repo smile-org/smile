@@ -7,6 +7,7 @@ import com.dli.helper.Constant;
 import com.dli.helper.FileUtil;
 import com.dli.helper.Helper;
 import com.dli.helper.OfficeUtil;
+import com.dli.services.CompanyService;
 import com.dli.services.DemoService;
 import com.dli.services.LogonService;
 import com.dli.services.UserService;
@@ -39,6 +40,9 @@ public class UserController {
 
     @Autowired
     private LogonService logonService;
+
+    @Autowired
+    private CompanyService companyService;
 
 
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
@@ -88,22 +92,35 @@ public class UserController {
         }
 
         try {
-            User u = new User();
-            u.setCell_phone(cellphone);
-            u.setEmail(email);
-            u.setJob_number(jobnumber);
-            u.setFull_name(fullname);
-            u.setDepartment(department);
-            u.setArea(area);
 
-            u.setAvatar(defaultheader);
-            u.setCompany_id(user.getCompany_id());
+            int userLimitCount =  companyService.backGetCompanyByID(user.getCompany_id()).getUser_limit();
+            int userCount = userService.backGetUserCountByCompanyID(  user.getCompany_id());
 
-            u.setToken(Helper.GenerateToken(cellphone));
+            if(  userLimitCount > userCount ) {
 
-            userService.backAddEmployee(u);
-            result.put(Constant.status, 1);
-            result.put(Constant.result, "员工添加成功");
+                User u = new User();
+                u.setCell_phone(cellphone);
+                u.setEmail(email);
+                u.setJob_number(jobnumber);
+                u.setFull_name(fullname);
+                u.setDepartment(department);
+                u.setArea(area);
+
+                u.setAvatar(defaultheader);
+                u.setCompany_id(user.getCompany_id());
+
+                u.setToken(Helper.GenerateToken(cellphone));
+
+                userService.backAddEmployee(u);
+                result.put(Constant.status, 1);
+                result.put(Constant.result, "员工添加成功");
+            }
+            else
+            {
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "员工数量超过授权数量啦，赶紧去申请开通吧");
+
+            }
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
@@ -473,31 +490,45 @@ public class UserController {
             //todo :  读取excel ,插入数据
 
             List<Object[]> lst = OfficeUtil.getInstance().extractExcel(fileroot + path + fileName);
-            //第一行是列头
-            for (int i = 1; i < lst.size(); i++) {
 
-                Object[] arr =lst.get(i);
 
-                User u = new User();
-                u.setCell_phone(   String.valueOf(arr[0]));
-                u.setEmail(arr[1] == null ? null :  String.valueOf(arr[1]));
-                u.setJob_number(arr[2] == null ? null :  String.valueOf(arr[2]));
-                u.setFull_name( String.valueOf(arr[3]));
-                u.setDepartment(arr[4] == null ? null :  String.valueOf(arr[4]));
-                u.setArea(arr[5] == null ? null :  String.valueOf(arr[5]));
+            int userLimitCount =  companyService.backGetCompanyByID(user.getCompany_id()).getUser_limit();
+            int userCount = userService.backGetUserCountByCompanyID(  user.getCompany_id());
 
-                u.setAvatar(defaultheader);
-                u.setCompany_id(user.getCompany_id());
-                u.setToken(Helper.GenerateToken( String.valueOf(arr[0])  ));
+            if(  userLimitCount >=  userCount +lst.size()-1 ) {
 
-                userService.backAddEmployee(u);
 
+                //第一行是列头
+                for (int i = 1; i < lst.size(); i++) {
+
+                    Object[] arr = lst.get(i);
+
+                    User u = new User();
+                    u.setCell_phone(String.valueOf(arr[0]));
+                    u.setEmail(arr[1] == null ? null : String.valueOf(arr[1]));
+                    u.setJob_number(arr[2] == null ? null : String.valueOf(arr[2]));
+                    u.setFull_name(String.valueOf(arr[3]));
+                    u.setDepartment(arr[4] == null ? null : String.valueOf(arr[4]));
+                    u.setArea(arr[5] == null ? null : String.valueOf(arr[5]));
+
+                    u.setAvatar(defaultheader);
+                    u.setCompany_id(user.getCompany_id());
+                    u.setToken(Helper.GenerateToken(String.valueOf(arr[0])));
+
+                    userService.backAddEmployee(u);
+
+                }
+
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, "导入成功");
+                // result.put(Constant.result, path + fileName);
             }
-
-
-            result.put(Constant.status, 1);
-            result.put(Constant.result, "导入成功");
-            // result.put(Constant.result, path + fileName);
+            else
+            {
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "员工数量超过授权数量啦，赶紧去申请开通吧");
+            }
 
 
         } catch (Exception ex) {

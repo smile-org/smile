@@ -45,5 +45,8 @@ public interface UserService {
     List<User>  adminGetPlatformUserList(  int skip ,   int take);
   int   adminGetPlatformUserListCount(  int skip ,   int take);
 
+    int backGetUserCountByCompanyID(  int companyid  );
     List<adminMonthCountStatistics>    adminGetEmployeeStatistics();
+
+
 }

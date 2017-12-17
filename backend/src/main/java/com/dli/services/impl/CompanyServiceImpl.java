@@ -130,4 +130,9 @@ public class CompanyServiceImpl implements CompanyService {
     public List<adminNameCountStatistics> adminGetCompanyAreaStatistics() {
         return   companyRepo.adminGetCompanyAreaStatistics();
     }
+
+    @Override
+    public String getPicUrl(int companyid, String pictype) {
+        return  companyRepo.getPicUrl(companyid,pictype);
+    }
 }

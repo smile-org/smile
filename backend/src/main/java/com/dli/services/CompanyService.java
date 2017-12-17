@@ -38,4 +38,6 @@ public interface CompanyService {
 
 
     List<  adminNameCountStatistics>   adminGetCompanyAreaStatistics();
+
+    String   getPicUrl(  int  companyid,   String pictype );
 }

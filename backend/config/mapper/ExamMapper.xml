@@ -343,7 +343,7 @@ update  answer set indicator=0 where answer_id=#{answerid}
     <select id="backGetQuestionList"  parameterType="com.dli.entities.QuestionCondition"  resultType="com.dli.entities.Question">
         select * from(
         select *, DATE_FORMAT(created_at,'%Y-%m-%d') as created_at1 from question where company_id=#{company_id}
-        )result  where 1=1
+        )result  where  indicator =1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="type_id!=0">and type_id =#{type_id} </if>
         <if test="start!=null">and created_at &gt;    #{start} </if>
@@ -362,7 +362,7 @@ update  answer set indicator=0 where answer_id=#{answerid}
     <select id="backGetQuestionListCount"  parameterType="com.dli.entities.QuestionCondition"  resultType="int">
         select count(*) from(
         select *, DATE_FORMAT(created_at,'%Y-%m-%d') as created_at1 from question where company_id=#{company_id}
-        )result  where 1=1
+        )result  where      indicator =1
         <if test="title!=null">and title like '%${title}%'</if>
         <if test="type_id!=0">and type_id =#{type_id} </if>
         <if test="start!=null">and created_at &gt;    #{start} </if>

@@ -5,6 +5,8 @@
     <resultMap type="com.dli.entities.Company" id="CompanyMap">
         <id column="company_id" property="company_id"/>
         <result column="company_name" property="company_name"/>
+        <result column="expiration_date" property="expiration_date"/>
+        <result column="user_limit" property="user_limit"/>
 
         <result column="contact_person" property="contact_person"/>
         <result column="phone_number" property="phone_number"/>
@@ -18,7 +20,7 @@
 
     <select id="backGetCompanyByID" resultMap="CompanyMap">
         select * from (
-select  c.company_id, c.company_name, i.contact_person,i.phone_number,p.province_name,city.city_name,i.address
+select  c.company_id, c.company_name ,c.expiration_date , c.user_limit, i.contact_person,i.phone_number,p.province_name,city.city_name,i.address
 from company c join company_info i on c.company_id=i.company_id
 join  city on   i.city_id = city.city_id
 join province p on i.province_id =p.province_id
@@ -38,7 +40,7 @@ where company_id=#{companyid} and pic_type=#{pictype}
 
 
     <insert id="adminAddCompany"  parameterType="com.dli.entities.adminCompany"  useGeneratedKeys="true"   keyProperty="company_id">
-        insert company values( 0,  #{company_name}, 1, now(), now() ,  #{business_id},  #{agency_id} )
+        insert company values( 0,  #{company_name}, 1, now(), now() ,  #{business_id},  #{agency_id}  ,#{user_limit} ,#{expiration_date} )
     </insert>
 
     <insert id="adminAddCompanyInfo"  parameterType="com.dli.entities.adminCompany">
@@ -66,13 +68,13 @@ where company_id=#{companyid} and pic_type=#{pictype}
     </select>
 
     <select id="adminGetCompanyByID" parameterType="int"   resultType="com.dli.entities.adminCompany">
-        select   c.company_name,  c.business_id, c.agency_id, i.*, p.pic_url as pic_url  from company  c  join   company_info  i on c.company_id = i. company_id
+        select   c.company_name,  c.business_id, c.agency_id, c.user_limit, c.expiration_date  , i.*, p.pic_url as pic_url  from company  c  join   company_info  i on c.company_id = i. company_id
           join  company_pic  p on  c.company_id = p. company_id and p.pic_type= 'business_licence' where c.company_id= #{companyid}
     </select>
 
     <update id="adminUpdateCompany"   parameterType="com.dli.entities.adminCompany">
         update  company set company_name=#{company_name} , business_id=#{business_id} ,
-            agency_id =#{agency_id} where  company_id= #{company_id}
+            agency_id =#{agency_id} , user_limit=#{user_limit} ,  expiration_date =#{expiration_date} where  company_id= #{company_id}
     </update>
 
     <update id="adminUpdateCompanyInfo"  parameterType="com.dli.entities.adminCompany">
@@ -85,7 +87,7 @@ where company_id=#{companyid} and pic_type=#{pictype}
     </update>
 
      <select id="adminGetCompanyList"  parameterType="com.dli.entities.adminCompany"  resultType="com.dli.entities.adminCompany">
-         select   c.company_id,  c.company_name, i.contact_person , i.phone_number ,
+         select   c.company_id,  c.company_name,  c.user_limit, c.expiration_date, i.contact_person , i.phone_number ,
 p.province_name as province , b.business_name as  business ,a.agency_name as  agency,
  c.created_at as start ,c.indicator
  from company c join company_info i on c.company_id =i.company_id
@@ -167,4 +169,8 @@ select   i.province_id, count(   c.company_id) as count  from company   c join  
   where  c.indicator =1  GROUP BY  i.province_id  ) t
  on p.province_id = t.province_id  order by p.province_id
       </select>
+
+     <select id="getPicUrl"   resultType="String"  >
+             SELECT   pic_url from  company_pic  where company_id= #{companyid} and  pic_type = #{pictype}
+     </select>
 </mapper>

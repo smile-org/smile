@@ -46,16 +46,14 @@ public interface UserRepo {
 
       void   adminAddPlatformUser(User  u);
 
-
       void  adminUpdatePlatformUser( User u);
 
       List<User>  adminGetPlatformUserList( @Param("skip") int skip ,  @Param("take") int take);
 
-
-
-
     int   adminGetPlatformUserListCount( @Param("skip") int skip ,  @Param("take") int take);
 
     List<adminMonthCountStatistics>    adminGetEmployeeStatistics();
+
+    int backGetUserCountByCompanyID(  int companyid  );
 
 }
