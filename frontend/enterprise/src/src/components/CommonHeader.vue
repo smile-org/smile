@@ -30,6 +30,10 @@
         <span class="h_icon h_icon06"></span>
         <p>约课管理</p>
       </li>
+      <li v-on:click="routeByName('taskingList')" v-bind:class="{active: type==='tasking'}">
+        <span class="h_icon h_icon10"></span>
+        <p>学习任务</p>
+      </li>
       <li v-on:click="routeByName('adminList')" v-bind:class="{active: type==='admin'}">
         <span class="h_icon h_icon07"></span>
         <p class="name_e">公司管理员</p>

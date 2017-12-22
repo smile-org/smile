@@ -153,3 +153,7 @@
   border:none;
   border-top:4px solid #55b761;
 }
+/*分页对齐*/
+.el-pagination button, .el-pagination span {
+  margin-top: -3px;
+}

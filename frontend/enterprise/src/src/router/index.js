@@ -52,6 +52,14 @@ import examQuestionCreate from '@/views/exam/questionCreate'
 import examQuestionEdit from '@/views/exam/questionEdit'
 import examDetail from '@/views/exam/detail'
 
+// 学习任务
+import taskingList from '@/views/tasking/list'
+import taskingCreate from '@/views/tasking/create'
+import taskingEdit from '@/views/tasking/edit'
+import taskingProgress from '@/views/tasking/progress'
+import taskingDetail from '@/views/tasking/detail'
+import taskingUserList from '@/views/tasking/userList'
+
 Vue.use(Router)
 var requiresAuth = true
 
@@ -281,6 +289,44 @@ export default new Router({
       name: 'examDetail',
       component: examDetail,
       meta: {requiresAuth: requiresAuth}
+    },
+    // 学习任务
+    {
+      path: '/tasking/list',
+      name: 'taskingList',
+      component: taskingList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/tasking/create',
+      name: 'taskingCreate',
+      component: taskingCreate,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/tasking/edit',
+      name: 'taskingEdit',
+      component: taskingEdit,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/tasking/progress',
+      name: 'taskingProgress',
+      component: taskingProgress,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/tasking/detail',
+      name: 'taskingDetail',
+      component: taskingDetail,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/tasking/userList',
+      name: 'taskingUserList',
+      component: taskingUserList,
+      meta: {requiresAuth: requiresAuth}
     }
+
   ]
 })
