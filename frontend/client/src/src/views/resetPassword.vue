@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header>
+    <header class="login_header">
       <div class="logo_c">
         <a class="tl" href="##"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack" /></a>
         <a class="tc" href="##"><img src="../assets/img/logo.png" alt="smile" class="logo1" /></a>

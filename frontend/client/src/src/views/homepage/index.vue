@@ -7,7 +7,7 @@
         </a>
         <div class="search_input" style="margin-left: .1rem;margin-right: -.15rem;">
           <img src="../../assets/img/seach_icon.png"/>
-          <img src="../../assets/img/delate.png"/>
+          <!--<img src="../../assets/img/delate.png"/>-->
           <input placeholder="输入关键词搜索相关学习资源" @focus="goSearch">
         </div>
         <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)"><img
@@ -82,6 +82,11 @@
         <div class="f_con">
           <el-tabs class="three_tab" v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="本周" name="first">
+              <div v-if="courseWeek==''||courseWeek==null">
+                <div class="null_date">
+                  <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+                </div>
+              </div>
               <ul class="list_border course_line">
                 <li class="course_list  line_only" v-for="item in courseWeek" :key="item.course_id">
                   <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
@@ -111,6 +116,11 @@
               </ul>
             </el-tab-pane>
             <el-tab-pane label="本月" name="second">
+              <div v-if="courseMonth==''||courseMonth==null">
+                <div class="null_date">
+                  <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+                </div>
+              </div>
               <ul class="list_border course_line">
                 <li class="course_list  line_only" v-for="item in courseMonth" :key="item.course_id">
                   <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
@@ -140,6 +150,11 @@
               </ul>
             </el-tab-pane>
             <el-tab-pane label="累计" name="third">
+              <div v-if="courseTotal==''||courseTotal==null">
+                <div class="null_date">
+                  <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+                </div>
+              </div>
               <ul class="list_border course_line">
                 <li class="course_list  line_only" v-for="item in courseTotal" :key="item.course_id">
                   <router-link v-bind:to="{path: '/getCourseDetails', query: {id: item.course_id}}">
