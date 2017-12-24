@@ -46,6 +46,10 @@ import myBooking from '@/views/personal/myBooking'
 import myFavorites from '@/views/personal/myFavorites'
 import changePWD from '@/views/personal/changePWD'
 
+// 学习任务
+import myTaskDetail from '@/views/personal/myTaskDetail'
+import myTaskSee from '@/views/personal/myTaskSee'
+
 Vue.use(Router)
 
 var requiresAuth = true
@@ -79,44 +83,44 @@ export default new Router({
       path: '/getCourseCategories',
       name: 'courseCategories',
       component: getCourseCategories,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/getCourses',
       name: 'courses',
       component: getCourses,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/getCourseDetails',
       name: 'courseDetails',
       component: getCourseDetails,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/commentCourse',
       name: 'courseComment',
       component: commentCourse,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/media',
       name: 'courseMedia',
       component: media,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     // 考试
     {
       path: '/getExamList',
       name: 'getExamList',
       component: getExamList,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/getExamInfo',
       name: 'getExamInfo',
       component: getExamInfo,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/startExam',
@@ -236,19 +240,19 @@ export default new Router({
       path: '/',
       name: 'homepage',
       component: homepage,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/search',
       name: 'search',
       component: search,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
     {
       path: '/searchResult',
       name: 'searchResult',
       component: searchResult,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
     },
 
     // 其他
@@ -257,7 +261,20 @@ export default new Router({
       path: '/list',
       name: 'list',
       component: list,
-      meta: { requiresAuth: requiresAuth }
+      meta: {requiresAuth: requiresAuth}
+    },
+    // 学习任务
+    {
+      path: '/myTaskDetail',
+      name: 'myTaskDetail',
+      component: myTaskDetail,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/myTaskSee',
+      name: 'myTaskSee',
+      component: myTaskSee,
+      meta: {requiresAuth: requiresAuth}
     }
   ]
 })
