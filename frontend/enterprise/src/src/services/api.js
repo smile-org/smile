@@ -179,6 +179,11 @@ export default {
     addExam: '/back/AddExam',
     getExam: '/back/GetExamEditPageInfo',
     updateExam: '/back/UpdateExam',
+    DisableTask: '/back/DisableTask',
+    // ********** 学习任务 **********
+    getTaskList: '/back/GetTaskList',
+    AddTask: '/back/AddTask',
+    UpdateTaskPublishStatus: '/back/UpdateTaskPublishStatus',
 
     // 员工导入
     uploadEmployeeExcel: axios.defaults.baseURL + '/back/ImportUserList',

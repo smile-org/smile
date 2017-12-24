@@ -29,29 +29,31 @@
           </div>
           <hr class="hr_line">
           <el-table :data="tableData" border style="width: 100%" >
-            <el-table-column prop="title" align="center" label="任务名称" min-width="180">
+            <el-table-column prop="task_title" align="center" label="任务名称" min-width="180">
             </el-table-column>
-            <el-table-column prop="category_name" align="center" label="目标学员范围" min-width="140">
+            <el-table-column prop="task_scope" align="center" label="目标学员范围" min-width="140">
             </el-table-column>
-            <el-table-column prop="principal_user_idName" align="center" label="截止日期" width="120">
+            <el-table-column prop="end_time" align="center" label="截止日期" width="120">
             </el-table-column>
             <el-table-column prop="ispublished" label="课程状态" align="center" min-width="100">
               <template scope="scope">
                 {{scope.row.ispublished ? "已发布" : "未发布"}}
               </template>
             </el-table-column>
-            <el-table-column prop="type_name" label="完成进度" align="center" min-width="120">
+            <el-table-column prop="finish_status" label="完成进度"  align="center" min-width="120">
               <template scope="scope">
-                <el-button @click="taskingProgress" type="text" size="small">20/50</el-button>
+                  <el-button v-on:click="getComments(scope.row.task_id)" type="text" size="small">
+                      {{scope.row.finish_status}}
+                  </el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="publish_date" label="发布日期" align="center" width="120">
+            <el-table-column prop="start_date" label="发布日期" align="center" width="120">
             </el-table-column>
             <el-table-column label="操作" class="tc" width="140" align="center">
               <template scope="scope">
                 <el-button @click="taskingEdit" type="text" size="small">编辑</el-button>
                 <el-button @click="updateState(scope.row)" type="text" size="small">{{scope.row.ispublished ? '隐藏' : '发布'}}</el-button>
-                <el-button @click="del(scope.row.course_id)" class="red_font" type="text" size="small">
+                <el-button @click="del(scope.row.task_id)" class="red_font" type="text" size="small">
                   删除
                 </el-button>
               </template>
@@ -103,23 +105,17 @@
       navigator
     },
     created () {
-      api.fetch(api.uri.searchCourse, {
+      api.fetch(api.uri.getTaskList, {
         title: this.formInline.name,
         start: this.formInline.start,
         end: this.formInline.end,
         skip: 0,
         take: this.take
       }).then(data => {
+        console.log(data)
         if (data.status === 1) {
           this.tableData = data.result
           this.total = data.total
-          api.fetch(api.uri.getCategory, {skip: 0, take: this.take}).then(data1 => {
-            if (data1.status === 1) {
-              this.categoryList = this.categoryList.concat(data1.result)
-            }
-          }).catch(err => {
-            this.$message(err.message)
-          })
         }
       }).catch(error => {
         this.$message(error.message)
@@ -142,16 +138,13 @@
       getComments: function (id) {
         router.push({name: 'courseComment', query: {id: id}})
       },
-      edit: function (id) {
-        router.push({name: 'courseEdit', query: {id: id}})
-      },
       del: function (id) {
-        this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除该任务, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          api.fetch(api.uri.deleteCourse, {courseid: id}).then(data => {
+          api.fetch(api.uri.DisableTask, {taskid: id}).then(data => {
             this.search()
           }).catch(error => {
             alert(error.message)
@@ -172,16 +165,14 @@
         if (this.formInline.end) {
           end = moment(this.formInline.end).format('YYYY-MM-DD')
         }
-        api.fetch(api.uri.searchCourse, {
+        api.fetch(api.uri.getTaskList, {
           title: this.formInline.name,
-//          priName: this.formInline.user,
-//          categoryid: (this.formInline.categoryId && this.formInline.categoryId !== -1) ? parseInt(this.formInline.categoryId) : 0,
-          // pubdate: pubDate,
           start: start,
           end: end,
           skip: this.take * (this.currentPage - 1),
           take: this.take
         }).then(data => {
+          console.log(111)
           if (data.status === 1) {
             this.tableData = data.result
             this.total = data.total
@@ -198,8 +189,8 @@
         } else {
           _type = 1
         }
-        api.fetch(api.uri.publishCourse, {
-          courseid: current.course_id,
+        api.fetch(api.uri.UpdateTaskPublishStatus, {
+          taskid: current.task_id,
           publish: _type
         }).then(data => {
           if (data.status === 1) {

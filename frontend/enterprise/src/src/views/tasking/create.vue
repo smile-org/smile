@@ -306,7 +306,7 @@
             </div>
           </div>
           <div class="tc">
-            <button type="button" class="inf_btn mt30 mb20" v-on:click="saveExam">保  存
+            <button type="button" class="inf_btn mt30 mb20" v-on:click="saveTask">保  存
             </button>
           </div>
         </div>
@@ -377,6 +377,15 @@
       navigator
     },
     methods: {
+      saveTask: function () {
+        console.log('saveTask')
+      },
+      changeFun: function () {
+        console.log('changefun')
+      },
+      search: function () {
+        console.log('search')
+      },
       handleCurrentChange: function (val) {
         this.currentPage = val
         this.search()
