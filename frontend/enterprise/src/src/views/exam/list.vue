@@ -23,14 +23,12 @@
             </el-form-item>
             <el-form-item label="开始时间">
               <el-col>
-                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.start_date"
-                                style="width: 100%;"></el-date-picker>
+                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.start_date" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item label="结束时间">
               <el-col>
-                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
-                                style="width: 100%;"></el-date-picker>
+                <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
             <el-form-item>

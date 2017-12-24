@@ -9,7 +9,7 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="f_blue">题库信息管理</span></span>
         </nav>
         <div class="con_tab">
-          <el-form :inline="true" :model="formInLine" class="demo-form-inline hidden">
+          <el-form :inline="true" :model="formInLine" class="demo-form-inline hidden" label-width="80px">
             <!--<el-row>-->
             <el-form-item label="题目">
               <el-input v-model="formInLine.title" placeholder="题目"></el-input>
