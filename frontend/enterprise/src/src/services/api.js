@@ -184,7 +184,7 @@ export default {
     getTaskList: '/back/GetTaskList',
     AddTask: '/back/AddTask',
     UpdateTaskPublishStatus: '/back/UpdateTaskPublishStatus',
-
+    GetUserTaskListByTaskID: 'back/GetUserTaskListByTaskID',
     // 员工导入
     uploadEmployeeExcel: axios.defaults.baseURL + '/back/ImportUserList',
     // 试题导入

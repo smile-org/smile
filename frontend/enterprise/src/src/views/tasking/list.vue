@@ -136,7 +136,7 @@
         this.search()
       },
       getComments: function (id) {
-        router.push({name: 'courseComment', query: {id: id}})
+        router.push({name: 'taskingProgress', query: {id: id}})
       },
       del: function (id) {
         this.$confirm('此操作将永久删除该任务, 是否继续?', '提示', {
