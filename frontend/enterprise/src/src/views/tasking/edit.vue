@@ -6,31 +6,31 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
-          <span class="vm">您的当前位置 : <span class="">学习任务</span> > <span class="">学习任务管理</span> > <span class="f_blue">添加学习任务</span></span>
+          <span class="vm">您的当前位置 : <span class="">学习任务</span> > <span class="">学习任务管理</span> > <span class="f_blue">编辑学习任务</span></span>
         </nav>
         <div class="con_tab">
           <el-form :rules="formRules" ref="form" :inline="true" :model="form"
                    class="demo-form-inline mt20 hidden add_width" label-width="80px">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="任务名称" prop="title">
-                  <el-input v-model="form.title" placeholder="任务名称"></el-input>
+                <el-form-item label="任务名称" prop="task_title">
+                  <el-input v-model="form.task_title" placeholder="任务名称"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="截止日期" prop="date">
-                  <el-date-picker v-model="form.date" type="date" placeholder="选择日期" class="dateTab_width"
+                <el-form-item label="截止日期" prop="expiration_date">
+                  <el-date-picker v-model="form.expiration_date" type="date" placeholder="选择日期" class="dateTab_width"
                                   style="width: 100%;" :picker-options="pickerOptions0">
                   </el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-col>
-              <el-form-item label="任务描述" prop="intro" class="input_textarea">
-                <el-input type="textarea" v-model="form.intro" placeholder="任务描述" style="min-width: 545px;"></el-input>
+              <el-form-item label="任务描述" prop="task_description" class="input_textarea">
+                <el-input type="textarea" v-model="form.task_description" placeholder="任务描述" style="min-width: 545px;"></el-input>
               </el-form-item>
-              <el-form-item label="目标学员范围" prop="intro" class="input_textarea">
-                <el-input type="textarea" v-model="form.scope" placeholder="目标学员范围"
+              <el-form-item label="目标学员范围" prop="task_scope" class="input_textarea">
+                <el-input type="textarea" v-model="form.task_scope" placeholder="目标学员范围"
                           style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
@@ -45,8 +45,8 @@
               <el-dialog title="添加课程" :visible.sync="dialogFormVisible">
                 <el-form ref="formInline" :inline="true" :model="formInline"
                          class="demo-form-inline">
-                  <el-form-item label="课程名称" prop="num">
-                    <el-input v-model.number="formInline.num" placeholder="课程名称"></el-input>
+                  <el-form-item label="课程名称" prop="name">
+                    <el-input v-model.number="formInline.name" placeholder="课程名称"></el-input>
                   </el-form-item>
                   <el-form-item label="开始时间">
                     <el-col>
@@ -61,47 +61,49 @@
                     </el-col>
                   </el-form-item>
                   <el-form-item>
-                    <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
+                    <button type="button" class="line-btn ml20" v-on:click="courseSearch">查  询</button>
                   </el-form-item>
                 </el-form>
                 <hr class="hr_line" style="margin-bottom: 15px;">
                 <el-row>
                   <h3 class="tasking_h3">查询结果</h3>
-                  <el-table border ref="multipleTable">
+                  <!-- 查询课程列表 -->
+                  <el-table border ref="multipleTable" :data="courseData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" size="small">加入任务</el-button>
+                        <el-button type="text" size="small" @click="addCourse(scope.row,scope.$index)">加入任务</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="full_name" align="center" label="课程名称" width=""></el-table-column>
+                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                   </el-table>
-                  <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change=""
+                  <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleCurrentChange"
                                  :current-page="currentPage" :page-size="take" :total="total"></el-pagination>
                 </el-row>
                 <el-row>
                   <h3 class="tasking_h3 mt20">已选课程</h3>
-                  <el-table border ref="multipleTable">
+                  <!-- 已选课程列表 -->
+                  <el-table border ref="multipleTable" :data="selCourseData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" class="red_font" size="small">取消</el-button>
+                        <el-button type="text" class="red_font" size="small" @click="delCourse(scope.$index)">取消</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="full_name" align="center" label="课程名称" width=""></el-table-column>
+                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                   </el-table>
                 </el-row>
                 <div class="tc btn_margin">
-                  <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
+                  <el-button type="success" class="inf_btn  ml20" @click="saveCourse">保 存</el-button>
                 </div>
               </el-dialog>
             </template>
             <div class="mt20">
               <template>
-                <el-table border class="mt20 mb30" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="课程名称">
+                <el-table border class="mt20 mb30" style="width: 100%" :data="selCourseData">
+                  <el-table-column prop="title" align="center" label="课程名称">
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template scope="scope">
-                      <el-button @click="remove(scope.row.id)" type="text" class="red_font" size="small">删除</el-button>
+                      <el-button @click="delCourse(scope.$index)" type="text" class="red_font" size="small">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -117,8 +119,8 @@
               <el-dialog title="添加考试" :visible.sync="dialogFormVisible1">
                 <el-form ref="formInline" :inline="true" :model="formInline"
                          class="demo-form-inline">
-                  <el-form-item label="考试名称" prop="num">
-                    <el-input v-model.number="formInline.num" placeholder="课程名称"></el-input>
+                  <el-form-item label="考试名称" prop="name">
+                    <el-input v-model.number="formInline.name" placeholder="课程名称"></el-input>
                   </el-form-item>
                   <el-form-item label="开始时间">
                     <el-col>
@@ -133,47 +135,48 @@
                     </el-col>
                   </el-form-item>
                   <el-form-item>
-                    <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
+                    <button type="button" class="line-btn ml20" v-on:click="examSearch">查  询</button>
                   </el-form-item>
                 </el-form>
                 <hr class="hr_line" style="margin-bottom: 15px;">
                 <el-row>
                   <h3 class="tasking_h3">查询结果</h3>
-                  <el-table border ref="multipleTable">
+                  <!-- 查询考试列表 -->
+                  <el-table border ref="multipleTable" :data="examData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" size="small">加入任务</el-button>
+                        <el-button type="text" size="small" @click="pushExam(scope.row,scope.$index)">加入任务</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="full_name" align="center" label="考试名称" width=""></el-table-column>
+                    <el-table-column property="exam_title" align="center" label="考试名称" width=""></el-table-column>
                   </el-table>
-                  <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change=""
+                  <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleCurrentChange1"
                                  :current-page="currentPage" :page-size="take" :total="total"></el-pagination>
                 </el-row>
                 <el-row>
                   <h3 class="tasking_h3 mt20">已选考试</h3>
-                  <el-table border ref="multipleTable">
+                  <el-table border ref="multipleTable" :data="selExamData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" class="red_font" size="small">取消</el-button>
+                        <el-button type="text" class="red_font" size="small" @click="delExam(scope.$index)">取消</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="full_name" align="center" label="考试名称" width=""></el-table-column>
+                    <el-table-column property="exam_title" align="center" label="考试名称" width=""></el-table-column>
                   </el-table>
                 </el-row>
                 <div class="tc btn_margin">
-                  <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
+                  <el-button type="success" class="inf_btn  ml20" @click="saveExam">保 存</el-button>
                 </div>
               </el-dialog>
             </template>
             <div class="mt20">
               <template>
-                <el-table border class="mt20 mb30" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="考试名称">
+                <el-table border class="mt20 mb30" style="width: 100%" :data="selExamData">
+                  <el-table-column prop="exam_title" align="center" label="考试名称">
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template scope="scope">
-                      <el-button @click="remove(scope.row.id)" type="text" class="red_font" size="small">删除</el-button>
+                      <el-button @click="delExam(scope.$index)" type="text" class="red_font" size="small">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -189,8 +192,8 @@
               <el-dialog title="添加报名" :visible.sync="dialogFormVisible2">
                 <el-form ref="formInline" :inline="true" :model="formInline"
                          class="demo-form-inline">
-                  <el-form-item label="报名名称" prop="num">
-                    <el-input v-model.number="formInline.num" placeholder="报名名称"></el-input>
+                  <el-form-item label="报名名称" prop="title">
+                    <el-input v-model.number="formInline.name" placeholder="报名名称"></el-input>
                   </el-form-item>
                   <el-form-item label="开始时间">
                     <el-col>
@@ -205,47 +208,47 @@
                     </el-col>
                   </el-form-item>
                   <el-form-item>
-                    <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
+                    <button type="button" class="line-btn ml20" v-on:click="enrollmentSearch">查  询</button>
                   </el-form-item>
                 </el-form>
                 <hr class="hr_line" style="margin-bottom: 15px;">
                 <el-row>
                   <h3 class="tasking_h3">查询结果</h3>
-                  <el-table border ref="multipleTable">
+                  <el-table border ref="multipleTable" :data="enrollmentData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" size="small">加入任务</el-button>
+                        <el-button type="text" size="small" @click="pushEnrollment(scope.row,scope.$index)">加入任务</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="full_name" align="center" label="课程名称" width=""></el-table-column>
+                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                   </el-table>
-                  <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change=""
+                  <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleCurrentChange2"
                                  :current-page="currentPage" :page-size="take" :total="total"></el-pagination>
                 </el-row>
                 <el-row>
                   <h3 class="tasking_h3 mt20">已选课程</h3>
-                  <el-table border ref="multipleTable">
+                  <el-table border ref="multipleTable" :data="selEnrollmentData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" class="red_font" size="small">取消</el-button>
+                        <el-button type="text" class="red_font" size="small" @click="delEnrollment(scope.$index)">取消</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="full_name" align="center" label="报名名称" width=""></el-table-column>
+                    <el-table-column property="title" align="center" label="报名名称" width=""></el-table-column>
                   </el-table>
                 </el-row>
                 <div class="tc btn_margin">
-                  <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
+                  <el-button type="success" class="inf_btn  ml20" @click="saveEnrollment">保 存</el-button>
                 </div>
               </el-dialog>
             </template>
             <div class="mt20">
               <template>
-                <el-table border class="mt20 mb30" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="课程名称">
+                <el-table border class="mt20 mb30" style="width: 100%" :data="selEnrollmentData">
+                  <el-table-column prop="title" align="center" label="课程名称">
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template scope="scope">
-                      <el-button @click="remove(scope.row.id)" type="text" class="red_font" size="small">删除</el-button>
+                      <el-button @click="delEnrollment(scope.$index)" type="text" class="red_font" size="small">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -261,44 +264,43 @@
               <el-dialog title="添加员工" :visible.sync="dialogFormVisible3">
                 <el-form ref="formInline" :inline="true" :model="formInline"
                          class="demo-form-inline" label-width="80px">
-                  <el-form-item label="课程名称" prop="num">
-                    <el-input v-model.number="formInline.num" placeholder="姓名"></el-input>
+                  <el-form-item label="课程名称" prop="name">
+                    <el-input v-model.number="formInline.name" placeholder="姓名"></el-input>
                   </el-form-item>
-                  <el-form-item label="部门" prop="title">
-                    <el-input v-model="formInline.title" placeholder="部门"></el-input>
+                  <el-form-item label="部门" prop="area">
+                    <el-input v-model="formInline.area" placeholder="部门"></el-input>
                   </el-form-item>
-                  <el-form-item label="区域" prop="content">
-                    <el-input v-model="formInline.content" placeholder="区域" style=""></el-input>
+                  <el-form-item label="区域" prop="department">
+                    <el-input v-model="formInline.department" placeholder="区域" style=""></el-input>
                   </el-form-item>
                   <el-form-item>
-                    <button type="button" class="line-btn ml20" v-on:click="search">查  询</button>
+                    <button type="button" class="line-btn ml20" @click="userSearch">查  询</button>
                   </el-form-item>
                 </el-form>
                 <hr class="hr_line" style="margin-bottom: 15px;">
                 <el-row>
                   <h3 class="tasking_h3">查询结果</h3>
-                  <el-table border ref="multipleTable">
-                    <el-table-column property="user_id" align="center" width="100" type="selection"
-                                     @selection-change="changeFun">
+                  <el-table border ref="multipleTable" :data="userData" @selection-change="changeFun">
+                    <el-table-column property="user_id" align="center" width="100" type="selection" @selection-change="changeFun">
                     </el-table-column>
                     <el-table-column property="full_name" align="center" label="姓名" width=""></el-table-column>
-                    <el-table-column property="full_name" align="center" label="部门" width=""></el-table-column>
-                    <el-table-column property="full_name" align="center" label="区域" width=""></el-table-column>
+                    <el-table-column property="department" align="center" label="部门" width=""></el-table-column>
+                    <el-table-column property="area" align="center" label="区域" width=""></el-table-column>
                   </el-table>
                 </el-row>
                 <div class="tc btn_margin">
-                  <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
+                  <el-button type="success" class="inf_btn  ml20" @click="saveUser">保 存</el-button>
                 </div>
               </el-dialog>
             </template>
             <div class="mt20">
               <template>
-                <el-table border class="mt20 mb30" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="员工姓名">
+                <el-table border class="mt20 mb30" style="width: 100%" :data="selUserData">
+                  <el-table-column prop="full_name" align="center" label="员工姓名">
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template scope="scope">
-                      <el-button v-on:click="del()" type="text" class="red_font" size="small">删除</el-button>
+                      <el-button v-on:click="delUser(scope.$index)" type="text" class="red_font" size="small">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -306,7 +308,7 @@
             </div>
           </div>
           <div class="tc">
-            <button type="button" class="inf_btn mt30 mb20" v-on:click="saveExam">保  存
+            <button type="button" class="inf_btn mt30 mb20" v-on:click="saveTask">保  存
             </button>
           </div>
         </div>
@@ -322,23 +324,51 @@
   import navigator from '../../components/Navigator'
   //  import ElRow from "element-ui/packages/row/src/row";
   import api from '../../services/api'
-  //  import moment from 'moment'
+  import moment from 'moment'
   //  import router from '../../router'
   export default {
     data: function () {
       return {
+        // 查询课程----------------
+        courseData: [],
+        // 选中课程
+        selCourseData: [],
+        // 课程id
+        courseids: [],
+        // 查询考试----------------
+        examData: [],
+        // 选中考试
+        selExamData: [],
+        // 考试id
+        examids: [],
+        // 查询报名----------------
+        enrollmentData: [],
+        // 选中报名
+        selEnrollmentData: [],
+        // 报名id
+        enrollmentids: [],
+        // 查询员工----------------
+        userData: [],
+        // 选中员工
+        selUserData: [],
+        selUserData2: [],
+        // 员工id
+        userids: [],
         pickerOptions0: {
           disabledDate (time) {
             return time.getTime() < Date.now() - 8.64e7
           }
         },
         form: {
-          title: '',
-          date: '',
-          scope: '',
-          intro: ''
+          task_title: '',
+          task_description: '',
+          task_scope: '',
+          expiration_date: ''
         },
         formInline: {
+          department: '',
+          area: '',
+          mobile: '',
           id: '',
           num: '',
           title: '',
@@ -357,16 +387,16 @@
         currentPage: 1,
         total: 0,
         formRules: {
-          title: [
+          task_title: [
             {required: true, message: '请输入任务名称', trigger: 'blur'}
           ],
-          date: [
+          expiration_date: [
             {type: 'date', required: true, message: '请选择有效时间', trigger: 'change'}
           ],
-          intro: [
+          task_description: [
             {required: true, message: '请输入任务描述', trigger: 'blur'}
           ],
-          scope: [
+          task_scope: [
             {required: true, message: '请输入目标学员范围', trigger: 'blur'}
           ]
         }
@@ -376,10 +406,315 @@
       commonHeader,
       navigator
     },
+    created () {
+      api.fetch(api.uri.GetTaskEditPageInfo, {
+        taskid: this.$route.query.id
+      }).then(data => {
+        console.log(data)
+        if (data.status === 1) {
+          var result = data.result
+          this.form.task_title = result.TaskToBeEdit.task_title
+          this.form.task_description = result.TaskToBeEdit.task_description
+          this.form.expiration_date = new Date(result.TaskToBeEdit.expiration_date)
+          this.form.task_scope = result.TaskToBeEdit.task_scope
+          this.selCourseData = result.CourseList
+          this.selExamData = result.ExamList
+          this.selEnrollmentData = result.EnrollmentPeriodList
+          this.selUserData = result.UserList
+          for (var i = 0; i < this.selCourseData.length; i++) {
+            this.courseids.push(this.selCourseData[i].course_id)
+          }
+          for (var x = 0; x < this.selExamData.length; x++) {
+            this.examids.push(this.selExamData[x].exam_id)
+          }
+          for (var y = 0; y < this.selEnrollmentData.length; y++) {
+            this.enrollmentids.push(this.selEnrollmentData[y].enrollment_id)
+          }
+          for (var z = 0; z < this.selUserData.length; z++) {
+            this.userids.push(this.selUserData[z].user_id)
+          }
+          console.log(this.courseids)
+          console.log(this.examids)
+          console.log(this.enrollmentids)
+          console.log(this.userids)
+        }
+      }).catch(error => {
+        this.$message(error.message)
+      })
+    },
     methods: {
+      // ********** 课程 ***********
+      courseSearch: function () {
+        var date1 = ''
+        if (this.form.startDate) {
+          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        }
+        var date2 = ''
+        if (this.form.endDate) {
+          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.searchCourse, {
+          title: this.formInline.name,
+          priName: this.formInline.user,
+          categoryid: this.formInline.categoryId ? parseInt(this.formInline.categoryId) : 0,
+          // pubdate: this.formInline.date,
+          start: date1,
+          end: date2,
+          skip: this.take * (this.currentPage - 1),
+          take: this.take
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            this.courseData = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      addCourse: function (title, index) {
+        this.selCourseData.push(title)
+        console.log(this.selCourseData)
+      },
+      saveCourse: function () {
+        this.courseids.splice(0, this.courseids.length)
+        for (var i = 0; i < this.selCourseData.length; i++) {
+          this.courseids.push(this.selCourseData[i].course_id)
+        }
+        this.dialogFormVisible = false
+        console.log(this.courseids)
+      },
+      delCourse: function (index) {
+        this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.selCourseData.splice(index, 1)
+          this.courseids.splice(0, this.courseids.length)
+          for (var i = 0; i < this.selCourseData.length; i++) {
+            this.courseids.push(this.selCourseData[i].course_id)
+          }
+          console.log(this.selCourseData)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      // ********** 考试 ***********
+      examSearch: function () {
+        var date1 = ''
+        if (this.form.startDate) {
+          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        }
+        var date2 = ''
+        if (this.form.endDate) {
+          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.getExamList, {
+          num: this.formInline.exam_num,
+          title: this.formInline.name,
+          manager: this.formInline.manager_idName,
+          start: date1,
+          end: date2,
+          skip: this.take * (this.currentPage - 1),
+          take: this.take
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            this.examData = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      pushExam: function (title) {
+        this.selExamData.push(title)
+        console.log(this.selExamData)
+      },
+      saveExam: function () {
+        this.examids.splice(0, this.examids.length)
+        for (var i = 0; i < this.selExamData.length; i++) {
+          this.examids.push(this.selExamData[i].exam_id)
+        }
+        this.dialogFormVisible1 = false
+        console.log(this.examids)
+      },
+      delExam: function (index) {
+        this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.selExamData.splice(index, 1)
+          this.examids.splice(0, this.examids.length)
+          for (var i = 0; i < this.selExamData.length; i++) {
+            this.examids.push(this.selExamData[i].exam_id)
+          }
+          console.log(this.selCourseData)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      // ********** 报名 ***********
+      enrollmentSearch: function () {
+        var date1 = ''
+        if (this.form.startDate) {
+          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        }
+        var date2 = ''
+        if (this.form.endDate) {
+          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        }
+        api.fetch(api.uri.getEnrollmentList, {
+          title: this.formInline.name,
+          teacher: this.formInline.teacher,
+          start: date1,
+          end: date2,
+          skip: (this.currentPage - 1) * this.take,
+          take: this.take
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            this.enrollmentData = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      pushEnrollment: function (title, index) {
+        console.log(title)
+        this.selEnrollmentData.push(title)
+        console.log(this.selEnrollmentData)
+      },
+      saveEnrollment: function () {
+        this.enrollmentids.splice(0, this.enrollmentids.length)
+        for (var i = 0; i < this.selEnrollmentData.length; i++) {
+          this.enrollmentids.push(this.selEnrollmentData[i].enrollment_id)
+        }
+        this.dialogFormVisible2 = false
+        console.log(this.enrollmentids)
+      },
+      delEnrollment: function (index) {
+        this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.selEnrollmentData.splice(index, 1)
+          this.enrollmentids.splice(0, this.enrollmentids.length)
+          for (var i = 0; i < this.selEnrollmentData.length; i++) {
+            this.enrollmentids.push(this.selEnrollmentData[i].enrollment_id)
+          }
+          console.log(this.selEnrollmentData)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      // ********** 员工 ***********
+      userSearch: function () {
+        api.fetch(api.uri.searchUserList, {
+          fullname: this.formInline.name,
+          area: this.formInline.area,
+          department: this.formInline.department,
+          cellphone: this.formInline.mobile,
+          skip: (this.currentPage - 1) * this.take,
+          take: this.take
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+            this.userData = data.result
+            this.total = data.total
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      pushUser: function (title, index) {
+        console.log(title)
+        this.selUserData.push(title)
+        console.log(this.selUserData)
+      },
+      saveUser: function () {
+        this.selUserData = this.selUserData2
+        this.userids.splice(0, this.userids.length)
+        for (var i = 0; i < this.selUserData.length; i++) {
+          this.userids.push(this.selUserData[i].user_id)
+        }
+        this.dialogFormVisible3 = false
+      },
+      delUser: function (index) {
+        this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.selUserData.splice(index, 1)
+          this.userids.splice(0, this.userids.length)
+          for (var i = 0; i < this.selUserData.length; i++) {
+            this.userids.push(this.selUserData[i].user_id)
+          }
+          console.log(this.selUserData)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      saveTask: function () {
+        api.post(api.uri.Update, {
+          task_title: this.form.task_title,
+          task_description: this.form.task_description,
+          task_scope: this.form.task_scope,
+          expiration_date: this.form.expiration_date,
+          courseids: this.courseids,
+          examids: this.examids,
+          enrollmentperiodids: this.enrollmentids,
+          userids: this.userids
+        }).then(data => {
+          console.log(data)
+          if (data.status === 1) {
+          }
+        }).catch(error => {
+          this.$message(error.message)
+        })
+      },
+      changeFun: function (val) {
+        this.selUserData2 = val
+      },
+      search: function () {
+        console.log('search')
+      },
       handleCurrentChange: function (val) {
+        console.log(val)
         this.currentPage = val
-        this.search()
+        this.courseSearch()
+      },
+      handleCurrentChange1: function (val) {
+        console.log(val)
+        this.currentPage = val
+        this.examSearch()
+      },
+      handleCurrentChange2: function (val) {
+        console.log(val)
+        this.currentPage = val
+        this.EnrollmentSearch()
+      },
+      handleCurrentChange3: function (val) {
+        console.log(val)
+        this.currentPage = val
+        this.userSearch()
       },
       addContent () {
         if (!this.addContentInProgress) {

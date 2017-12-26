@@ -51,7 +51,7 @@
             </el-table-column>
             <el-table-column label="操作" class="tc" width="140" align="center">
               <template scope="scope">
-                <el-button @click="taskingEdit" type="text" size="small">编辑</el-button>
+                <el-button @click="taskingEdit(scope.row.task_id)" type="text" size="small">编辑</el-button>
                 <el-button @click="updateState(scope.row)" type="text" size="small">{{scope.row.ispublished ? '隐藏' : '发布'}}</el-button>
                 <el-button @click="del(scope.row.task_id)" class="red_font" type="text" size="small">
                   删除
@@ -128,8 +128,8 @@
       taskingProgress: function () {
         router.push({name: 'taskingProgress'})
       },
-      taskingEdit: function () {
-        router.push({name: 'taskingEdit'})
+      taskingEdit: function (id) {
+        router.push({name: 'taskingEdit', query: {id: id}})
       },
       handleCurrentChange: function (val) {
         this.currentPage = val

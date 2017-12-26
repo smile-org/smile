@@ -360,10 +360,6 @@
           }
         },
         form: {
-          title: '',
-          date: '',
-          scope: '',
-          intro: '',
           task_title: '',
           task_description: '',
           task_scope: '',
@@ -394,13 +390,13 @@
           task_title: [
             {required: true, message: '请输入任务名称', trigger: 'blur'}
           ],
-          date: [
+          expiration_date: [
             {type: 'date', required: true, message: '请选择有效时间', trigger: 'change'}
           ],
-          intro: [
+          task_description: [
             {required: true, message: '请输入任务描述', trigger: 'blur'}
           ],
-          scope: [
+          task_scope: [
             {required: true, message: '请输入目标学员范围', trigger: 'blur'}
           ]
         }
@@ -459,6 +455,10 @@
           type: 'warning'
         }).then(() => {
           this.selCourseData.splice(index, 1)
+          this.courseids.splice(0, this.courseids.length)
+          for (var i = 0; i < this.selCourseData.length; i++) {
+            this.courseids.push(this.selCourseData[i].course_id)
+          }
           console.log(this.selCourseData)
         }).catch(() => {
           this.$message({
@@ -514,6 +514,9 @@
           type: 'warning'
         }).then(() => {
           this.selExamData.splice(index, 1)
+          for (var i = 0; i < this.selExamData.length; i++) {
+            this.examids.push(this.selExamData[i].exam_id)
+          }
           console.log(this.selCourseData)
         }).catch(() => {
           this.$message({
@@ -569,6 +572,10 @@
           type: 'warning'
         }).then(() => {
           this.selEnrollmentData.splice(index, 1)
+          this.enrollmentids.splice(0, this.enrollmentids.length)
+          for (var i = 0; i < this.selEnrollmentData.length; i++) {
+            this.enrollmentids.push(this.selEnrollmentData[i].enrollment_id)
+          }
           console.log(this.selEnrollmentData)
         }).catch(() => {
           this.$message({
@@ -608,7 +615,6 @@
           this.userids.push(this.selUserData[i].user_id)
         }
         this.dialogFormVisible3 = false
-        alert(this.userids)
       },
       delUser: function (index) {
         this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
@@ -617,6 +623,10 @@
           type: 'warning'
         }).then(() => {
           this.selUserData.splice(index, 1)
+          this.userids.splice(0, this.userids.length)
+          for (var i = 0; i < this.selUserData.length; i++) {
+            this.userids.push(this.selUserData[i].user_id)
+          }
           console.log(this.selUserData)
         }).catch(() => {
           this.$message({
