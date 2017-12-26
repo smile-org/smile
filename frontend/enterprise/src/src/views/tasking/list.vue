@@ -33,7 +33,10 @@
             </el-table-column>
             <el-table-column prop="task_scope" align="center" label="目标学员范围" min-width="140">
             </el-table-column>
-            <el-table-column prop="end_time" align="center" label="截止日期" width="120">
+            <el-table-column prop="expiration_date | formatDate" align="center" label="截止日期" width="120">
+              <template scope="scope">
+                <span>{{scope.row.expiration_date | formatDate}} </span>
+              </template>
             </el-table-column>
             <el-table-column prop="ispublished" label="课程状态" align="center" min-width="100">
               <template scope="scope">
@@ -48,6 +51,9 @@
               </template>
             </el-table-column>
             <el-table-column prop="start_date" label="发布日期" align="center" width="120">
+              <template scope="scope" v-if="scope.row.start_date">
+                <span>{{scope.row.start_date | formatDate}} </span>
+              </template>
             </el-table-column>
             <el-table-column label="操作" class="tc" width="140" align="center">
               <template scope="scope">
@@ -121,6 +127,12 @@
         this.$message(error.message)
       })
     },
+    filters: {
+      formatDate (time) {
+        var date = new Date(time)
+        return moment(date).format('YYYY-MM-DD')
+      }
+    },
     methods: {
       addTasking: function () {
         router.push({name: 'taskingCreate'})
@@ -166,7 +178,7 @@
           end = moment(this.formInline.end).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.getTaskList, {
-          title: this.formInline.name,
+          tasktitle: this.formInline.name,
           start: start,
           end: end,
           skip: this.take * (this.currentPage - 1),

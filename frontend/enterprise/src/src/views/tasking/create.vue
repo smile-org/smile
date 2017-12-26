@@ -71,7 +71,7 @@
                   <el-table border ref="multipleTable" :data="courseData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" size="small" @click="addCourse(scope.row,scope.$index)">加入任务</el-button>
+                        <el-button type="text" size="small" @click="addCourse(scope.row,scope.row.course_id)">加入任务</el-button>
                       </template>
                     </el-table-column>
                     <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
@@ -145,7 +145,7 @@
                   <el-table border ref="multipleTable" :data="examData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" size="small" @click="pushExam(scope.row,scope.$index)">加入任务</el-button>
+                        <el-button type="text" size="small" @click="pushExam(scope.row,scope.row.exam_id)">加入任务</el-button>
                       </template>
                     </el-table-column>
                     <el-table-column property="exam_title" align="center" label="考试名称" width=""></el-table-column>
@@ -217,7 +217,7 @@
                   <el-table border ref="multipleTable" :data="enrollmentData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" size="small" @click="pushEnrollment(scope.row,scope.$index)">加入任务</el-button>
+                        <el-button type="text" size="small" @click="pushEnrollment(scope.row,scope.row.enrollment_id)">加入任务</el-button>
                       </template>
                     </el-table-column>
                     <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
@@ -436,8 +436,19 @@
           this.$message(error.message)
         })
       },
-      addCourse: function (title, index) {
-        this.selCourseData.push(title)
+      addCourse: function (title, id) {
+        if (this.courseids.indexOf(id) === -1) {
+          this.selCourseData.push(title)
+          this.courseids.splice(0, this.courseids.length)
+          for (var i = 0; i < this.selCourseData.length; i++) {
+            this.courseids.push(this.selCourseData[i].course_id)
+          }
+        } else {
+          this.$message({
+            type: 'info',
+            message: '请勿重复添加'
+          })
+        }
         console.log(this.selCourseData)
       },
       saveCourse: function () {
@@ -495,8 +506,19 @@
           this.$message(error.message)
         })
       },
-      pushExam: function (title) {
-        this.selExamData.push(title)
+      pushExam: function (title, id) {
+        if (this.examids.indexOf(id) === -1) {
+          this.selExamData.push(title)
+          this.examids.splice(0, this.examids.length)
+          for (var i = 0; i < this.selExamData.length; i++) {
+            this.examids.push(this.selExamData[i].exam_id)
+          }
+        } else {
+          this.$message({
+            type: 'info',
+            message: '请勿重复添加'
+          })
+        }
         console.log(this.selExamData)
       },
       saveExam: function () {
@@ -552,9 +574,19 @@
           this.$message(error.message)
         })
       },
-      pushEnrollment: function (title, index) {
-        console.log(title)
-        this.selEnrollmentData.push(title)
+      pushEnrollment: function (title, id) {
+        if (this.enrollmentids.indexOf(id) === -1) {
+          this.selEnrollmentData.push(title)
+          this.enrollmentids.splice(0, this.enrollmentids.length)
+          for (var i = 0; i < this.selEnrollmentData.length; i++) {
+            this.enrollmentids.push(this.selEnrollmentData[i].enrollment_id)
+          }
+        } else {
+          this.$message({
+            type: 'info',
+            message: '请勿重复添加'
+          })
+        }
         console.log(this.selEnrollmentData)
       },
       saveEnrollment: function () {
@@ -636,21 +668,28 @@
         })
       },
       saveTask: function () {
-        api.post(api.uri.AddTask, {
-          task_title: this.form.task_title,
-          task_description: this.form.task_description,
-          task_scope: this.form.task_scope,
-          expiration_date: this.form.expiration_date,
-          courseids: this.courseids,
-          examids: this.examids,
-          enrollmentperiodids: this.enrollmentids,
-          userids: this.userids
-        }).then(data => {
-          console.log(data)
-          if (data.status === 1) {
+        this.$refs['form'].validate((valid) => {
+          if (valid) {
+            api.post(api.uri.AddTask, {
+              task_title: this.form.task_title,
+              task_description: this.form.task_description,
+              task_scope: this.form.task_scope,
+              expiration_date: this.form.expiration_date,
+              courseids: this.courseids.join(','),
+              examids: this.examids.join(','),
+              enrollmentperiodids: this.enrollmentids.join(','),
+              userids: this.userids.join(',')
+            }).then(data => {
+              console.log(data)
+              if (data.status === 1) {
+                this.$router.push('list')
+              }
+            }).catch(error => {
+              this.$message(error.message)
+            })
+          } else {
+            return false
           }
-        }).catch(error => {
-          this.$message(error.message)
         })
       },
       changeFun: function (val) {

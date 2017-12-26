@@ -183,7 +183,7 @@ export default {
     // ********** 学习任务 **********
     getTaskList: '/back/GetTaskList',
     AddTask: '/back/AddTask',
-    Update: '/back/UpdateTask',
+    UpdateTask: '/back/UpdateTask',
     UpdateTaskPublishStatus: '/back/UpdateTaskPublishStatus',
     GetUserTaskListByTaskID: '/back/GetUserTaskListByTaskID',
     GetUserTaskStatus: '/back/GetUserTaskStatus',
