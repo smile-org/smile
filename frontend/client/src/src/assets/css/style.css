@@ -6,7 +6,7 @@ body {
 
 /*header start*/
 header {
-  height: 1.2rem;
+  height: 1rem;
   background: #ffffff;
   text-align: center;
   border-bottom: 1px solid #d4d4d4;
@@ -17,7 +17,7 @@ header {
   background: #00b553;
 }
 header .logo_c {
-  height: 1.2rem;
+  height: 1rem;
   line-height: 0.2rem;
   display: flex; /*设为伸缩容器*/
   flex-flow: row; /*伸缩项目单行排列*/
@@ -50,7 +50,7 @@ header .logo_c a .logo1 {
 }
 
 header .search_c {
-  height: 1.2rem;
+  height: 1rem;
   line-height: 0.1rem;
   display: flex; /*设为伸缩容器*/
   flex-flow: row; /*伸缩项目单行排列*/
