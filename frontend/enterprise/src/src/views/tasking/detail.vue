@@ -25,11 +25,11 @@
               </span>
               <span class="tasking_margin">
                 <span class="tasking_span">状态 ：</span>
-                  <span>{{LearnPercentage}}</span>
+                  <span>{{LearnStatus}}</span>
               </span>
               <span class="tasking_margin">
                 <span class="tasking_span">完成进度 ：</span>
-                  <span>{{LearnStatus}}</span>
+                  <span>{{LearnPercentage}}</span>
               </span>
             </li>
             <li>

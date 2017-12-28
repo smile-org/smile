@@ -51,12 +51,12 @@
                   <el-form-item label="开始时间">
                     <el-col>
                       <el-date-picker class="dateTab_width" type="date" placeholder="选择日期"
-                                      v-model="formInline.start_date" style="width: 100%;"></el-date-picker>
+                                      v-model="course_start_date" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                   <el-form-item label="结束时间">
                     <el-col>
-                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
+                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="course_end_date"
                                       style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
@@ -125,12 +125,12 @@
                   <el-form-item label="开始时间">
                     <el-col>
                       <el-date-picker class="dateTab_width" type="date" placeholder="选择日期"
-                                      v-model="formInline.start_date" style="width: 100%;"></el-date-picker>
+                                      v-model="exam_start_date" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                   <el-form-item label="结束时间">
                     <el-col>
-                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
+                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="exam_end_date"
                                       style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
@@ -198,12 +198,12 @@
                   <el-form-item label="开始时间">
                     <el-col>
                       <el-date-picker class="dateTab_width" type="date" placeholder="选择日期"
-                                      v-model="formInline.start_date" style="width: 100%;"></el-date-picker>
+                                      v-model="en_start_date" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                   <el-form-item label="结束时间">
                     <el-col>
-                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
+                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="en_end_date"
                                       style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
@@ -264,14 +264,14 @@
               <el-dialog title="添加员工" :visible.sync="dialogFormVisible3">
                 <el-form ref="formInline" :inline="true" :model="formInline"
                          class="demo-form-inline" label-width="80px">
-                  <el-form-item label="课程名称" prop="name">
+                  <el-form-item label="员工名称" prop="name">
                     <el-input v-model.number="formInline.name" placeholder="姓名"></el-input>
                   </el-form-item>
-                  <el-form-item label="部门" prop="area">
-                    <el-input v-model="formInline.area" placeholder="部门"></el-input>
+                  <el-form-item label="部门" prop="department">
+                    <el-input v-model="formInline.department" placeholder="部门"></el-input>
                   </el-form-item>
-                  <el-form-item label="区域" prop="department">
-                    <el-input v-model="formInline.department" placeholder="区域" style=""></el-input>
+                  <el-form-item label="区域" prop="area">
+                    <el-input v-model="formInline.area" placeholder="区域" style=""></el-input>
                   </el-form-item>
                   <el-form-item>
                     <button type="button" class="line-btn ml20" @click="userSearch">查  询</button>
@@ -354,6 +354,12 @@
         selUserData2: [],
         // 员工id
         userids: [],
+        course_start_date: '',
+        course_end_date: '',
+        exam_start_date: '',
+        exam_end_date: '',
+        en_start_date: '',
+        en_end_date: '',
         pickerOptions0: {
           disabledDate (time) {
             return time.getTime() < Date.now() - 8.64e7
@@ -410,12 +416,12 @@
       // ********** 课程 ***********
       courseSearch: function () {
         var date1 = ''
-        if (this.form.startDate) {
-          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        if (this.course_start_date) {
+          date1 = moment(this.course_start_date).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.form.endDate) {
-          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        if (this.course_end_date) {
+          date2 = moment(this.course_end_date).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.searchCourse, {
           title: this.formInline.name,
@@ -481,12 +487,12 @@
       // ********** 考试 ***********
       examSearch: function () {
         var date1 = ''
-        if (this.form.startDate) {
-          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        if (this.exam_start_date) {
+          date1 = moment(this.exam_start_date).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.form.endDate) {
-          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        if (this.exam_end_date) {
+          date2 = moment(this.exam_end_date).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.getExamList, {
           num: this.formInline.exam_num,
@@ -550,12 +556,12 @@
       // ********** 报名 ***********
       enrollmentSearch: function () {
         var date1 = ''
-        if (this.form.startDate) {
-          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        if (this.en_start_date) {
+          date1 = moment(this.en_start_date).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.form.endDate) {
-          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        if (this.en_end_date) {
+          date2 = moment(this.en_end_date).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.getEnrollmentList, {
           title: this.formInline.name,

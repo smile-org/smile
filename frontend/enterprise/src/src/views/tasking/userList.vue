@@ -30,7 +30,7 @@
             </el-form-item>
           </el-form>
           <hr class="hr_line">
-          <el-table :data="tableData" border style="width: 100%">
+          <el-table :data="tableData" border style="width: 100%" :default-sort = "{prop: 'expiration_date', order: 'descending'}">
             <el-table-column prop="full_name" align="center" label="姓名" min-width="180">
             </el-table-column>
             <el-table-column prop="job_number" align="center" label="工号" min-width="140">
@@ -41,7 +41,7 @@
             </el-table-column>
             <el-table-column prop="task_title" align="center" label="任务名称" width="120">
             </el-table-column>
-            <el-table-column prop="" align="center" label="截止日期" width="120" sortable>
+            <el-table-column prop="" align="center" label="截止日期" width="120">
               <template scope="scope">
                 <span>{{scope.row.expiration_date | formatDate}} </span>
               </template>
@@ -51,7 +51,7 @@
                 {{scope.row.ispublished ? "已发布" : "未发布"}}
               </template>
             </el-table-column>
-            <el-table-column prop="learn_status" label="完成进度" align="center"  min-width="120">
+            <el-table-column prop="learn_percentage" label="完成进度" align="center"  min-width="120" sortable>
             </el-table-column>
             <el-table-column label="操作" class="tc" width="100" align="center">
               <template scope="scope">
