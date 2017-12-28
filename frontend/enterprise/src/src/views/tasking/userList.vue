@@ -55,7 +55,7 @@
             </el-table-column>
             <el-table-column label="操作" class="tc" width="100" align="center">
               <template scope="scope">
-                <el-button v-on:click="taskingDetail(scope.row.task_id)" type="text" size="small">查看</el-button>
+                <el-button v-on:click="taskingDetail(scope.row.task_id,scope.row.user_id)" type="text" size="small">查看</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -131,8 +131,8 @@
       })
     },
     methods: {
-      taskingDetail: function (id) {
-        router.push({name: 'taskingDetail', query: {id: id}})
+      taskingDetail: function (id, userid) {
+        router.push({name: 'taskingDetail', query: {id: id, userid: userid}})
       },
       handleCurrentChange: function (val) {
         this.currentPage = val

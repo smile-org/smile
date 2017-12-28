@@ -95,7 +95,11 @@
       return {
         LearnStatus: '1',
         LearnPercentage: '',
-        CurrentUser: {},
+        CurrentUser: {
+          full_name: '',
+          department: '',
+          area: ''
+        },
         CurrentTask: {},
         CourseList: [],
         ExamList: [],
@@ -108,7 +112,8 @@
     },
     created () {
       api.fetch(api.uri.GetUserTaskStatus, {
-        taskid: this.$route.query.id
+        taskid: this.$route.query.id,
+        userid: this.$route.query.userid
       }).then(data => {
         console.log(data)
         if (data.status === 1) {
