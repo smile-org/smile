@@ -47,7 +47,7 @@
               <img src="../../assets/img/img1.png" class="fl img_bg">
               <div class="course_cen show_star">
                 <div class="hidden effect_right ">
-                  <h3 class="fl">销售的哭昏}</h3>
+                  <h3 class="fl">销售的哭昏</h3>
                   <!--<el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="value5"></el-rate>-->
                   <ul class="small_icon fr">
                     <li class="fl">
@@ -64,6 +64,9 @@
               <p class="exam_explain">
                 这杀手焦点科技撒
               </p>
+              <div class="surplus_num  t_bor2" style="">
+                已完成
+              </div>
             </a>
           </li>
         </ul>
