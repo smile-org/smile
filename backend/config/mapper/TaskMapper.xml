@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dli.repositories.TaskRepo">
+
+
+    <insert id="backAddTask"  parameterType="com.dli.entities.Task"   useGeneratedKeys="true"   keyProperty="task_id"  >
+        insert learn_task  values(  null,   #{task_title},   #{task_description},  #{task_scope},  #{expiration_date},  0,  null,   #{company_id},   1,  now(), now()    );
+    </insert>
+
+
+    <insert id="backAddTaskUserMapping">
+        insert   task_user_mapping  values(   #{task_id},   #{user_id} );
+    </insert>
+
+     <insert id="backAddTaskItemMapping">
+         insert  task_item_mapping   values(  null, #{task_id},  #{item_id} ,  #{item_type} );
+     </insert>
+
+    <select id="backGetTask"    resultType="com.dli.entities.Task">
+        select * from    learn_task where task_id=  #{task_id};
+    </select>
+
+
+    <select id="backGetTaskCourseList"  resultType="com.dli.entities.Course">
+        select  c.* from  course  c  join   task_item_mapping  m  on  c.course_id= m.item_id  where m.task_id=  #{task_id} and m.item_type='course'  and c.indicator=1;
+    </select>
+
+    <select id="backGetTaskExamList"  resultType="com.dli.entities.Exam">
+         select  e.* from  exam  e  join   task_item_mapping  m  on  e.exam_id= m.item_id  where m.task_id=  #{task_id} and m.item_type='exam'   and e.indicator=1;
+    </select>
+
+    <select id="backGetTaskEnrollmentPeriodList"  resultType="com.dli.entities.backEnrollment">
+         select  p.*, e.title from  enrollment e join   enrollment_period  p   on e.enrollment_id = p.enrollment_id   join   task_item_mapping  m  on  p.period_id= m.item_id
+          where m.task_id= #{task_id} and m.item_type='enrollment' and p.indicator=1;
+    </select>
+
+    <select id="backGetTaskUserList"  resultType="com.dli.entities.User">
+           select  u.* from  user  u  join   task_user_mapping  m  on  u.user_id=  m.user_id  where m.task_id= #{task_id} and u.indicator=1
+    </select>
+
+    <update id="backUpdateTask"   parameterType="com.dli.entities.Task">
+        update  learn_task  set
+task_title= #{task_title},
+task_description=#{task_description},
+task_scope=#{task_scope},
+expiration_date=#{expiration_date},
+
+updated_at=NOW()
+
+where task_id=#{task_id};
+    </update>
+
+
+    <delete id="backDeleteTaskItemMapping">
+        delete from   task_item_mapping where task_id=#{task_id};
+    </delete>
+
+    <delete id="backDeleteTaskUserMapping">
+        delete from  task_user_mapping where task_id =#{task_id};
+    </delete>
+
+    <update id="backDisableTask">
+update learn_task set indicator=0 where task_id=#{task_id}
+    </update>
+
+
+
+    <update id="backUpdateTaskPublishStatus">
+        update learn_task
+        <set>
+            <if test="taskid!=0"> ispublished =#{status}   , </if>
+            <if test="status!=0"> publish_date =now()  </if>
+        </set>
+        where task_id = #{taskid}
+    </update>
+
+    <select id="backGetCourseContentCount"  resultType="int">
+            select  count(content_id) from  course_content where course_id= #{courseid}  and indicator=1;
+    </select>
+
+
+
+    <select id="backGetUserCourseContentCount"  resultType="int">
+         select  count(*) from  learn_progress where  course_id= #{courseid}  and user_id=  #{userid};
+    </select>
+
+   <select id="backGetExamFinishedForUser"  resultType="int">
+       select  count( history_id) from exam_history where exam_id=#{examid} and user_id=#{userid} and  `status`='pass'
+   </select>
+
+
+    <select id="backGetEnrollmentPeriodFinishedForUser"  resultType="int">
+         select count(*) from  user_enrollment where period_id=#{periodid} and user_id=#{userid}
+    </select>
+
+
+    <select id="backGetUserTaskListByTaskID"    parameterType="com.dli.entities.backUserTask" resultType="com.dli.entities.backUserTask">
+        select u.full_name,  u.job_number ,  u.department,  u.area  , t.task_title,
+  t.expiration_date,  u.user_id , t.task_id  from  learn_task  t join task_user_mapping m  on t.task_id=   m.task_id  join  user u
+ ON  m.user_id = u.user_id   where  t.task_id=#{task_id} and     u.indicator=1   limit #{skip}, #{take}
+    </select>
+
+
+    <select id="backGetUserTaskListCountByTaskID"    parameterType="com.dli.entities.backUserTask" resultType="int">
+        select  count(*)  from  learn_task  t join task_user_mapping m  on t.task_id=   m.task_id  join  user u
+        ON  m.user_id = u.user_id   where  t.task_id=#{task_id} and     u.indicator=1
+    </select>
+
+
+
+    <select id="backGetTaskList"   parameterType="com.dli.entities.backTask"  resultType="com.dli.entities.backTask">
+        select  task_title ,task_scope,  expiration_date, ispublished,  task_id from  learn_task
+        where 1=1  and indicator=1
+        <if test="task_title!=null">and task_title like '%${task_title}%'</if>
+        <if test="start_date!=null">and expiration_date &gt;=    #{start_date} </if>
+        <if test="end_date!=null">and expiration_date  &lt;=   #{end_date}</if>
+        limit #{skip} ,#{take}
+
+    </select>
+
+
+
+    <select id="backGetTaskListCount"   parameterType="com.dli.entities.backTask"  resultType="int">
+        select  count(*) from  learn_task
+        where 1=1  and indicator=1
+        <if test="task_title!=null">and task_title like '%${task_title}%'</if>
+        <if test="start_date!=null">and expiration_date &gt;=    #{start_date} </if>
+        <if test="end_date!=null">and expiration_date  &lt;=   #{end_date}</if>
+
+    </select>
+
+
+    <select id="backGetUserTaskList"    parameterType="com.dli.entities.backUserTask" resultType="com.dli.entities.backUserTask">
+           select u.full_name,  u.job_number ,  u.department,  u.area  , t.task_title,
+        t.expiration_date,  u.user_id , t.task_id
+ from  learn_task  t join task_user_mapping m  on t.task_id=   m.task_id  join  user u
+        ON  m.user_id = u.user_id   where    t.indicator =1 and  u.indicator=1
+        <if test="full_name!=null">and u.full_name like '%${full_name}%'</if>
+        <if test="task_title!=null">and t.task_title like '%${task_title}%'</if>
+        <if test="job_number!=null">and u.job_number like '%${job_number}%'</if>
+        <if test="department!=null">and u.department like '%${department}%'</if>
+        <if test="area!=null">and u.area like '%${area}%'</if>
+          limit #{skip}, #{take}
+    </select>
+
+
+
+    <select id="backGetUserTaskListCount"    parameterType="com.dli.entities.backUserTask" resultType="int">
+        select   count(*)
+        from  learn_task  t join task_user_mapping m  on t.task_id=   m.task_id  join  user u
+        ON  m.user_id = u.user_id   where    t.indicator =1 and  u.indicator=1
+        <if test="full_name!=null">and u.full_name like '%${full_name}%'</if>
+        <if test="task_title!=null">and t.task_title like '%${task_title}%'</if>
+        <if test="job_number!=null">and u.job_number like '%${job_number}%'</if>
+        <if test="department!=null">and u.department like '%${department}%'</if>
+        <if test="area!=null">and u.area like '%${area}%'</if>
+
+    </select>
+
+    <select id="getMyTaskList"      resultType="com.dli.entities.TaskAndLearnStatus">
+        select  t.task_title ,  t.task_scope,   t.expiration_date, t.task_id,   m.user_id from   learn_task  t  join task_user_mapping     m  on t.task_id= m.task_id
+         where  m.user_id =  #{userid}  and    t.indicator=1 and t.ispublished=1
+    </select>
+
+    <select id="getTaskCourseListForDetail"       resultType="com.dli.entities.Course" >
+           select result.* ,
+  case when  o1.renshu is not null then  o1.renshu else 0 end  as study_count,
+  case when o3.userct is not null  then o3.userct  else 0 end as collect_count,
+   case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
+         from (select * from  course  c   join   task_item_mapping  m
+            on c.course_id = m.item_id    where   m.item_type='course'  and
+              m.task_id= #{taskid}  and c.indicator=1  and  c.ispublished=1 )result
+
+left join (
+select course_id, count(*)  as  renshu from (
+select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+on result.course_id =o1.course_id
+left join
+(
+select  course_id,    total/ct as pingfen from (
+select course_id, sum(star) as total , count(comment_id) as ct from course_comment  group by course_id)t)o2
+on result.course_id= o2.course_id
+left join
+(
+select item_id as course_id,  count(user_id) as userct from  user_favor where item_type='course' group by item_id)o3
+on   result.course_id= o3.course_id
+order by  renshu desc, pingfen desc ;
+    </select>
+
+    <select id="getTaskExamListForDetail"     resultType="com.dli.entities.Exam">
+
+            select * from (
+  select result.*,
+          case when o1.renshu  is not null then o1.renshu else 0 end  as study_count,
+          case when  o2.userct is not null then  o2.userct else 0  end   as collect_count
+          from (
+          select * from  exam  e   join   task_item_mapping  m
+           on e.exam_id = m.item_id    where   m.item_type='exam'  and   m.task_id= #{taskid}  and e.indicator=1  and e.ispublished=1
+
+          )result
+
+          left join (
+          select exam_id, count(*)  as  renshu from (
+          select  exam_id, user_id from exam_history  group by exam_id, user_id)t group by exam_id)o1
+          on result.exam_id=o1.exam_id
+
+          left join
+          (
+          select item_id as exam_id,  count(user_id) as userct from  user_favor where item_type='exam' group by item_id)o2
+          on result.exam_id=o2.exam_id)t   order by   start_date
+    </select>
+
+
+
+  <select id="getTaskEnrollmentPeriodListForDetail"    resultType="com.dli.entities.EnrollmentPeriodEnrollment">
+         select *    from (
+           select result.*  ,
+            case  when  o1.renshu is not null then o1.renshu   else 0  end  as study_count,
+            case  when   o2.userct  is not null then    o2.userct  else 0 end as collect_count,
+              case when o3.pingfen is not null  then o3.pingfen  else 0 end as star
+            from(
+
+       select p.*,  e.title, e.intro, e.icon, e.pic,e.company_id  from  enrollment    e  join   enrollment_period  p on e.enrollment_id = p.enrollment_id      join   task_item_mapping  m      on p.period_id = m.item_id
+  where   m.item_type='enrollment'  and   m.task_id=#{taskid}  and  e.indicator=1  and   p.indicator=1 and p.ispublished =1
+
+       )result
+         left join (
+         select period_id, count(*)  as  renshu from
+         user_enrollment   group by  period_id )o1   on  result.period_id =o1.period_id
+         left join(
+         select item_id as period_id,  count(user_id) as userct from  user_favor where item_type='enrollment' group by item_id)o2
+         on   result.period_id= o2.period_id
+
+left join(
+select  enrollment_id,    total/ct as pingfen from (
+select enrollment_id, sum(star) as total , count(comment_id) as ct from enrollment_comment  group by enrollment_id)t)o3
+on result.enrollment_id= o3.enrollment_id
+
+         )t
+         order by study_count desc, start_date  desc;
+  </select>
+
+</mapper>
