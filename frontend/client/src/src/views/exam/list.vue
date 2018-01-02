@@ -39,14 +39,15 @@
           </router-link>
         </li>
       </ul>
-
     </section>
+    <v-footer currentTag="2"></v-footer>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import api from '../../services/api'
+import VFooter from '../../components/footer'
 import searchHeader from '../../components/SearchHeader'
 export default {
   data: function () {
@@ -60,7 +61,8 @@ export default {
     }
   },
   components: {
-    searchHeader
+    searchHeader,
+    VFooter
   },
   filters: {
     formatImage: function (uri) {

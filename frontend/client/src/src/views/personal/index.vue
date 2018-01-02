@@ -182,6 +182,7 @@
         </li>
       </ul>
     </section>
+    <v-footer currentTag="4"></v-footer>
   </div>
 </template>
 
@@ -190,18 +191,21 @@
   import axios from 'axios'
   import commonHeader from '../../components/CommonHeader'
   import Croppa from '../../../node_modules/vue-croppa'
+  import VFooter from '../../components/footer'
   import Vue from 'vue'
   Vue.use(Croppa)
   export default {
     data: function () {
       return {
+        currentPage: -1,
         seen: false, // 是否显示更换头像界面
         myCroppa: {},
         data: {}
       }
     },
     components: {
-      commonHeader
+      commonHeader,
+      VFooter
     },
     created () {
       api.fetch(api.uri.getPersonal).then(data => {

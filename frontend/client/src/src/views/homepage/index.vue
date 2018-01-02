@@ -5,13 +5,13 @@
         <a class="seach_tit tl" href="##">
           <img :src="logo | formatImage" style="width:.8rem"/>
         </a>
-        <div class="search_input" style="margin-left: .1rem;margin-right: -.15rem;">
+        <div class="search_input" style="margin-left: .1rem;margin-right: .35rem;">
           <img src="../../assets/img/seach_icon.png"/>
           <!--<img src="../../assets/img/delate.png"/>-->
           <input placeholder="输入关键词搜索相关学习资源" @focus="goSearch">
         </div>
-        <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)"><img
-          src="../../assets/img/home.png" alt="更多"/></a>
+        <!--<a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)"><img-->
+          <!--src="../../assets/img/home.png" alt="更多"/></a>-->
       </div>
     </header>
     <section>
@@ -286,6 +286,7 @@
         </li>
       </ul>
     </nav>
+    <v-footer :currentTag=currentTag></v-footer>
     <div class="c-modal" :style="{display:nav1 ? 'block':'none'}">
     </div>
   </div>
@@ -296,9 +297,11 @@
   import {formatDate} from '../../common/date'
   import axios from 'axios'
   import router from '../../router'
+  import VFooter from '../../components/footer'
   export default {
     data: function () {
       return {
+        currentTag: '1',
         activeName: 'first',
         booking: [],
         courseWeek: [],
@@ -323,6 +326,9 @@
         var date = new Date(time)
         return formatDate(date, 'yyyy-MM-dd')
       }
+    },
+    components: {
+      VFooter
     },
     created () {
       this.username = sessionStorage.getItem('username')

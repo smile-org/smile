@@ -8,7 +8,7 @@
       <a><img :src="logo | formatImage"  class="logo1" v-on:click="goHome" /></a>
       <!--</router-link>-->
       <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)">
-        <img src="../assets/img/home.png" alt="更多" v-show="routeName!=='startExam'" />
+        <!--<img src="../assets/img/home.png" alt="更多" v-show="routeName!=='startExam'" />-->
       </a>
     </div>
     <nav @click="homeClick(false,$event)" id="slide_menu" :class="nav1 ?'active' : ''">

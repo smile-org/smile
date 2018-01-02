@@ -80,6 +80,7 @@
         </el-tab-pane>
       </el-tabs>
     </section>
+    <v-footer currentTag="2"></v-footer>
   </div>
 </template>
 
@@ -87,6 +88,7 @@
 import api from '../../services/api'
 import axios from 'axios'
 import { formatDate } from '../../common/date'
+import VFooter from '../../components/footer'
 import searchHeader from '../../components/SearchHeader'
 export default {
   data: function () {
@@ -106,7 +108,8 @@ export default {
     }
   },
   components: {
-    searchHeader
+    searchHeader,
+    VFooter
   },
   filters: {
     formatImage: function (uri) {

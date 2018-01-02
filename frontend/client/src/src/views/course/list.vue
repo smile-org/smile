@@ -12,11 +12,13 @@
         </li>
       </ul>
     </section>
+    <v-footer currentTag="2"></v-footer>
   </div>
 </template>
 
 <script>
 import api from '../../services/api'
+import VFooter from '../../components/footer'
 // import router from '../../router/index'
 import axios from 'axios'
 import searchHeader from '../../components/SearchHeader'
@@ -32,7 +34,8 @@ export default {
     }
   },
   components: {
-    searchHeader
+    searchHeader,
+    VFooter
   },
   created () {
     // api.get(api.uri.getCourseCategories, { skip: this.currentPage * this.take, take: this.take }).then(data => {

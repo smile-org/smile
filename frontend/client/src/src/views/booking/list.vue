@@ -35,10 +35,11 @@
           </router-link>
         </li>
       </ul>
+      <button class="bottom_btn " type="button" v-on:click="newBooking">我要发起约课</button>
     </section>
-    <footer>
-      <button class="login_btn btn_position" type="button" v-on:click="newBooking">我要发起约课</button>
-    </footer>
+    <!--<footer>-->
+    <!--</footer>-->
+    <v-footer currentTag="3"></v-footer>
   </div>
 </template>
 
@@ -48,6 +49,7 @@ import axios from 'axios'
 import router from '../../router'
 import { formatDate } from '../../common/date'
 import searchHeader from '../../components/SearchHeader'
+import VFooter from '../../components/footer'
 export default {
   data: function () {
     return {
@@ -59,7 +61,8 @@ export default {
     }
   },
   components: {
-    searchHeader
+    searchHeader,
+    VFooter
   },
   filters: {
     formatImage: function (uri) {

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import homepage from '@/views/homepage/index'
 import search from '@/views/homepage/search'
 import searchResult from '@/views/homepage/searchResult'
+import discover from '@/views/homepage/discover'
 
 // 登录
 import login from '@/views/login'
@@ -252,6 +253,12 @@ export default new Router({
       path: '/searchResult',
       name: 'searchResult',
       component: searchResult,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/discover',
+      name: 'discover',
+      component: discover,
       meta: {requiresAuth: requiresAuth}
     },
 

@@ -2,12 +2,14 @@
   <header @click="homeClick(false)">
     <div class="search_c">
       <a class="seach_tit tl"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack"/></a>
-      <div class="search_input">
+      <div class="search_input" style="margin-right: .35rem;">
         <img src="../assets/img/seach_icon.png" />
-        <img src="../assets/img/delate.png" />
+        <!--<img src="../assets/img/delate.png" />-->
         <input :placeholder="holder" @focus="goSearch">
       </div>
-      <a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)"><img src="../assets/img/home.png" alt="更多" /></a>
+      <!--<a class="seach_tit tr" href="javaScript:;" @click.stop.prevent="homeClick(true)">-->
+        <!--<img src="../assets/img/home.png" alt="更多" />-->
+      <!--</a>-->
     </div>
     <nav @click="homeClick(false,$event)" id="slide_menu" :class="nav1 ?'active' : ''">
       <div class="user_info">
