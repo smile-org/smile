@@ -50,11 +50,11 @@
                   </el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="start_date" label="发布日期" align="center" width="120">
+            <!-- <el-table-column prop="start_date" label="发布日期" align="center" width="120">
               <template scope="scope" v-if="scope.row.start_date">
                 <span>{{scope.row.start_date | formatDate}} </span>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="操作" class="tc" width="140" align="center">
               <template scope="scope">
                 <el-button @click="taskingEdit(scope.row.task_id)" type="text" size="small">编辑</el-button>

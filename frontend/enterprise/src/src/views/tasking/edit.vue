@@ -51,12 +51,12 @@
                   <el-form-item label="开始时间">
                     <el-col>
                       <el-date-picker class="dateTab_width" type="date" placeholder="选择日期"
-                                      v-model="formInline.start_date" style="width: 100%;"></el-date-picker>
+                                      v-model="course_start_date" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                   <el-form-item label="结束时间">
                     <el-col>
-                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
+                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="course_end_date"
                                       style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
@@ -125,12 +125,12 @@
                   <el-form-item label="开始时间">
                     <el-col>
                       <el-date-picker class="dateTab_width" type="date" placeholder="选择日期"
-                                      v-model="formInline.start_date" style="width: 100%;"></el-date-picker>
+                                      v-model="exam_start_date" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                   <el-form-item label="结束时间">
                     <el-col>
-                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
+                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="exam_end_date"
                                       style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
@@ -198,12 +198,12 @@
                   <el-form-item label="开始时间">
                     <el-col>
                       <el-date-picker class="dateTab_width" type="date" placeholder="选择日期"
-                                      v-model="formInline.start_date" style="width: 100%;"></el-date-picker>
+                                      v-model="en_start_date" style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                   <el-form-item label="结束时间">
                     <el-col>
-                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="formInline.end_date"
+                      <el-date-picker class="dateTab_width" type="date" placeholder="选择日期" v-model="en_end_date"
                                       style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
@@ -324,6 +324,7 @@
   import navigator from '../../components/Navigator'
   //  import ElRow from "element-ui/packages/row/src/row";
   import api from '../../services/api'
+  import _ from 'lodash'
   import moment from 'moment'
   //  import router from '../../router'
   export default {
@@ -354,6 +355,12 @@
         selUserData2: [],
         // 员工id
         userids: [],
+        course_start_date: '',
+        course_end_date: '',
+        exam_start_date: '',
+        exam_end_date: '',
+        en_start_date: '',
+        en_end_date: '',
         pickerOptions0: {
           disabledDate (time) {
             return time.getTime() < Date.now() - 8.64e7
@@ -446,12 +453,12 @@
       // ********** 课程 ***********
       courseSearch: function () {
         var date1 = ''
-        if (this.form.startDate) {
-          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        if (this.course_start_date) {
+          date1 = moment(this.course_start_date).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.form.endDate) {
-          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        if (this.course_end_date) {
+          date2 = moment(this.course_end_date).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.searchCourse, {
           title: this.formInline.name,
@@ -517,12 +524,12 @@
       // ********** 考试 ***********
       examSearch: function () {
         var date1 = ''
-        if (this.form.startDate) {
-          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        if (this.exam_start_date) {
+          date1 = moment(this.exam_start_date).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.form.endDate) {
-          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        if (this.exam_end_date) {
+          date2 = moment(this.exam_end_date).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.getExamList, {
           num: this.formInline.exam_num,
@@ -587,12 +594,12 @@
       // ********** 报名 ***********
       enrollmentSearch: function () {
         var date1 = ''
-        if (this.form.startDate) {
-          date1 = moment(this.formInline.startDate).format('YYYY-MM-DD')
+        if (this.en_start_date) {
+          date1 = moment(this.en_start_date).format('YYYY-MM-DD')
         }
         var date2 = ''
-        if (this.form.endDate) {
-          date2 = moment(this.formInline.endDate).format('YYYY-MM-DD')
+        if (this.en_end_date) {
+          date2 = moment(this.en_end_date).format('YYYY-MM-DD')
         }
         api.fetch(api.uri.getEnrollmentList, {
           title: this.formInline.name,
@@ -678,7 +685,16 @@
         console.log(this.selUserData)
       },
       saveUser: function () {
-        this.selUserData = this.selUserData2
+        // this.selUserData = this.selUserData2
+        for (var p = 0; p < this.selUserData2.length; p++) {
+          var spec = this.selUserData2[p]
+          if (!_.some(this.selUserData, {user_id: spec.user_id})) {
+            this.selUserData.push({
+              user_id: spec.user_id,
+              full_name: spec.full_name
+            })
+          }
+        }
         this.userids.splice(0, this.userids.length)
         for (var i = 0; i < this.selUserData.length; i++) {
           this.userids.push(this.selUserData[i].user_id)
@@ -732,6 +748,8 @@
       },
       changeFun: function (val) {
         this.selUserData2 = val
+        console.log(val)
+        console.log(this.selUserData)
       },
       search: function () {
         console.log('search')

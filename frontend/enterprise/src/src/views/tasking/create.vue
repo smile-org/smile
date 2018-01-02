@@ -324,6 +324,7 @@
   import navigator from '../../components/Navigator'
   //  import ElRow from "element-ui/packages/row/src/row";
   import api from '../../services/api'
+  import _ from 'lodash'
   import moment from 'moment'
   //  import router from '../../router'
   export default {
@@ -647,7 +648,16 @@
         console.log(this.selUserData)
       },
       saveUser: function () {
-        this.selUserData = this.selUserData2
+        // this.selUserData = this.selUserData2
+        for (var p = 0; p < this.selUserData2.length; p++) {
+          var spec = this.selUserData2[p]
+          if (!_.some(this.selUserData, {user_id: spec.user_id})) {
+            this.selUserData.push({
+              user_id: spec.user_id,
+              full_name: spec.full_name
+            })
+          }
+        }
         this.userids.splice(0, this.userids.length)
         for (var i = 0; i < this.selUserData.length; i++) {
           this.userids.push(this.selUserData[i].user_id)
