@@ -30,7 +30,7 @@
             </el-form-item>
           </el-form>
           <hr class="hr_line">
-          <el-table :data="tableData" border style="width: 100%" :default-sort = "{prop: 'learn_percentage', order: 'descending'}">
+          <el-table :data="tableData" border style="width: 100%" >
             <el-table-column prop="full_name" align="center" label="姓名" min-width="180">
             </el-table-column>
             <el-table-column prop="job_number" align="center" label="工号" min-width="140">
@@ -51,7 +51,10 @@
                 {{scope.row.ispublished ? "已发布" : "未发布"}}
               </template>
             </el-table-column>
-            <el-table-column prop="learn_percentage" label="完成进度" align="center"  min-width="120" sortable>
+            <el-table-column prop="percentage" label="完成进度" align="center"  min-width="120" sortable>
+              <template scope="scope">
+                {{scope.row.percentage | formatString}}
+              </template>
             </el-table-column>
             <el-table-column label="操作" class="tc" width="100" align="center">
               <template scope="scope">
@@ -108,6 +111,9 @@
       formatDate (time) {
         var date = new Date(time)
         return moment(date).format('YYYY-MM-DD')
+      },
+      formatString (str) {
+        return str + '%'
       }
     },
     created () {
@@ -120,9 +126,12 @@
         skip: 0,
         take: this.take
       }).then(data => {
-        console.log(data)
         if (data.status === 1) {
           this.tableData = data.result
+          for (var i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].percentage = parseFloat(this.tableData[i].learn_percentage)
+          }
+          console.log(this.tableData)
           this.total = data.total
           this.tableData.expiration_date = new Date(this.tableData.expiration_date)
         }
@@ -139,7 +148,6 @@
         this.search()
       },
       search: function () {
-        console.log(this.formInline.fullname)
         api.fetch(api.uri.GetUserTaskList, {
           fullname: this.formInline.fullname,
           tasktitle: this.formInline.tasktitle,
@@ -149,7 +157,6 @@
           skip: this.take * (this.currentPage - 1),
           take: this.take
         }).then(data => {
-          console.log(111)
           if (data.status === 1) {
             this.tableData = data.result
             this.total = data.total
