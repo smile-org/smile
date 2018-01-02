@@ -30,7 +30,7 @@
             </el-form-item>
           </el-form>
           <hr class="hr_line">
-          <el-table :data="tableData" border style="width: 100%" :default-sort = "{prop: 'expiration_date', order: 'descending'}">
+          <el-table :data="tableData" border style="width: 100%" :default-sort = "{prop: 'learn_percentage', order: 'descending'}">
             <el-table-column prop="full_name" align="center" label="姓名" min-width="180">
             </el-table-column>
             <el-table-column prop="job_number" align="center" label="工号" min-width="140">
