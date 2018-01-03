@@ -1698,7 +1698,7 @@ footer .exam_b .btn span:nth-child(2) {
 /*此处为首页*/
 .banner_bg {
   width: 100%;
-  /*height:3rem;*/
+  height: 3rem;
   display: block;
 }
 

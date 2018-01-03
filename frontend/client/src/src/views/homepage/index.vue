@@ -193,6 +193,11 @@
             <span class="vm">更多</span> <img src="../../assets/img/go02.png" class="vm" style="width: .125rem;">
           </router-link>
         </div>
+        <div v-if="exam==''||exam==null">
+          <div class="null_date">
+            <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+          </div>
+        </div>
         <ul class="list_border course_line">
           <li class="course_list  line_only" v-for="item in exam" :key="item.exam_id">
             <router-link v-bind:to="{path: '/getExamInfo', query: {id: item.exam_id}}">
@@ -225,6 +230,11 @@
           <router-link v-bind:to="{name: 'getEnrollList'}" class="home_more">
             <span class="vm">更多</span> <img src="../../assets/img/go02.png" class="vm" style="width: .125rem;">
           </router-link>
+        </div>
+        <div v-if="enroll==''||enroll==null">
+          <div class="null_date">
+            <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+          </div>
         </div>
         <ul class=" list_border course_line reg_nohover">
           <li class="course_list  line_only" v-for="item in enroll" :key="item.period_id">

@@ -13,6 +13,7 @@
     </header>-->
     <search-header v-bind:holder="searchPlaceHolder" v-bind:type="2"></search-header>
     <section>
+
       <ul class="mt3 list_border course_line" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <li class="course_list  line_only" v-for="item in data" :key="item.exam_id">
           <router-link v-bind:to="{name: 'getExamInfo', query: {id: item.exam_id}}">
@@ -39,6 +40,11 @@
           </router-link>
         </li>
       </ul>
+      <div v-if="data==''||data==null">
+        <div class="null_date" style="">
+          <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+        </div>
+      </div>
     </section>
     <v-footer currentTag="2"></v-footer>
   </div>
