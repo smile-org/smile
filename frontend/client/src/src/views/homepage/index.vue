@@ -49,6 +49,11 @@
             <span class="vm">更多</span> <img src="../../assets/img/go02.png" class="vm" style="width: .125rem;">
           </router-link>
         </div>
+        <div v-if="booking==''||booking==null">
+          <div class="null_date">
+            <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+          </div>
+        </div>
         <ul class=" list_border course_line reg_nohover">
           <li class="course_list  line_only" v-for="item in booking" :key="item.appointmentId">
             <router-link v-bind:to="{name: 'getBooking', query: {id: item.appointmentId}}" class=" wid100">
