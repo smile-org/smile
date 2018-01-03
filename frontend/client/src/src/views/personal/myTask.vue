@@ -1,112 +1,59 @@
 <template>
   <div id="app">
-    <!--<header>-->
-    <!--<div class="logo_c">-->
-    <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
-    <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
-    <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
-    <!--</div>-->
-    <!--</header>-->
     <common-header></common-header>
     <section>
-      <el-tabs class="f_con2" v-model="activeName">
+      <el-tabs class="f_con2" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="进行中" name="first">
-          <ul class="tasking_ul ">
-            <li class="tasking_li">
-               <router-link v-bind:to="{path: '/myTaskDetail'}">
+          <ul class="tasking_ul "  v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_inProgress" infinite-scroll-distance="10">
+            <li class="tasking_li" v-for="item in dataInProgress" :key="item.task_id">
+               <router-link v-bind:to="{path: '/myTaskDetail', query: {id: item.task_id}}">
                 <p class="tasking_font">
                   <span class="">任务名称 ：</span>
-                  学习任务1
+                  {{item.task_title}}
                 </p>
                 <p class="tasking_font">
                   <span class="">截止日期 ：</span>
-                  20162325
+                  {{item.expiration_date | formatDate}}
                 </p>
                 <p class="tasking_font">
                   <span class="">目标学员范围 ：</span>
-                  学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务
+                  {{item.task_scope}}
                 </p>
                 <p class="tasking_font">
                   <span class="">任务完成进度 ：</span>
-                  <span class="g_f">45%</span>
+                  <span class="g_f">{{item.learn_percentage}}</span>
                 </p>
                 <div class="surplus_num t_bor1 " style="">
-                  倒计时：<span>2</span>天
+                  倒计时：<span>{{item.count_down}}</span>天
                 </div>
                </router-link>
-            </li>
-            <li class="tasking_li ">
-              <router-link v-bind:to="{path: '/myTaskDetail'}">
-                <p class="tasking_font">
-                  <span class="">任务名称 ：</span>
-                  学习任务1
-                </p>
-                <p class="tasking_font">
-                  <span class="">截止日期 ：</span>
-                  20162325
-                </p>
-                <p class="tasking_font">
-                  <span class="">目标学员范围 ：</span>
-                  学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务
-                </p>
-                <p class="tasking_font">
-                  <span class="">任务完成进度 ：</span>
-                  <span class="g_f">45%</span>
-                </p>
-                <div class="surplus_num t_bor1 " style="">
-                  倒计时：<span>2</span>天
-                </div>
-              </router-link>
             </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane label="已完成" name="second">
-          <ul class="tasking_ul ">
-            <li class="tasking_li">
-              <router-link v-bind:to="{path: '/myTaskDetail'}">
+          <ul class="tasking_ul " v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_finish" infinite-scroll-distance="10">
+            <li class="tasking_li" v-for="item in dataFinish" :key="item.task_id">
+              <router-link v-bind:to="{path: '/myTaskDetail', query: {id: item.task_id}}">
                 <p class="tasking_font">
                   <span class="">任务名称 ：</span>
-                  学习任务1
+                  {{item.task_title}}
                 </p>
                 <p class="tasking_font">
                   <span class="">截止日期 ：</span>
-                  20162325
+                  {{item.expiration_date | formatDate}}
                 </p>
                 <p class="tasking_font">
                   <span class="">目标学员范围 ：</span>
-                  学习任务学习任务学习任务学习任yy务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务
+                  {{item.task_scope}}
                 </p>
                 <p class="tasking_font">
                   <span class="">任务完成进度 ：</span>
-                   <span class="g_f">45%</span>
+                   <span class="g_f">{{item.learn_percentage}}</span>
                 </p>
                 <div class="surplus_num  t_bor2" style="">
-                  已完成
+                  {{item.learn_status}}
                 </div>
               </router-link>
-            </li>
-            <li class="tasking_li">
-              <a href="myTaskDetail.vue">
-                <p class="tasking_font">
-                  <span class="">任务名称 ：</span>
-                  学习任务1
-                </p>
-                <p class="tasking_font">
-                  <span class="">截止日期 ：</span>
-                  20162325
-                </p>
-                <p class="tasking_font">
-                  <span class="">目标学员范围 ：</span>
-                  学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务学习任务
-                </p>
-                <p class="tasking_font">
-                  <span class="">任务完成进度 ：</span>
-                  <span class="g_f">45%</span>
-                </p>
-                <div class="surplus_num  t_bor3" style="">
-                  未完成
-                </div>
-              </a>
             </li>
           </ul>
         </el-tab-pane>
@@ -119,17 +66,18 @@
   import api from '../../services/api'
   import axios from 'axios'
   import commonHeader from '../../components/CommonHeader'
+  import {formatDate} from '../../common/date'
   export default {
     data: function () {
       return {
         activeName: 'first',
         dataInProgress: [],
-        dataNotStart: [],
+        dataFinish: [],
         isBusy_inProgress: false,
-        isBusy_notStart: false,
+        isBusy_finish: false,
         take: 20,
         currentPage_inProgress: -1,
-        currentPage_notStart: -1
+        currentPage_finish: -1
       }
     },
     components: {
@@ -138,39 +86,49 @@
     filters: {
       formatImage: function (uri) {
         return axios.defaults.imageServer + uri
+      },
+      formatDate: function (time) {
+        var date = new Date(time)
+        return formatDate(date, 'yyyy-MM-dd')
       }
     },
     methods: {
-      // handleClick: function (tab, event) {
-      //   this.loadMore()
-      // },
-      handleStar: function (data) {
-        for (var i = 0; i < data.length; i++) {
-          var current = data[i]
-          if (current && current.star) {
-            current.star = current.star.toFixed(1)
-          }
-        }
+      handleClick: function (tab, event) {
+        this.loadMore()
       },
       loadMore: function () {
-        this.busy = true
-        this.currentPage_inProgress = this.currentPage_inProgress + 1
-        api.fetch(api.uri.getMyTaskListInProgress, {
-          take: this.take,
-          skip: this.currentPage_inProgress * this.take
-        }).then(data => {
-          if (data.status === 1) {
-            this.dataInProgress = this.dataInProgress.concat(data.result)
-            this.handleStar(this.dataInProgress)
-            if (data.result.length === this.take) {
-              this.isBusy_inProgress = false
+        if (this.activeName === 'first' && this.dataInProgress.length === 0 && !this.isBusy_inProgress) {
+          this.currentPage_inProgress = this.currentPage_inProgress + 1
+          this.isBusy_inProgress = true
+          api.fetch(api.uri.getTaskInProgress, {take: this.take, skip: this.currentPage_inProgress * this.take}).then(data => {
+            if (data.status === 1) {
+              this.dataInProgress = this.dataInProgress.concat(data.result)
+              if (data.result.length === this.take) {
+                this.isBusy_inProgress = false
+              }
+            } else {
+              // todo:
             }
-          } else {
-            // todo:
-          }
-        }).catch(error => {
-          console.log(error.message)
-        })
+          }).catch(error => {
+            console.log(error.message)
+          })
+        }
+        if (this.activeName === 'second' && this.dataFinish.length === 0 && !this.isBusy_finish) {
+          this.currentPage_finish = this.currentPage_finish + 1
+          this.isBusy_finish = true
+          api.fetch(api.uri.getTaskFinished, {take: this.take, skip: this.currentPage_finish * this.take}).then(data => {
+            if (data.status === 1) {
+              this.dataFinish = this.dataFinish.concat(data.result)
+              if (data.result.length === this.take) {
+                this.isBusy_finish = false
+              }
+            } else {
+              // todo:
+            }
+          }).catch(error => {
+            console.log(error.message)
+          })
+        }
       }
     }
   }

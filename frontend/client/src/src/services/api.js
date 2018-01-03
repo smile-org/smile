@@ -181,6 +181,12 @@ export default {
     // getMyFavoriteExam: '',
     updatePassword: 'updatePassword',
 
+    // 新的 我的任务 api
+    getTaskInProgress: 'GetMyTaskListInProcess',
+    getTaskFinished: 'GetMyTaskListFinished',
+    getTaskDetail: 'GetTaskAndLearnStatusDetail',
+    getTaskUserRanking: 'GetTaskClassMate',
+
     // 首页
     getHomepageCourse: '/getFirstPageCourseList',
     getSearchHistoryList: '/getsearchHistoryList',

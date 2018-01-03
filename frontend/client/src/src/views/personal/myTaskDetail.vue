@@ -14,73 +14,140 @@
           <a>
             <p class="tasking_font">
               <span class="">任务名称 ：</span>
-              学习任务1
+              {{data.task_title}}
             </p>
             <p class="tasking_font">
               <span class="">截止日期 ：</span>
-              20162325
+              {{data.expiration_date | formatDate}}
             </p>
             <p class="tasking_font">
               <span class="">目标学员范围 ：</span>
-              学习任务学习任务务学习任务务学习任务
+              {{data.task_scope}}
             </p>
             <p class="tasking_font">
               <span class="">学习任务描述 ：</span>
-              学习任务学习任g务jj 学习任务学习任务学习务学习任务学习任务学习任务学习任务学习任务
+              {{data.task_description}}
             </p>
             <p class="tasking_font">
               <span class="">任务完成进度 ：</span>
-              <span class="g_f">45%</span>
+              <span class="g_f">{{data.learn_percentage}}</span>
             </p>
             <div class="surplus_num t_bor1 " style="">
-              倒计时：<span>2</span>天
+              <div v-show="data.count_down >= 0">倒计时：<span>{{data.count_down}}</span>天</div>
+              <div v-show="data.count_down == -1">已结束</div>
             </div>
-            <router-link class="tasking_see" v-bind:to="{path: '/myTaskSee'}">查看同学</router-link>
+            <router-link class="tasking_see" v-bind:to="{path: '/myTaskSee', query: {id: data.task_id}}">查看同学</router-link>
           </a>
         </li>
       </ul>
       <div class="hidden">
         <h3 class="list_need">课程</h3>
-        <ul class="list_border course_line">
-          <li class="course_list  line_only">
-            <a>
-              <img src="../../assets/img/img1.png" class="fl img_bg">
+        <ul class="list_border course_line" v-show="data.CourseList.length > 0">
+          <li class="course_list  line_only" v-for="course in data.CourseList" :key="course.content.course_id">
+            <router-link v-bind:to="{path: '/getCourseDetails', query: {id: course.content.course_id}}">
+              <img :src="course.content.icon | formatImage" class="fl img_bg">
               <div class="course_cen show_star">
                 <div class="hidden effect_right ">
-                  <h3 class="fl">销售的哭昏</h3>
-                  <!--<el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900" text-template="value5"></el-rate>-->
+                  <h3 class="fl">{{course.content.title}}</h3>
+                  <el-rate class="star_time" v-model="course.content.star" disabled text-color="#ff9900" ></el-rate>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
-                      <span class="green00b">2</span>
+                      <span class="green00b">{{course.content.study_count}}</span>
                     </li>
                     <li class="fl">
                       <span class="icon icon2"></span>
-                      <span class="redff7">4</span>
+                      <span class="redff7">{{course.content.collect_count}}</span>
                     </li>
                   </ul>
                 </div>
               </div>
               <p class="exam_explain">
-                这杀手焦点科技撒
+                {{course.content.intro}}
               </p>
               <div class="surplus_num  t_bor2" style="">
-                已完成
+                {{course.learn_status}}
               </div>
-            </a>
+            </router-link>
           </li>
         </ul>
+        <div class="null_date" v-show="data.CourseList.length === 0">
+          <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
+        </div>
       </div>
       <div class="hidden">
         <h3 class="list_need">考试</h3>
-        <div class="null_date">
+        <ul class="list_border course_line" v-show="data.ExamList.length > 0">
+          <li class="course_list  line_only" v-for="exam in data.ExamList" :key="exam.content.exam_id">
+            <router-link v-bind:to="{path: '/getExamInfo', query: {id: exam.content.exam_id}}">
+              <img :src="exam.content.icon|formatImage" class="fl img_bg">
+              <div class="course_cen">
+                <div class="hidden effect_right ">
+                  <h3 class="fl">{{exam.content.exam_title}}</h3>
+                  <ul class="small_icon fr">
+                    <li class="fl">
+                      <span class="icon icon1"></span>
+                      <span class="green00b">{{exam.content.study_count}}</span>
+                    </li>
+                    <li class="fl">
+                      <span class="icon icon2"></span>
+                      <span class="redff7">{{exam.content.collect_count}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <p class="exam_explain">
+                {{exam.content.intro}}
+              </p>
+              <div class="surplus_num  t_bor2" style="">
+                {{exam.learn_status}}
+              </div>
+            </router-link>
+          </li>
+        </ul>
+        <div class="null_date" v-show="data.ExamList.length === 0">
           <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
         </div>
 
       </div>
       <div  class="hidden">
         <h3 class="list_need">报名</h3>
-        <div class="null_date">
+        <ul class=" list_border course_line reg_nohover" v-show="data.EnorllmentList.length > 0">
+          <li class="course_list  line_only" v-for="enroll in data.EnorllmentList" :key="enroll.content.period_id">
+            <router-link v-bind:to="{name: 'getEnroll', query: {id: enroll.content.period_id}}">
+              <img class="person_header2 fl" :src="enroll.content.icon | formatImage">
+              <div class="bm_con_bm show_star">
+                <div class="hidden bm_font ml6">
+                  <h3 class=" mb10">{{enroll.content.title}}</h3>
+                  <p class="ellipsis" style="width: 73%;">主讲：{{enroll.content.teacher}}</p>
+                  <p class="" style="">{{enroll.content.start_date | formatDate}}--{{enroll.content.end_date | formatDate}}</p>
+                  <el-rate class="star_time" v-model="enroll.content.star" disabled  text-color="#ff9900"></el-rate>
+                  <ul class="small_icon fr">
+                    <li class="fl">
+                      <span class="icon icon1"></span>
+                      <span class="green00b">{{enroll.content.study_count}}</span>
+                    </li>
+                    <li class="fl">
+                      <span class="icon icon2"></span>
+                      <span class="redff7">{{enroll.content.collect_count}}</span>
+                    </li>
+                  </ul>
+                  <!-- <span class="surplus_num s_num" style="right:0.05rem;top:.65rem;" v-if="item.left_count > 0">
+                    剩余{{item.left_count}}人
+                  </span> -->
+                  <!--<span class="surplus_num red_full" v-else-if="item.left_count === 0">
+                    已 满
+                  </span>
+                  <img class="end_png" src="../../assets/img/end.png" />-->
+                </div>
+              </div>
+              <div class="surplus_num  t_bor2" style="">
+                {{enroll.learn_status}}
+              </div>
+            </router-link>
+          </li>
+        </ul>
+        <div class="null_date" v-show="data.EnorllmentList.length === 0">
           <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
         </div>
 
@@ -93,19 +160,12 @@
   import api from '../../services/api'
   import axios from 'axios'
   import commonHeader from '../../components/CommonHeader'
+  import {formatDate} from '../../common/date'
   export default {
     data: function () {
       return {
-        activeName: 'first',
-        dataInProgress: [],
-        dataNotStart: [],
-        dataFinish: [],
-        isBusy_inProgress: false,
-        isBusy_notStart: false,
-        take: 20,
-        currentPage_inProgress: -1,
-        currentPage_notStart: -1,
-        value5: 3.7
+        id: 0,
+        data: {}
       }
     },
     components: {
@@ -114,40 +174,19 @@
     filters: {
       formatImage: function (uri) {
         return axios.defaults.imageServer + uri
+      },
+      formatDate: function (time) {
+        var date = new Date(time)
+        return formatDate(date, 'yyyy-MM-dd')
       }
     },
-    methods: {
-      // handleClick: function (tab, event) {
-      //   this.loadMore()
-      // },
-      handleStar: function (data) {
-        for (var i = 0; i < data.length; i++) {
-          var current = data[i]
-          if (current && current.star) {
-            current.star = current.star.toFixed(1)
-          }
+    created () {
+      this.id = this.$route.query.id
+      api.fetch(api.uri.getTaskDetail, {taskid: this.id}).then(data => {
+        if (data.status === 1) {
+          this.data = data.result
         }
-      },
-      loadMore: function () {
-        this.busy = true
-        this.currentPage_inProgress = this.currentPage_inProgress + 1
-        api.fetch(api.uri.getMyTaskListInProgress, {
-          take: this.take,
-          skip: this.currentPage_inProgress * this.take
-        }).then(data => {
-          if (data.status === 1) {
-            this.dataInProgress = this.dataInProgress.concat(data.result)
-            this.handleStar(this.dataInProgress)
-            if (data.result.length === this.take) {
-              this.isBusy_inProgress = false
-            }
-          } else {
-            // todo:
-          }
-        }).catch(error => {
-          console.log(error.message)
-        })
-      }
+      })
     }
   }
 </script>

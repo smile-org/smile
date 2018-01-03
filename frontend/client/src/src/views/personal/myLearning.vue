@@ -1,12 +1,5 @@
 <template>
   <div id="app">
-    <!--<header>-->
-      <!--<div class="logo_c">-->
-        <!--<a class="tl" href="##"><img src="../../assets/img/back.png" alt="返回" /></a>-->
-        <!--<a class="tc" href="##"><img src="../../assets/img/logo.png" alt="smile" class="logo1" /></a>-->
-        <!--<a class="tr" href="##"><img src="../../assets/img/home.png" alt="更多" /></a>-->
-      <!--</div>-->
-    <!--</header>-->
     <common-header></common-header>
     <section>
       <el-tabs class="f_con2" v-model="activeName" @tab-click="handleClick">

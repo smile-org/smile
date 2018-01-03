@@ -10,28 +10,13 @@
     <common-header></common-header>
     <section>
       <p class="tasking_member">
-        <img src="../../assets/img/progress.png" class="vm mr1" />您打败了<span>30%</span>的同学
+        <img src="../../assets/img/progress.png" class="vm mr1" />您打败了<span>{{data.percentage}}</span>的同学
       </p>
       <ul class="course_con list_border ">
-        <li class="tasking_memberFont">
-          <img class="vm mr1" src="../../assets/img/img01.jpg"/>
-          <span class="vm mr1">王晓乐 </span>
-          <span class="vm">当前完成进度：30%</span>
-        </li>
-        <li class="tasking_memberFont">
-          <img class="vm mr1" src="../../assets/img/img01.jpg"/>
-          <span class="vm mr1">王晓乐 </span>
-          <span class="vm">当前完成进度：30%</span>
-        </li>
-        <li class="tasking_memberFont">
-          <img class="vm mr1" src="../../assets/img/img01.jpg"/>
-          <span class="vm mr1">王晓乐 </span>
-          <span class="vm">当前完成进度：30%</span>
-        </li>
-        <li class="tasking_memberFont">
-          <img class="vm mr1" src="../../assets/img/img01.jpg"/>
-          <span class="vm mr1">wangdash </span>
-          <span class="vm">当前完成进度：30%</span>
+        <li class="tasking_memberFont" v-for="item in data.UserList" :key="item.avatar">
+          <img :src="item.avatar|formatImage" class="vm mr1">
+          <span class="vm mr1">{{item.user_name}} </span>
+          <span class="vm">当前完成进度：{{item.percentage}}</span>
         </li>
       </ul>
     </section>
@@ -44,7 +29,10 @@
   import commonHeader from '../../components/CommonHeader'
   export default {
     data: function () {
-      return {}
+      return {
+        id: 0,
+        data: {}
+      }
     },
     components: {
       commonHeader
@@ -54,38 +42,14 @@
         return axios.defaults.imageServer + uri
       }
     },
-    methods: {
-      // handleClick: function (tab, event) {
-      //   this.loadMore()
-      // },
-      handleStar: function (data) {
-        for (var i = 0; i < data.length; i++) {
-          var current = data[i]
-          if (current && current.star) {
-            current.star = current.star.toFixed(1)
-          }
+    created () {
+      this.id = this.$route.query.id
+      api.fetch(api.uri.getTaskUserRanking, {taskid: this.id}).then(data => {
+        if (data.status === 1) {
+          console.log(data.result)
+          this.data = data.result
         }
-      },
-      loadMore: function () {
-        this.busy = true
-        this.currentPage_inProgress = this.currentPage_inProgress + 1
-        api.fetch(api.uri.getMyTaskListInProgress, {
-          take: this.take,
-          skip: this.currentPage_inProgress * this.take
-        }).then(data => {
-          if (data.status === 1) {
-            this.dataInProgress = this.dataInProgress.concat(data.result)
-            this.handleStar(this.dataInProgress)
-            if (data.result.length === this.take) {
-              this.isBusy_inProgress = false
-            }
-          } else {
-            // todo:
-          }
-        }).catch(error => {
-          console.log(error.message)
-        })
-      }
+      })
     }
   }
 </script>
