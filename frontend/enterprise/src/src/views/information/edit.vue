@@ -96,7 +96,7 @@
       :url="uploadUrl"
       :width="375"
       :headers="headers"
-      :height="120"
+      :height="150"
       :value.sync="showBanner"
       :no-circle=true
       img-format="png">
