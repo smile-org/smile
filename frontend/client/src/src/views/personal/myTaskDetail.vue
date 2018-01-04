@@ -48,7 +48,7 @@
               <img :src="course.content.icon | formatImage" class="fl img_bg">
               <div class="course_cen show_star">
                 <div class="hidden effect_right ">
-                  <h3 class="fl" style="max-width: 2.9rem;">{{course.content.title}}</h3>
+                  <h3 class="fl" style="max-width: 2.85rem;">{{course.content.title}}</h3>
                   <el-rate class="star_time" v-model="course.content.star" disabled text-color="#ff9900" ></el-rate>
                   <ul class="small_icon fr">
                     <li class="fl">
@@ -65,7 +65,7 @@
               <p class="exam_explain">
                 {{course.content.intro}}
               </p>
-              <div class="surplus_num  t_bor2" style="">
+              <div  class="surplus_num" :class="course.learn_status=='未完成'?'t_bor3':'t_bor2'" style="">
                 {{course.learn_status}}
               </div>
             </router-link>
@@ -76,14 +76,14 @@
         </div>
       </div>
       <div class="hidden">
-        <h3 class="list_need" style="max-width: 2.9rem;">考试</h3>
+        <h3 class="list_need" >考试</h3>
         <ul class="list_border course_line" v-show="data.ExamList.length > 0">
           <li class="course_list  line_only" v-for="exam in data.ExamList" :key="exam.content.exam_id">
             <router-link v-bind:to="{path: '/getExamInfo', query: {id: exam.content.exam_id}}">
               <img :src="exam.content.icon|formatImage" class="fl img_bg">
               <div class="course_cen">
                 <div class="hidden effect_right ">
-                  <h3 class="fl">{{exam.content.exam_title}}</h3>
+                  <h3 class="fl" style="max-width: 2.85rem;">{{exam.content.exam_title}}</h3>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -99,7 +99,7 @@
               <p class="exam_explain">
                 {{exam.content.intro}}
               </p>
-              <div class="surplus_num  t_bor2" style="">
+              <div  class="surplus_num" :class="exam.learn_status=='未完成'?'t_bor3':'t_bor2'" style="">
                 {{exam.learn_status}}
               </div>
             </router-link>
@@ -110,14 +110,14 @@
         </div>
       </div>
       <div  class="hidden">
-        <h3 class="list_need" style="max-width: 2.9rem;">报名</h3>
+        <h3 class="list_need">报名</h3>
         <ul class=" list_border course_line reg_nohover" v-show="data.EnorllmentList.length > 0">
           <li class="course_list  line_only" v-for="enroll in data.EnorllmentList" :key="enroll.content.period_id">
             <router-link v-bind:to="{name: 'getEnroll', query: {id: enroll.content.period_id}}">
               <img class="person_header2 fl" :src="enroll.content.icon | formatImage">
               <div class="bm_con_bm show_star">
                 <div class="hidden bm_font ml6">
-                  <h3 class=" mb10">{{enroll.content.title}}</h3>
+                  <h3 class=" mb10" style="max-width: 2.85rem;">{{enroll.content.title}}</h3>
                   <p class="ellipsis" style="width: 73%;">主讲：{{enroll.content.teacher}}</p>
                   <p class="" style="">{{enroll.content.start_date | formatDate}}--{{enroll.content.end_date | formatDate}}</p>
                   <el-rate class="star_time" v-model="enroll.content.star" disabled  text-color="#ff9900"></el-rate>
@@ -140,7 +140,7 @@
                   <img class="end_png" src="../../assets/img/end.png" />-->
                 </div>
               </div>
-              <div class="surplus_num  t_bor2" style="">
+              <div class="surplus_num" :class="enroll.learn_status=='未完成'?'t_bor3':'t_bor2'" style="">
                 {{enroll.learn_status}}
               </div>
             </router-link>

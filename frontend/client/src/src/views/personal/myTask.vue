@@ -50,7 +50,7 @@
                   <span class="">任务完成进度 ：</span>
                   {{item.learn_percentage}}
                 </p>
-                <div class="surplus_num  t_bor2" style="">
+                <div class="surplus_num" :class="item.learn_status=='未完成'?'t_bor3':'t_bor2'" style="">
                   {{item.learn_status}}
                 </div>
               </router-link>
