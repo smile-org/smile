@@ -22,7 +22,6 @@
     </section>
   </div>
 </template>
-
 <script>
   import api from '../../services/api'
   import axios from 'axios'

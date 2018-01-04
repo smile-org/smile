@@ -108,7 +108,6 @@
         <div class="null_date" v-show="data.ExamList.length === 0">
           <img class="vm mr1" src="../../assets/img/sade_null.png"> <span class="vm">暂无数据</span>
         </div>
-
       </div>
       <div  class="hidden">
         <h3 class="list_need" style="max-width: 2.9rem;">报名</h3>

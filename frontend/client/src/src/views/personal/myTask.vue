@@ -19,7 +19,7 @@
                   <span class="">目标学员范围 ：</span>
                   {{item.task_scope}}
                 </p>
-                <p class="tasking_font">
+                <p class="tasking_font ">
                   <span class="">任务完成进度 ：</span>
                   {{item.learn_percentage}}
                 </p>
