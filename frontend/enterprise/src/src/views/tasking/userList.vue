@@ -95,12 +95,7 @@
           area: '',
           department: ''
         },
-        tableData: [
-          {
-            title: '啊董',
-            number: '252522'
-          }
-        ]
+        tableData: []
       }
     },
     components: {

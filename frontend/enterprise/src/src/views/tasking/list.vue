@@ -95,10 +95,7 @@
           start: '',
           end: ''
         },
-        tableData: [{
-          title: '啊董',
-          number: '252522'
-        }],
+        tableData: [],
         categoryList: [{
           category_id: -1,
           category_name: '请选择'
