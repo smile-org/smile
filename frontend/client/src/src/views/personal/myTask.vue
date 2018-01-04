@@ -21,7 +21,7 @@
                 </p>
                 <p class="tasking_font">
                   <span class="">任务完成进度 ：</span>
-                  <span class="g_f">{{item.learn_percentage}}</span>
+                  {{item.learn_percentage}}
                 </p>
                 <div class="surplus_num t_bor1 " style="">
                   倒计时：<span>{{item.count_down}}</span>天
@@ -48,7 +48,7 @@
                 </p>
                 <p class="tasking_font">
                   <span class="">任务完成进度 ：</span>
-                   <span class="g_f">{{item.learn_percentage}}</span>
+                  {{item.learn_percentage}}
                 </p>
                 <div class="surplus_num  t_bor2" style="">
                   {{item.learn_status}}

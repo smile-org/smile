@@ -30,11 +30,11 @@
             </p>
             <p class="tasking_font">
               <span class="">任务完成进度 ：</span>
-              <span class="g_f">{{data.learn_percentage}}</span>
+              {{data.learn_percentage}}
             </p>
             <div class="surplus_num t_bor1 " style="">
-              <div v-show="data.count_down >= 0">倒计时：<span>{{data.count_down}}</span>天</div>
-              <div v-show="data.count_down == -1">已结束</div>
+              <div class="o_f" v-show="data.count_down >= 0">倒计时：<span>{{data.count_down}}</span>天</div>
+              <div class="o_f" v-show="data.count_down == -1">已结束</div>
             </div>
             <router-link class="tasking_see" v-bind:to="{path: '/myTaskSee', query: {id: data.task_id}}">查看同学</router-link>
           </a>
@@ -48,7 +48,7 @@
               <img :src="course.content.icon | formatImage" class="fl img_bg">
               <div class="course_cen show_star">
                 <div class="hidden effect_right ">
-                  <h3 class="fl">{{course.content.title}}</h3>
+                  <h3 class="fl" style="max-width: 2.9rem;">{{course.content.title}}</h3>
                   <el-rate class="star_time" v-model="course.content.star" disabled text-color="#ff9900" ></el-rate>
                   <ul class="small_icon fr">
                     <li class="fl">
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="hidden">
-        <h3 class="list_need">考试</h3>
+        <h3 class="list_need" style="max-width: 2.9rem;">考试</h3>
         <ul class="list_border course_line" v-show="data.ExamList.length > 0">
           <li class="course_list  line_only" v-for="exam in data.ExamList" :key="exam.content.exam_id">
             <router-link v-bind:to="{path: '/getExamInfo', query: {id: exam.content.exam_id}}">
@@ -111,7 +111,7 @@
 
       </div>
       <div  class="hidden">
-        <h3 class="list_need">报名</h3>
+        <h3 class="list_need" style="max-width: 2.9rem;">报名</h3>
         <ul class=" list_border course_line reg_nohover" v-show="data.EnorllmentList.length > 0">
           <li class="course_list  line_only" v-for="enroll in data.EnorllmentList" :key="enroll.content.period_id">
             <router-link v-bind:to="{name: 'getEnroll', query: {id: enroll.content.period_id}}">
