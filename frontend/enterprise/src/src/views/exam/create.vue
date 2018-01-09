@@ -455,6 +455,7 @@
             })
           }
         }
+        this.dialogMaterialVisible = false
       },
       deleteSelectedMaterial (id) {
         this.$confirm('此操作将删除该复习资料, 是否继续?', '提示', {
@@ -523,6 +524,7 @@
           }
         }
         this.changeQuestionScore()
+        this.dialogExamVisible = false
       },
       deleteSelectedExam (id) {
         this.$confirm('此操作将删除该试题, 是否继续?', '提示', {
