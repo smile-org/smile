@@ -1,6 +1,7 @@
 package com.dli.helper;
 
 import com.dli.entities.User;
+import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import sun.misc.BASE64Encoder;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -95,10 +98,6 @@ public class Helper {
     }
 
 
-    public static void SendMessage(String cellphone, String message) {
-
-    }
-
     public static boolean isNullOrEmpty(String value) {
         if (value == null || value.trim().equals("")) return true;
         else return false;
@@ -165,19 +164,25 @@ public class Helper {
             cl.add(Calendar.DAY_OF_MONTH, 1);// 今
 
 
+            return cl.getTime();
 
-            return  cl.getTime();
 
-
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw ex;
         }
     }
 
 
-    public  static   String  GenerateToken(  String   phone ) throws Exception{
+    public static String GenerateToken(String phone) throws Exception {
 
+
+        String randmom = String.valueOf(Helper.getRandNum(0, 999999));
+        String str = phone + randmom;
+
+
+        String newstr = getEncryption(str);
+        return newstr;
+/*
         String randmom = String.valueOf(Helper.getRandNum(0, 999999));
            String str= phone + randmom;
            MessageDigest md5= MessageDigest.getInstance("MD5");
@@ -185,72 +190,92 @@ public class Helper {
 
            String newstr=base64en.encode(md5.digest(str.getBytes("utf-8")));
            return newstr;
+
+           */
     }
 
-    /*
-    public  static   void    Export(List<String> rowNameList, List<Object[]> dataList, String tempFileName ,
-                                    HttpServletRequest request, HttpServletResponse response)
-            throws  Exception
-    {
 
-        try {
+    public static String[] generatePwd() throws Exception {
 
+        String[] arr = new String[2];
+        String randmom = String.valueOf(Helper.getRandNum(0, 999999));
+        arr[0] = randmom;
 
-        String path =fileroot +  exportfolder;
-        File targetFile = new File(path);
-        if(!targetFile.exists()){
-            targetFile.mkdirs();
+        String newstr = getEncryption(randmom);
+        arr[1] = newstr;
+
+        return arr;
+    }
+
+/*
+    public static String getEncryption(String originString)
+            throws Exception {
+        String result = "";
+        if (originString != null) {
+            try {
+                // 指定加密的方式为MD5
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                // 进行加密运算
+                byte bytes[] = md.digest(originString.getBytes("ISO8859-1"));
+                for (int i = 0; i < bytes.length; i++) {
+                    // 将整数转换成十六进制形式的字符串 这里与0xff进行与运算的原因是保证转换结果为32位
+                    String str = Integer.toHexString(bytes[i] & 0xFF);
+                    if (str.length() == 1) {
+                        str += "F";
+                    }
+                    result += str;
+                }
+            } catch (Exception e) {
+                throw  e;
+            }
         }
-
-        String fullPath =   path + tempFileName+ UUID.randomUUID() +".xlsx";
-        OfficeUtil.getInstance().export2excel("sheet1", rowNameList, dataList,fullPath);
-
-        //推流
-        File downloadFile = new File(fullPath);
-        ServletContext context = request.getServletContext();
-
-        // get MIME type of the file
-        String mimeType = context.getMimeType(fullPath);
-        if (mimeType == null) {
-            // set to binary type if MIME mapping not found
-            mimeType = "application/octet-stream";
-        }
-
-        // set content attributes for the response
-        response.setContentType(mimeType);
-        response.setContentLength((int) downloadFile.length());
-
-        // set headers for the response
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"",
-                downloadFile.getName());
-        response.setHeader(headerKey, headerValue);
-
-        InputStream myStream = new FileInputStream(fullPath);
-        IOUtils.copy(myStream, response.getOutputStream());
-        response.flushBuffer();
-        }
-        catch (Exception ex){
-            throw ex;
-        }
-
+        return result;
     }
 */
 
-    /*
-    * todo
 
-    *2. job to disable course , exam, enroll  while over due expiration date
-     3. generate token . when : log on , if token is null.
-     4. job to create records into table short_message(table created already) ,  for new user which password is null
-     5. job to send message ,record from short_message
-     6.  员工，  问题    导入的   读取excel部分
-       导出问题列表   没导出选项
-     7.  job 清理  course_content 中没有course_id的记录 和对应的 文件， 考虑一下当前正在编辑的课程（也是这种情况，但是不能删除），比如删除一周以前创建的
+    private static String getEncryption(String sourceStr) throws Exception {
+        String result = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(sourceStr.getBytes());
+            byte b[] = md.digest();
+            int i;
+            StringBuffer buf = new StringBuffer("");
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+            result = buf.toString();
+            //System.out.println("MD5(" + sourceStr + ",32) = " + result);
+            // System.out.println("MD5(" + sourceStr + ",16) = " + buf.toString().substring(8, 24));
+        } catch (Exception e) {
+            //System.out.println(e);
+            throw e;
+        }
+        return result;
+
+    }
+
+
+
+
+    /*
+    todo
+
+
+
+
+
+
     *
-    *
-    * 生成密码
-    *  job 比较公司的有效期， 快到一个月的时候给联系人发消息。 过有效期 停用公司。 停用的公司应该不能登陆了， check一下
     *
     * */
 }
+
+
+

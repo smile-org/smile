@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -191,7 +192,10 @@ public class ExamServiceImpl implements ExamService {
         Exam exam = examRepo.getExambyID(examid);
 
         List<Integer> correctids = examRepo.getExamHistoryCorrectRecordQuestionIDList(historyid);
-        List<Question> correctQuestions = examRepo.backGetQuestionListByIDs(correctids);
+
+        List<Question> correctQuestions = new ArrayList<>();
+        if(correctids.size()>0)
+         correctQuestions = examRepo.backGetQuestionListByIDs(correctids);
         // getTottalScoreForExam 这个方法  算总分 ，算得分 都可以用
         int score = this.getTottalScoreForExam(correctQuestions, exam.getSingle_choice_score(),
                 exam.getMulti_choice_score(), exam.getTrue_false_score());
@@ -406,6 +410,14 @@ public class ExamServiceImpl implements ExamService {
             else
                 entity.HasHistory = 0;
 
+
+            Date  current =new Date();
+            if(  current.getTime()   >   e.getStart_date().getTime()   &&   current.getTime() <   e.getEnd_date().getTime()   )
+                entity.IsEditable =false;
+            else
+                entity.IsEditable =true;
+
+
             entity.CourseList = examRepo.backGetExamCourseListByExamID(examid);
             entity.QuestionList = examRepo.backGetExamQuestionListByExamID(examid);
         }
@@ -471,6 +483,16 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public int adminGetExamResource() {
         return   examRepo.adminGetExamResource();
+    }
+
+    @Override
+    public List<Answer> backGetQuestionAnswerList(int questionid) {
+        return   examRepo.backGetQuestionAnswerList(questionid);
+    }
+
+    @Override
+    public Exam getExambyID(int examid) {
+        return examRepo.getExambyID(examid);
     }
 
 

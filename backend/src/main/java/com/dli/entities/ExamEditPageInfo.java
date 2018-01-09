@@ -13,4 +13,6 @@ public class ExamEditPageInfo {
       public   List<Course>    CourseList;
 
       public  List<Question>   QuestionList;
+
+      public    boolean      IsEditable;
 }

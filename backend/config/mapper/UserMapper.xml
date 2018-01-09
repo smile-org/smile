@@ -34,7 +34,7 @@
 
 
     <insert id="backAddUser"    parameterType="com.dli.entities.User"   useGeneratedKeys="true"   keyProperty="user_id" >
-        insert  user values(  0, #{cell_phone}, null,#{email}, #{job_number}, #{avatar},#{full_name}, #{department} ,#{area},  #{token},#{company_id},1,now(),now())
+        insert  user values(  0, #{cell_phone}, #{password},#{email}, #{job_number}, #{avatar},#{full_name}, #{department} ,#{area},  #{token},#{company_id},1,now(),now())
     </insert>
 
     <insert id="backAddUserRoleMapping"  >
@@ -104,7 +104,7 @@ where user_id=#{user_id}
     </select>
 
      <insert id="adminAddPlatformUser"    parameterType="com.dli.entities.User"   useGeneratedKeys="true"   keyProperty="user_id"  >
-            insert  user values(  0, #{cell_phone}, null,#{email}, null, #{avatar},#{full_name}, null ,null,   #{token} , null,1,now(),now())
+            insert  user values(  0, #{cell_phone}, #{password},#{email}, null, #{avatar},#{full_name}, null ,null,   #{token} , null,1,now(),now())
      </insert>
 
 
@@ -159,6 +159,22 @@ select  u.user_id,  DATE_FORMAT(u.created_at,'%Y-%m') as month  from  user   u j
     <select id="backGetUserCountByCompanyID"  resultType="int">
         select count(*) from  user where company_id=#{companyid} and indicator =1
     </select>
+
+
+    <insert id="addMessage"     >
+        insert  short_message  values(   0,  #{cellphone},  #{messageparam}, #{templatecode} ,   null, null,null,null,  0,    #{msgtype}, now(),     null  )
+    </insert>
+
+    <select id="jobGetMessageList"  resultType="com.dli.entities.Message">
+        select * from     short_message where   (resultcode is null or resultcode != 'OK' ) and retrycount  &lt;6
+    </select>
+
+
+
+    <update id="jobUpdateMessage"    parameterType="com.dli.entities.Message">
+        update  short_message  set resultcode=#{resultcode} ,resultmessage =#{resultmessage}, requestid =  #{requestid}, bizid= #{bizid},retrycount=  #{retrycount}, updated_at=  now()
+  where id = #{id}
+    </update>
 
 
 </mapper>

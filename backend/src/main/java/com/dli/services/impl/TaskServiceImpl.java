@@ -461,14 +461,22 @@ public  class TaskServiceImpl implements TaskService {
 
 
         double percentage= parsePercentage( backGetUserTaskPercentage( userid,taskid,  new Date())[0]);
+
         a.UserList =new ArrayList<>();
 
 
         for( User  u :userList ){
             String[] percentageAndStatus =  backGetUserTaskPercentage( u.getUser_id(),taskid,  new Date());
-            String[]  currentuser =new   String[2];
-            currentuser[0] =u.getFull_name();
-            currentuser[1] =percentageAndStatus[0];
+
+           Map<String, String>   currentuser =new HashMap<>();
+          //  String[]  currentuser =new   String[2];
+          //  currentuser[0] =u.getFull_name();
+           // currentuser[1] =percentageAndStatus[0];
+
+            currentuser.put("user_name" ,u.getFull_name());
+            currentuser.put("percentage" ,percentageAndStatus[0]);
+            currentuser.put("avatar" ,u.getAvatar());
+
             a.UserList.add(currentuser);
             if(   u.getUser_id() != userid && parsePercentage( percentageAndStatus[0])  < percentage  )
             {

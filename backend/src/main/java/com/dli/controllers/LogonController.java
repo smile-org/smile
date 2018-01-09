@@ -7,6 +7,7 @@ import com.dli.helper.Constant;
 import com.dli.helper.Helper;
 import com.dli.services.CompanyService;
 import com.dli.services.LogonService;
+import com.dli.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,10 @@ public class LogonController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
+
     private LogonService logonService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/getVerificationCode", method = RequestMethod.GET)
     public Map getVerificationCode(String cellphone) {
@@ -56,7 +60,11 @@ public class LogonController {
                 }
                     else {
                     String vcode = String.valueOf(Helper.getRandNum(0, 999999));
-                    Helper.SendMessage(cellphone, "[smile]您的验证码为:" + vcode);
+                    //Helper.SendMessage(cellphone, "[smile]您的验证码为:" + vcode);
+                   // userService.addMessage(cellphone,"[smile]您的验证码为:" + vcode,  Constant.findpwd);
+                    String param =  String.format(Constant.findpwd_param,  vcode);
+                    userService.addMessage(cellphone,param,   Constant.findpwd_templatecode, Constant.findpwd );
+
                     logonService.addSMS(u.getUser_id(), cellphone, vcode, Constant.findpwd, new Date());
 
                     result.put(Constant.status, 1);

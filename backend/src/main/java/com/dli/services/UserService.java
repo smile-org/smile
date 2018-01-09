@@ -48,5 +48,8 @@ public interface UserService {
     int backGetUserCountByCompanyID(  int companyid  );
     List<adminMonthCountStatistics>    adminGetEmployeeStatistics();
 
+    void  addMessage(  String  cellphone,   String messageparam   ,   String templatecode  ,   String msgtype);
+
+    void   sendMessage();
 
 }

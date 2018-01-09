@@ -2,6 +2,7 @@ package com.dli.repositories;
 
 
 import com.dli.entities.Demo;
+import com.dli.entities.Message;
 import com.dli.entities.User;
 import com.dli.entities.adminMonthCountStatistics;
 import org.apache.ibatis.annotations.Mapper;
@@ -55,5 +56,14 @@ public interface UserRepo {
     List<adminMonthCountStatistics>    adminGetEmployeeStatistics();
 
     int backGetUserCountByCompanyID(  int companyid  );
+
+     void  addMessage(  @Param("cellphone") String  cellphone,  @Param("messageparam") String messageparam   , @Param("templatecode")  String templatecode  ,  @Param("msgtype") String msgtype);
+
+
+
+     List<Message>  jobGetMessageList();
+
+
+     void   jobUpdateMessage( Message   msg  );
 
 }

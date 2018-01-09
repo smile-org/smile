@@ -101,8 +101,8 @@
    case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
          from (
 select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
-  where indicator=1  and ispublished=1 and category_id=#{cateid} and
-( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
+  where indicator=1  and ispublished=1   and    now() &lt;  expiration_date    and category_id=#{cateid} and
+( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  )  )result
 
 left join (
 select course_id, count(*)  as  renshu from (
@@ -369,12 +369,12 @@ where created_at
         case when o2.pingfen is not null  then o2.pingfen  else 0 end as star
         from (
         select   c.* from course  c     left join course_whitelist w on c.course_id=w.course_id
-        where indicator=1 and ispublished=1 and  created_at > #{scope}  and company_id=#{companyid}   and
+        where indicator=1 and ispublished=1 and     now() &lt;  expiration_date   and company_id=#{companyid}   and
         ( type_id=1   or   (  type_id=2  and  w.user_id=#{userid}  )  ) )result
 
         left join (
         select course_id, count(*)  as  renshu from (
-        select  course_id, user_id from learn_progress  group by course_id, user_id)t group by course_id)o1
+        select  course_id, user_id from learn_progress  where  created_at > #{scope}  group by course_id, user_id)t group by course_id)o1
         on result.course_id =o1.course_id
 
 left join

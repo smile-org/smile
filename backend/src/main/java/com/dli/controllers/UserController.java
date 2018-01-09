@@ -111,7 +111,17 @@ public class UserController {
 
                 u.setToken(Helper.GenerateToken(cellphone));
 
+                String[] pwd = Helper.generatePwd();
+                u.setPassword( pwd[1]);
                 userService.backAddEmployee(u);
+
+
+
+                String param =   String.format(  Constant.newpwd_param, pwd[0] );
+                userService.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
+
+              //  userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
+
                 result.put(Constant.status, 1);
                 result.put(Constant.result, "员工添加成功");
             }
@@ -515,7 +525,18 @@ public class UserController {
                     u.setCompany_id(user.getCompany_id());
                     u.setToken(Helper.GenerateToken(String.valueOf(arr[0])));
 
+                    String[] pwd = Helper.generatePwd();
+                    u.setPassword( pwd[1]);
+
                     userService.backAddEmployee(u);
+
+
+
+                    String param =   String.format(  Constant.newpwd_param, pwd[0] );
+                    userService.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
+
+
+                   // userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
 
                 }
 
@@ -593,13 +614,17 @@ public class UserController {
             u.setCell_phone(cellphone);
             u.setEmail(email);
             u.setFull_name(fullname);
-
             u.setAvatar(defaultheader);
-
              u.setToken( Helper.GenerateToken(cellphone));
 
-
+            String[] pwd = Helper.generatePwd();
+            u.setPassword( pwd[1]);
             userService.adminAddPlatformUser(u);
+           // userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
+
+            String param =   String.format(  Constant.newpwd_param, pwd[0] );
+            userService.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
+
             result.put(Constant.status, 1);
             result.put(Constant.result, "员工添加成功");
 

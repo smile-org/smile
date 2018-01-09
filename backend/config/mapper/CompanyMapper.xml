@@ -173,4 +173,25 @@ select   i.province_id, count(   c.company_id) as count  from company   c join  
      <select id="getPicUrl"   resultType="String"  >
              SELECT   pic_url from  company_pic  where company_id= #{companyid} and  pic_type = #{pictype}
      </select>
+
+
+    <select id="jobGetCompanyNearExpirationDate"     resultType="com.dli.entities.adminCompany" >
+        select  c.company_id, c.company_name  , c.expiration_date , i.contact_person, i.phone_number
+        from company c join   company_info i on c.company_id=   i.company_id  where   c.indicator=1
+        and  DATEDIFF(    c.expiration_date  ,now() )   &lt;= 30
+    </select>
+
+    <insert id="jobAddCompany_expiration_notify">
+        insert   company_expiration_notify  VALUES (  0, #{date} ,#{company_id})
+    </insert>
+
+    <select id="jobGetCompany_expiration_notifyCount"    resultType="int">
+        select count(*) from company_expiration_notify where company_id =#{company_id} and   expiration_date =#{date}
+    </select>
+
+
+    <select id="jobDisableCompany">
+        update company set indicator=0
+ where indicator=1 and   DATEDIFF(  now() ,  expiration_date) &gt; 1
+    </select>
 </mapper>

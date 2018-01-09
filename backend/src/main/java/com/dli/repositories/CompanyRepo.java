@@ -5,6 +5,7 @@ import com.dli.entities.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -52,6 +53,18 @@ public interface CompanyRepo {
     List<  adminNameCountStatistics>   adminGetCompanyAreaStatistics();
 
    String   getPicUrl( @Param("companyid")  int  companyid,  @Param("pictype") String pictype );
+
+
+
+    List<adminCompany>     jobGetCompanyNearExpirationDate();
+
+    void jobAddCompany_expiration_notify( @Param("date") Date date ,  @Param("company_id")int company_id );
+
+
+     int  jobGetCompany_expiration_notifyCount( @Param("date") Date date ,  @Param("company_id")int company_id );
+
+
+     void  jobDisableCompany();
 
 
 }

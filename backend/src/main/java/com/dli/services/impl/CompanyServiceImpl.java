@@ -2,6 +2,7 @@ package com.dli.services.impl;
 
 
 import com.dli.entities.*;
+import com.dli.helper.Constant;
 import com.dli.helper.Helper;
 import com.dli.repositories.CompanyRepo;
 import com.dli.repositories.DemoRepo;
@@ -53,8 +54,16 @@ public class CompanyServiceImpl implements CompanyService {
 
             u.setToken(Helper.GenerateToken(u.getCell_phone()));
 
+        String[] pwd = Helper.generatePwd();
+        u.setPassword( pwd[1]);
             userRepo.backAddUser(u);
             userRepo.backAddUserRoleMapping(u.getUser_id(), 2);
+
+
+        String param =   String.format(  Constant.newpwd_param, pwd[0] );
+        userRepo.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
+
+       //  userRepo.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
 
 
 
@@ -134,5 +143,32 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public String getPicUrl(int companyid, String pictype) {
         return  companyRepo.getPicUrl(companyid,pictype);
+    }
+
+    @Override
+    public void notifycompnayNearExpiration() {
+        List<adminCompany>  lst =  companyRepo.jobGetCompanyNearExpirationDate();
+
+        for(  adminCompany  c :lst){
+
+            int   count =  companyRepo.jobGetCompany_expiration_notifyCount( c.getExpiration_date(),c.getCompany_id());
+            if( count==0){
+             //   userRepo.addMessage( c.getPhone_number(),  String.format( Constant.companyexpriationMessage, c.getContact_person(),c.getCompany_name()),
+              //          Constant.companyexpriation   );
+
+                userRepo.addMessage( c.getPhone_number(), null,   Constant.companyexpriation_templatecode, Constant.companyexpriation);
+
+
+                companyRepo.jobAddCompany_expiration_notify(c.getExpiration_date(),c.getCompany_id());
+
+
+            }
+
+        }
+    }
+
+    @Override
+    public void jobDisableCompany() {
+        companyRepo.jobDisableCompany();
     }
 }
