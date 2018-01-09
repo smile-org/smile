@@ -217,7 +217,7 @@
                   <el-table border ref="multipleTable" :data="enrollmentData">
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
-                        <el-button type="text" size="small" @click="pushEnrollment(scope.row,scope.row.enrollment_id)">加入任务</el-button>
+                        <el-button type="text" size="small" @click="pushEnrollment(scope.row,scope.row.period_id)">加入任务</el-button>
                       </template>
                     </el-table-column>
                     <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
@@ -435,7 +435,7 @@
             this.examids.push(this.selExamData[x].exam_id)
           }
           for (var y = 0; y < this.selEnrollmentData.length; y++) {
-            this.enrollmentids.push(this.selEnrollmentData[y].enrollment_id)
+            this.enrollmentids.push(this.selEnrollmentData[y].period_id)
           }
           for (var z = 0; z < this.selUserData.length; z++) {
             this.userids.push(this.selUserData[z].user_id)
@@ -623,7 +623,7 @@
           this.selEnrollmentData.push(title)
           this.enrollmentids.splice(0, this.enrollmentids.length)
           for (var i = 0; i < this.selEnrollmentData.length; i++) {
-            this.enrollmentids.push(this.selEnrollmentData[i].enrollment_id)
+            this.enrollmentids.push(this.selEnrollmentData[i].period_id)
           }
         } else {
           this.$message({
@@ -636,7 +636,7 @@
       saveEnrollment: function () {
         this.enrollmentids.splice(0, this.enrollmentids.length)
         for (var i = 0; i < this.selEnrollmentData.length; i++) {
-          this.enrollmentids.push(this.selEnrollmentData[i].enrollment_id)
+          this.enrollmentids.push(this.selEnrollmentData[i].period_id)
         }
         this.dialogFormVisible2 = false
         console.log(this.enrollmentids)
@@ -650,7 +650,7 @@
           this.selEnrollmentData.splice(index, 1)
           this.enrollmentids.splice(0, this.enrollmentids.length)
           for (var i = 0; i < this.selEnrollmentData.length; i++) {
-            this.enrollmentids.push(this.selEnrollmentData[i].enrollment_id)
+            this.enrollmentids.push(this.selEnrollmentData[i].period_id)
           }
           console.log(this.selEnrollmentData)
         }).catch(() => {
