@@ -1,28 +1,22 @@
 package com.dli.controllers;
 
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.IAcsClient;
-import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.profile.DefaultProfile;
-import com.aliyuncs.profile.IClientProfile;
-import com.dli.entities.Demo;
-import com.dli.helper.OfficeUtil;
-import com.dli.services.DemoService;
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.common.utils.BinaryUtil;
+import com.aliyun.oss.model.MatchMode;
+import com.aliyun.oss.model.PolicyConditions;
+import com.dli.entities.User;
+import com.dli.helper.Constant;
+import com.dli.services.LogonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/")
@@ -31,10 +25,7 @@ public class HomeController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private DemoService demoService;
-
-    @Value("${html.path}")
-    private String htmlPath;
+    private LogonService logonService;
 
     @RequestMapping("")
     public String index() {
@@ -42,247 +33,84 @@ public class HomeController {
         return "smile backend service is running...";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Map add(@RequestBody Map body) {
-        System.out.print(body);
-        return body;
-    }
+    @Value("${accessKeyId}")
+    private String accessKeyId;
 
-    @RequestMapping(value = "/getDemoList", method = RequestMethod.GET)
-    public Map getDemoList() {
-        List<Demo> demoList = demoService.getDemoList();
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("status", "successful");
-        result.put("result", demoList);
-        return result;
-    }
+    @Value("${accessKeySecret}")
+    private String accessKeySecret;
 
-    @RequestMapping(value = "/getDemo", method = RequestMethod.GET)
-    public Map getDemo(@RequestParam int id) {
-        Demo demo = demoService.getDemoById(id);
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("status", "successful");
-        result.put("result", demo);
-        return result;
-    }
+    @Value("${endpoint}")
+    private String endpoint;
 
-
-    @RequestMapping(value = "/addDemo", method = RequestMethod.PUT)
-    public Map addDemo(@RequestBody Map body) {
-        String fullName = (String) body.get("full_name");
-        Demo demo = new Demo();
-        demo.setFullName(fullName);
-        Map<String, Object> result = new HashMap<String, Object>();
-        int row = demoService.insertDemo(demo);
-        result.put("status", "successful");
-        result.put("result", row + " row affected.");
-        return result;
-    }
-
-    @RequestMapping(value = "/updateDemo", method = RequestMethod.PATCH)
-    public Map updateDemo(@RequestBody Map body) {
-        int id = (Integer) body.get("id");
-        String fullName = (String) body.get("full_name");
-        Demo demo = new Demo();
-        demo.setId(id);
-        demo.setFullName(fullName);
-        Map<String, Object> result = new HashMap<String, Object>();
-        int row = demoService.updateDemo(demo);
-        result.put("status", "successful");
-        result.put("result", row + " row affected.");
-        return result;
-    }
-
-
-    @RequestMapping(value = "/deleteDemo", method = RequestMethod.POST)
-    public Map deleteDemo(@RequestBody Map body) {
-        int id = (Integer) body.get("id");
-        Map<String, Object> result = new HashMap<String, Object>();
-        int row = demoService.deleteDemo(id);
-        result.put("status", "successful");
-        result.put("result", row + " row affected.");
-        return result;
-    }
-
-    @RequestMapping(value = "/officeUtilTest", method = RequestMethod.GET)
-    public String officeUtilTest() {
-        try {
-            //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.doc",htmlPath);
-            //OfficeUtil.getInstance().word2html("/home/wangqc/Desktop/德银网点运营排队机分析技术方案1.03.docx",htmlPath);
-            //OfficeUtil.getInstance().ppt2html("/home/wangqc/Desktop/ETL调度设计.ppt",htmlPath);
-            //OfficeUtil.getInstance().ppt2html("/root/smile/files/course/office/ETL调度设计.pptx",htmlPath);
-
-            /*String sheetName = "testSheet";
-            List<String> rowNameList = new ArrayList<>();
-            rowNameList.add("序号");
-            rowNameList.add("姓名");
-            rowNameList.add("性别");
-            rowNameList.add("出生日期");
-
-            List<Object[]> dataList = new ArrayList<>();
-            Object[] dataArray = new Object[4];
-            dataArray[0] = 1;
-            dataArray[1] = "张三";
-            dataArray[2] = "男";
-            dataArray[3] = "1984-01-01 12:12:12";
-            dataList.add(dataArray);
-
-            OfficeUtil.getInstance().export2excel(sheetName, rowNameList, dataList,"/home/wangqc/Desktop/testExcel.xlsx");*/
-
-            List<Object[]> result = OfficeUtil.getInstance().extractExcel("/home/wangqc/Desktop/合计.xlsx");
-            for (Object[] objectArray : result) {
-                for (Object obj : objectArray) {
-                    logger.info(obj.toString());
-                }
-            }
-
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return "finished";
-    }
+    @Value("${env_type}")
+    private String env_type;
 
     /*
-    *
-    * 阿里云发送短信demo代码
-    *
-    * */
+    获取OSS 参数信息
+     */
+    @RequestMapping(value = "/ossInfo", method = RequestMethod.GET)
+    public Map getOSSInfo(@RequestHeader Map header, @RequestParam String businessType) {
 
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
 
-/*
-    @RequestMapping(value = "/SendMessage", method = RequestMethod.GET)
-    public String SendMessage() {
+       /* String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String uuid = UUID.randomUUID().toString().replace("-", "");*/
+
+        String dir = "";
+
+        switch (businessType) {
+            case "business-licences": //营业执照
+                dir = "business-licences/";
+                break;
+            case "2":
+                System.out.println(2);
+                break;
+            default:
+                System.out.println("default");
+                break;
+        }
+
+        String host = "http://" + env_type + "." + endpoint;
+        OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+
         try {
+            long expireTime = 300;
+            long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
 
+            java.sql.Date expiration = new java.sql.Date(expireEndTime);
+            PolicyConditions policyConds = new PolicyConditions();
+            policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, 1048576000);
+            policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, dir);
 
-            smsSender();
-            return "123";
-        }
-        catch (Exception ex){
-            return  "";
-        }
+            String postPolicy = client.generatePostPolicy(expiration, policyConds);
+            byte[] binaryData = postPolicy.getBytes("utf-8");
+            String encodedPolicy = BinaryUtil.toBase64String(binaryData);
+            String postSignature = client.calculatePostSignature(postPolicy);
 
-    }
+            Map map = new HashMap();
 
-    public String smsSender() throws ClientException, InterruptedException {
+            map.put("accessid", accessKeyId);
+            map.put("policy", encodedPolicy);
+            map.put("signature", postSignature);
+            map.put("dir", dir);
+            map.put("host", host);
+            map.put("expire", String.valueOf(expireEndTime / 1000));
 
-        //发短信
-        SendSmsResponse response = sendSms();
-        System.out.println("短信接口返回的数据----------------");
-        System.out.println("Code=" + response.getCode());
-        System.out.println("Message=" + response.getMessage());
-        System.out.println("RequestId=" + response.getRequestId());
-        System.out.println("BizId=" + response.getBizId());
+            result.put(Constant.status, 1);
+            result.put(Constant.result, map);
 
-       // Thread.sleep(3000L);
-
-        //查明细
-        if(response.getCode() != null && response.getCode().equals("OK")) {
-            QuerySendDetailsResponse querySendDetailsResponse = querySendDetails(response.getBizId());
-            System.out.println("短信明细查询接口返回数据----------------");
-            System.out.println("Code=" + querySendDetailsResponse.getCode());
-            System.out.println("Message=" + querySendDetailsResponse.getMessage());
-            int i = 0;
-            for(QuerySendDetailsResponse.SmsSendDetailDTO smsSendDetailDTO : querySendDetailsResponse.getSmsSendDetailDTOs())
-            {
-                System.out.println("SmsSendDetailDTO["+i+"]:");
-                System.out.println("Content=" + smsSendDetailDTO.getContent());
-                System.out.println("ErrCode=" + smsSendDetailDTO.getErrCode());
-                System.out.println("OutId=" + smsSendDetailDTO.getOutId());
-                System.out.println("PhoneNum=" + smsSendDetailDTO.getPhoneNum());
-                System.out.println("ReceiveDate=" + smsSendDetailDTO.getReceiveDate());
-                System.out.println("SendDate=" + smsSendDetailDTO.getSendDate());
-                System.out.println("SendStatus=" + smsSendDetailDTO.getSendStatus());
-                System.out.println("Template=" + smsSendDetailDTO.getTemplateCode());
-            }
-            System.out.println("TotalCount=" + querySendDetailsResponse.getTotalCount());
-            System.out.println("RequestId=" + querySendDetailsResponse.getRequestId());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return "sms is working.";
+
+        return result;
     }
-
-
-    //产品名称:云通信短信API产品,开发者无需替换
-    static final String product = "Dysmsapi";
-    //产品域名,开发者无需替换
-    static final String domain = "dysmsapi.aliyuncs.com";
-
-    // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAIkSeJxpWsHEA4";
-    static final String accessKeySecret = "HzjZ1jIgQZOxQ1TCKvYbIgWF3ILNNp";
-
-    public static SendSmsResponse sendSms() throws ClientException {
-
-        //可自助调整超时时间
-        System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
-        System.setProperty("sun.net.client.defaultReadTimeout", "10000");
-
-        //初始化acsClient,暂不支持region化
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
-        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
-        IAcsClient acsClient = new DefaultAcsClient(profile);
-
-        //组装请求对象-具体描述见控制台-文档部分内容
-        SendSmsRequest request = new SendSmsRequest();
-        //必填:待发送手机号
-        request.setPhoneNumbers("13810833019");
-        //必填:短信签名-可在短信控制台中找到
-        request.setSignName("学啦");
-        //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_117610042");
-        //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-        request.setTemplateParam("{\"code\":\"Tom\"}");
-
-        //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
-        //request.setSmsUpExtendCode("90997");
-
-        //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
-      //  request.setOutId("yourOutId");
-
-        //hint 此处可能会抛出异常，注意catch
-        SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
-
-        return sendSmsResponse;
-    }
-
-
-    public static QuerySendDetailsResponse querySendDetails(String bizId) throws ClientException {
-
-        //可自助调整超时时间
-        System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
-        System.setProperty("sun.net.client.defaultReadTimeout", "10000");
-
-        //初始化acsClient,暂不支持region化
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
-        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
-        IAcsClient acsClient = new DefaultAcsClient(profile);
-
-        //组装请求对象
-        QuerySendDetailsRequest request = new QuerySendDetailsRequest();
-        //必填-号码
-        request.setPhoneNumber("13810833019");
-        //可选-流水号
-        request.setBizId(bizId);
-        //必填-发送日期 支持30天内记录查询，格式yyyyMMdd
-        SimpleDateFormat ft = new SimpleDateFormat("yyyyMMdd");
-        request.setSendDate(ft.format(new Date()));
-        //必填-页大小
-        request.setPageSize(10L);
-        //必填-当前页码从1开始计数
-        request.setCurrentPage(1L);
-
-        //hint 此处可能会抛出异常，注意catch
-        QuerySendDetailsResponse querySendDetailsResponse = acsClient.getAcsResponse(request);
-
-        return querySendDetailsResponse;
-    }
-
-
-*/
-
-
-
 }

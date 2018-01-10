@@ -5,7 +5,7 @@ import axios from 'axios'
 // axios.defaults.withCredentials = true
 
 // axios.defaults.baseURL = 'http://192.168.1.106:8888' // 'http://192.168.0.108:3000'
-axios.defaults.baseURL = 'http://123.207.154.226:8888'
+axios.defaults.baseURL = 'http://localhost:8888'
 // axios.defaults.imageServer = 'http://192.168.1.106:4001'
 axios.defaults.imageServer = 'http://123.207.154.226:4001'
 
@@ -105,7 +105,10 @@ export default {
     // *** 约课 ***
     getAppointments: '/appointment/adminGetAppointmentList',
     getAppointment: '/appointment/adminGetAppointment',
-    exportAppointment: '/appointment/adminExportAppointment'
+    exportAppointment: '/appointment/adminExportAppointment',
+
+    // *** Aliyun OSS ***
+    ossInfo: '/ossInfo'
   },
 
   getUploadHeaders: function () {
@@ -113,5 +116,19 @@ export default {
     return {
       token: token
     }
+  },
+  // 用于生成uuid
+  S4: function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+  },
+  guid: function () {
+    return (this.S4() + this.S4() + '-' + this.S4() + '-' + this.S4() + '-' + this.S4() + '-' + this.S4() + this.S4() + this.S4())
+  },
+
+  // 获取文件扩展名
+  getFileExt: function (fileName) {
+    var arrLen = fileName.split('.').length - 1
+    var extension = fileName.split('.')[arrLen].toUpperCase()
+    return extension
   }
 }

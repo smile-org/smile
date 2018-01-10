@@ -111,12 +111,13 @@
                 :on-change="changeUpload"
                 :on-exceed="handleExceed"
                 :file-list="fileList"
-                :headers="headers">
+                :headers="headers"
+                :data="uploadFormData">
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2MB</div>
               </el-upload>
               <div class="license_width">
-                <img v-show="ruleForm.src !== ''" v-bind:src="ruleForm.src | formatImage">
+                <img v-show="ruleForm.src !== ''" v-bind:src="ruleForm.src">
               </div>
             </el-form-item>
             <div class="tc btn_margin">
@@ -142,7 +143,9 @@
       return {
         id: '',
         fileList: [],
-        imgUrl: axios.defaults.baseURL + api.uri.uploadLicense,
+        // imgUrl: axios.defaults.baseURL + api.uri.uploadLicense,
+        imgUrl: '',
+        tempImgUrl: '',
         headers: {},
         firstLoad: true,
         oriCity: '',
@@ -151,6 +154,14 @@
         agencyList: [],
         provinceList: [],
         cityList: [],
+        uploadFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        },
         ruleForm: {
           companyName: '',
           contacts: '',
@@ -223,6 +234,7 @@
     created () {
       this.id = parseInt(this.$route.query.id)
       this.headers = api.getUploadHeaders()
+      this.initUploadData()
       api.fetch(api.uri.getCompanyInfo, {companyid: this.id}).then(data => {
         if (data.status === 1) {
           this.businessList = data.result.BusinessList
@@ -247,6 +259,19 @@
       })
     },
     methods: {
+      initUploadData () {
+        this.headers = api.getUploadHeaders()
+        api.fetch(api.uri.ossInfo, {businessType: 'business-licences'}).then(data => {
+          if (data.status === 1) {
+            this.uploadFormData.OSSAccessKeyId = data.result.accessid
+            this.uploadFormData.key = data.result.dir
+            this.uploadFormData.policy = data.result.policy
+            this.uploadFormData.signature = data.result.signature
+            this.uploadFormData.expire = data.result.expire
+            this.imgUrl = data.result.host
+          }
+        })
+      },
       changeUpload (file, fileList) {
         // 保证页面显示一个附件
         if (fileList.length > 0) {
@@ -298,6 +323,11 @@
           this.fileList = []
           return false
         }
+
+        this.initUploadData()
+        this.uploadFormData.key = this.uploadFormData.key + api.guid() + '.' + api.getFileExt(file.name)
+        console.log(this.uploadFormData.key)
+        this.tempImgUrl = this.uploadFormData.key
       },
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
@@ -331,7 +361,7 @@
       },
       // 上传成功后赋给src
       handleSuccess (response, file, fileList) {
-        this.ruleForm.src = response.result
+        this.ruleForm.src = this.imgUrl + '/' + this.tempImgUrl
       },
       handleRemove (file, fileList) {
         console.log(file, fileList)

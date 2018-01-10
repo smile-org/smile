@@ -218,13 +218,13 @@ public class CompanyController {
             companyService.adminAddCompany(c);
 
 
-            String targetpath = String.format(homebusinesslicenceprefix.replace("%s-", ""), c.getCompany_id());
+            // String targetpath = String.format(homebusinesslicenceprefix.replace("%s-", ""), c.getCompany_id());
 
             // Move file to new directory
-            boolean sucess = FileUtil.moveFile(fileroot + LincenceUrl, fileroot + targetpath);
+            // boolean sucess = FileUtil.moveFile(fileroot + LincenceUrl, fileroot + targetpath);
 
 
-            c.setPic_url(targetpath + LincenceUrl.substring(16));
+            c.setPic_url(LincenceUrl);
             c.setPic_type("business_licence");
             companyService.adminAddCompanyPic(c);
 
@@ -332,7 +332,11 @@ public class CompanyController {
             companyService.adminUpdateCompany(c);
             companyService.adminUpdateCompanyInfo(c);
 
-            if (LincenceUrl.startsWith("/company-0")) {
+            c.setPic_url(LincenceUrl);
+            c.setPic_type("business_licence");
+            companyService.adminUpdateCompanyPic(c);
+
+            /*if (LincenceUrl.startsWith("/company-0")) {
 
 
                 String targetpath = String.format(homebusinesslicenceprefix.replace("%s-", ""), c.getCompany_id());
@@ -345,7 +349,7 @@ public class CompanyController {
                 c.setPic_type("business_licence");
 
                 companyService.adminUpdateCompanyPic(c);
-            }
+            }*/
 
 
             result.put(Constant.status, 1);
