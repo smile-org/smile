@@ -2,7 +2,7 @@
   <header>
     <div class="logo">
       <!--<img class="vm" :src="companyLogo" />-->
-      <img class="vm" src="../assets/img/small_logo.png"/>
+      <img class="vm" src="../assets/img/jd_logo.png" style="width: 50px"/>
       <span class="vm">企业管理后台</span>
     </div>
     <ul class="fr">

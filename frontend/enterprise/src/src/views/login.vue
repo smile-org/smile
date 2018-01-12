@@ -1,7 +1,8 @@
 <template>
     <section class="login_bg">
         <div class="pos_center">
-            <h1><img src="../assets/img/logo1.png">企业管理后台</h1>
+            <!--<h1><img src="../assets/img/logo1.png">企业管理后台</h1>-->
+            <h1><img src="../assets/img/jd_logo2.png"></h1>
             <div class="login_con">
                 <h3>欢迎登录企业管理后台</h3>
                 <hr noshade="noshade">
