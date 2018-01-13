@@ -60,8 +60,7 @@ public class HomeController {
             return result;
         }
 
-       /* String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
-        String uuid = UUID.randomUUID().toString().replace("-", "");*/
+        int companyId = user.getCompany_id();
 
         String dir = "";
 
@@ -69,8 +68,11 @@ public class HomeController {
             case "business-licences": //营业执照
                 dir = "business-licences/";
                 break;
-            case "2":
-                System.out.println(2);
+            case "company-logo":
+                dir = String.format("company-%s/logo/",companyId);
+                break;
+            case "company-banner":
+                dir = String.format("company-%s/banner/",companyId);
                 break;
             default:
                 System.out.println("default");
