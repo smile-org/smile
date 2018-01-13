@@ -120,6 +120,8 @@ export default {
     submitBooking: '/appointment/addAppointment',
     // 点赞
     likeBooking: '/appointment/follow',
+    // cancel dian zan
+    unlikeBooking: '/appointment/cancelFollow',
     // 添加新需求
     submitNewRequirement: '/appointment/addItem',
 

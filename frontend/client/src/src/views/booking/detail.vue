@@ -60,7 +60,7 @@
                       <!--<span class="green00b">{{item.followCount}}</span>-->
                     <!--</li>-->
                     <li class="">
-                      <span v-show="item.isFollow" class="icon icon6" id="c_save"></span>
+                      <span v-show="item.isFollow" @click="unlike(item)" class="icon icon6" id="c_save"></span>
                       <span v-show="!item.isFollow" @click="like(item)" class="icon icon7" id="c_save"></span>
                       <span class="greybob">{{item.followCount}}</span>
                     </li>
@@ -147,6 +147,22 @@ export default {
     })
   },
   methods: {
+    unlike: function (item) {
+      if (item.isFollow) {
+        var that = this
+        api.fetch(api.uri.unlikeBooking, { appointmentId: this.id, itemId: item.itemId }).then(data => {
+          if (data.status === 1) {
+            item.isFollow = 0
+            item.followCount--
+            api.fetch(api.uri.getBooking, {appointmentId: that.id}).then(result => {
+              if (result.status === 1) {
+                that.data.followerCount = result.result.followerCount
+              }
+            })
+          }
+        })
+      }
+    },
     like: function (item) {
       if (item.isFollow) {
         // TODO: 统一弹框， 已经点过赞了

@@ -180,6 +180,13 @@
             <img class="personal_go" src="../../assets/img/go02.png"/>
           </router-link>
         </li>
+        <li class="" @click="logout()">
+          <!-- <router-link v-bind:to="{name: 'changePWD'}" class="quyu_click"> -->
+            <img class="icon_per" src="../../assets/img/logo_img10.png"/>
+            <span class="">退出</span>
+            <img class="personal_go" src="../../assets/img/go02.png"/>
+          <!-- </router-link> -->
+        </li>
       </ul>
     </section>
     <v-footer currentTag="4"></v-footer>
@@ -188,6 +195,7 @@
 
 <script>
   import api from '../../services/api'
+  import router from '../../router/index'
   import axios from 'axios'
   import commonHeader from '../../components/CommonHeader'
   import Croppa from '../../../node_modules/vue-croppa'
@@ -219,6 +227,19 @@
       homeClick: function () {
         this.seen = !this.seen
         console.log(this.data.avatar)
+      },
+      logout: function () {
+        this.$confirm('确定要退出吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          sessionStorage.clear()
+          localStorage.clear()
+          router.push({name: 'login'})
+        }).catch(() => {
+
+        })
       },
       // 上传头像
       upload: function () {
