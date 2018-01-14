@@ -1,9 +1,9 @@
 <template>
     <section class="login_bg">
         <div class="pos_center">
-            <h1><img src="../assets/img/logo1.png">运营管理后台</h1>
+            <h1><img src="../assets/img/jd_logoW.png"></h1>
             <div class="login_con">
-                <h3>欢迎登录运营管理后台</h3>
+                <h3>欢迎登录运营管理1后台</h3>
                 <hr noshade="noshade">
                 <form>
                     <p class="form_warning">{{msg}}</p>
