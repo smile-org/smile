@@ -3,7 +3,7 @@
     <header>
       <div class="search_c">
         <a class="seach_tit tl" href="##">
-          <img :src="logo | formatImage" style="width:.8rem"/>
+          <img :src="logo | formatImage" alt="logo" style="width:.8rem"/>
         </a>
         <div class="search_input" style="margin-left: .1rem;margin-right: .35rem;">
           <img src="../../assets/img/seach_icon.png"/>
@@ -262,7 +262,7 @@
                       <span class="redff7">{{item.collect_count}}</span>
                     </li>
                   </ul>
-                  <span class="surplus_num s_num" style="right:0.05rem;top:.65rem;" v-if="item.left_count > 0">
+                  <span class="surplus_num s_num" style="right:0.05rem;top:.8rem;" v-if="item.left_count > 0">
                     剩余{{item.left_count}}人
                   </span>
                   <!--<span class="surplus_num red_full" v-else-if="item.left_count === 0">

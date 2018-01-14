@@ -1,4 +1,11 @@
 <style>
+  .text_iconfont{
+    font-family: jiudian;
+    width: .24rem;
+    color: #ff9925;
+    vertical-align: middle;
+    margin-right: .1rem;
+  }
   #asd {
     background-color: #333;
     position: fixed;
@@ -36,8 +43,8 @@
   }
 
   /*!*#asd button {*!*/
-    /*margin: 0 auto;*/
-    /*width: 100%;*/
+  /*margin: 0 auto;*/
+  /*width: 100%;*/
   /*}*/
   #asd .btn_save {
     width: 100%;
@@ -51,7 +58,8 @@
     display: block;
     margin-top: .5rem;
   }
-  .btn_pqx{
+
+  .btn_pqx {
     width: 100%;
     height: .8rem;
     outline: 0;
@@ -64,29 +72,45 @@
     background: #cccccc;
     border-color: #cccccc;
   }
+
+  .el-message-box__wrapper {
+    position: fixed;
+    top: 0%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .3rem;
+    text-align: center;
+  }
+
+  .el-message-box {
+    width: 100%;
+  }
+
   /*button {*/
-    /*display: inline-block;*/
-    /*padding: 6px 12px;*/
-    /*margin-bottom: 0;*/
-    /*font-size: 14px;*/
-    /*font-weight: 400;*/
-    /*line-height: 1.42857143;*/
-    /*text-align: center;*/
-    /*white-space: nowrap;*/
-    /*vertical-align: middle;*/
-    /*-ms-touch-action: manipulation;*/
-    /*touch-action: manipulation;*/
-    /*cursor: pointer;*/
-    /*-webkit-user-select: none;*/
-    /*-moz-user-select: none;*/
-    /*-ms-user-select: none;*/
-    /*user-select: none;*/
-    /*background-image: none;*/
-    /*border: 1px solid transparent;*/
-    /*border-radius: 4px;*/
-    /*color: #fff;*/
-    /*background-color: #00b553;*/
-    /*border-color: #00b553;*/
+  /*display: inline-block;*/
+  /*padding: 6px 12px;*/
+  /*margin-bottom: 0;*/
+  /*font-size: 14px;*/
+  /*font-weight: 400;*/
+  /*line-height: 1.42857143;*/
+  /*text-align: center;*/
+  /*white-space: nowrap;*/
+  /*vertical-align: middle;*/
+  /*-ms-touch-action: manipulation;*/
+  /*touch-action: manipulation;*/
+  /*cursor: pointer;*/
+  /*-webkit-user-select: none;*/
+  /*-moz-user-select: none;*/
+  /*-ms-user-select: none;*/
+  /*user-select: none;*/
+  /*background-image: none;*/
+  /*border: 1px solid transparent;*/
+  /*border-radius: 4px;*/
+  /*color: #fff;*/
+  /*background-color: #00b553;*/
+  /*border-color: #00b553;*/
   /*}*/
 </style>
 <template>
@@ -106,7 +130,7 @@
           <button @click="upload" class="btn_save">保  存</button>
           <!--<button @click="homeClick" style="background: #dcdcdc;border-color: #dcdcdc;color: #fff;font-size: .3rem">取  消</button>-->
         </div>
-        <div  style="">
+        <div style="">
           <button @click="homeClick" class="btn_pqx" style="">取  消</button>
         </div>
       </croppa>
@@ -182,9 +206,10 @@
         </li>
         <li class="" @click="logout()">
           <!-- <router-link v-bind:to="{name: 'changePWD'}" class="quyu_click"> -->
-            <img class="icon_per" src="../../assets/img/logo_img10.png"/>
-            <span class="">退出</span>
-            <img class="personal_go" src="../../assets/img/go02.png"/>
+          <!--<img class="icon_per" src="../../assets/img/logo_img10.png"/>-->
+          <span class="text_iconfont">&#xe60f;</span>
+          <span class="">退出</span>
+          <img class="personal_go" src="../../assets/img/go02.png"/>
           <!-- </router-link> -->
         </li>
       </ul>

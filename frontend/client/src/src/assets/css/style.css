@@ -46,7 +46,7 @@ header .logo_c a img {
 }
 
 header .logo_c a .logo1 {
-  width: 1rem;
+  width: 1.1rem;
 }
 
 header .search_c {
@@ -1285,7 +1285,7 @@ footer .exam_b .btn span:nth-child(2) {
   position: absolute;
   right: .25rem;
   /*bottom:.3rem;*/
-  top: .25rem;
+  top: .3rem;
   color: #fff;
   font-size: .22rem;
   font-style: normal;
@@ -1315,7 +1315,9 @@ footer .exam_b .btn span:nth-child(2) {
 .o_f {
   color: #ff7800;
 }
-
+.o_f2 {
+  color: #ffa200;
+}
 .bm_font .small_icon {
   position: absolute;
   right: .3rem;
