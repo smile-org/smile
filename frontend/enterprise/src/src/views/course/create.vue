@@ -184,7 +184,7 @@
           <my-upload @input="closeIcon" :no-rotate=false field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="190" :headers="headers" :height="144" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
 
-          <my-upload @input="closeBanner" :no-rotate=false field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="120" :value.sync="showBanner" :no-circle=true img-format="png">
+          <my-upload @input="closeBanner" :no-rotate=false field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="150" :value.sync="showBanner" :no-circle=true img-format="png">
           </my-upload>
         </div>
       </section>
