@@ -161,9 +161,9 @@
             @crop-upload-success="cropIconUploadSuccess"
             @crop-upload-fail="cropIconUploadFail"
             :url="uploadUrl"
-            :width="280"
+            :width="190"
             :headers="headers"
-            :height="194"
+            :height="144"
             :value.sync="showIcon"
             :no-circle=true
             img-format="png">

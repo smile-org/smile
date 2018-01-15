@@ -194,9 +194,9 @@
           @crop-upload-success="cropBannerUploadSuccess"
           @crop-upload-fail="cropBannerUploadFail"
           :url="uploadUrl"
-          :width="375"
+          :width="190"
           :headers="headers"
-          :height="120"
+          :height="144"
           :value.sync="showBanner"
           :no-circle=true
           img-format="png">
