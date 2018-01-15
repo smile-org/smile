@@ -66,4 +66,7 @@ public interface UserRepo {
 
      void   jobUpdateMessage( Message   msg  );
 
+
+     int   getUserByCellphone  (String  cellphone);
+
 }

@@ -66,6 +66,8 @@ export default {
     verifyCode: '/checkVerificationCode',
     // 重设密码
     resetPassword: '/updatePassword',
+    // 重置密码
+    resetPasswordByCellPhone: 'updatePasswordByCellphone',
 
     // *** 课程 ***
     // 获取课程分类

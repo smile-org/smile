@@ -176,5 +176,10 @@ select  u.user_id,  DATE_FORMAT(u.created_at,'%Y-%m') as month  from  user   u j
   where id = #{id}
     </update>
 
+    <select id="getUserByCellphone"       resultType="int"  >
+        select count(*) from    user where cell_phone =   #{cellphone}
+    </select>
+
+
 
 </mapper>

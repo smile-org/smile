@@ -8,6 +8,7 @@ import com.dli.helper.Helper;
 import com.dli.helper.OfficeUtil;
 import com.dli.services.CompanyService;
 import com.dli.services.LogonService;
+import com.dli.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class CompanyController {
 
     @Autowired
     private LogonService logonService;
+
+    @Autowired
+    private UserService userService;
 
 
     @Autowired
@@ -135,6 +139,38 @@ public class CompanyController {
     }
 
 
+
+    @RequestMapping(value = "/back/UpdateCompanyPicUrl", method = RequestMethod.POST)
+    public Map backupdateCompanyPicUrl(@RequestBody Map body, @RequestHeader Map header) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            String pictype = (String) body.get("pictype");
+            String url = (String) body.get("url");
+
+            companyService.backSetCompanyPic(url, user.getCompany_id(), pictype);
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "保存成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
     @Value("${homebusinesslicenceprefix}")
     private String homebusinesslicenceprefix;
 
@@ -186,64 +222,72 @@ public class CompanyController {
 
         try {
 
-            String company_name = (String) body.get("company_name");
-            String contact_person = (String) body.get("contact_person");
             String phone_number = (String) body.get("phone_number");
+            int count =  userService.getUserByCellphone(phone_number);
+            if( count >0 )
+            {
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "手机号重复，添加失败");
+            }
 
-            int province_id = (int) body.get("province_id");
-            int city_id = (int) body.get("city_id");
+            else {
 
-            int business_id = (int) body.get("business_id");
-            int agency_id = (int) body.get("agency_id");
-            String address = (String) body.get("address");
-            String LincenceUrl = (String) body.get("LincenceUrl");
-
-            int user_limit = (int) body.get("user_limit");
-            String expiration_date = (String) body.get("expiration_date");
-
-
-            adminCompany c = new adminCompany();
-            c.setCompany_name(company_name);
-            c.setContact_person(contact_person);
-            c.setPhone_number(phone_number);
-            c.setProvince_id(province_id);
-            c.setCity_id(city_id);
-            c.setBusiness_id(business_id);
-            c.setAgency_id(agency_id);
-            c.setAddress(address);
-            //c.setLincenceUrl(LincenceUrl);
-            c.setUser_limit(user_limit);
-            c.setExpiration_date(   Helper.dateParse(expiration_date) );
-
-            companyService.adminAddCompany(c);
+                String company_name = (String) body.get("company_name");
+                String contact_person = (String) body.get("contact_person");
 
 
-            // String targetpath = String.format(homebusinesslicenceprefix.replace("%s-", ""), c.getCompany_id());
+                int province_id = (int) body.get("province_id");
+                int city_id = (int) body.get("city_id");
 
-            // Move file to new directory
-            // boolean sucess = FileUtil.moveFile(fileroot + LincenceUrl, fileroot + targetpath);
+                int business_id = (int) body.get("business_id");
+                int agency_id = (int) body.get("agency_id");
+                String address = (String) body.get("address");
+                String LincenceUrl = (String) body.get("LincenceUrl");
 
-
-            c.setPic_url(LincenceUrl);
-            c.setPic_type("business_licence");
-            companyService.adminAddCompanyPic(c);
-
-
-            //添加 logo和banner
-            c.setPic_url(defaulthomebanner);
-            c.setPic_type("banner");
-            companyService.adminAddCompanyPic(c);
-
-            c.setPic_url(defaulthomelogo);
-            c.setPic_type("logo");
-            companyService.adminAddCompanyPic(c);
+                int user_limit = (int) body.get("user_limit");
+                String expiration_date = (String) body.get("expiration_date");
 
 
+                adminCompany c = new adminCompany();
+                c.setCompany_name(company_name);
+                c.setContact_person(contact_person);
+                c.setPhone_number(phone_number);
+                c.setProvince_id(province_id);
+                c.setCity_id(city_id);
+                c.setBusiness_id(business_id);
+                c.setAgency_id(agency_id);
+                c.setAddress(address);
+                //c.setLincenceUrl(LincenceUrl);
+                c.setUser_limit(user_limit);
+                c.setExpiration_date(Helper.dateParse(expiration_date));
+
+                companyService.adminAddCompany(c);
 
 
+                // String targetpath = String.format(homebusinesslicenceprefix.replace("%s-", ""), c.getCompany_id());
 
-            result.put(Constant.status, 1);
-            result.put(Constant.result, c.getCompany_id());
+                // Move file to new directory
+                // boolean sucess = FileUtil.moveFile(fileroot + LincenceUrl, fileroot + targetpath);
+
+
+                c.setPic_url(LincenceUrl);
+                c.setPic_type("business_licence");
+                companyService.adminAddCompanyPic(c);
+
+
+                //添加 logo和banner
+                c.setPic_url(defaulthomebanner);
+                c.setPic_type("banner");
+                companyService.adminAddCompanyPic(c);
+
+                c.setPic_url(defaulthomelogo);
+                c.setPic_type("logo");
+                companyService.adminAddCompanyPic(c);
+
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, c.getCompany_id());
+            }
 
 
         } catch (Exception ex) {
