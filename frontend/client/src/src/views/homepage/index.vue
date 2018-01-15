@@ -3,7 +3,7 @@
     <header>
       <div class="search_c">
         <a class="seach_tit tl" href="##">
-          <img :src="logo | formatImage" alt="logo" style="width:.8rem"/>
+          <img :src="logo | formatImage" style="width:.8rem"/>
         </a>
         <div class="search_input" style="margin-left: .1rem;margin-right: .35rem;">
           <img src="../../assets/img/seach_icon.png"/>
