@@ -166,6 +166,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public int getUserByCellphone(String cellphone) {
+        return     userRepo.getUserByCellphone(cellphone);
+    }
 
 
     @Value("${accessKeyId}")

@@ -52,4 +52,6 @@ public interface UserService {
 
     void   sendMessage();
 
+    int   getUserByCellphone  (String  cellphone);
+
 }

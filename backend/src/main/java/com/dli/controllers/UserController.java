@@ -93,43 +93,49 @@ public class UserController {
 
         try {
 
-            int userLimitCount =  companyService.backGetCompanyByID(user.getCompany_id()).getUser_limit();
-            int userCount = userService.backGetUserCountByCompanyID(  user.getCompany_id());
-
-            if(  userLimitCount > userCount ) {
-
-                User u = new User();
-                u.setCell_phone(cellphone);
-                u.setEmail(email);
-                u.setJob_number(jobnumber);
-                u.setFull_name(fullname);
-                u.setDepartment(department);
-                u.setArea(area);
-
-                u.setAvatar(defaultheader);
-                u.setCompany_id(user.getCompany_id());
-
-                u.setToken(Helper.GenerateToken(cellphone));
-
-                String[] pwd = Helper.generatePwd();
-                u.setPassword( pwd[1]);
-                userService.backAddEmployee(u);
-
-
-
-                String param =   String.format(  Constant.newpwd_param, pwd[0] );
-                userService.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
-
-              //  userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
-
-                result.put(Constant.status, 1);
-                result.put(Constant.result, "员工添加成功");
-            }
-            else
+            int count =  userService.getUserByCellphone(cellphone);
+            if( count >0 )
             {
                 result.put(Constant.status, 0);
-                result.put(Constant.result, "员工数量超过授权数量啦，赶紧去申请开通吧");
+                result.put(Constant.result, "手机号重复，添加失败");
+            }
+            else {
 
+                int userLimitCount = companyService.backGetCompanyByID(user.getCompany_id()).getUser_limit();
+                int userCount = userService.backGetUserCountByCompanyID(user.getCompany_id());
+
+                if (userLimitCount > userCount) {
+
+                    User u = new User();
+                    u.setCell_phone(cellphone);
+                    u.setEmail(email);
+                    u.setJob_number(jobnumber);
+                    u.setFull_name(fullname);
+                    u.setDepartment(department);
+                    u.setArea(area);
+
+                    u.setAvatar(defaultheader);
+                    u.setCompany_id(user.getCompany_id());
+
+                    u.setToken(Helper.GenerateToken(cellphone));
+
+                    String[] pwd = Helper.generatePwd();
+                    u.setPassword(pwd[1]);
+                    userService.backAddEmployee(u);
+
+
+                    String param = String.format(Constant.newpwd_param, pwd[0]);
+                    userService.addMessage(u.getCell_phone(), param, Constant.newpwd_templatecode, Constant.newpwd);
+
+                    //  userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
+
+                    result.put(Constant.status, 1);
+                    result.put(Constant.result, "员工添加成功");
+                } else {
+                    result.put(Constant.status, 0);
+                    result.put(Constant.result, "员工数量超过授权数量啦，赶紧去申请开通吧");
+
+                }
             }
 
         } catch (Exception ex) {
@@ -507,43 +513,74 @@ public class UserController {
 
             if(  userLimitCount >=  userCount +lst.size()-1 ) {
 
+                List<String >    phoneList =new ArrayList<>();
 
                 //第一行是列头
                 for (int i = 1; i < lst.size(); i++) {
 
                     Object[] arr = lst.get(i);
 
-                    User u = new User();
-                    u.setCell_phone(String.valueOf(arr[0]));
-                    u.setEmail(arr[1] == null ? null : String.valueOf(arr[1]));
-                    u.setJob_number(arr[2] == null ? null : String.valueOf(arr[2]));
-                    u.setFull_name(String.valueOf(arr[3]));
-                    u.setDepartment(arr[4] == null ? null : String.valueOf(arr[4]));
-                    u.setArea(arr[5] == null ? null : String.valueOf(arr[5]));
 
-                    u.setAvatar(defaultheader);
-                    u.setCompany_id(user.getCompany_id());
-                    u.setToken(Helper.GenerateToken(String.valueOf(arr[0])));
+                    String phone = String.valueOf(arr[0]);
+                    int count = userService.getUserByCellphone(phone);
 
-                    String[] pwd = Helper.generatePwd();
-                    u.setPassword( pwd[1]);
+                    if( count >0 )
+                    {
+                        phoneList.add(phone);
+                    }
 
-                    userService.backAddEmployee(u);
-
-
-
-                    String param =   String.format(  Constant.newpwd_param, pwd[0] );
-                    userService.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
-
-
-                   // userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
 
                 }
 
 
-                result.put(Constant.status, 1);
-                result.put(Constant.result, "导入成功");
-                // result.put(Constant.result, path + fileName);
+                if(phoneList.size()>0  )
+                {
+
+                    String   output =  String.join(",",phoneList);
+                    result.put(Constant.status, 0);
+                    result.put(Constant.result, "导入失败，重复的号码如下："  +output);
+
+                }
+
+                else {
+
+
+                    //第一行是列头
+                    for (int i = 1; i < lst.size(); i++) {
+
+                        Object[] arr = lst.get(i);
+
+                        User u = new User();
+                        u.setCell_phone(String.valueOf(arr[0]));
+                        u.setEmail(arr[1] == null ? null : String.valueOf(arr[1]));
+                        u.setJob_number(arr[2] == null ? null : String.valueOf(arr[2]));
+                        u.setFull_name(String.valueOf(arr[3]));
+                        u.setDepartment(arr[4] == null ? null : String.valueOf(arr[4]));
+                        u.setArea(arr[5] == null ? null : String.valueOf(arr[5]));
+
+                        u.setAvatar(defaultheader);
+                        u.setCompany_id(user.getCompany_id());
+                        u.setToken(Helper.GenerateToken(String.valueOf(arr[0])));
+
+                        String[] pwd = Helper.generatePwd();
+                        u.setPassword(pwd[1]);
+
+                        userService.backAddEmployee(u);
+
+
+                        String param = String.format(Constant.newpwd_param, pwd[0]);
+                        userService.addMessage(u.getCell_phone(), param, Constant.newpwd_templatecode, Constant.newpwd);
+
+
+                        // userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
+
+                    }
+
+
+                    result.put(Constant.status, 1);
+                    result.put(Constant.result, "导入成功");
+                    // result.put(Constant.result, path + fileName);
+                }
             }
             else
             {
@@ -609,24 +646,34 @@ public class UserController {
         }
 
         try {
-            User u = new User();
 
-            u.setCell_phone(cellphone);
-            u.setEmail(email);
-            u.setFull_name(fullname);
-            u.setAvatar(defaultheader);
-             u.setToken( Helper.GenerateToken(cellphone));
+            int count =  userService.getUserByCellphone(cellphone);
+            if( count >0 )
+            {
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "手机号重复，添加失败");
+            }
+            else {
 
-            String[] pwd = Helper.generatePwd();
-            u.setPassword( pwd[1]);
-            userService.adminAddPlatformUser(u);
-           // userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
+                User u = new User();
 
-            String param =   String.format(  Constant.newpwd_param, pwd[0] );
-            userService.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
+                u.setCell_phone(cellphone);
+                u.setEmail(email);
+                u.setFull_name(fullname);
+                u.setAvatar(defaultheader);
+                u.setToken(Helper.GenerateToken(cellphone));
 
-            result.put(Constant.status, 1);
-            result.put(Constant.result, "员工添加成功");
+                String[] pwd = Helper.generatePwd();
+                u.setPassword(pwd[1]);
+                userService.adminAddPlatformUser(u);
+                // userService.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
+
+                String param = String.format(Constant.newpwd_param, pwd[0]);
+                userService.addMessage(u.getCell_phone(), param, Constant.newpwd_templatecode, Constant.newpwd);
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, "员工添加成功");
+            }
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
