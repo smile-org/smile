@@ -74,6 +74,47 @@ public class HomeController {
             case "company-banner":
                 dir = String.format("company-%s/banner/",companyId);
                 break;
+            case "header":
+                dir = String.format("company-%s/header/",companyId);
+                break;
+
+
+
+            case "course-icon":
+                dir = String.format("company-%s/course/",companyId);
+                break;
+
+            case "course-pic":
+                dir = String.format("company-%s/course/",companyId);
+                break;
+
+            case "course-category-icon":
+                dir = String.format("company-%s/course/",companyId);
+                break;
+
+            case "course-office":
+                dir = String.format("company-%s/course/office/",companyId);
+                break;
+
+
+            case "exam-icon":
+                dir = String.format("company-%s/exam/",companyId);
+                break;
+
+            case "exam-pic":
+                dir = String.format("company-%s/exam/",companyId);
+                break;
+
+
+            case "enrollment-icon":
+                dir = String.format("company-%s/enrollment/",companyId);
+                break;
+
+            case "enrollment-pic":
+                dir = String.format("company-%s/enrollment/",companyId);
+                break;
+
+
             default:
                 System.out.println("default");
                 break;

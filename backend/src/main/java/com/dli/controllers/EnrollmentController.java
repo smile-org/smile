@@ -1015,6 +1015,8 @@ public class EnrollmentController {
             }
 
 
+
+            /*
             if (!icon.startsWith("/default")) {
                 String fileName = String.format("%s-icon.png", enrollment.getEnrollment_id());
                 String path = String.format(enrollmenticon, user.getCompany_id(), enrollment.getEnrollment_id()).replace(fileName, "");
@@ -1034,6 +1036,9 @@ public class EnrollmentController {
                 enrollment.setPic(path + fileName);
                 enrollmentService.backUpdateEnrollmentIconAndPic(enrollment);
             }
+
+
+            */
 
 
             result.put(Constant.status, 1);
@@ -1114,6 +1119,7 @@ public class EnrollmentController {
 
             enrollmentService.backSaveContentList(enrollmentid, lst);
 
+            /*
             if (!icon.startsWith("/default")) {
                 String fileName = String.format("%s-icon.png", enrollmentid);
                 String path = String.format(enrollmenticon, user.getCompany_id(), enrollmentid).replace(fileName, "");
@@ -1137,6 +1143,8 @@ public class EnrollmentController {
                     enrollmentService.backUpdateEnrollmentIconAndPic(enrollment);
                 }
             }
+
+            */
 
             result.put(Constant.status, 1);
             result.put(Constant.result, "更新成功");
@@ -1221,6 +1229,8 @@ public class EnrollmentController {
             enrollmentService.backAddEnrollmentPeriod(period);
 
 
+
+            /*
             if (!icon.startsWith("/default")) {
                 String fileName = String.format("%s-icon.png", enrollmentid);
                 String path = String.format(enrollmenticon, user.getCompany_id(), enrollmentid).replace(fileName, "");
@@ -1244,6 +1254,9 @@ public class EnrollmentController {
                     enrollmentService.backUpdateEnrollmentIconAndPic(enrollment);
                 }
             }
+
+
+            */
 
             result.put(Constant.status, 1);
             result.put(Constant.result, enrollmentService.backGetEnrollmentEditPageInfoByPeriodID(period.getPeriod_id()));

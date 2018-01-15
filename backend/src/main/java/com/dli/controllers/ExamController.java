@@ -1343,6 +1343,8 @@ public class ExamController {
                 examService.backAddExam(e);
 
 
+
+                /*
                 if (!icon.startsWith("/default")) {
                     String fileName = String.format("%s-icon.png", e.getExam_id());
                     String path = String.format(examicon, user.getCompany_id(), e.getExam_id()).replace(fileName, "");
@@ -1362,6 +1364,8 @@ public class ExamController {
                     e.setPic(path + fileName);
                     examService.backUpdateExamIconAndPic(e);
                 }
+
+                */
 
 
                 if (!Helper.isNullOrEmpty(courseids)) {
@@ -1511,6 +1515,9 @@ public class ExamController {
 
                     examService.backUpdateExam(e);
 
+
+
+                    /*
                     if (!icon.startsWith("/default")) {
                         String fileName = String.format("%s-icon.png", examid);
                         String path = String.format(examicon, user.getCompany_id(), examid).replace(fileName, "");
@@ -1535,6 +1542,8 @@ public class ExamController {
                             examService.backUpdateExamIconAndPic(e);
                         }
                     }
+
+                    */
 
                     examService.backDeleteExamCourseMapping(examid);
 

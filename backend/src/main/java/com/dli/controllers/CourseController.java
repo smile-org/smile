@@ -372,6 +372,7 @@ public class CourseController {
             cate.setIcon(iconPath);
             courseService.backAddCourseCategory(cate);
 
+            /*
             if (!iconPath.startsWith("/default")) {
                 String fileName = String.format("%s-cateicon.png", cate.getCategory_id());
                 String path = String.format(coursecategoryicon, user.getCompany_id(), cate.getCategory_id()).replace(fileName, "");
@@ -379,6 +380,7 @@ public class CourseController {
                 FileUtil.renameFile(fileroot + iconPath, fileroot + path + fileName);
                 courseService.backUpdateCourseCategoryIcon(path + fileName, cate.getCategory_id());
             }
+            */
 
 
             result.put(Constant.status, 1);
@@ -480,6 +482,8 @@ public class CourseController {
             courseService.backUpdateCourseCategoryName(catename, cateid);
             courseService.backUpdateCourseCategoryIcon(iconPath, cateid);
 
+            /*
+
             if (!iconPath.startsWith("/default")) {
                 String fileName = String.format("%s-cateicon.png", cateid);
                 String path = String.format(coursecategoryicon, user.getCompany_id(), cateid).replace(fileName, "");
@@ -489,6 +493,9 @@ public class CourseController {
                     courseService.backUpdateCourseCategoryIcon(path + fileName, cateid);
                 }
             }
+
+            */
+
 
 
             result.put(Constant.status, 1);
@@ -642,7 +649,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/back/AddCourseContent", method = RequestMethod.GET)
-    public Map backAddCourseContent(int num, String title, String content, String attachmentUrl, @RequestHeader Map header) {
+    public Map backAddCourseContent(int num, String title, String content, String attachmentUrl, String  fileName, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -653,8 +660,8 @@ public class CourseController {
         }
 
         try {
-            int lastSlashIndex = attachmentUrl.lastIndexOf("/");
-            String fileName = attachmentUrl.substring(lastSlashIndex + 38);
+            //int lastSlashIndex = attachmentUrl.lastIndexOf("/");
+            //String fileName = attachmentUrl.substring(lastSlashIndex + 38);
             String ext = Helper.getFileNameExtension(fileName);
 
             CourseContent c = new CourseContent();
@@ -665,12 +672,16 @@ public class CourseController {
             c.setContent_type(ext);
             courseService.backAddCourseContent(c);
 
+            courseService.backUpdateCourseContentPath(attachmentUrl, c.getContent_id());
+
             // 1. 重命名 office 课件
             // 2. update original path
             // 3. 转html5,
             //4. update link
 
 
+
+            /*
             String guid =UUID.randomUUID().toString();
             //String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
             //String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
@@ -701,6 +712,7 @@ public class CourseController {
                 String   htmlfilename= guid  + ".html";
                 courseService.backUpdateCourseContentLink(path1 + c.getContent_id() + "-" + htmlfilename, c.getContent_id());
             }
+            */
 
             result.put(Constant.status, 1);
             result.put(Constant.result, c.getContent_id());
@@ -717,7 +729,7 @@ public class CourseController {
 
     // 如果没有上传新文件，则attachmentUrl 是空
     @RequestMapping(value = "/back/UpdateCourseContent", method = RequestMethod.GET)
-    public Map backUpdateCourseContent(int contentid, int num, String title, String content, String attachmentUrl, @RequestHeader Map header) {
+    public Map backUpdateCourseContent(int contentid, int num, String title, String content, String attachmentUrl, String  fileName, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
         String token = header.get("token").toString();
         User user = logonService.getUserByToken(token);
@@ -728,8 +740,8 @@ public class CourseController {
         }
 
         try {
-            int lastSlashIndex;
-            String fileName = null;
+           // int lastSlashIndex;
+
             String ext = null;
 
             CourseContent c = new CourseContent();
@@ -739,8 +751,8 @@ public class CourseController {
             c.setContent(content);
 
             if (!Helper.isNullOrEmpty(attachmentUrl)) {
-                lastSlashIndex = attachmentUrl.lastIndexOf("/");
-                fileName = attachmentUrl.substring(lastSlashIndex + 38);
+               // lastSlashIndex = attachmentUrl.lastIndexOf("/");
+               // fileName = attachmentUrl.substring(lastSlashIndex + 38);
                 ext = Helper.getFileNameExtension(fileName);
 
                 c.setFilename(fileName);
@@ -752,6 +764,10 @@ public class CourseController {
 
             if (!Helper.isNullOrEmpty(attachmentUrl)) {
 
+                courseService.backUpdateCourseContentPath(attachmentUrl, c.getContent_id());
+
+
+                /*
                 String guid =UUID.randomUUID().toString();
               //  String fullName = String.format(courseofficeprefix + fileName, user.getCompany_id(), c.getContent_id());
                // String fullName = String.format(courseofficeprefix , user.getCompany_id(), c.getContent_id()) +fileName ;
@@ -783,7 +799,7 @@ public class CourseController {
                 }
                 else {
                     courseService.backUpdateCourseContentLink(null, c.getContent_id());
-                }
+                }*/
             }
 
             result.put(Constant.status, 1);
@@ -1005,6 +1021,7 @@ public class CourseController {
             courseService.backAddCourse(c);
 
 
+            /*
             if (!iconPath.startsWith("/default")) {
                 String fileName = String.format("%s-icon.png", c.getCourse_id());
                 String path = String.format(courseicon, user.getCompany_id(), c.getCourse_id()).replace(fileName, "");
@@ -1024,6 +1041,8 @@ public class CourseController {
                 c.setPic(path + fileName);
                 courseService.backUpdateCourseIconAndPic(c);
             }
+
+            */
 
           /*  if (icon != null) {
                 String fileName = String.format("%s-icon.png", c.getCourse_id());
@@ -1148,6 +1167,7 @@ public class CourseController {
             courseService.backUpdateCourse(c);
 
 
+            /*
             if (!iconPath.startsWith("/default")) {
                 String fileName = String.format("%s-icon.png", courseid);
                 String path = String.format(courseicon, user.getCompany_id(), courseid).replace(fileName, "");
@@ -1172,6 +1192,10 @@ public class CourseController {
                     courseService.backUpdateCourseIconAndPic(c);
                 }
             }
+
+
+
+           */
 
 
 

@@ -634,6 +634,34 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = "/UpdateUserPicPath", method = RequestMethod.POST)
+    public Map UpdateUserPicPath( @RequestBody Map body,@RequestHeader Map header  ) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            String avatar = (String) body.get("avatar");
+            userService.UpdateUserPic(avatar, user.getUser_id());
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result, "保存成功");
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
+
+
     @RequestMapping(value = "/admin/AddPlatformUser", method = RequestMethod.GET)
     public Map adminAddPlatformUser(@RequestParam String cellphone, @RequestParam String email, @RequestParam String fullname, @RequestHeader Map header) {
         Map<String, Object> result = new HashMap<String, Object>();
