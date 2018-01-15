@@ -262,7 +262,7 @@
                       <span class="redff7">{{item.collect_count}}</span>
                     </li>
                   </ul>
-                  <span class="surplus_num s_num" style="right:0.05rem;top:.65rem;" v-if="item.left_count > 0">
+                  <span class="surplus_num s_num" style="right:0.05rem;top:.8rem;" v-if="item.left_count > 0">
                     剩余{{item.left_count}}人
                   </span>
                   <!--<span class="surplus_num red_full" v-else-if="item.left_count === 0">

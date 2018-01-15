@@ -33,8 +33,8 @@
               {{data.learn_percentage}}
             </p>
             <div class="surplus_num t_bor1 " style="">
-              <div class="o_f" v-show="data.count_down >= 0">倒计时：<span>{{data.count_down}}</span>天</div>
-              <div class="o_f" v-show="data.count_down == -1">已结束</div>
+              <div class="o_f2" v-show="data.count_down >= 0">倒计时：<span>{{data.count_down}}</span>天</div>
+              <div class="o_f2 " v-show="data.count_down == -1">已结束</div>
             </div>
             <router-link class="tasking_see" v-bind:to="{path: '/myTaskSee', query: {id: data.task_id}}">查看同学</router-link>
           </a>
@@ -48,7 +48,7 @@
               <img :src="course.content.icon | formatImage" class="fl img_bg">
               <div class="course_cen show_star">
                 <div class="hidden effect_right ">
-                  <h3 class="fl" style="max-width: 2.85rem;">{{course.content.title}}</h3>
+                  <h3 class="fl" style="max-width: 2.8rem;">{{course.content.title}}</h3>
                   <el-rate class="star_time" v-model="course.content.star" disabled text-color="#ff9900" ></el-rate>
                   <ul class="small_icon fr">
                     <li class="fl">
@@ -83,7 +83,7 @@
               <img :src="exam.content.icon|formatImage" class="fl img_bg">
               <div class="course_cen">
                 <div class="hidden effect_right ">
-                  <h3 class="fl" style="max-width: 2.85rem;">{{exam.content.exam_title}}</h3>
+                  <h3 class="fl" style="max-width: 2.8rem;">{{exam.content.exam_title}}</h3>
                   <ul class="small_icon fr">
                     <li class="fl">
                       <span class="icon icon1"></span>
@@ -117,7 +117,7 @@
               <img class="person_header2 fl" :src="enroll.content.icon | formatImage">
               <div class="bm_con_bm show_star">
                 <div class="hidden bm_font ml6">
-                  <h3 class=" mb10" style="max-width: 2.85rem;">{{enroll.content.title}}</h3>
+                  <h3 class=" mb10" style="max-width: 2.8rem;">{{enroll.content.title}}</h3>
                   <p class="ellipsis" style="width: 73%;">主讲：{{enroll.content.teacher}}</p>
                   <p class="" style="">{{enroll.content.start_date | formatDate}}--{{enroll.content.end_date | formatDate}}</p>
                   <el-rate class="star_time" v-model="enroll.content.star" disabled  text-color="#ff9900"></el-rate>

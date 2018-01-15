@@ -66,6 +66,8 @@ export default {
     verifyCode: '/checkVerificationCode',
     // 重设密码
     resetPassword: '/updatePassword',
+    // 重置密码
+    resetPasswordByCellPhone: 'updatePasswordByCellphone',
 
     // *** 课程 ***
     // 获取课程分类
@@ -120,6 +122,8 @@ export default {
     submitBooking: '/appointment/addAppointment',
     // 点赞
     likeBooking: '/appointment/follow',
+    // cancel dian zan
+    unlikeBooking: '/appointment/cancelFollow',
     // 添加新需求
     submitNewRequirement: '/appointment/addItem',
 

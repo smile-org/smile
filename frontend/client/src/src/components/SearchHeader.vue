@@ -3,7 +3,8 @@
     <div class="search_c">
       <a class="seach_tit tl"><img src="../assets/img/back.png" alt="返回" v-on:click="goBack"/></a>
       <div class="search_input" style="margin-right: .35rem;">
-        <img src="../assets/img/seach_icon.png" />
+        <img src="../assets/img/seach_icon.png" alt="search"/>
+        <!--<span class="search_img">&#xe60f;</span>-->
         <!--<img src="../assets/img/delate.png" />-->
         <input :placeholder="holder" @focus="goSearch">
       </div>

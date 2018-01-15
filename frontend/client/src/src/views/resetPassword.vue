@@ -77,8 +77,8 @@ export default {
       }
 
       var md5PWD = md5(this.password)
-      md5PWD = this.password
-      api.post(api.uri.resetPassword, {cellphone: usernameInSS, vcode: codeInSS, pwd: md5PWD}).then(data => {
+      // md5PWD = this.password
+      api.post(api.uri.resetPasswordByCellPhone, {cellphone: usernameInSS, vcode: codeInSS, pwd: md5PWD}).then(data => {
         if (data.status === 1) {
           // 设置成功后清楚 SS
           sessionStorage.removeItem('smile_username')
