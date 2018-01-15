@@ -1,7 +1,7 @@
 <style>
   .text_iconfont{
     font-family: jiudian;
-    width: .24rem;
+    font-size: .24rem;
     color: #ff9925;
     vertical-align: middle;
     margin-right: .1rem;
