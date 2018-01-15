@@ -178,9 +178,9 @@
           @crop-upload-success="cropIconUploadSuccess"
           @crop-upload-fail="cropIconUploadFail"
           :url="uploadUrl"
-          :width="280"
+          :width="190"
           :headers="headers"
-          :height="194"
+          :height="144"
           :value.sync="showIcon"
           :no-circle=true
           img-format="png">
@@ -194,9 +194,9 @@
           @crop-upload-success="cropBannerUploadSuccess"
           @crop-upload-fail="cropBannerUploadFail"
           :url="uploadUrl"
-          :width="190"
+          :width="375"
           :headers="headers"
-          :height="144"
+          :height="120"
           :value.sync="showBanner"
           :no-circle=true
           img-format="png">
