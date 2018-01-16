@@ -46,7 +46,7 @@ header .logo_c a img {
 }
 
 header .logo_c a .logo1 {
-  width: 0.9rem;
+  width: 1rem;
 }
 
 header .search_c {
@@ -2037,14 +2037,14 @@ footer .exam_b .btn span:nth-child(2) {
 .t_bor2 {
   border: 1px solid #00b553;
   color: #00b553;
-  width: 1.3rem;
+  width: 1.15rem;
   line-height: .4rem;
 }
 
 .t_bor3 {
   border: 1px solid #ff7866;
   color: #ff7866;
-  width: 1.3rem;
+  width: 1.15rem;
   line-height: .4rem;
 }
 

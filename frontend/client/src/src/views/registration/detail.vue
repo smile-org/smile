@@ -48,7 +48,7 @@
             <li class="position_r">
               <span>人数 :</span> {{data.count}}
               <em class="surplus_num red_full" style="bottom: .2rem;" v-if="data.left_count === 0">已  满</em>
-              <em class="surplus_num s_num" style="bottom: .2rem;"
+              <em class="surplus_num s_num" style="top: .17rem;"
                   v-if="data.left_count > 0">剩 余 {{data.left_count}} 人</em>
 
             <li class="hidden ">

@@ -1,118 +1,3 @@
-<style>
-  .text_iconfont{
-    font-family: jiudian;
-    font-size: .24rem;
-    color: #ff9925;
-    vertical-align: middle;
-    margin-right: .1rem;
-  }
-  #asd {
-    background-color: #333;
-    position: fixed;
-    z-index: 1111;
-    height: 100%;
-    width: 100%;
-    margin-top: -1.2rem;
-    padding: .3rem;
-  }
-
-  #asd canvas {
-    border: 1px solid #fff;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 4rem !important;
-    height: 4rem !important;
-    margin-top: 1rem;
-  }
-
-  #asd svg {
-    position: static;
-    margin-left: -20px;
-    margin-bottom: 280px;
-    background: #fff;
-    border-radius: 50%;
-    -webkit-filter: drop-shadow(-2px 2px 2px rgba(0, 0, 0, .7));
-    filter: drop-shadow(-2px 2px 2px rgba(0, 0, 0, .7));
-    z-index: 10;
-    cursor: pointer;
-    border: 2px solid #fff;
-    width: 20px;
-    height: 20px;
-    right: .1rem !important;
-  }
-
-  /*!*#asd button {*!*/
-  /*margin: 0 auto;*/
-  /*width: 100%;*/
-  /*}*/
-  #asd .btn_save {
-    width: 100%;
-    height: .8rem;
-    background: #00b553;
-    outline: 0;
-    border-radius: 0.1rem;
-    font-size: 0.32rem;
-    color: #fff;
-    letter-spacing: 0.1rem;
-    display: block;
-    margin-top: .5rem;
-  }
-
-  .btn_pqx {
-    width: 100%;
-    height: .8rem;
-    outline: 0;
-    border-radius: 0.1rem;
-    font-size: 0.32rem;
-    color: #fff;
-    letter-spacing: 0.1rem;
-    display: block;
-    margin-top: .5rem;
-    background: #cccccc;
-    border-color: #cccccc;
-  }
-
-  .el-message-box__wrapper {
-    position: fixed;
-    top: 0%;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: .3rem;
-    text-align: center;
-  }
-
-  .el-message-box {
-    width: 100%;
-  }
-
-  /*button {*/
-  /*display: inline-block;*/
-  /*padding: 6px 12px;*/
-  /*margin-bottom: 0;*/
-  /*font-size: 14px;*/
-  /*font-weight: 400;*/
-  /*line-height: 1.42857143;*/
-  /*text-align: center;*/
-  /*white-space: nowrap;*/
-  /*vertical-align: middle;*/
-  /*-ms-touch-action: manipulation;*/
-  /*touch-action: manipulation;*/
-  /*cursor: pointer;*/
-  /*-webkit-user-select: none;*/
-  /*-moz-user-select: none;*/
-  /*-ms-user-select: none;*/
-  /*user-select: none;*/
-  /*background-image: none;*/
-  /*border: 1px solid transparent;*/
-  /*border-radius: 4px;*/
-  /*color: #fff;*/
-  /*background-color: #00b553;*/
-  /*border-color: #00b553;*/
-  /*}*/
-</style>
 <template>
   <div id="app">
     <!--<header>-->
@@ -214,6 +99,23 @@
         </li>
       </ul>
     </section>
+    <!--<div class="exit_fade" @click="logout()">-->
+    <!--</div>-->
+    <!--<div class="exit_con" @click="logout()">-->
+      <!--<div class="exit_box">-->
+        <!--<p class="exit_font1">-->
+          <!--是否退出登录-->
+        <!--</p>-->
+        <!--<ul class="exit_button">-->
+          <!--<li class="fl">-->
+            <!--<button>取消</button>-->
+          <!--</li>-->
+          <!--<li class="fl">-->
+            <!--<button >确定</button>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
     <v-footer currentTag="4"></v-footer>
   </div>
 </template>
@@ -254,7 +156,7 @@
         console.log(this.data.avatar)
       },
       logout: function () {
-        this.$confirm('确定要退出吗？', '提示', {
+        this.$confirm('是否退出登录', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -300,6 +202,229 @@
   }
 
 </script>
+<style scope="scoped">
+  .el-message-box{
+    border-radius: .1rem;
+    width: 80%!important;
+    /*padding:0 .3rem;*/
+  }
+  .el-message-box__header,.el-message-box__status.el-icon-warning,.el-message-box__headerbtn{
+    display: none;
+  }
+  .el-message-box__btns {
+    padding: 0 .1rem;
+    text-align: right;
+  }
+  .el-message-box__content{
+    font-size: .3rem;
+    color: #666;
+    text-align: center;
+    /*height:1.49rem;*/
+    /*line-height:1.49rem;*/
+  }
+  .el-message-box__message {
+    margin-left: 0!important;
+  }
+  .el-button{
+    border:none;
+    font-weight: normal;
+    font-size: .3rem;
+    background: #fff;
+    color: #00b553;
+    /*padding: .1rem .3rem;*/
+    flex: 1;
+    border-radius: 0;
+  }
+  .el-button:hover,.el-button:active,.el-button:focus{
+    border:none;
+    background: #fff;
+  }
+  .el-button--primary.is-active:hover,.el-button--primary.is-active, .el-button--primary:focus{
+    border:none;
+    background: #fff;
+    color: #00b553;
+  }
+  .el-button--primary.is-active, .el-button--primary:active{
+    border:none;
+    background: #fff;
+    color: #00b553;
+  }
+  .el-button:focus, .el-button:hover{
+    color: #00b553;
+  }
+  .el-message-box__btns{
+    display: flex; /*设为伸缩容器*/
+    flex-flow: row; /*伸缩项目单行排列*/
+    align-items: center;
+    justify-content: center;
+    height: 1rem;
+    line-height: 0rem;
+    position: relative;
+  }
+  .el-message-box__btns:before{
+    content: '';
+    border-top: 1px solid #e8e8e8;
+    width: 90%;
+    top: 0;
+    right: 5%;
+    position: absolute;
 
+  }
+  .el-message-box__btns button:nth-child(2) {
+    margin-left: .1rem;
+    border-left: 1px solid #e8e8e8;
+  }
+
+</style>
+<style>
+  .text_iconfont{
+    font-family: jiudian;
+    font-size: .24rem;
+    color: #ff9925;
+    vertical-align: middle;
+    margin-right: .1rem;
+  }
+  #asd {
+    background-color: #333;
+    position: fixed;
+    z-index: 1111;
+    height: 100%;
+    width: 100%;
+    margin-top: -1.2rem;
+    padding: .3rem;
+  }
+
+  #asd canvas {
+    border: 1px solid #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 4rem !important;
+    height: 4rem !important;
+    margin-top: 1rem;
+  }
+
+  #asd svg {
+    position: static;
+    margin-left: -20px;
+    margin-bottom: 280px;
+    background: #fff;
+    border-radius: 50%;
+    -webkit-filter: drop-shadow(-2px 2px 2px rgba(0, 0, 0, .7));
+    filter: drop-shadow(-2px 2px 2px rgba(0, 0, 0, .7));
+    z-index: 10;
+    cursor: pointer;
+    border: 2px solid #fff;
+    width: 20px;
+    height: 20px;
+    right: .1rem !important;
+  }
+
+  /*!*#asd button {*!*/
+  /*margin: 0 auto;*/
+  /*width: 100%;*/
+  /*}*/
+  #asd .btn_save {
+    width: 100%;
+    height: .8rem;
+    background: #00b553;
+    outline: 0;
+    border-radius: 0.1rem;
+    font-size: 0.32rem;
+    color: #fff;
+    letter-spacing: 0.1rem;
+    display: block;
+    margin-top: .5rem;
+  }
+
+  .btn_pqx {
+    width: 100%;
+    height: .8rem;
+    outline: 0;
+    border-radius: 0.1rem;
+    font-size: 0.32rem;
+    color: #fff;
+    letter-spacing: 0.1rem;
+    display: block;
+    margin-top: .5rem;
+    background: #cccccc;
+    border-color: #cccccc;
+  }
+
+  .el-message-box__wrapper {
+    position: fixed;
+    top: 0%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .3rem;
+    text-align: center;
+  }
+
+  .el-message-box {
+    width: 100%;
+  }
+  .exit_fade{
+    position: fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    width:100%;
+    background: rgba(51, 51, 51, 0.48);
+    z-index: 10000;
+  }
+  .exit_con{
+    position: absolute;
+    top: 50%;
+    right: .5rem;
+    left: .5rem;
+    margin-top: -1.5rem;
+    z-index: 10001;
+  }
+  .exit_box{
+    /*width:100%;*/
+    background: #fff;
+    height:2.5rem;
+    left: .5rem;
+    right: .5rem;
+    text-align: center;
+    border-radius: .1rem;
+
+    padding: 0 .3rem;
+  }
+  .exit_font1{
+    font-size: .3rem;
+    color: #666;
+    height:1.49rem;
+    line-height:1.49rem;
+  }
+  .exit_button{
+    width: 100%;
+    display: flex; /*设为伸缩容器*/
+    flex-flow: row; /*伸缩项目单行排列*/
+    align-items: center;
+    justify-content: center;
+    height: 1rem;
+    line-height: 0rem;
+    border-top: 1px solid #e8e8e8;
+    /*margin: .15rem 0;*/
+  }
+  .exit_button li{
+    flex: 1;
+    /*padding: .2rem 0;*/
+
+  }
+  .exit_button li:first-child{
+    border-right: 1px solid #e8e8e8;
+  }
+  .exit_button li button{
+    font-size: .3rem;
+    background: #fff;
+    color: #00b553;
+    padding: .1rem .3rem;
+
+  }
+</style>
 
 
