@@ -18,8 +18,8 @@
                 <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con_bm show_star">
                   <div class="hidden bm_font ml6">
-                    <h3 class="mb10">{{item.title}}</h3>
-                    <p class="ellipsis" style="width: 73%;">主讲：{{item.teacher}}</p>
+                    <h3 class="mb1">{{item.title}}</h3>
+                    <p class="ellipsis mt1" style="width: 73%;">主讲：{{item.teacher}}</p>
                     <p style="margin-top: .05rem;">{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
                     <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900"
                              text-template="{value}"></el-rate>
@@ -48,8 +48,8 @@
                 <img class="person_header2 fl" :src="item.icon | formatImage">
                 <div class="bm_con_bm show_star">
                   <div class="hidden bm_font ml6">
-                    <h3 class="mb10">{{item.title}}</h3>
-                    <p>主讲：{{item.teacher}}</p>
+                    <h3 class="mb1">{{item.title}}</h3>
+                    <p class="mt1">主讲：{{item.teacher}}</p>
                     <p style="margin-top: .05rem;">{{item.start_date | formatDate}} ~ {{item.end_date | formatDate}}</p>
                     <el-rate class="star_time" v-model="item.star" disabled show-text text-color="#ff9900"
                              text-template="{value}"></el-rate>
