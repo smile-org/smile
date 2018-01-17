@@ -16,6 +16,7 @@
             <a class="el-button--text cur ml20" v-on:click="setDefault">使用默认</a>
             <my-upload @input="closeMyUpload" field="file"
               :no-rotate=false
+              :params="logoFormData"
               @crop-success="cropSuccess"
               @crop-upload-success="cropUploadSuccess"
               @crop-upload-fail="cropUploadFail"
@@ -64,7 +65,16 @@
           ]
         },
         show: false,
-        uploadUrl: api.uri.uploadCategoryImage,
+        // uploadUrl: api.uri.uploadCategoryImage,
+        uploadUrl: '',
+        logoFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        },
         returnedImageUrl: '',
         headers: api.getUploadHeaders()
       }
@@ -72,6 +82,18 @@
     created () {
       this.imageSrc = this.image
       lang.zh.preview = ''
+
+      this.headers = api.getUploadHeaders()
+      api.fetch(api.uri.ossInfo, {businessType: 'course-category-icon'}).then(data => {
+        if (data.status === 1) {
+          this.logoFormData.OSSAccessKeyId = data.result.accessid
+          this.logoFormData.key = data.result.dir
+          this.logoFormData.policy = data.result.policy
+          this.logoFormData.signature = data.result.signature
+          this.logoFormData.expire = data.result.expire
+          this.uploadUrl = data.result.host
+        }
+      })
     },
     components: {
       commonHeader,
@@ -84,14 +106,18 @@
       },
       setDefault () {
         this.imageSrc = this.image
+        this.returnedImageUrl = ''
       },
       cropSuccess (data, field) {
         this.imageSrc = data
+        this.logoFormData.key = this.logoFormData.key + api.guid() + '.png'
       },
       cropUploadSuccess (jsonData, field) {
-        if (jsonData.status === 1) {
-          this.returnedImageUrl = jsonData.result
-        }
+        // if (jsonData.status === 1) {
+        //   this.returnedImageUrl = jsonData.result
+        // }
+        this.returnedImageUrl = this.uploadUrl + '/' + this.logoFormData.key
+        console.log(this.returnedImageUrl)
       },
       cropUploadFail (status, field) {
         console.log(status)

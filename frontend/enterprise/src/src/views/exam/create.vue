@@ -227,10 +227,10 @@
           <div class="tc btn_margin">
             <button type="button" class="inf_btn  " v-on:click="save">保  存</button>
           </div>
-          <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="190" :headers="headers" :height="144" :value.sync="showIcon" :no-circle=true img-format="png">
+          <my-upload @input="closeIcon" :params="logoFormData" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="190" :headers="headers" :height="144" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
 
-          <my-upload @input="closeBanner" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="150" :value.sync="showBanner" :no-circle=true img-format="png">
+          <my-upload @input="closeBanner" :params="bannerFormData" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="150" :value.sync="showBanner" :no-circle=true img-format="png">
           </my-upload>
         </div>
       </section>
@@ -270,8 +270,26 @@
             return time.getTime() < Date.now() - 8.64e7
           }
         },
-        uploadIconUrl: api.uri.uploadExamIcon,
-        uploadBannerUrl: api.uri.uploadExamBanner,
+        // uploadIconUrl: api.uri.uploadExamIcon,
+        // uploadBannerUrl: api.uri.uploadExamBanner,
+        uploadIconUrl: '',
+        logoFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        },
+        uploadBannerUrl: '',
+        bannerFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        },
         // 是否显示icon上传
         showIcon: false,
         // 是否显示banner 上传
@@ -389,8 +407,38 @@
           this.adminList = data.result.AdminList
         }
       })
+      this.initLogoFormData()
+      this.initBannerFormData()
     },
     methods: {
+      initLogoFormData () {
+        this.headers = api.getUploadHeaders()
+        api.fetch(api.uri.ossInfo, {businessType: 'exam-icon'}).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.logoFormData.OSSAccessKeyId = data.result.accessid
+            this.logoFormData.key = data.result.dir
+            this.logoFormData.policy = data.result.policy
+            this.logoFormData.signature = data.result.signature
+            this.logoFormData.expire = data.result.expire
+            this.uploadIconUrl = data.result.host
+          }
+        })
+      },
+      initBannerFormData () {
+        this.headers = api.getUploadHeaders()
+        api.fetch(api.uri.ossInfo, {businessType: 'exam-pic'}).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.bannerFormData.OSSAccessKeyId = data.result.accessid
+            this.bannerFormData.key = data.result.dir
+            this.bannerFormData.policy = data.result.policy
+            this.bannerFormData.signature = data.result.signature
+            this.bannerFormData.expire = data.result.expire
+            this.uploadBannerUrl = data.result.host
+          }
+        })
+      },
       materialListCheckedChange (val) {
         this.materialListChecked = val
       },
@@ -596,20 +644,24 @@
         this.showBanner = !this.showBanner
       },
       cropIconSuccess (data, field) {
-        // this.iconData = data
+        this.iconData = data
+        this.logoFormData.key = this.logoFormData.key + api.guid() + '.png'
       },
       cropBannerSuccess (data, field) {
-        // this.bannerData = data
+        this.bannerData = data
+        this.bannerFormData.key = this.bannerFormData.key + api.guid() + '.png'
       },
       cropIconUploadSuccess (jsonData, field) {
-        if (jsonData.status === 1) {
-          this.iconSrc = jsonData.result
-        }
+        // if (jsonData.status === 1) {
+        //   this.iconSrc = jsonData.result
+        // }
+        this.iconSrc = this.uploadIconUrl + '/' + this.logoFormData.key
       },
       cropBannerUploadSuccess (jsonData, field) {
-        if (jsonData.status === 1) {
-          this.bannerSrc = jsonData.result
-        }
+        // if (jsonData.status === 1) {
+        //   this.bannerSrc = jsonData.result
+        // }
+        this.bannerSrc = this.uploadBannerUrl + '/' + this.bannerFormData.key
       },
       cropIconUploadFail (status, field) {
         this.$message({

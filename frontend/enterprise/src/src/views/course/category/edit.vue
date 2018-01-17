@@ -16,6 +16,7 @@
             <a class="el-button--text cur ml20" v-on:click="setDefault">使用默认</a>
             <my-upload @input="closeMyUpload" field="file"
               @crop-success="cropSuccess"
+              :params="logoFormData"
               @crop-upload-success="cropUploadSuccess"
               @crop-upload-fail="cropUploadFail"
               :url="uploadUrl"
@@ -70,7 +71,17 @@
         image: '',
 
         // 上传API
-        uploadUrl: api.uri.uploadCategoryImage
+        // uploadUrl: api.uri.uploadCategoryImage
+
+        uploadUrl: '',
+        logoFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        }
       }
     },
     components: {
@@ -85,6 +96,16 @@
         if (data.status === 1) {
           this.ruleForm = data.result
           this.image = axios.defaults.imageServer + data.result.icon
+          api.fetch(api.uri.ossInfo, {businessType: 'course-category-icon'}).then(data => {
+            if (data.status === 1) {
+              this.logoFormData.OSSAccessKeyId = data.result.accessid
+              this.logoFormData.key = data.result.dir
+              this.logoFormData.policy = data.result.policy
+              this.logoFormData.signature = data.result.signature
+              this.logoFormData.expire = data.result.expire
+              this.uploadUrl = data.result.host
+            }
+          })
         }
       }).catch(error => {
         alert(error.message)
@@ -100,11 +121,13 @@
       },
       cropSuccess (data, field) {
         this.image = data
+        this.logoFormData.key = this.logoFormData.key + api.guid() + '.png'
       },
       cropUploadSuccess (jsonData, field) {
-        if (jsonData.status === 1) {
-          this.ruleForm.iconPath = jsonData.result
-        }
+        // if (jsonData.status === 1) {
+        //   this.ruleForm.iconPath = jsonData.result
+        // }
+        this.ruleForm.iconPath = this.uploadUrl + '/' + this.logoFormData.key
       },
       cropUploadFail (status, field) {
         console.log(status)

@@ -16,7 +16,7 @@
                 个人端logo
               </td>
               <td class="page_m_b">
-                <img :src="logoSrc" width="20%"/>
+                <img :src="logoSrc | formatImage" width="20%"/>
               </td>
               <td class="page_m_c">
                 <a v-on:click="setDefault('logo')">使用默认</a>
@@ -29,7 +29,7 @@
 
               </td>
               <td class="page_m_b">
-                <img :src="bannerSrc" width="100%"/>
+                <img :src="bannerSrc | formatImage" width="100%"/>
               </td>
               <td class="page_m_c">
                 <a v-on:click="setDefault('banner')">使用默认</a>
@@ -43,10 +43,10 @@
               <!--&lt;!&ndash;此部分为上传页面&ndash;&gt;-->
               <div class="m_show">
                 <div class="m_show_header">
-                  <img :src="logoSrc"/>
+                  <img :src="logoSrc | formatImage"/>
                 </div>
                 <!--<img src="img/p_header.jpg"/>-->
-                <img class="m_show_banner" :src="bannerSrc" width="100%"/>
+                <img class="m_show_banner" :src="bannerSrc | formatImage" width="100%"/>
               </div>
               <div class="tc btn_margin">
                 <el-button type="success" class="inf_btn  ml20" @click="dialogFormVisible = false">关 闭
@@ -57,17 +57,30 @@
         </div>
       </section>
     </div>
+    <!--<my-upload @input="closeMyUpload" field="file"
+               @crop-success="cropSuccess"
+               @crop-upload-success="cropUploadSuccess"
+               @crop-upload-fail="cropUploadFail"
+               :width="width"
+               :height="height"
+               :params="params"
+               :headers="headers"
+               :value.sync="show"
+               :no-circle=true
+               :url="uploadUrl"
+               img-format="png"></my-upload>-->
+
     <my-upload
       @input="closeIcon"
       field="file"
-      :params="logoFormData"
+      :params="params"
       @crop-success="cropIconSuccess"
       @crop-upload-success="cropIconUploadSuccess"
       @crop-upload-fail="cropIconUploadFail"
       :url="uploadUrl"
-      :width="95"
+      :width="280"
       :headers="headers"
-      :height="72"
+      :height="194"
       :value.sync="showIcon"
       :no-circle=true
       img-format="png">
@@ -76,7 +89,7 @@
     <my-upload
       @input="closeBanner"
       field="file"
-      :params="bannerFormData"
+      :params="params"
       @crop-success="cropBannerSuccess"
       @crop-upload-success="cropBannerUploadSuccess"
       @crop-upload-fail="cropBannerUploadFail"
@@ -115,25 +128,8 @@
           pictype: ''
         },
         headers: {},
-        // uploadUrl: api.uri.uploadCompanyPic,
-        uploadUrl: '',
-        dialogFormVisible: false,
-        logoFormData: {
-          key: '',
-          policy: '',
-          OSSAccessKeyId: '',
-          signature: '',
-          expire: 0,
-          success_action_status: '200'
-        },
-        bannerFormData: {
-          key: '',
-          policy: '',
-          OSSAccessKeyId: '',
-          signature: '',
-          expire: 0,
-          success_action_status: '200'
-        }
+        uploadUrl: api.uri.uploadCompanyPic,
+        dialogFormVisible: false
       }
     },
     components: {
@@ -149,8 +145,6 @@
           this.bannerSrc = data.result.banner
         }
       })
-      this.initLogoFormData()
-      this.initBannerFormData()
     },
     methods: {
       setDefault: function (type) {
@@ -166,33 +160,9 @@
           }
         })
       },
-      initLogoFormData () {
-        this.headers = api.getUploadHeaders()
-        api.fetch(api.uri.ossInfo, {businessType: 'company-logo'}).then(data => {
-          // console.log('logo: ', data.result)
-          if (data.status === 1) {
-            this.logoFormData.OSSAccessKeyId = data.result.accessid
-            this.logoFormData.key = data.result.dir
-            this.logoFormData.policy = data.result.policy
-            this.logoFormData.signature = data.result.signature
-            this.logoFormData.expire = data.result.expire
-            this.uploadUrl = data.result.host
-          }
-        })
-      },
-      initBannerFormData () {
-        this.headers = api.getUploadHeaders()
-        api.fetch(api.uri.ossInfo, {businessType: 'company-banner'}).then(data => {
-          if (data.status === 1) {
-            this.bannerFormData.OSSAccessKeyId = data.result.accessid
-            this.bannerFormData.key = data.result.dir
-            this.bannerFormData.policy = data.result.policy
-            this.bannerFormData.signature = data.result.signature
-            this.bannerFormData.expire = data.result.expire
-            this.uploadUrl = data.result.host
-          }
-        })
-      },
+      // closeMyUpload: function (value) {
+      //   this.show = value
+      // },
       closeIcon: function (value) {
         this.showIcon = value
       },
@@ -209,29 +179,47 @@
         this.params.pictype = type
       },
       cropIconSuccess (data, field) {
-        this.logoFormData.key = this.logoFormData.key + api.guid() + '.png'
+
       },
       cropIconUploadSuccess (jsonData, field) {
-        this.logoSrc = this.uploadUrl + '/' + this.logoFormData.key
-        api.post(api.uri.saveCompanyPic, {pictype: 'logo', url: this.logoSrc}).then(data => {
-        })
+        this.logoSrc = jsonData.result
       },
       cropIconUploadFail (status, field) {
-        // console.log('-----------------------failed----------------------')
-        // // console.error(this.logoFormData)
-        // console.log('status:', status)
-        // console.log('field:', field)
+
       },
       cropBannerSuccess (data, field) {
-        this.bannerFormData.key = this.bannerFormData.key + api.guid() + '.png'
+
       },
       cropBannerUploadSuccess (jsonData, field) {
-        this.bannerSrc = this.uploadUrl + '/' + this.bannerFormData.key
-        api.post(api.uri.saveCompanyPic, {pictype: 'banner', url: this.bannerSrc}).then(data => {
-        })
+        this.bannerSrc = jsonData.result
       },
       cropBannerUploadFail (status, field) {
+
       }
+      // cropSuccess (data, field) {
+      // },
+      // /**
+      //  * upload success
+      //  *
+      //  * [param] jsonData   服务器返回数据，已进行json转码
+      //  * [param] field
+      //  */
+      // cropUploadSuccess (jsonData, field) {
+      //   if (this.params.pictype === 'logo') {
+      //     this.logoSrc = jsonData.result
+      //   } else {
+      //     this.bannerSrc = jsonData.result
+      //   }
+      // },
+      // /**
+      //  * upload fail
+      //  *
+      //  * [param] status    server api return error status, like 500
+      //  * [param] field
+      //  */
+      // cropUploadFail (status, field) {
+      //   alert(status)
+      // }
     }
   }
 </script>

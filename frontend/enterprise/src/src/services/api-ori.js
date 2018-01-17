@@ -7,7 +7,7 @@ import axios from 'axios'
 // axios.defaults.baseURL = 'http://192.168.1.106:8888' // 'http://192.168.0.108:3000'
 axios.defaults.baseURL = 'http://123.207.154.226:8888'
 // axios.defaults.imageServer = 'http://192.168.1.106:4001'
-axios.defaults.imageServer = '' // 'http://123.207.154.226:4001'
+axios.defaults.imageServer = 'http://123.207.154.226:4001'
 
 /**
  * 拦截器， 对所有的请求。
@@ -68,7 +68,6 @@ export default {
     // 使用默认图片
     setDefaultImage: '/back/SetDefaultCompanyPic',
     uploadCompanyPic: axios.defaults.baseURL + '/back/UploadCompanyPic',
-    saveCompanyPic: '/back/UpdateCompanyPicUrl',
 
     // *** 用户 ***
     // 搜索日志
@@ -202,10 +201,7 @@ export default {
     exportUserLearnProgressList: '/back/ExportUserLearnProgressList',
     // 上传报名Icon和Banner
     uploadEnrollmentIcon: '/back/UploadEnrollmentIcon',
-    uploadEnrollmentBanner: '/back/UploadEnrollmentPic',
-
-    // *** Aliyun OSS ***
-    ossInfo: '/ossInfo'
+    uploadEnrollmentBanner: '/back/UploadEnrollmentPic'
   },
   extension: {
     course: [
@@ -221,18 +217,18 @@ export default {
     ]
   },
   image: {
-    category: 'http://default-image.oss-cn-beijing.aliyuncs.com/cateicon.png',
+    category: '/default/cateicon.png',
     course: {
-      icon: 'http://default-image.oss-cn-beijing.aliyuncs.com/course-icon.png',
-      banner: 'http://default-image.oss-cn-beijing.aliyuncs.com/course-pic.png'
+      icon: '/default/course-icon.png',
+      banner: '/default/course-pic.png'
     },
     enrollment: {
-      icon: 'http://default-image.oss-cn-beijing.aliyuncs.com/enrollment-icon.png',
-      banner: 'http://default-image.oss-cn-beijing.aliyuncs.com/enrollment-pic.png'
+      icon: '/default/enrollment-icon.png',
+      banner: '/default/enrollment-pic.png'
     },
     exam: {
-      icon: 'http://default-image.oss-cn-beijing.aliyuncs.com/exam-icon.png',
-      banner: 'http://default-image.oss-cn-beijing.aliyuncs.com/exam-pic.png'
+      icon: '/default/exam-icon.png',
+      banner: '/default/exam-pic.png'
     }
   },
 
@@ -241,18 +237,5 @@ export default {
     return {
       token: token
     }
-  },
-  // 用于生成uuid
-  S4: function () {
-    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
-  },
-  guid: function () {
-    return (this.S4() + this.S4() + '-' + this.S4() + '-' + this.S4() + '-' + this.S4() + '-' + this.S4() + this.S4() + this.S4())
-  },
-  // 获取文件扩展名
-  getFileExt: function (fileName) {
-    var arrLen = fileName.split('.').length - 1
-    var extension = fileName.split('.')[arrLen].toUpperCase()
-    return extension
   }
 }

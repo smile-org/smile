@@ -9,7 +9,7 @@
           <span class="vm">您的当前位置 : <span class="">考试管理</span> > <span class="">考试信息管理</span> > <span class="f_blue">添加考试</span></span>
         </nav>
         <div class="con_tab">
-          <span v-show="hasHistory === 1" class="red_font" >考试已经开始， 不允许编辑</span>
+          <span v-show="hasHistory === 1 || isEditable === true" class="red_font" >考试已经开始，不允许编辑</span>
           <el-form ref="form" :rules="formRules" :inline="true" :model="form" class="demo-form-inline mt20 hidden add_width" label-width="80px">
             <el-col :span="8">
               <el-form-item label="考试名称" prop="name">
@@ -236,14 +236,14 @@
 
           </div>
           <div class="tc btn_margin">
-            <button type="button" class="inf_btn  " v-bind:disabled="hasHistory === 1" v-on:click="save">保  存</button>
+            <button type="button" class="inf_btn  " v-bind:disabled="hasHistory === 1 || isEditable === true" v-on:click="save">保  存</button>
 
-            <button type="button" class="inf_btn  ml20" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
+            <button type="button" class="inf_btn  ml20" v-bind:disabled="hasHistory === 1 || isEditable === true" v-on:click="publish">{{form.ispublished ? "隐藏": "发布"}}</button>
           </div>
-          <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="190" :headers="headers" :height="144" :value.sync="showIcon" :no-circle=true img-format="png">
+          <my-upload @input="closeIcon" :params="logoFormData"  field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="190" :headers="headers" :height="144" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
 
-          <my-upload @input="closeBanner" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="150" :value.sync="showBanner" :no-circle=true img-format="png">
+          <my-upload @input="closeBanner" :params="bannerFormData" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="150" :value.sync="showBanner" :no-circle=true img-format="png">
           </my-upload>
         </div>
       </section>
@@ -283,8 +283,26 @@
             return time.getTime() < Date.now() - 8.64e7
           }
         },
-        uploadIconUrl: api.uri.uploadExamIcon,
-        uploadBannerUrl: api.uri.uploadExamBanner,
+        // uploadIconUrl: api.uri.uploadExamIcon,
+        // uploadBannerUrl: api.uri.uploadExamBanner,
+        uploadIconUrl: '',
+        logoFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        },
+        uploadBannerUrl: '',
+        bannerFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        },
         // 是否显示icon上传
         showIcon: false,
         // 是否显示banner 上传
@@ -388,7 +406,8 @@
 
         id: 0,
 
-        hasHistory: 0
+        hasHistory: 0,
+        isEditable: false
       }
     },
     components: {
@@ -404,6 +423,7 @@
       this.headers = api.getUploadHeaders()
       lang.zh.preview = ''
       api.fetch(api.uri.getExam, {examid: this.id}).then(data => {
+        console.log(data)
         if (data.status === 1) {
           this.hasHistory = data.result.HasHistory
           this.adminList = data.result.AdminList
@@ -453,8 +473,38 @@
           this.examListChecked = examListCheckedArray.join(',')
         }
       })
+      this.initLogoFormData()
+      this.initBannerFormData()
     },
     methods: {
+      initLogoFormData () {
+        this.headers = api.getUploadHeaders()
+        api.fetch(api.uri.ossInfo, {businessType: 'exam-icon'}).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.logoFormData.OSSAccessKeyId = data.result.accessid
+            this.logoFormData.key = data.result.dir
+            this.logoFormData.policy = data.result.policy
+            this.logoFormData.signature = data.result.signature
+            this.logoFormData.expire = data.result.expire
+            this.uploadIconUrl = data.result.host
+          }
+        })
+      },
+      initBannerFormData () {
+        this.headers = api.getUploadHeaders()
+        api.fetch(api.uri.ossInfo, {businessType: 'exam-pic'}).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.bannerFormData.OSSAccessKeyId = data.result.accessid
+            this.bannerFormData.key = data.result.dir
+            this.bannerFormData.policy = data.result.policy
+            this.bannerFormData.signature = data.result.signature
+            this.bannerFormData.expire = data.result.expire
+            this.uploadBannerUrl = data.result.host
+          }
+        })
+      },
       publish () {
         console.log(this.form.ispublished)
       // 隐藏传0， 发布传1
@@ -668,6 +718,8 @@
             api.post(api.uri.updateExam, obj).then(data => {
               if (data.status === 1) {
                 router.push({name: 'examList'})
+              } else {
+                this.$message(data.message)
               }
             })
           } else {
@@ -682,20 +734,24 @@
         this.showBanner = !this.showBanner
       },
       cropIconSuccess (data, field) {
-        // this.iconData = data
+        this.iconData = data
+        this.logoFormData.key = this.logoFormData.key + api.guid() + '.png'
       },
       cropBannerSuccess (data, field) {
-        // this.bannerData = data
+        this.bannerData = data
+        this.bannerFormData.key = this.bannerFormData.key + api.guid() + '.png'
       },
       cropIconUploadSuccess (jsonData, field) {
-        if (jsonData.status === 1) {
-          this.iconSrc = jsonData.result
-        }
+        // if (jsonData.status === 1) {
+        //   this.iconSrc = jsonData.result
+        // }
+        this.iconSrc = this.uploadIconUrl + '/' + this.logoFormData.key
       },
       cropBannerUploadSuccess (jsonData, field) {
-        if (jsonData.status === 1) {
-          this.bannerSrc = jsonData.result
-        }
+        // if (jsonData.status === 1) {
+        //   this.bannerSrc = jsonData.result
+        // }
+        this.bannerSrc = this.uploadBannerUrl + '/' + this.bannerFormData.key
       },
       cropIconUploadFail (status, field) {
         this.$message({

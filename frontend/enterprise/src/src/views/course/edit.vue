@@ -106,6 +106,7 @@
                   :auto-upload="true"
                   :on-change="changeContentUpload"
                   :file-list="fileList"
+                  :data="contentFormData"
                   :headers="headers">
                   <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
                   <div slot="tip" class="el-upload__tip">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
@@ -179,10 +180,11 @@
             <button type="button" class="inf_btn  " v-on:click="submitCourse">保 存</button>
             <button type="button" class="inf_btn  ml20" v-on:click="publish">{{currentCourse.ispublished ? "隐藏": "发布"}}</button>
           </div>
-          <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="190" :headers="headers" :height="144" :value.sync="showIcon" :no-circle=true img-format="png">
+
+          <my-upload @input="closeIcon" field="file" @crop-success="cropIconSuccess" @crop-upload-success="cropIconUploadSuccess" @crop-upload-fail="cropIconUploadFail" :url="uploadIconUrl" :width="190" :headers="headers" :params="logoFormData" :height="144" :value.sync="showIcon" :no-circle=true img-format="png">
           </my-upload>
 
-          <my-upload @input="closeBanner" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :height="150" :value.sync="showBanner" :no-circle=true img-format="png">
+          <my-upload @input="closeBanner" field="file" @crop-success="cropBannerSuccess" @crop-upload-success="cropBannerUploadSuccess" @crop-upload-fail="cropBannerUploadFail" :url="uploadBannerUrl" :width="375" :headers="headers" :params="bannerFormData" :height="150" :value.sync="showBanner" :no-circle=true img-format="png">
           </my-upload>
         </div>
       </section>
@@ -230,9 +232,38 @@ export default {
       iconSrcDefault: axios.defaults.imageServer + api.image.course.icon,
       bannerSrcDefault: axios.defaults.imageServer + api.image.course.banner,
       // 图片上传地址
-      uploadIconUrl: api.uri.uploadCourseIcon,
-      uploadBannerUrl: api.uri.uploadCourseBanner,
-      uploadContentAction: api.uri.uploadContentAction,
+      // uploadIconUrl: api.uri.uploadCourseIcon,
+      // uploadBannerUrl: api.uri.uploadCourseBanner,
+      // uploadContentAction: api.uri.uploadContentAction,
+
+      uploadIconUrl: '',
+      logoFormData: {
+        key: '',
+        policy: '',
+        OSSAccessKeyId: '',
+        signature: '',
+        expire: 0,
+        success_action_status: '200'
+      },
+      uploadBannerUrl: '',
+      bannerFormData: {
+        key: '',
+        policy: '',
+        OSSAccessKeyId: '',
+        signature: '',
+        expire: 0,
+        success_action_status: '200'
+      },
+      uploadContentAction: '',
+      contentFormData: {
+        key: '',
+        policy: '',
+        OSSAccessKeyId: '',
+        signature: '',
+        expire: 0,
+        success_action_status: '200'
+      },
+
       // uploadContentFile: api.uri.addCourseContent,
       // 下拉框数据
       adminList: [],
@@ -341,8 +372,47 @@ export default {
     }).catch(error => {
       this.$message(error.message)
     })
+    this.initLogoFormData()
+    this.initBannerFormData()
+    api.fetch(api.uri.ossInfo, {businessType: 'course-office'}).then(data => {
+      if (data.status === 1) {
+        console.log('office', data.result)
+        this.contentFormData.OSSAccessKeyId = data.result.accessid
+        this.contentFormData.key = data.result.dir
+        this.contentFormData.policy = data.result.policy
+        this.contentFormData.signature = data.result.signature
+        this.contentFormData.expire = data.result.expire
+        this.uploadContentAction = data.result.host
+      }
+    })
   },
   methods: {
+    initLogoFormData () {
+      this.headers = api.getUploadHeaders()
+      api.fetch(api.uri.ossInfo, {businessType: 'course-icon'}).then(data => {
+        if (data.status === 1) {
+          this.logoFormData.OSSAccessKeyId = data.result.accessid
+          this.logoFormData.key = data.result.dir
+          this.logoFormData.policy = data.result.policy
+          this.logoFormData.signature = data.result.signature
+          this.logoFormData.expire = data.result.expire
+          this.uploadIconUrl = data.result.host
+        }
+      })
+    },
+    initBannerFormData () {
+      this.headers = api.getUploadHeaders()
+      api.fetch(api.uri.ossInfo, {businessType: 'course-pic'}).then(data => {
+        if (data.status === 1) {
+          this.bannerFormData.OSSAccessKeyId = data.result.accessid
+          this.bannerFormData.key = data.result.dir
+          this.bannerFormData.policy = data.result.policy
+          this.bannerFormData.signature = data.result.signature
+          this.bannerFormData.expire = data.result.expire
+          this.uploadBannerUrl = data.result.host
+        }
+      })
+    },
     publish () {
       console.log('ss')
       console.log(this.currentCourse)
@@ -469,7 +539,8 @@ export default {
               num: this.formInline.sequnce_num,
               title: this.formInline.sequnce_title,
               content: this.formInline.content,
-              attachmentUrl: this.formInline.orignal_path
+              attachmentUrl: this.formInline.orignal_path,
+              fileName: this.formInline.filename
             }).then(data => {
               this.dialogFormVisible = false
               // 更新contentList
@@ -489,7 +560,8 @@ export default {
               num: parseInt(this.formInline.sequnce_num),
               title: this.formInline.sequnce_title,
               content: this.formInline.content,
-              attachmentUrl: this.formInline.orignal_path
+              attachmentUrl: this.formInline.orignal_path,
+              fileName: this.formInline.filename
             }).then(data => {
               if (data.status === 1) {
                 this.dialogFormVisible = false
@@ -512,8 +584,10 @@ export default {
     },
     onContentSuccess (response, file, fileList) {
       // 上传成功保存两个属性， 保存课程时，判断是否有附件的依据
-      this.formInline.orignal_path = response.result
+      // this.formInline.orignal_path = response.result
       this.formInline.filename = file.name
+      this.formInline.orignal_path = this.uploadContentAction + '/' + this.contentFormData.key
+      console.log('content', this.formInline.orignal_path)
     },
     changeContentUpload (file, fileList) {
       // 保证页面显示一个附件
@@ -551,6 +625,8 @@ export default {
         this.fileList = []
         return false
       }
+      this.contentFormData.key = this.contentFormData.key + api.guid() + '.' + api.getFileExt(file.name)
+      console.log(this.contentFormData.key)
     },
     submitCourse () {
       this.$refs['form'].validate((valid) => {
@@ -604,19 +680,23 @@ export default {
     },
     cropIconSuccess (data, field) {
       this.iconData = data
+      this.logoFormData.key = this.logoFormData.key + api.guid() + '.png'
     },
     cropBannerSuccess (data, field) {
       this.bannerData = data
+      this.bannerFormData.key = this.bannerFormData.key + api.guid() + '.png'
     },
     cropIconUploadSuccess (jsonData, field) {
-      if (jsonData.status === 1) {
-        this.iconSrc = jsonData.result
-      }
+      // if (jsonData.status === 1) {
+      //   this.iconSrc = jsonData.result
+      // }
+      this.iconSrc = this.uploadIconUrl + '/' + this.logoFormData.key
     },
     cropBannerUploadSuccess (jsonData, field) {
-      if (jsonData.status === 1) {
-        this.bannerSrc = jsonData.result
-      }
+      // if (jsonData.status === 1) {
+      //   this.bannerSrc = jsonData.result
+      // }
+      this.bannerSrc = this.uploadBannerUrl + '/' + this.bannerFormData.key
     },
     cropIconUploadFail (status, field) {
       this.$message({

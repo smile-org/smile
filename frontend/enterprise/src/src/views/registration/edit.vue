@@ -156,11 +156,11 @@
           <my-upload
             @input="closeIcon"
             field="file"
-            :params="params"
+            :params="logoFormData"
             @crop-success="cropIconSuccess"
             @crop-upload-success="cropIconUploadSuccess"
             @crop-upload-fail="cropIconUploadFail"
-            :url="uploadUrl"
+            :url="uploadIconUrl"
             :width="190"
             :headers="headers"
             :height="144"
@@ -172,11 +172,11 @@
           <my-upload
             @input="closeBanner"
             field="file"
-            :params="params"
+            :params="bannerFormData"
             @crop-success="cropBannerSuccess"
             @crop-upload-success="cropBannerUploadSuccess"
             @crop-upload-fail="cropBannerUploadFail"
-            :url="uploadUrl"
+            :url="uploadBannerUrl"
             :width="375"
             :headers="headers"
             :height="150"
@@ -242,11 +242,30 @@
         showIcon: false,
         showBanner: false,
         headers: {},
-        uploadIconUrl: api.uri.uploadEnrollmentIcon,
-        uploadBannerUrl: api.uri.uploadEnrollmentBanner,
-        uploadUrl: '',
-        params: {
-          pictype: ''
+        // uploadIconUrl: api.uri.uploadEnrollmentIcon,
+        // uploadBannerUrl: api.uri.uploadEnrollmentBanner,
+        // uploadUrl: '',
+        // params: {
+        //   pictype: ''
+        // },
+
+        uploadIconUrl: '',
+        logoFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
+        },
+        uploadBannerUrl: '',
+        bannerFormData: {
+          key: '',
+          policy: '',
+          OSSAccessKeyId: '',
+          signature: '',
+          expire: 0,
+          success_action_status: '200'
         },
 
         startDateInContentErrMsg: '',
@@ -295,8 +314,38 @@
           this.enrollment_id = data.result.EnrollmentToBeEidt.enrollment_id
         }
       })
+      this.initLogoFormData()
+      this.initBannerFormData()
     },
     methods: {
+      initLogoFormData () {
+        this.headers = api.getUploadHeaders()
+        api.fetch(api.uri.ossInfo, {businessType: 'exam-icon'}).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.logoFormData.OSSAccessKeyId = data.result.accessid
+            this.logoFormData.key = data.result.dir
+            this.logoFormData.policy = data.result.policy
+            this.logoFormData.signature = data.result.signature
+            this.logoFormData.expire = data.result.expire
+            this.uploadIconUrl = data.result.host
+          }
+        })
+      },
+      initBannerFormData () {
+        this.headers = api.getUploadHeaders()
+        api.fetch(api.uri.ossInfo, {businessType: 'exam-pic'}).then(data => {
+          if (data.status === 1) {
+            console.log(data.result)
+            this.bannerFormData.OSSAccessKeyId = data.result.accessid
+            this.bannerFormData.key = data.result.dir
+            this.bannerFormData.policy = data.result.policy
+            this.bannerFormData.signature = data.result.signature
+            this.bannerFormData.expire = data.result.expire
+            this.uploadBannerUrl = data.result.host
+          }
+        })
+      },
       publish () {
         console.log(this.form.ispublished)
       // 隐藏传0， 发布传1
@@ -481,13 +530,22 @@
       },
       // 1: 上传logo; 2: 上传banner
       uploadImage: function (number) {
+        // if (number === 1) {
+        //   this.uploadUrl = axios.defaults.baseURL + this.uploadIconUrl
+        //   this.params.pictype = 'logo'
+        //   this.showIcon = !this.showIcon
+        // } else {
+        //   this.uploadUrl = axios.defaults.baseURL + this.uploadBannerUrl
+        //   this.params.pictype = 'banner'
+        //   this.showBanner = !this.showBanner
+        // }
         if (number === 1) {
-          this.uploadUrl = axios.defaults.baseURL + this.uploadIconUrl
-          this.params.pictype = 'logo'
+          // this.uploadUrl = axios.defaults.baseURL + this.uploadIconUrl
+          // this.params.pictype = 'logo'
           this.showIcon = !this.showIcon
         } else {
-          this.uploadUrl = axios.defaults.baseURL + this.uploadBannerUrl
-          this.params.pictype = 'banner'
+          // this.uploadUrl = axios.defaults.baseURL + this.uploadBannerUrl
+          // this.params.pictype = 'banner'
           this.showBanner = !this.showBanner
         }
       },
@@ -497,20 +555,40 @@
       closeBanner: function (value) {
         this.showBanner = value
       },
-      cropIconSuccess (data, field) {
+      // cropIconSuccess (data, field) {
 
-      },
-      cropIconUploadSuccess (jsonData, field) {
-        this.iconSrc = jsonData.result
-      },
+      // },
+      // cropIconUploadSuccess (jsonData, field) {
+      //   this.iconSrc = jsonData.result
+      // },
       cropIconUploadFail (status, field) {
 
       },
-      cropBannerSuccess (data, field) {
+      // cropBannerSuccess (data, field) {
 
+      // },
+      // cropBannerUploadSuccess (jsonData, field) {
+      //   this.bannerSrc = jsonData.result
+      // },
+      cropIconSuccess (data, field) {
+        // this.iconData = data
+        this.logoFormData.key = this.logoFormData.key + api.guid() + '.png'
+      },
+      cropBannerSuccess (data, field) {
+        // this.bannerData = data
+        this.bannerFormData.key = this.bannerFormData.key + api.guid() + '.png'
+      },
+      cropIconUploadSuccess (jsonData, field) {
+        // if (jsonData.status === 1) {
+        //   this.iconSrc = jsonData.result
+        // }
+        this.iconSrc = this.uploadIconUrl + '/' + this.logoFormData.key
       },
       cropBannerUploadSuccess (jsonData, field) {
-        this.bannerSrc = jsonData.result
+        // if (jsonData.status === 1) {
+        //   this.bannerSrc = jsonData.result
+        // }
+        this.bannerSrc = this.uploadBannerUrl + '/' + this.bannerFormData.key
       },
       cropBannerUploadFail (status, field) {
 
