@@ -89,7 +89,8 @@
             <img class="personal_go" src="../../assets/img/go02.png"/>
           </router-link>
         </li>
-        <li class="" @click="logout()">
+        <!--<li class="" @click="logout()">-->
+        <li class=""  @click="open">
           <!-- <router-link v-bind:to="{name: 'changePWD'}" class="quyu_click"> -->
           <!--<img class="icon_per" src="../../assets/img/logo_img10.png"/>-->
           <span class="text_iconfont">&#xe60f;</span>
@@ -99,23 +100,24 @@
         </li>
       </ul>
     </section>
-    <!--<div class="exit_fade" @click="logout()">-->
-    <!--</div>-->
-    <!--<div class="exit_con" @click="logout()">-->
-      <!--<div class="exit_box">-->
-        <!--<p class="exit_font1">-->
-          <!--是否退出登录-->
-        <!--</p>-->
-        <!--<ul class="exit_button">-->
-          <!--<li class="fl">-->
-            <!--<button>取消</button>-->
-          <!--</li>-->
-          <!--<li class="fl">-->
-            <!--<button >确定</button>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-    <!--</div>-->
+    <div class="exit_fade" v-show="showModal" v-on:click="cancel">
+    </div>
+    <!--<div  class="c-modal" v-show="showModal"></div>-->
+    <div class="exit_con" v-show="showModal">
+      <div class="exit_box">
+        <p class="exit_font1">
+          是否退出登录
+        </p>
+        <ul class="exit_button">
+          <li class="fl">
+            <button type="button" v-on:click="cancel">取消</button>
+          </li>
+          <li class="fl">
+            <button type="button" v-on:click="confirmButtonText" >确定</button>
+          </li>
+        </ul>
+      </div>
+    </div>
     <v-footer currentTag="4"></v-footer>
   </div>
 </template>
@@ -132,6 +134,7 @@
   export default {
     data: function () {
       return {
+        showModal: false,
         currentPage: -1,
         seen: false, // 是否显示更换头像界面
         myCroppa: {},
@@ -155,18 +158,29 @@
         this.seen = !this.seen
         console.log(this.data.avatar)
       },
-      logout: function () {
-        this.$confirm('是否退出登录', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          sessionStorage.clear()
-          localStorage.clear()
-          router.push({name: 'login'})
-        }).catch(() => {
-
-        })
+//      logout: function () {
+//        this.$confirm('是否退出登录', {
+//          confirmButtonText: '确定',
+//          cancelButtonText: '取消',
+//          type: 'warning'
+//        }).then(() => {
+//          sessionStorage.clear()
+//          localStorage.clear()
+//          router.push({name: 'login'})
+//        }).catch(() => {
+//
+//        })
+//      },
+      cancel: function () {
+        this.showModal = false
+      },
+      open: function () {
+        this.showModal = true
+      },
+      confirmButtonText: function () {
+        sessionStorage.clear()
+        localStorage.clear()
+        router.push({name: 'login'})
       },
       // 上传头像
       upload: function () {
@@ -194,6 +208,7 @@
         }.bind(this))
       }
     },
+
     filters: {
       formatImage: function (uri) {
         return axios.defaults.imageServer + uri
@@ -202,80 +217,79 @@
   }
 
 </script>
-<style scope="scoped">
-  .el-message-box{
-    border-radius: .1rem;
-    width: 80%!important;
-    /*padding:0 .3rem;*/
-  }
-  .el-message-box__header,.el-message-box__status.el-icon-warning,.el-message-box__headerbtn{
-    display: none;
-  }
-  .el-message-box__btns {
-    padding: 0 .1rem;
-    text-align: right;
-  }
-  .el-message-box__content{
-    font-size: .3rem;
-    color: #666;
-    text-align: center;
-    /*height:1.49rem;*/
-    /*line-height:1.49rem;*/
-  }
-  .el-message-box__message {
-    margin-left: 0!important;
-  }
-  .el-button{
-    border:none;
-    font-weight: normal;
-    font-size: .3rem;
-    background: #fff;
-    color: #00b553;
-    /*padding: .1rem .3rem;*/
-    flex: 1;
-    border-radius: 0;
-  }
-  .el-button:hover,.el-button:active,.el-button:focus{
-    border:none;
-    background: #fff;
-  }
-  .el-button--primary.is-active:hover,.el-button--primary.is-active, .el-button--primary:focus{
-    border:none;
-    background: #fff;
-    color: #00b553;
-  }
-  .el-button--primary.is-active, .el-button--primary:active{
-    border:none;
-    background: #fff;
-    color: #00b553;
-  }
-  .el-button:focus, .el-button:hover{
-    color: #00b553;
-  }
-  .el-message-box__btns{
-    display: flex; /*设为伸缩容器*/
-    flex-flow: row; /*伸缩项目单行排列*/
-    align-items: center;
-    justify-content: center;
-    height: 1rem;
-    line-height: 0rem;
-    position: relative;
-  }
-  .el-message-box__btns:before{
-    content: '';
-    border-top: 1px solid #e8e8e8;
-    width: 90%;
-    top: 0;
-    right: 5%;
-    position: absolute;
+<!--<style scope="scoped">-->
+  <!--.el-message-box{-->
+    <!--border-radius: .1rem!important;-->
+    <!--width: 80%!important;-->
+    <!--/*padding:0 .3rem;*/-->
+  <!--}-->
+  <!--.el-message-box__header,.el-message-box__status.el-icon-warning,.el-message-box__headerbtn{-->
+    <!--display: none!important;-->
+  <!--}-->
+  <!--.el-message-box__btns {-->
+    <!--padding: 0 .1rem!important;-->
+    <!--text-align: right!important;-->
+  <!--}-->
+  <!--.el-message-box__content{-->
+    <!--font-size: .3rem!important;-->
+    <!--color: #666!important;-->
+    <!--text-align: center!important;-->
+    <!--/*height:1.49rem;*/-->
+    <!--/*line-height:1.49rem;*/-->
+  <!--}-->
+  <!--.el-message-box__message {-->
+    <!--margin-left: 0!important;-->
+  <!--}-->
+  <!--.el-button{-->
+    <!--border:none!important;-->
+    <!--font-weight: normal!important;-->
+    <!--font-size: .3rem!important;-->
+    <!--background: #fff!important;-->
+    <!--color: #00b553!important;-->
+    <!--/*padding: .1rem .3rem;*/-->
+    <!--flex: 1!important;-->
+    <!--border-radius: 0!important;-->
+  <!--}-->
+  <!--.el-button:hover,.el-button:active,.el-button:focus{-->
+    <!--border:none!important;-->
+    <!--background: #fff!important;-->
+  <!--}-->
+  <!--.el-button&#45;&#45;primary.is-active:hover,.el-button&#45;&#45;primary.is-active, .el-button&#45;&#45;primary:focus{-->
+    <!--border:none!important;-->
+    <!--background: #fff!important;-->
+    <!--color: #00b553!important;-->
+  <!--}-->
+  <!--.el-button&#45;&#45;primary.is-active, .el-button&#45;&#45;primary:active{-->
+    <!--border:none!important;-->
+    <!--background: #fff!important;-->
+    <!--color: #00b553!important;-->
+  <!--}-->
+  <!--.el-button:focus, .el-button:hover{-->
+    <!--color: #00b553!important;-->
+  <!--}-->
+  <!--.el-message-box__btns{-->
+    <!--display: flex!important; /*设为伸缩容器*/-->
+    <!--flex-flow: row!important; /*伸缩项目单行排列*/-->
+    <!--align-items: center!important;-->
+    <!--justify-content: center!important;-->
+    <!--height: 1rem!important;-->
+    <!--line-height: 0rem!important;-->
+    <!--position: relative!important;-->
+  <!--}-->
+  <!--.el-message-box__btns:before{-->
+    <!--content: '';-->
+    <!--border-top: 1px solid #e8e8e8!important;-->
+    <!--width: 90%!important;-->
+    <!--top: 0!important;-->
+    <!--right: 5%!important;-->
+    <!--position: absolute!important;-->
 
-  }
-  .el-message-box__btns button:nth-child(2) {
-    margin-left: .1rem;
-    border-left: 1px solid #e8e8e8;
-  }
-
-</style>
+  <!--}-->
+  <!--.el-message-box__btns button:nth-child(2) {-->
+    <!--margin-left: .1rem!important;-->
+    <!--border-left: 1px solid #e8e8e8!important;-->
+  <!--}-->
+<!--</style>-->
 <style>
   .text_iconfont{
     font-family: jiudian;
@@ -376,21 +390,23 @@
   }
   .exit_con{
     position: absolute;
-    top: 50%;
-    right: .5rem;
-    left: .5rem;
-    margin-top: -1.5rem;
+    /*top: 50%;*/
+    /*right: .5rem;*/
+    /*left: .5rem;*/
+    /*margin-top: -1.5rem;*/
     z-index: 10001;
   }
   .exit_box{
     /*width:100%;*/
     background: #fff;
     height:2.5rem;
-    left: .5rem;
-    right: .5rem;
+    left: .8rem;
+    right: .8rem;
     text-align: center;
     border-radius: .1rem;
-
+    top: 50%;
+    margin-top: -1.5rem;
+    position: fixed;
     padding: 0 .3rem;
   }
   .exit_font1{
