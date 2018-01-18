@@ -28,6 +28,7 @@
   import api from '../../services/api'
   import commonHeader from '../../components/CommonHeader'
   import router from '../../router'
+  import md5 from 'js-md5'
   export default {
     data: function () {
       return {
@@ -46,7 +47,7 @@
           this.showError = true
           return
         }
-        api.post(api.uri.updatePassword, {password: this.confirmPassword}).then(data => {
+        api.post(api.uri.updatePassword, {password: md5(this.confirmPassword)}).then(data => {
           if (data.status === 1) {
             // TODO: element ui 弹出框后再跳转
             router.push({name: 'me'})
