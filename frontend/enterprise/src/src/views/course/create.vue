@@ -554,7 +554,7 @@ export default {
       // 上传成功保存两个属性， 保存课程时，判断是否有附件的依据
       // this.formInline.url = response.result
       this.formInline.name = file.name
-      this.formInline.url = this.uploadContentAction + this.contentFormData.key
+      this.formInline.url = this.uploadContentAction + '/' + this.contentFormData.key
     },
     changeContentUpload (file, fileList) {
       // 保证页面显示一个附件
