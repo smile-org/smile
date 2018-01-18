@@ -83,6 +83,7 @@ export default {
   filters: {
     formatImage: function (uri) {
       return axios.defaults.imageServer + uri
+//      return !uri ? '' : uri.includes('http://') ? uri : axios.defaults.imageServer + uri
     }
   }
 

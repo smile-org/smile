@@ -41,7 +41,7 @@
                         </el-table-column>
                         <el-table-column prop="job_number" align="center" label="工号" width="">
                         </el-table-column>
-                        <el-table-column prop="email" align="center" label="邮箱" width="">
+                        <el-table-column prop="email" align="center" label="邮箱" min-width="160">
                         </el-table-column>
                         <el-table-column prop="set" align="center" label="设置" width="">
                             <template scope="scope">
