@@ -328,7 +328,8 @@ where created_at
     </select>
 
     <select id="getLastStudyDaysCountByUserid"   resultType="int" >
-        select  DATEDIFF(    CURDATE(), Date( max(learn_at) ))  from learn_progress     where user_id=#{userid}
+select  case   when count is not null then count else -1  end  from (
+        select   DATEDIFF(    CURDATE(), Date( max(learn_at) )) as   count     from learn_progress     where user_id=#{userid})t
     </select>
 
 
