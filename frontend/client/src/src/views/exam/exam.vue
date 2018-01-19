@@ -85,11 +85,12 @@
         <li v-on:click="gotoQuestion(index)" v-for="(item, index) in data.questions" :key="item.question_id" :class="{c_o: item.lastStatus === 'indoubt', c_g: item.lastStatus === 'finished'}">{{index + 1}}</li>
       </ul>
       <div class="el-row dio_btn mt3">
+
         <div class="el-col el-col-12">
-          <button type="button" class="c_g btn fr " v-on:click="submitExam">确定</button>
+          <button type="button" class="c_o  btn fr" v-on:click='showModal=false'>取消</button>
         </div>
         <div class="el-col el-col-12">
-          <button type="button" class="c_o  btn fl" v-on:click='showModal=false'>取消</button>
+          <button type="button" class="c_g btn fl " v-on:click="submitExam">确定</button>
         </div>
       </div>
     </div>

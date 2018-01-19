@@ -30,7 +30,7 @@
             </li>
           </ul>
         </el-tab-pane>
-        <el-tab-pane label="已完成" name="second">
+        <el-tab-pane label="已结束" name="second">
           <ul class="tasking_ul " v-infinite-scroll="loadMore" infinite-scroll-disabled="isBusy_finish" infinite-scroll-distance="10">
             <li class="tasking_li" v-for="item in dataFinish" :key="item.task_id">
               <router-link v-bind:to="{path: '/myTaskDetail', query: {id: item.task_id}}">
