@@ -114,6 +114,7 @@ update learn_task set indicator=0 where task_id=#{task_id}
         <if test="task_title!=null">and task_title like '%${task_title}%'</if>
         <if test="start_date!=null">and expiration_date &gt;=    #{start_date} </if>
         <if test="end_date!=null">and expiration_date  &lt;=   #{end_date}</if>
+        <if test="companyId!=null">and company_id  =   #{companyId}</if>
         limit #{skip} ,#{take}
 
     </select>
@@ -126,6 +127,7 @@ update learn_task set indicator=0 where task_id=#{task_id}
         <if test="task_title!=null">and task_title like '%${task_title}%'</if>
         <if test="start_date!=null">and expiration_date &gt;=    #{start_date} </if>
         <if test="end_date!=null">and expiration_date  &lt;=   #{end_date}</if>
+        <if test="companyId!=null">and company_id  =   #{companyId}</if>
 
     </select>
 
