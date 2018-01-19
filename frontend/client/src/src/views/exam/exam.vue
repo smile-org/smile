@@ -3,7 +3,7 @@
     <common-header></common-header>
   <section>
     <el-row class="course_tit">
-      <el-col :span="16"><h3>{{data.exam.exam_title}}</h3></el-col>
+      <el-col :span="16"><h3>{{examTitle}}</h3></el-col>
       <el-col :span="4" class="tc" ><a class="exam_green" v-on:click="goQuestionList">答题卡</a></el-col>
       <el-col :span="4" class="tr" ><a class="exam_green" v-on:click="goSubmitModal">交卷</a></el-col>
     </el-row>
@@ -146,7 +146,9 @@ export default {
       historyId: 0,
 
       // 模态对话框类型， 0：答题卡； 1: 交卷；2：时间到交卷
-      popupType: 0
+      popupType: 0,
+
+      examTitle: ''
     }
   },
   components: {
@@ -157,8 +159,9 @@ export default {
     this.historyId = parseInt(this.$route.query.historyId)
     api.fetch(api.uri.getExamQuestions, {examid: this.id}).then(data => {
       if (data.status === 1) {
-        console.log(data.result)
+        console.log('data.result', data.result)
         this.data = data.result
+        this.examTitle = data.result.exam.exam_title
         this.questionCount = this.data.questions.length
         this.currentQuestion = this.data.questions[this.currentQuestionNo - 1]
         console.log(this.currentQuestion)
@@ -240,6 +243,9 @@ export default {
       })
     },
     goPre: function () {
+      if (this.currentQuestionNo === 1) {
+        return
+      }
       var self = this
       this.updateQuestion(function (err) {
         if (!err) {
@@ -248,6 +254,9 @@ export default {
       })
     },
     goNext: function () {
+      if (this.currentQuestionNo === this.questionCount) {
+        return
+      }
       var self = this
       this.updateQuestion(function (err) {
         if (!err) {

@@ -188,24 +188,32 @@
           alert('no image to upload')
           return
         }
-        var imgUrl = this.myCroppa.generateDataUrl()
-        this.myCroppa.generateBlob(function (blob) {
-          var fd = new FormData()
-          fd.append('file', blob)
-          axios({
-            url: axios.defaults.baseURL + '/UploadUserPic',
-            method: 'post',
-            data: fd,
-            headers: {'Content-Type': 'multipart/form-data'}
-          }).then((res) => {
-            if (res.status === 1) {
-              document.getElementById('myImg').src = imgUrl
-              this.seen = !this.seen
-            } else {
-              alert('上传失败！')
-            }
-          })
-        }.bind(this))
+        // var imgUrl = this.myCroppa.generateDataUrl()
+        api.fetch(axios.defaults.baseURL + '/ossInfo', {businessType: 'header'}).then(data => {
+          if (data.status === 1) {
+            console.log(data)
+            var uploadUrl = data.result.host
+            var relatedPath = data.result.dir + api.guid() + '.png'
+            var imageUrl = uploadUrl + '/' + relatedPath
+            var fd = new FormData()
+            fd.append('OSSAccessKeyId', data.result.accessid)
+            fd.append('key', relatedPath)
+            fd.append('policy', data.result.policy)
+            fd.append('signature', data.result.signature)
+            fd.append('expire', data.result.expire)
+            fd.append('host', data.result.host)
+            var that = this
+            this.myCroppa.generateBlob(function (blob) {
+              fd.append('file', blob)
+              api.post(uploadUrl, fd).then(d => {
+                document.getElementById('myImg').src = imageUrl
+                api.post(api.uri.uploadUserAvatar, {avatar: imageUrl}).then(av => {
+                  that.seen = !that.seen
+                })
+              })
+            })
+          }
+        })
       }
     },
 

@@ -199,6 +199,23 @@ export default {
     deleteSearchHistory: '/deleteSearchHistory',
     search: '/search',
 
-    getBannerAndLogo: '/GetCompanyPic'
+    getBannerAndLogo: '/GetCompanyPic',
+
+    uploadUserAvatar: '/UpdateUserPicPath'
+  },
+
+  // 用于生成uuid
+  S4: function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+  },
+  guid: function () {
+    return (this.S4() + this.S4() + '-' + this.S4() + '-' + this.S4() + '-' + this.S4() + '-' + this.S4() + this.S4() + this.S4())
+  },
+
+  // 获取文件扩展名
+  getFileExt: function (fileName) {
+    var arrLen = fileName.split('.').length - 1
+    var extension = fileName.split('.')[arrLen].toUpperCase()
+    return extension
   }
 }
