@@ -17,6 +17,16 @@ public class backTask {
     private        int skip;
     private              int take;
 
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    private int companyId;
+
 
 
     public int getTask_id() {

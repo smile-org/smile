@@ -413,6 +413,8 @@ public class TaskController {
             bt.setSkip(skip);
             bt.setTake(take);
 
+            bt.setCompanyId(user.getCompany_id());
+
             List<backTask>   a= taskService.backGetTaskList( bt);
            int total=   taskService.backGetTaskListCount( bt);
 
