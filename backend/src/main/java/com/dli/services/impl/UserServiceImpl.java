@@ -194,7 +194,7 @@ public class UserServiceImpl implements UserService {
          final String product = "Dysmsapi";
          final String domain = "dysmsapi.aliyuncs.com";
 
-         final String sign_name = "学啦";
+         final String sign_name = "玖点e学";
 
         //初始化acsClient,暂不支持region化
         IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
