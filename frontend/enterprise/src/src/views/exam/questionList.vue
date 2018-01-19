@@ -116,7 +116,7 @@
   export default {
     data: function () {
       return {
-        templateExcelUrl: axios.defaults.imageServer + '/import/template/Question.xlsx',
+        templateExcelUrl: axios.defaults.fileServer + '/import/template/Question.xlsx',
         tableData: [],
         take: 10,
         currentPage: 1,
@@ -228,7 +228,7 @@
         }).then(data => {
           if (data.status === 1) {
             console.log(data.result)
-            this.excelUrl = axios.defaults.imageServer + data.result
+            this.excelUrl = axios.defaults.fileServer + data.result
             this.showloading = false
             this.dialogTableVisible = true
           }

@@ -8,6 +8,7 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://123.207.154.226:8888'
 // axios.defaults.imageServer = 'http://192.168.1.106:4001'
 axios.defaults.imageServer = '' // 'http://123.207.154.226:4001'
+axios.defaults.fileServer = 'http://123.207.154.226:4001'
 
 /**
  * 拦截器， 对所有的请求。

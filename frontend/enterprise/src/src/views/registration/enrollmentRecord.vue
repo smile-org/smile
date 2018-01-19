@@ -145,7 +145,7 @@
         }
         api.fetch(api.uri.exportEnrollmentResultList, {title: this.form.title, teacher: this.form.teacher, start: date1, end: date2}).then(data => {
           if (data.status === 1) {
-            this.excelUrl = axios.defaults.imageServer + data.result
+            this.excelUrl = axios.defaults.fileServer + data.result
             this.showloading = false
             this.dialogTableVisible = true
           }

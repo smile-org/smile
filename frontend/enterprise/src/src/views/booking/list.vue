@@ -129,7 +129,7 @@
         }).then(data => {
           if (data.status === 1) {
             console.log(data.result)
-            this.excelUrl = axios.defaults.imageServer + data.result
+            this.excelUrl = axios.defaults.fileServer + data.result
             this.showloading = false
             this.dialogTableVisible = true
           }

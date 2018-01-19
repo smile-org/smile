@@ -134,7 +134,7 @@
         take: 10,
         currentPage: 0,
         total: 0,
-        excelUrl: axios.defaults.imageServer + '/import/template/User.xlsx',
+        excelUrl: axios.defaults.fileServer + '/import/template/User.xlsx',
         dialogUploadVisible: false,
         uploadContentAction: api.uri.uploadEmployeeExcel,
         headers: {},
@@ -275,7 +275,7 @@
         }).then(data => {
           if (data.status === 1) {
             console.log(data.result)
-            this.exportExcelUrl = axios.defaults.imageServer + data.result
+            this.exportExcelUrl = axios.defaults.fileServer + data.result
             this.showloading = false
             this.dialogTableVisible = true
           }
