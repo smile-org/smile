@@ -87,13 +87,13 @@
           <p class="addBook_list"><span>1. </span>sssssssss</p>
         </div>-->
 
-        <div class="el-row dio_btn yk">
-          <div class="el-col el-col-12">
-            <button type="button" class="c_g btn fr mr2" v-on:click="subNewRequirement">确定</button>
-          </div>
-          <div class="el-col el-col-12">
-            <button type="button" class="c_o  btn fl" v-on:click="cancel">取消</button>
-          </div>
+        <div class="el-row dio_btn yk tc">
+          <!--<div class="el-col el-col-12">-->
+            <button type="button" class="c_o  btn" style="margin-right: .2rem;" v-on:click="cancel">取消</button>
+          <!--</div>-->
+          <!--<div class="el-col el-col-12">-->
+            <button type="button" class="c_g btn  " v-on:click="subNewRequirement">确定</button>
+          <!--</div>-->
         </div>
       </div>
     </div>
