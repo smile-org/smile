@@ -36,7 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void adminAddCompany(adminCompany c )  throws  Exception {
+    public void adminAddCompany(  String avatar , adminCompany c )  throws  Exception {
 
 
             companyRepo.adminAddCompany(c);
@@ -49,7 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
             User u = new User();
             u.setFull_name(c.getContact_person());
             u.setCell_phone(c.getPhone_number());
-            u.setAvatar("/default/header.png");
+            u.setAvatar(avatar);
             u.setCompany_id(c.getCompany_id());
 
             u.setToken(Helper.GenerateToken(u.getCell_phone()));

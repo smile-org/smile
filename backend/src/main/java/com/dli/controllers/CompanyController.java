@@ -208,6 +208,8 @@ public class CompanyController {
         return result;
     }
 
+    @Value("${defaultheader}")
+    private String defaultheader;
 
     @RequestMapping(value = "/admin/AddCompany", method = RequestMethod.POST)
     public Map adminAddCompany(@RequestBody Map body, @RequestHeader Map header) {
@@ -261,7 +263,7 @@ public class CompanyController {
                 c.setUser_limit(user_limit);
                 c.setExpiration_date(Helper.dateParse(expiration_date));
 
-                companyService.adminAddCompany(c);
+                companyService.adminAddCompany(  defaultheader,c);
 
 
                 // String targetpath = String.format(homebusinesslicenceprefix.replace("%s-", ""), c.getCompany_id());
