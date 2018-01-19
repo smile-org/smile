@@ -69,11 +69,11 @@
                         <el-table :data="data" border style="width: 100%">
                             <el-table-column prop="full_name" align="center" label="姓名" min-width="100">
                             </el-table-column>
-                            <el-table-column prop="cell_phone" align="center" label="手机" min-width="120">
+                            <el-table-column prop="cell_phone" align="center" label="手机" min-width="110">
                             </el-table-column>
                             <el-table-column prop="job_number" align="center" label="工号" min-width="140">
                             </el-table-column>
-                            <el-table-column prop="email" align="center" label="邮箱" min-width="140">
+                            <el-table-column prop="email" align="center" label="邮箱" min-width="160">
                             </el-table-column>
                             <el-table-column prop="department" align="center" label="部门" width="120">
                             </el-table-column>

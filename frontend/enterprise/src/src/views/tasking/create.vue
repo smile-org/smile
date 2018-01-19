@@ -69,12 +69,12 @@
                   <h3 class="tasking_h3">查询结果</h3>
                   <!-- 查询课程列表 -->
                   <el-table border ref="multipleTable" :data="courseData">
+                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
                         <el-button type="text" size="small" @click="addCourse(scope.row,scope.row.course_id)">加入任务</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                   </el-table>
                   <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleCurrentChange"
                                  :current-page="currentPage" :page-size="take" :total="total"></el-pagination>
@@ -83,12 +83,12 @@
                   <h3 class="tasking_h3 mt20">已选课程</h3>
                   <!-- 已选课程列表 -->
                   <el-table border ref="multipleTable" :data="selCourseData">
+                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
                         <el-button type="text" class="red_font" size="small" @click="delCourse(scope.$index)">取消</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                   </el-table>
                 </el-row>
                 <div class="tc btn_margin">
@@ -143,12 +143,12 @@
                   <h3 class="tasking_h3">查询结果</h3>
                   <!-- 查询考试列表 -->
                   <el-table border ref="multipleTable" :data="examData">
+                    <el-table-column property="exam_title" align="center" label="考试名称" width=""></el-table-column>
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
                         <el-button type="text" size="small" @click="pushExam(scope.row,scope.row.exam_id)">加入任务</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="exam_title" align="center" label="考试名称" width=""></el-table-column>
                   </el-table>
                   <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleCurrentChange1"
                                  :current-page="currentPage" :page-size="take" :total="total"></el-pagination>
@@ -156,12 +156,12 @@
                 <el-row>
                   <h3 class="tasking_h3 mt20">已选考试</h3>
                   <el-table border ref="multipleTable" :data="selExamData">
+                    <el-table-column property="exam_title" align="center" label="考试名称" width=""></el-table-column>
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
                         <el-button type="text" class="red_font" size="small" @click="delExam(scope.$index)">取消</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="exam_title" align="center" label="考试名称" width=""></el-table-column>
                   </el-table>
                 </el-row>
                 <div class="tc btn_margin">
@@ -215,12 +215,12 @@
                 <el-row>
                   <h3 class="tasking_h3">查询结果</h3>
                   <el-table border ref="multipleTable" :data="enrollmentData">
+                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
                         <el-button type="text" size="small" @click="pushEnrollment(scope.row,scope.row.period_id)">加入任务</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="title" align="center" label="课程名称" width=""></el-table-column>
                   </el-table>
                   <el-pagination class="tc mt20" small layout="total, prev, pager, next" @current-change="handleCurrentChange2"
                                  :current-page="currentPage" :page-size="take" :total="total"></el-pagination>
@@ -228,12 +228,12 @@
                 <el-row>
                   <h3 class="tasking_h3 mt20">已选课程</h3>
                   <el-table border ref="multipleTable" :data="selEnrollmentData">
+                    <el-table-column property="title" align="center" label="报名名称" width=""></el-table-column>
                     <el-table-column label="操作" align="center">
                       <template scope="scope">
                         <el-button type="text" class="red_font" size="small" @click="delEnrollment(scope.$index)">取消</el-button>
                       </template>
                     </el-table-column>
-                    <el-table-column property="title" align="center" label="报名名称" width=""></el-table-column>
                   </el-table>
                 </el-row>
                 <div class="tc btn_margin">
