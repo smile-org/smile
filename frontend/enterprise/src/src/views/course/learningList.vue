@@ -55,7 +55,7 @@
             </el-table-column>
             <el-table-column align="center" label="学习时间">
               <template scope="scope">
-                {{scope.row.learn_at|formatDate}}
+                {{scope.row.learn_at}}
               </template>
             </el-table-column>
           </el-table>
