@@ -124,7 +124,7 @@ public class HomeController {
         OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
 
         try {
-            long expireTime = 300;
+            long expireTime = 1800;
             long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
 
             java.sql.Date expiration = new java.sql.Date(expireEndTime);
