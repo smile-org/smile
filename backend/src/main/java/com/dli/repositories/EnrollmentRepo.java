@@ -96,4 +96,6 @@ public interface EnrollmentRepo {
 
     int  adminGetEnrollmentResource();
 
+    int   getEnrommentCommentCountByUseridEnrollmentid(  @Param("userid")  int userid,   @Param("enrollmentid") int enrollmentid);
+
 }

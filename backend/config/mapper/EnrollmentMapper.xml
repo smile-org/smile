@@ -231,6 +231,8 @@ on result.enrollment_id= o3.enrollment_id
         insert  enrollment_comment values(null, #{userid},#{enrollmentid}, #{star},#{comment}, now() ,1 );
     </insert>
 
+
+
     <select id="getEnrollmentCommentList" resultMap="EnrollmentCommentMap">
         select  c.*  , u.full_name as user_idName, u.avatar as   user_idAvatar from   enrollment_comment  c  join user u on  c.user_id=u.user_id  where c.indicator =1
         and  enrollment_id=#{enrollmentid}   order by  c.created_at desc;
@@ -536,5 +538,10 @@ where period_id=#{period_id}
 
     <select id="adminGetEnrollmentResource"  resultType="int">
         select  count(*)  as  enrollment_count from enrollment_period where indicator=1;
+    </select>
+
+
+    <select id="getEnrommentCommentCountByUseridEnrollmentid"  resultType="int">
+        select  count(*) from   enrollment_comment where user_id= #{userid} and   enrollment_id= #{enrollmentid}
     </select>
 </mapper>

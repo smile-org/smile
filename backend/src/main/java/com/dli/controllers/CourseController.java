@@ -237,16 +237,27 @@ public class CourseController {
             result.put(Constant.result, "无效的登录用户");
             return result;
         }
-
         try {
             int courseid = (int) body.get("courseid");
             int star = (int) body.get("star");
             String comment = (String) body.get("comment");
 
-            courseService.addCourseComment(user.getUser_id(), courseid, star, comment, new Date());
 
-            result.put(Constant.status, 1);
-            result.put(Constant.result, "评价成功");
+           boolean    exist = courseService.getCourseCommentCountByCourseidUserid(   courseid,  user.getUser_id()  );
+
+           if(   exist   )
+           {
+
+               result.put(Constant.status, 0);
+               result.put(Constant.result, "不能重复评价");
+           }
+           else {
+
+               courseService.addCourseComment(user.getUser_id(), courseid, star, comment, new Date());
+
+               result.put(Constant.status, 1);
+               result.put(Constant.result, "评价成功");
+           }
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());

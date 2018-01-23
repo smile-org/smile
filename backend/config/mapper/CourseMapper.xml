@@ -585,4 +585,8 @@ join course_content   ct on p.content_id = ct.content_id
     <select id="adminGetCourseResource"  resultType="int">
         select count( *)  as course_count   from course  where indicator=1;
     </select>
+
+    <select id="getCourseCommentCountByCourseidUserid"      resultType="int">
+        select  count(*) from        course_comment  where   course_id =#{courseid} and   user_id=#{userid}
+    </select>
 </mapper>

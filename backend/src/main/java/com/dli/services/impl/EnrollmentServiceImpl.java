@@ -289,5 +289,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return   enrollmentRepo.adminGetEnrollmentResource();
     }
 
+    @Override
+    public boolean getEnrommentCommentCountByUseridEnrollmentid(int userid, int enrollmentid) {
+           boolean   returnval =false;
+
+        int count =   enrollmentRepo.getEnrommentCommentCountByUseridEnrollmentid( userid, enrollmentid);
+        if( count  > 0  ) returnval =true;
+
+        return    returnval;
+
+    }
+
 
 }
