@@ -279,7 +279,6 @@ section .form_list input:hover {
   color: #fc7a06;
   border-color: #fc7a06;
 }
-
 .green_b {
   color: #00b553;
   border-color: #00b553;
@@ -2110,6 +2109,8 @@ footer .exam_b .btn span:nth-child(2) {
   justify-content: space-between;
   border-top: 1px solid #e5e5e5;
   box-shadow: 0 -0.01rem 0.05rem rgba(0,0,0,.1);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .footer_li{
   -webkit-flex: 1;
@@ -2209,5 +2210,21 @@ footer .exam_b .btn span:nth-child(2) {
   from {left: -.6rem;}
   to {left: .5rem;}
 }
+.cy_img{
+  position: absolute;
+  z-index: 12;
+  right: 0px;
+  bottom: 0px;
+  width: .6rem;
+}
+.imgAnimation{
+  animation-name: imgAnimation;
+  animation: imgAnimation 0.1s alternate;
+  -webkit-animation: imgAnimation 0.1s alternate ;
+  -moz-animation: imgAnimation 0.1s alternate infinite;
+}
 
-
+@-webkit-keyframes imgAnimation{
+  0%{ right: -9rem; bottom:5rem;}
+  100%{ bottom: 0; right: 0;  margin-left: -9.5rem;  }
+}
