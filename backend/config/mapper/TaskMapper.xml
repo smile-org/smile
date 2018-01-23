@@ -142,6 +142,7 @@ update learn_task set indicator=0 where task_id=#{task_id}
         <if test="job_number!=null">and u.job_number like '%${job_number}%'</if>
         <if test="department!=null">and u.department like '%${department}%'</if>
         <if test="area!=null">and u.area like '%${area}%'</if>
+        <if test="companyId!=null">and t.company_id  =   #{companyId}</if>
           limit #{skip}, #{take}
     </select>
 
@@ -156,7 +157,7 @@ update learn_task set indicator=0 where task_id=#{task_id}
         <if test="job_number!=null">and u.job_number like '%${job_number}%'</if>
         <if test="department!=null">and u.department like '%${department}%'</if>
         <if test="area!=null">and u.area like '%${area}%'</if>
-
+        <if test="companyId!=null">and t.company_id  =   #{companyId}</if>
     </select>
 
     <select id="getMyTaskList"      resultType="com.dli.entities.TaskAndLearnStatus">

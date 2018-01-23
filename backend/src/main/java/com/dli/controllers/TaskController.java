@@ -468,10 +468,7 @@ public class TaskController {
             if( !  Helper.isNullOrEmpty(area) )
                 ut.setArea(area);
 
-
-
-
-
+            ut.setCompanyId(user.getCompany_id());
 
 
             ut.setSkip(skip);

@@ -3,21 +3,31 @@ package com.dli.entities;
 import java.util.Date;
 
 public class backUserTask {
-   private   String full_name;
+    private String full_name;
     private String job_number;
-    private String  department;
-    private  String area;
-    private String  task_title;
+    private String department;
+    private String area;
+    private String task_title;
     private Date expiration_date;
 
-    private  String learn_status;
-    private  String learn_percentage;
+    private String learn_status;
+    private String learn_percentage;
 
-    private   int  user_id;
+    private int user_id;
     private int task_id;
 
-    private  int skip;
-    private    int     take;
+    private int skip;
+    private int take;
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    private int companyId;
 
     public String getLearn_status() {
         return learn_status;
