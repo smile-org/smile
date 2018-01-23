@@ -677,7 +677,12 @@ section .form_list input:hover {
   background: #ffffff;
   position: relative;
 }
-
+.tit_clear::after{
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
 .course_tit .c_icon {
   overflow: hidden;
   margin-top: 0.15rem;
@@ -970,10 +975,11 @@ section .form_list input:hover {
 
 }
 
-.course_tit .exam_green {
+.course_tit .exam_submit {
   display: inline-block;
   margin-top: .01rem;
   color: #00b553;
+  padding: 0 .1rem 0 .3rem;
 }
 
 .exam_circle {

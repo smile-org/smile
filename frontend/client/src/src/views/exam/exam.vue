@@ -2,11 +2,11 @@
   <div id="app">
     <common-header></common-header>
     <section>
-      <el-row class="course_tit">
-        <el-col :span="24"><h3>{{examTitle}}</h3></el-col>
-        <el-col :span="4" class="fr tr"><a class="exam_green" v-on:click="goSubmitModal">交卷</a></el-col>
-        <el-col :span="4" class="fr tl"><a class="exam_green" v-on:click="goQuestionList">答题卡</a></el-col>
-      </el-row>
+      <div class="course_tit tit_clear">
+        <h3>{{examTitle}}</h3>
+        <a class="exam_submit fr" v-on:click="goSubmitModal">交卷</a>
+        <a class="exam_submit fr" v-on:click="goQuestionList">答题卡</a>
+      </div>
       <div class="course_tit2 mt3">
         <ul class="exam_circle">
           <li class="">
@@ -57,7 +57,7 @@
           <span :disabled="currentQuestionNo === 1" v-bind:class="{active: currentQuestionNo === 1}" v-on:click="goPre">上一题</span>
         </el-col>
         <el-col class="btn" :span="8">
-          <span class="orange_b" v-on:click="suspect">标记存疑3</span>
+          <span class="orange_b" v-on:click="suspect">标记存疑</span>
         </el-col>
         <el-col class="btn" v-bind:class="{active: currentQuestionNo === questionCount}" v-on:click="goNext" :span="8">
           <span :disabled="currentQuestionNo === questionCount"
