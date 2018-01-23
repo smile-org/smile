@@ -107,4 +107,6 @@ public interface CourseRepo {
     int  backGetCourseCommentListCount(int courseid );
 
     int adminGetCourseResource();
+
+    int   getCourseCommentCountByCourseidUserid(  @Param("courseid") int courseid,    @Param("userid" )  int  userid);
 }

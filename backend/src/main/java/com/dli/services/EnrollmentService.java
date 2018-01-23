@@ -79,4 +79,6 @@ public interface EnrollmentService {
     void    backUpdateEnrollmentPublishStatus(   int   status  , int  periodid );
 
     int  adminGetEnrollmentResource();
+
+    boolean   getEnrommentCommentCountByUseridEnrollmentid(    int userid,   int enrollmentid);
 }

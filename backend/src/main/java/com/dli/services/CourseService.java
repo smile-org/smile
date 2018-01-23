@@ -92,4 +92,6 @@ public interface CourseService {
     int  backGetCourseCommentListCount(int courseid );
 
     int adminGetCourseResource();
+
+    boolean   getCourseCommentCountByCourseidUserid(   int courseid,     int  userid);
 }

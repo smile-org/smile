@@ -314,6 +314,16 @@ public class CourseServiceImpl implements CourseService {
         return  courseRepo.adminGetCourseResource();
     }
 
+    @Override
+    public boolean getCourseCommentCountByCourseidUserid(int courseid, int userid) {
+
+                boolean returnval =false;
+          int count =      courseRepo.getCourseCommentCountByCourseidUserid(courseid  ,userid);
+
+          if( count >0 ) returnval =  true;
+          return   returnval;
+    }
+
 
     // @Override
   //  public int getCourseCommentListCount(int courseid) {

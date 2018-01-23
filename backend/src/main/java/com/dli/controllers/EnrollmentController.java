@@ -345,10 +345,19 @@ public class EnrollmentController {
             int star = (int) body.get("star");
             String comment = (String) body.get("comment");
 
-            enrollmentService.addEnrollmentComment(user.getUser_id(), enrollmentid, star, comment);
+            boolean  exist = enrollmentService.getEnrommentCommentCountByUseridEnrollmentid(  user.getUser_id() , enrollmentid);
 
-            result.put(Constant.status, 1);
-            result.put(Constant.result, "评价成功");
+            if( exist )
+            {
+                result.put(Constant.status, 0);
+                result.put(Constant.result, "不能重复评价");
+            }
+            else {
+                enrollmentService.addEnrollmentComment(user.getUser_id(), enrollmentid, star, comment);
+
+                result.put(Constant.status, 1);
+                result.put(Constant.result, "评价成功");
+            }
 
         } catch (Exception ex) {
             logger.error(ex.getMessage());
