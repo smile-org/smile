@@ -2,7 +2,7 @@
   <div id="app">
     <common-header></common-header>
     <section>
-      <div class="course_tit tit_clear">
+      <div class="course_tit tit_clear mt3">
         <h3>{{examTitle}}</h3>
         <a class="exam_submit fr" v-on:click="goSubmitModal">交卷</a>
         <a class="exam_submit fr" v-on:click="goQuestionList">答题卡</a>
