@@ -2,6 +2,7 @@ package com.dli.services.impl;
 
 
 import com.dli.entities.*;
+import com.dli.helper.SortByPercentage;
 import com.dli.repositories.CollectRepo;
 import com.dli.repositories.TaskRepo;
 import com.dli.repositories.UserRepo;
@@ -462,7 +463,7 @@ public  class TaskServiceImpl implements TaskService {
 
         double percentage= parsePercentage( backGetUserTaskPercentage( userid,taskid,  new Date())[0]);
 
-        a.UserList =new ArrayList<>();
+        a.UserList =new ArrayList< >();
 
 
         for( User  u :userList ){
@@ -472,6 +473,9 @@ public  class TaskServiceImpl implements TaskService {
           //  String[]  currentuser =new   String[2];
           //  currentuser[0] =u.getFull_name();
            // currentuser[1] =percentageAndStatus[0];
+
+
+
 
             currentuser.put("user_name" ,u.getFull_name());
             currentuser.put("percentage" ,percentageAndStatus[0]);
@@ -484,6 +488,8 @@ public  class TaskServiceImpl implements TaskService {
             }
 
         }
+
+        Collections.sort(  a.UserList, new SortByPercentage());
 
         double   p  =100.0 * count /  a.UserList.size();
 
