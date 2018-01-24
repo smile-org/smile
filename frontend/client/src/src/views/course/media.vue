@@ -1,35 +1,38 @@
 <template>
   <div>
-    <!--<common-header></common-header>-->
-    <!--<section>-->
-      <!--<div v-if="type===0">-->
-      <video-bg :sources="source">
-      </video-bg>
-      <!--<iframe frameborder="0"  width="100%" height="100%" :src="url">
-        </iframe>-->
-
-    <!--</section>-->
-    <!--<a href="http://192.168.1.103:3000/a.mp4"> aaaaa </a>-->
+    <common-header></common-header>
+    <iframe v-show="showIframe" :src="link" width="100%" height="100%"></iframe>
+    <img v-show="showImage" :src="link" width="100%" height="100%"/>
   </div>
 </template>
 
 <script>
 import commonHeader from '../../components/CommonHeader'
-import VideoBg from 'vue-videobg'
 export default {
   data () {
     return {
-      type: 0,
-      source: ['http://192.168.1.103:3000/a.mp4'],
-      url: 'http://123.207.154.226:4001/company-1/course/html5/88-airflow%E5%AE%89%E8%A3%85%E6%96%87%E6%A1%A3-20170912.html'
+      link: '',
+      showIframe: false,
+      showImage: false,
+      type: ''
     }
   },
   components: {
-    commonHeader,
-    VideoBg
+    commonHeader
   },
   created () {
-
+    this.link = this.$route.query.link
+    this.type = this.$route.query.type.toLowerCase()
+    if (this.type === 'png' || this.type === 'jpg') {
+      this.showImage = true
+      this.showIframe = false
+    } else if (this.type === 'pdf' || this.type === 'doc' || this.type === 'docx' || this.type === 'ppt' || this.type === 'pptx') {
+      this.showIframe = true
+      this.showImage = false
+    } else {
+      this.showIframe = false
+      this.showImage = false
+    }
   },
   methods: {
 

@@ -208,11 +208,12 @@
           contentid: contentId
         }).then(data => {
           if (data.status === 1) {
-            if (type === 'ppt' || type === 'pptx' || type === 'doc' || type === 'docx') {
-              window.open(axios.defaults.imageServer + contentLink, '_self')
-            } else {
-              window.open(axios.defaults.imageServer + orignalPath, '_self')
-            }
+            router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
+            // if (type === 'ppt' || type === 'pptx' || type === 'doc' || type === 'docx') {
+            //   window.open(axios.defaults.imageServer + contentLink, '_self')
+            // } else {
+            //   window.open(axios.defaults.imageServer + orignalPath, '_self')
+            // }
           }
         })
       }
