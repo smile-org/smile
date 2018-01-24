@@ -341,7 +341,9 @@ export default {
 
       // id
       id: 0,
-      currentCourse: {}
+      currentCourse: {},
+
+      contentOrigianlPath: ''
     }
   },
   components: {
@@ -378,11 +380,12 @@ export default {
       if (data.status === 1) {
         console.log('office', data.result)
         this.contentFormData.OSSAccessKeyId = data.result.accessid
-        this.contentFormData.key = data.result.dir
+        // this.contentFormData.key = data.result.dir
         this.contentFormData.policy = data.result.policy
         this.contentFormData.signature = data.result.signature
         this.contentFormData.expire = data.result.expire
         this.uploadContentAction = data.result.host
+        this.contentOrigianlPath = data.result.dir
       }
     })
   },
@@ -625,7 +628,8 @@ export default {
         this.fileList = []
         return false
       }
-      this.contentFormData.key = this.contentFormData.key + api.guid() + '.' + api.getFileExt(file.name)
+      // this.contentFormData.key = this.contentFormData.key + api.guid() + '.' + api.getFileExt(file.name)
+      this.contentFormData.key = this.contentOrigianlPath + api.guid() + '.' + api.getFileExt(file.name)
       console.log(this.contentFormData.key)
     },
     submitCourse () {
