@@ -70,7 +70,11 @@ export default {
       this.nav1 = status
     },
     goBack () {
-      router.go(-1)
+      if (this.routeName === 'getExamInfo') {
+        router.push({name: 'getExamList'})
+      } else {
+        router.go(-1)
+      }
     },
     goHome () {
       if (this.routeName === 'startExam') {
