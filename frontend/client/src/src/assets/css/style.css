@@ -316,9 +316,9 @@ section .form_list input:hover {
 .sologan1 {
   background: url('../img/sologan1.png') no-repeat center center;
   background-size: 100% 100%;
-  width: 2.2rem;
-  height: 1.7rem;
-  margin: 0.36rem auto;
+  width: 3.35rem;
+  height: 2.6rem;
+  margin: 0.1rem auto 0rem;
 }
 
 .sologan2 {
