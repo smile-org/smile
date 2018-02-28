@@ -31,6 +31,7 @@ export default {
       this.link = this.link.replace('http://dev-env.oss-cn-beijing.aliyuncs.com/', 'http://files.jxueyuan.com/')
         .replace('http://prod-env.oss-cn-beijing.aliyuncs.com/', 'http://files.jxueyuan.com/')
       this.link = 'http://ow365.cn/?i=15062&del=1&furl=' + this.link
+      // comments
       this.showIframe = true
       this.showImage = false
     } else {
