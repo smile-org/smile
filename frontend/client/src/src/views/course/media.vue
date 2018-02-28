@@ -43,7 +43,10 @@
   }
 </script>
 <style scoped="scope">
-  */
+  /*header {*/
+    /*position: fixed !important;*/
+    /*width: 100%!important;*/
+  /*}*/
 </style>
 <style>
 </style>
