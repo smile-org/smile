@@ -263,6 +263,31 @@ public class Helper {
 
 
 
+    /**
+     * 生成当前UTC时间戳
+     *
+     * @return
+     */
+
+    private final static String ISO8601_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
+    public static String generateUTCTimestamp() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat df = new SimpleDateFormat(ISO8601_DATE_FORMAT);
+        df.setTimeZone(new SimpleTimeZone(0, "GMT"));
+        return df.format(date);
+    }
+
+    /**
+     * 生成随机数
+     *
+     * @return
+     */
+    public static String generateRandom() {
+        String signatureNonce = UUID.randomUUID().toString();
+        return signatureNonce;
+    }
+
 
     /*
     todo

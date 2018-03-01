@@ -7,15 +7,16 @@ import com.aliyun.oss.model.PolicyConditions;
 import com.dli.entities.User;
 import com.dli.helper.Constant;
 import com.dli.services.LogonService;
+import com.dli.services.VodService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 
 @RestController
@@ -26,6 +27,9 @@ public class HomeController {
 
     @Autowired
     private LogonService logonService;
+
+    @Autowired
+    private VodService vodService;
 
     @RequestMapping("")
     public String index() {
@@ -69,49 +73,48 @@ public class HomeController {
                 dir = "business-licences/";
                 break;
             case "company-logo":
-                dir = String.format("company-%s/logo/",companyId);
+                dir = String.format("company-%s/logo/", companyId);
                 break;
             case "company-banner":
-                dir = String.format("company-%s/banner/",companyId);
+                dir = String.format("company-%s/banner/", companyId);
                 break;
             case "header":
-                dir = String.format("company-%s/header/",companyId);
+                dir = String.format("company-%s/header/", companyId);
                 break;
-
 
 
             case "course-icon":
-                dir = String.format("company-%s/course/",companyId);
+                dir = String.format("company-%s/course/", companyId);
                 break;
 
             case "course-pic":
-                dir = String.format("company-%s/course/",companyId);
+                dir = String.format("company-%s/course/", companyId);
                 break;
 
             case "course-category-icon":
-                dir = String.format("company-%s/course/",companyId);
+                dir = String.format("company-%s/course/", companyId);
                 break;
 
             case "course-office":
-                dir = String.format("company-%s/course/office/",companyId);
+                dir = String.format("company-%s/course/office/", companyId);
                 break;
 
 
             case "exam-icon":
-                dir = String.format("company-%s/exam/",companyId);
+                dir = String.format("company-%s/exam/", companyId);
                 break;
 
             case "exam-pic":
-                dir = String.format("company-%s/exam/",companyId);
+                dir = String.format("company-%s/exam/", companyId);
                 break;
 
 
             case "enrollment-icon":
-                dir = String.format("company-%s/enrollment/",companyId);
+                dir = String.format("company-%s/enrollment/", companyId);
                 break;
 
             case "enrollment-pic":
-                dir = String.format("company-%s/enrollment/",companyId);
+                dir = String.format("company-%s/enrollment/", companyId);
                 break;
 
 
@@ -149,11 +152,42 @@ public class HomeController {
             result.put(Constant.status, 1);
             result.put(Constant.result, map);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
         }
 
 
         return result;
     }
+
+    /**
+     * 获取vod 参数信息
+     */
+    @RequestMapping(value = "/vodInfo", method = RequestMethod.GET)
+    public Map getVODInfo(@RequestHeader Map header, @RequestParam String title, @RequestParam String fileName) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+            Map map = vodService.getVodInfo(title, fileName);
+            result.put(Constant.status, 1);
+            result.put(Constant.result, map);
+
+        } catch (IOException ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+
+        }
+        return result;
+    }
+
 }
