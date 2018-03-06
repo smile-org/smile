@@ -53,12 +53,15 @@ public class VodServiceImpl implements VodService {
         String remoteFileName = vodUploaderParam.getRemoteFileName();
         String vodAccessKeyId = vodUploaderParam.getVodAccessKeyId();
         int expirationSec = vodUploaderParam.getExpirationSec();
+        System.out.println(expirationSec);
         String videoId = vodUploaderParam.getVideoId();
 
+        String vodAccessKeySecret = vodUploaderParam.getVodAccessKeySecret();
 
-        String host = "http://" + bucket + "." + endpoint;
-        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        String host = "https://" + bucket + "." + endpoint.replace("https://","");
+        OSSClient ossClient = new OSSClient(endpoint, vodAccessKeyId, vodAccessKeySecret);
         long expireEndTime = System.currentTimeMillis() + expirationSec * 1000;
+        System.out.println(expireEndTime);
         java.sql.Date expiration = new java.sql.Date(expireEndTime);
         PolicyConditions policyConds = new PolicyConditions();
         policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, 1048576000);
@@ -74,7 +77,7 @@ public class VodServiceImpl implements VodService {
         result.put("signature", postSignature);
         result.put("dir", remoteFileName);
         result.put("host", host);
-        result.put("expire", String.valueOf(expireEndTime / 1000));
+        result.put("expire", String.valueOf(expireEndTime));
         result.put("videoId",videoId);
 
         return result;
@@ -242,6 +245,7 @@ public class VodServiceImpl implements VodService {
         private String bucket;
         private String remoteFileName;
         private String vodAccessKeyId;
+        private String vodAccessKeySecret;
         private int expirationSec;
         private String videoId;
 
@@ -265,6 +269,10 @@ public class VodServiceImpl implements VodService {
             return vodAccessKeyId;
         }
 
+        public String getVodAccessKeySecret() {
+            return vodAccessKeySecret;
+        }
+
         public int getExpirationSec() {
             return expirationSec;
         }
@@ -274,7 +282,7 @@ public class VodServiceImpl implements VodService {
         }
 
         public VodUploaderParam invoke() throws IOException {
-            String vodAccessKeySecret;
+
 
             JSONObject jsonObject = JSONObject.fromObject(entityStr);
             Map<Object, Object> map = (Map) jsonObject;

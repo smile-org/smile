@@ -5,7 +5,7 @@ import conf from './../config/index.js'
 // axios.defaults.withCredentials = true
 
 // axios.defaults.baseURL = 'http://192.168.0.106:8888' // 'http://192.168.0.108:3000'
-axios.defaults.baseURL = 'http://123.207.154.226:8888'
+axios.defaults.baseURL = 'http://api-test.jxueyuan.com'
 // axios.defaults.baseURL = 'http://api.jxueyuan.com'
 axios.defaults.imageServer = '' // 'http://123.207.154.226:4001'
 

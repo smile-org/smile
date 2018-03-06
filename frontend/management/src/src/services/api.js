@@ -7,7 +7,7 @@ import axios from 'axios'
 // axios.defaults.baseURL = 'http://192.168.1.106:8888' // 'http://192.168.0.108:3000'
 
 // axios.defaults.baseURL = 'http://123.207.154.226:8888'
-axios.defaults.baseURL = 'http://api.jxueyuan.com'
+axios.defaults.baseURL = 'http://api-test.jxueyuan.com'
 // axios.defaults.baseURL = 'http://localhost:8888'
 // axios.defaults.imageServer = 'http://192.168.1.106:4001'
 axios.defaults.imageServer = 'http://123.207.154.226:4001'

@@ -208,11 +208,12 @@
           contentid: contentId
         }).then(data => {
           if (data.status === 1) {
-            if (type === 'mp4') {
-              window.open(orignalPath, '_self')
-            } else {
-              router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
-            }
+            // if (type === 'mp4') {
+            //   window.open(orignalPath, '_self')
+            // } else {
+            //   router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
+            // }
+            router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
           }
         })
       }
