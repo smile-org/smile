@@ -60,6 +60,10 @@ import taskingProgress from '@/views/tasking/progress'
 import taskingDetail from '@/views/tasking/detail'
 import taskingUserList from '@/views/tasking/userList'
 
+// 会员管理
+import memberList from '@/views/member/list'
+import memberContact from '@/views/member/contact'
+
 Vue.use(Router)
 var requiresAuth = true
 
@@ -326,7 +330,19 @@ export default new Router({
       name: 'taskingUserList',
       component: taskingUserList,
       meta: {requiresAuth: requiresAuth}
+    },
+    // 会员管理
+    {
+      path: '/member/list',
+      name: 'memberList',
+      component: memberList,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/member/contact',
+      name: 'memberContact',
+      component: memberContact,
+      meta: {requiresAuth: requiresAuth}
     }
-
   ]
 })

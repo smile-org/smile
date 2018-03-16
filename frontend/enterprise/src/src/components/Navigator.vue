@@ -128,6 +128,20 @@
           }
           ]
         }
+      } else if (this.module === 'membering') {
+        this.navigator = {
+          icon: 'aside_icon11',
+          name: '会员管理',
+          items: [{
+            text: '会员服务介绍',
+            routeName: 'memberList',
+            name: 'list'
+          }, {
+            text: '会员升级咨询',
+            routeName: 'memberContact',
+            name: 'contact'
+          }]
+        }
       } else {
         this.navigator = {
           icon: 'aside_icon07',

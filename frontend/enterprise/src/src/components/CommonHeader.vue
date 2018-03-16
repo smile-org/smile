@@ -34,6 +34,10 @@
         <span class="h_icon h_icon10"></span>
         <p>学习任务</p>
       </li>
+      <li v-on:click="routeByName('memberList')" v-bind:class="{active: type==='membering'}">
+        <span class="h_icon h_icon11"></span>
+        <p>会员管理</p>
+      </li>
       <li v-on:click="routeByName('adminList')" v-bind:class="{active: type==='admin'}">
         <span class="h_icon h_icon07"></span>
         <p class="name_e">公司管理员</p>

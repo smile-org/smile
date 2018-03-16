@@ -143,7 +143,11 @@ header ul li .name_e {
   width: 19px;
   height: 22px;
 }
-
+.h_icon11 {
+  background-position: -203px 0;
+  width: 19px;
+  height: 22px;
+}
 .aside_icon01 {
   background-position: 0px -22px;
   width: 15px;
@@ -199,6 +203,11 @@ header ul li .name_e {
 }
 .aside_icon10 {
   background-position: -182px -22px;
+  width: 19px;
+  height: 22px;
+}
+.aside_icon11 {
+  background-position: -203px -22px;
   width: 19px;
   height: 22px;
 }
@@ -759,4 +768,92 @@ table {
   font-size: 14px;
   color: #333;
   font-weight: bold;
+}
+/*huiyuan*/
+.con_main_r .member_bg{
+  background: #89d6f2;
+  position: relative;
+  overflow: hidden
+}
+.con_main_r .member_bg::after{
+  content:'';
+  background: url(../img/member_cloud.png)no-repeat;
+  width: 100%;
+  height: 288px;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+
+}
+.member_tab{
+  width: 70%;
+  margin: 40px auto 60px;
+  background: #ffffff;
+  border: none;
+  padding-bottom: 40px;
+  position: relative;
+  z-index: 8;
+}
+.member_tab::before{
+  content:'';
+  background: url(../img/member_hat.png);
+  width: 55px;
+  height: 55px;
+  position: absolute;
+  right: -21px;
+  top: -31px;
+  background-size: 100% 100%;
+}
+.member_tab tr{
+  height: 25px;
+  border: none;
+}
+.member_tab .mem_bg1{
+  background: #56b39b
+}
+.member_tab .mem_bg2{
+  background: #bc70ff
+}
+.member_tab .mem_bg3{
+  background: #f8a934
+}
+.member_tab tr td{
+  padding: 15px 0;
+  border: none;
+}
+.member_tab tr:first-child{
+  height: 50px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+}
+.member_tab tr:nth-child(2n){
+  background: #f9f9f9;
+}
+.mem_star{
+  color: #f8a934;
+  margin-right: 10px;
+}
+.member_plane{
+  position: absolute;
+  bottom: 170px;
+  left: -116px;
+  width: 387px;
+  transform: rotate(-8deg);
+}
+.member_contact{
+  /*width: 285px;*/
+  /*margin: 20px auto;*/
+  text-align: center;
+  margin-top: 20px;
+}
+.member_contact li{
+  /*text-align: left;*/
+  font-size: 18px;
+  margin-bottom:10px;
+}
+.member_contact li:first-child{
+  font-size:24px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }

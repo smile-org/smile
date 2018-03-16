@@ -95,6 +95,7 @@
   import {formatDate} from '../../common/date'
   import axios from 'axios'
   import commonHeader from '../../components/CommonHeader'
+
   export default {
     data: function () {
       return {
@@ -208,12 +209,12 @@
           contentid: contentId
         }).then(data => {
           if (data.status === 1) {
-            // if (type === 'mp4') {
-            //   window.open(orignalPath, '_self')
-            // } else {
-            //   router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
-            // }
-            router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
+            if (type === 'mp4') {
+              router.push({name: 'courseVideo', query: {link: orignalPath, type: type}})
+            } else {
+              router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
+            }
+//            router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
           }
         })
       }

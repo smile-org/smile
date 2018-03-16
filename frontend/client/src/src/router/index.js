@@ -18,6 +18,7 @@ import getCourses from '@/views/course/courseList'
 import getCourseDetails from '@/views/course/detail'
 import commentCourse from '@/views/course/comment'
 import media from '@/views/course/media'
+import video from '@/views/course/video'
 
 // 考试
 import getExamList from '@/views/exam/list'
@@ -108,6 +109,12 @@ export default new Router({
       path: '/media',
       name: 'courseMedia',
       component: media,
+      meta: {requiresAuth: requiresAuth}
+    },
+    {
+      path: '/video',
+      name: 'courseVideo',
+      component: video,
       meta: {requiresAuth: requiresAuth}
     },
     // 考试
