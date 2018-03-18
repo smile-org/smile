@@ -40,11 +40,51 @@ where company_id=#{companyid} and pic_type=#{pictype}
 
 
     <insert id="adminAddCompany"  parameterType="com.dli.entities.adminCompany"  useGeneratedKeys="true"   keyProperty="company_id">
-        insert company values( 0,  #{company_name}, 1, now(), now() ,  #{business_id},  #{agency_id}  ,#{user_limit} ,#{expiration_date}, #{last_pay_date} )
+        insert company values( 0,  #{company_name}, 1, now(), now() ,
+        <choose>
+            <when test="business_id!=0">
+                #{business_id},
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="agency_id!=0">
+                #{agency_id}  ,
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+          #{user_limit} ,#{expiration_date}, #{last_pay_date} )
     </insert>
 
     <insert id="adminAddCompanyInfo"  parameterType="com.dli.entities.adminCompany">
-        insert  company_info values( #{company_id},  #{contact_person}, #{phone_number}, #{province_id}, #{city_id}, #{address}, now(),  now()   )
+        insert  company_info values( #{company_id},  #{contact_person}, #{phone_number},
+
+        <choose>
+            <when test="province_id!=0">
+                #{province_id},
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="city_id!=0">
+                #{city_id},
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+
+
+
+         #{address}, now(),  now()   )
     </insert>
 
     <insert id="adminAddCompanyPic"  parameterType="com.dli.entities.adminCompany">

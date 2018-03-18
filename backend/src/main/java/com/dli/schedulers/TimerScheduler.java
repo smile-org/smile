@@ -1,6 +1,7 @@
 package com.dli.schedulers;
 
 
+import com.dli.entities.adminCompany;
 import com.dli.services.CompanyService;
 import com.dli.services.ExamService;
 import com.dli.services.LogonService;
@@ -8,10 +9,12 @@ import com.dli.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import java.sql.Connection;
@@ -130,60 +133,88 @@ public class TimerScheduler {
     }
 
 
+    @Value("${sqlhost}")
+    private String sqlhost;
+
+    @Value("${sqluser}")
+    private String sqluser;
+
+    @Value("${sqlpwd}")
+    private String sqlpwd;
+
+    @Value("${sqldb}")
+    private String sqldb;
+
+
+
+
+    @Value("${defaultheader}")
+    private String defaultheader;
+
+    @Value("${defaulthomelogo}")
+    private String defaulthomelogo;
+
+    @Value("${defaulthomebanner}")
+    private String defaulthomebanner;
 
     //第一次延迟1秒执行，当执行完后5分钟再执行
-    @Scheduled(initialDelay = 1000, fixedDelay = 10000 * 10)
+   // @Scheduled(initialDelay = 1000, fixedDelay = 10000 * 10)
+
+    //每天晚上5点执行
+    @Scheduled(cron = "00 00 05 * * ?")
     public void syncCompany() {
-        try {
 
-
-            Connection conn = null;
-           // ArrayList students = new ArrayList();//定义与初始化ArrayList数组，相当于定义数组，但是容量比数组大
-           // StringBuffer str= new StringBuffer();
+        Connection conn = null;
             try {
-                //获取连接
-                String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  //加载JDBC驱动
 
-                String dbURL = "jdbc:sqlserver://bds257367494.my3w.com:1433;DatabaseName=bds257367494_db";  //连接服务器和数据库sample
-                //运行SQL语句
-                String userName = "bds257367494";  //默认用户名
-                String userPwd = "123456abc";
-                //Class.forName(driverName);
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                conn = DriverManager.getConnection(dbURL, userName, userPwd);
+                String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+                String dbURL = "jdbc:sqlserver://"+sqlhost+":1433;DatabaseName="  +sqldb;
+                Class.forName(driverName);
+                conn = DriverManager.getConnection(dbURL, sqluser, sqlpwd);
 
-                /*
-                if(conn!=null)
-                {
-                    System.out.println("Connection Successful!");  //如果连接成功 控制台输出
-                }
-                else{
-
-                    System.out.println("Connection fail!");
-                    return students;
-                }
-                */
-
-
-                String sql = "select * from tb_user";//SQL语句，选择数据表student中的所有数据
+                String sql = "select * from tb_user";
                 Statement stat = conn.createStatement();
                 ResultSet rs = stat.executeQuery(sql);//定义ResultSet类，用于接收获取的数据
                 while (rs.next())
                 {
-                    //实例化VO
-                  //  Student student=new Student();
-                  //  student.setName(rs.getString("姓名"));
-                   // student.setBanji(rs.getString("班级"));
-                 //   student.setSex(rs.getString("性别"));
-                 //   student.setTime(rs.getString("年龄"));
-                //    students.add(student);
+                    String phone_number = rs.getString("tel");
+                    int count =  userService.getUserByCellphone(phone_number);
+                    if( count >0 )     continue;
+
+
+                    String company_name = rs.getString("name");
+                    String contact_person = rs.getString("contact");
+                    int user_limit = 100;
+
+                    Calendar calendar = Calendar.getInstance();
+                    Date expiration_date = new Date();
+                    calendar.setTime(expiration_date);
+                    calendar.add(Calendar.YEAR, 1);
+                    expiration_date = calendar.getTime();
+
+                    adminCompany c = new adminCompany();
+                    c.setCompany_name(company_name);
+                    c.setContact_person(contact_person);
+                    c.setPhone_number(phone_number);
+                    c.setUser_limit(user_limit);
+                    c.setExpiration_date(expiration_date);
+                    companyService.adminAddCompany(  defaultheader,c);
+
+                    //添加 logo和banner
+                    c.setPic_url(defaulthomebanner);
+                    c.setPic_type("banner");
+                    companyService.adminAddCompanyPic(c);
+
+                    c.setPic_url(defaulthomelogo);
+                    c.setPic_type("logo");
+                    companyService.adminAddCompanyPic(c);
                 }
                 rs.close();
                 stat.close();
             }
-            catch (Exception e1)
+            catch (Exception ex)
             {
-                e1.printStackTrace();
+                logger.error(ex.getMessage());
             }
             finally
             {
@@ -197,14 +228,10 @@ public class TimerScheduler {
                 }
                 catch(Exception ex)
                 {
+                    logger.error(ex.getMessage());
                 }
-               // return students;
             }
 
-            userService.sendMessage();
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-        }
 
     }
 }
