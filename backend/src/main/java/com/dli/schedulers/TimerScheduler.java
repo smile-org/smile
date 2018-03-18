@@ -14,6 +14,13 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 @Component
 public class TimerScheduler {
 
@@ -115,6 +122,85 @@ public class TimerScheduler {
     @Scheduled(initialDelay = 1000, fixedDelay = 1000 * 10)
     public void sendMessage() {
         try {
+            userService.sendMessage();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
+
+    }
+
+
+
+    //第一次延迟1秒执行，当执行完后5分钟再执行
+    @Scheduled(initialDelay = 1000, fixedDelay = 10000 * 10)
+    public void syncCompany() {
+        try {
+
+
+            Connection conn = null;
+           // ArrayList students = new ArrayList();//定义与初始化ArrayList数组，相当于定义数组，但是容量比数组大
+           // StringBuffer str= new StringBuffer();
+            try {
+                //获取连接
+                String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  //加载JDBC驱动
+
+                String dbURL = "jdbc:sqlserver://bds257367494.my3w.com:1433;DatabaseName=bds257367494_db";  //连接服务器和数据库sample
+                //运行SQL语句
+                String userName = "bds257367494";  //默认用户名
+                String userPwd = "123456abc";
+                //Class.forName(driverName);
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                conn = DriverManager.getConnection(dbURL, userName, userPwd);
+
+                /*
+                if(conn!=null)
+                {
+                    System.out.println("Connection Successful!");  //如果连接成功 控制台输出
+                }
+                else{
+
+                    System.out.println("Connection fail!");
+                    return students;
+                }
+                */
+
+
+                String sql = "select * from tb_user";//SQL语句，选择数据表student中的所有数据
+                Statement stat = conn.createStatement();
+                ResultSet rs = stat.executeQuery(sql);//定义ResultSet类，用于接收获取的数据
+                while (rs.next())
+                {
+                    //实例化VO
+                  //  Student student=new Student();
+                  //  student.setName(rs.getString("姓名"));
+                   // student.setBanji(rs.getString("班级"));
+                 //   student.setSex(rs.getString("性别"));
+                 //   student.setTime(rs.getString("年龄"));
+                //    students.add(student);
+                }
+                rs.close();
+                stat.close();
+            }
+            catch (Exception e1)
+            {
+                e1.printStackTrace();
+            }
+            finally
+            {
+                try
+                {//关闭连接
+                    if(conn!=null)
+                    {
+                        conn.close();
+                        conn=null;
+                    }
+                }
+                catch(Exception ex)
+                {
+                }
+               // return students;
+            }
+
             userService.sendMessage();
         } catch (Exception ex) {
             logger.error(ex.getMessage());

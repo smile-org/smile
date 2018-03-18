@@ -596,11 +596,13 @@ public class AppointmentController {
             rowNameList.add("企业联系人");
             rowNameList.add("发起时间");
 
+            rowNameList.add("关键词");
+
 
             List<Object[]> dataList = new ArrayList<>();
 
             for (adminAppointment  adm : lst) {
-                Object[] dataArray = new Object[7];
+                Object[] dataArray = new Object[8];
 
                 dataArray[0] = adm.getAppointment_title();
                 dataArray[1] = adm.getCompany_name();
@@ -610,7 +612,9 @@ public class AppointmentController {
                 dataArray[4] = adm.getSponsor_idcell_phone();
                 dataArray[5] = adm.getContact_person();
                 dataArray[6] =  Helper.formatDate( adm.getSponsor_date() );
-         ;
+
+                dataArray[7] =  adm.getKeywords();
+
 
                 dataList.add(dataArray);
             }

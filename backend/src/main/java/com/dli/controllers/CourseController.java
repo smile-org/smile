@@ -1002,6 +1002,11 @@ public class CourseController {
 
             int typeid =(int ) body.get("typeid");
 
+            String keywords=null;
+            Object  objKeyWords = body.get("keywords");
+            if(objKeyWords!= null) {
+                keywords = (String) body.get("keywords");
+            }
 
 
             String contentids=null;
@@ -1027,6 +1032,7 @@ public class CourseController {
             c.setIcon(iconPath);
             c.setType_id(typeid);
             c.setCompany_id(user.getCompany_id());
+            c.setKeywords(keywords);
 
 
             courseService.backAddCourse(c);
@@ -1149,6 +1155,13 @@ public class CourseController {
             String depart =(String ) body.get("depart");
             String expdate =(String ) body.get("expdate");
 
+            String keywords=null;
+            Object  objKeyWords = body.get("keywords");
+            if(objKeyWords!= null) {
+                keywords = (String) body.get("keywords");
+            }
+
+
             String intro =(String ) body.get("intro");
             String iconPath =(String ) body.get("iconPath");
             String picPath =(String ) body.get("picPath");
@@ -1169,8 +1182,10 @@ public class CourseController {
             c.setTitle(title);
             c.setPrincipal_user_id(adminid);
             c.setDepartment(depart);
+            c.setKeywords(keywords);
             c.setExpiration_date(Helper.dateParse(expdate));
             c.setIntro(intro);
+
 
             c.setPic(picPath);
             c.setIcon(iconPath);

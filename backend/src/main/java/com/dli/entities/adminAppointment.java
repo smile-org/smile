@@ -16,9 +16,14 @@ public class adminAppointment {
     private String sponsor_idcell_phone;
 
 
+    private  String keywords;
+
+
     private String contact_person;
     private String phone_number;
     private Date sponsor_date;
+
+
 
 
     private  Date start;
@@ -140,5 +145,14 @@ public class adminAppointment {
 
     public void setTake(int take) {
         this.take = take;
+    }
+
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }

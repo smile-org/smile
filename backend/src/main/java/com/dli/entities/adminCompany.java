@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class adminCompany {
 
+
     private int company_id;
     private String company_name;
     private int business_id;
@@ -12,6 +13,7 @@ public class adminCompany {
     private int province_id;
     private  int user_limit;
     private   Date  expiration_date;
+    private   Date   last_pay_date;
 
     private String business;
     private String agency;
@@ -211,4 +213,12 @@ public class adminCompany {
     }
 
 
+
+    public Date getLast_pay_date() {
+        return last_pay_date;
+    }
+
+    public void setLast_pay_date(Date last_pay_date) {
+        this.last_pay_date = last_pay_date;
+    }
 }

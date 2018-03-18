@@ -14,9 +14,8 @@ public class Course {
     private String icon;
     private String pic;
     private int type_id;
-
-    private  boolean ispublished;
-
+    private String keywords;
+    private boolean ispublished;
 
     private int company_id;
     private boolean indicator;
@@ -25,12 +24,13 @@ public class Course {
 
     private Date updated_at;
 
+
     //append property
-    private  int study_count;
-    private  int collect_count;
-    private   String  principal_user_idName;
-    private   int courseCollected;
-    private  double star;
+    private int study_count;
+    private int collect_count;
+    private String principal_user_idName;
+    private int courseCollected;
+    private double star;
 
     public int getCourseCollected() {
         return courseCollected;
@@ -184,6 +184,13 @@ public class Course {
         this.ispublished = ispublished;
     }
 
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
 
     public double getStar() {
         return star;
