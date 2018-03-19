@@ -463,7 +463,7 @@ where  content_id=#{content_id}
     </select>
 
     <insert id="backAddCourse" parameterType="com.dli.entities.Course"      useGeneratedKeys="true"   keyProperty="course_id"  >
-        insert course  values (  0, #{category_id},#{title}, #{principal_user_id},  #{department}, #{expiration_date},#{intro}  , #{icon}, #{pic}, #{type_id}, 0, null,#{company_id}, 1,now(),now()   )
+        insert course  values (  0, #{category_id},#{title}, #{principal_user_id},  #{department}, #{expiration_date},#{intro}  , #{icon}, #{pic}, #{type_id}, 0, null,#{company_id}, 1,now(),now() ,#{keywords}  )
     </insert>
 
 
@@ -492,6 +492,7 @@ where  content_id=#{content_id}
    expiration_date=#{expiration_date},
     intro= #{intro},
     icon=#{icon},
+    keywords= #{keywords},
      pic=#{pic},
    type_id=#{type_id}
    where course_id=#{course_id}

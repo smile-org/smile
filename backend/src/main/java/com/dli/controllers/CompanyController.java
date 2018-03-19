@@ -249,6 +249,13 @@ public class CompanyController {
                 int user_limit = (int) body.get("user_limit");
                 String expiration_date = (String) body.get("expiration_date");
 
+                Object   objPaydate =body.get("pay_date");
+                String pay_date =null;
+                if( objPaydate !=null) {
+                    pay_date = (String) objPaydate;
+                }
+
+
 
                 adminCompany c = new adminCompany();
                 c.setCompany_name(company_name);
@@ -262,6 +269,7 @@ public class CompanyController {
                 //c.setLincenceUrl(LincenceUrl);
                 c.setUser_limit(user_limit);
                 c.setExpiration_date(Helper.dateParse(expiration_date));
+                c.setLast_pay_date(  pay_date==null? null:  Helper.dateParse(pay_date) );
 
                 companyService.adminAddCompany(  defaultheader,c);
 
@@ -359,6 +367,14 @@ public class CompanyController {
             int user_limit = (int) body.get("user_limit");
             String expiration_date = (String) body.get("expiration_date");
 
+            Object   objPaydate =body.get("pay_date");
+            String pay_date =null;
+            if( objPaydate !=null) {
+                 pay_date = (String) objPaydate;
+            }
+
+
+
 
             adminCompany c = new adminCompany();
             c.setCompany_id(company_id);
@@ -374,6 +390,9 @@ public class CompanyController {
 
             c.setUser_limit(user_limit);
             c.setExpiration_date(   Helper.dateParse(expiration_date) );
+            c.setLast_pay_date(  pay_date==null? null:  Helper.dateParse(pay_date) );
+
+
 
             companyService.adminUpdateCompany(c);
             companyService.adminUpdateCompanyInfo(c);
@@ -747,5 +766,43 @@ public class CompanyController {
         }
         return result;
     }
+
+
+
+
+
+    @RequestMapping(value = "/back/GetPaymentStatus", method = RequestMethod.GET)
+    public Map backgetPaymentStatus( @RequestHeader Map header) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = header.get("token").toString();
+        User user = logonService.getUserByToken(token);
+        if (user == null) {
+            result.put(Constant.status, 0);
+            result.put(Constant.result, "无效的登录用户");
+            return result;
+        }
+
+        try {
+
+            int companyid=  user.getCompany_id();
+            adminCompany  c=  companyService.adminGetCompanyByID(companyid);
+            int status=  c.getLast_pay_date()==null? 0:1;
+
+
+
+
+            result.put(Constant.status, 1);
+            result.put(Constant.result,  status);
+
+
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            result.put(Constant.status, 0);
+            result.put(Constant.result, ex.getMessage());
+        }
+        return result;
+    }
+
 
 }

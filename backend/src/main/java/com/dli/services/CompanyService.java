@@ -44,4 +44,6 @@ public interface CompanyService {
     void   notifycompnayNearExpiration();
 
     void  jobDisableCompany();
+
+    adminCompany  adminGetCompanyByID( int  companyid );
 }

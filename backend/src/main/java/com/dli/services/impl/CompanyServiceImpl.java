@@ -171,4 +171,9 @@ public class CompanyServiceImpl implements CompanyService {
     public void jobDisableCompany() {
         companyRepo.jobDisableCompany();
     }
+
+    @Override
+    public adminCompany adminGetCompanyByID(int companyid) {
+        return  companyRepo.adminGetCompanyByID( companyid );
+    }
 }
