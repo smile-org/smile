@@ -855,5 +855,6 @@ table {
 .member_contact li:first-child{
   font-size:24px;
   font-weight: 500;
+  margin-top: 60px;
   margin-bottom: 20px;
 }
