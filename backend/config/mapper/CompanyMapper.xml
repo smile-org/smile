@@ -127,7 +127,7 @@ where company_id=#{companyid} and pic_type=#{pictype}
     </update>
 
      <select id="adminGetCompanyList"  parameterType="com.dli.entities.adminCompany"  resultType="com.dli.entities.adminCompany">
-         select   c.company_id,  c.company_name,  c.user_limit, c.expiration_date, i.contact_person , i.phone_number ,
+         select   c.company_id,  c.company_name,  c.user_limit, c.last_pay_date,   c.expiration_date,  i.contact_person , i.phone_number ,
 p.province_name as province , b.business_name as  business ,a.agency_name as  agency,
  c.created_at as start ,c.indicator
  from company c join company_info i on c.company_id =i.company_id

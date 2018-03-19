@@ -535,11 +535,12 @@ public class CompanyController {
 
             rowNameList.add("授权用户");
             rowNameList.add("服务截至日期");
+            rowNameList.add("付费日期");
 
             List<Object[]> dataList = new ArrayList<>();
 
             for (adminCompany  a : lst) {
-                Object[] dataArray = new Object[10];
+                Object[] dataArray = new Object[11];
 
                 dataArray[0] = a.getCompany_name();
                 dataArray[1] = a.getContact_person();
@@ -553,6 +554,7 @@ public class CompanyController {
 
                 dataArray[8] =  a.getUser_limit();
                 dataArray[9] =  (a.getExpiration_date()==null?  "":  Helper.formatDateWithoutTime( a.getExpiration_date() ) ) ;
+                dataArray[10] =   (a.getLast_pay_date()==null?  "":  Helper.formatDateWithoutTime( a.getLast_pay_date() ) ) ;
 
                 dataList.add(dataArray);
             }

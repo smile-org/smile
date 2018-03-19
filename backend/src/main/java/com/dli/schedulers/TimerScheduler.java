@@ -158,10 +158,10 @@ public class TimerScheduler {
     private String defaulthomebanner;
 
     //第一次延迟1秒执行，当执行完后5分钟再执行
-   // @Scheduled(initialDelay = 1000, fixedDelay = 10000 * 10)
+    @Scheduled(initialDelay = 1000, fixedDelay = 10000 * 10)
 
     //每天晚上5点执行
-    @Scheduled(cron = "00 00 05 * * ?")
+    //@Scheduled(cron = "00 00 05 * * ?")
     public void syncCompany() {
 
         Connection conn = null;
@@ -182,7 +182,7 @@ public class TimerScheduler {
                     if( count >0 )     continue;
 
 
-                    String company_name = rs.getString("name");
+                    String company_name = rs.getString("company");
                     String contact_person = rs.getString("contact");
                     int user_limit = 100;
 
