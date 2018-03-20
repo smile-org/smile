@@ -54,6 +54,7 @@
               <el-table-column prop="appointment_title" label="约课主题"  align="center" min-width="180"></el-table-column>
               <el-table-column prop="company_name" label="企业名称"  align="center" width="180"></el-table-column>
               <el-table-column prop="business_name" label="主营行业"  align="center" width="180"></el-table-column>
+              <el-table-column prop="keywords" label="关键词"  align="center" width="180"></el-table-column>
               <el-table-column prop="sponsor_idfull_name" label="发起者"  align="center" width="180"></el-table-column>
               <el-table-column prop="sponsor_idcell_phone" label="发起人联系方式"  align="center" width="180"></el-table-column>
               <el-table-column prop="contact_person" label="企业联系人"  align="center" width="180"></el-table-column>

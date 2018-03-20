@@ -47,6 +47,21 @@
                   </el-col>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="付费日期" prop="payDate">
+                  <el-col>
+                    <el-date-picker
+                      format="yyyy-MM-dd"
+                      class="dateTab_width"
+                      type="date"
+                      placeholder="选择付费日期"
+                      v-model="ruleForm.payDate"
+                      style="width: 100%;"></el-date-picker>
+                  </el-col>
+                </el-form-item>
+              </el-col>
+
             </el-row>
             <el-row>
               <el-col :span="12">
@@ -172,7 +187,8 @@
           address: '',
           src: '',
           userCount: 0,
-          dateEnd: ''
+          dateEnd: '',
+          payDate: ''
         },
         rules: {
           companyName: [
@@ -214,6 +230,9 @@
           dateEnd: [
             { type: 'date', required: true, message: '请输入服务截止日期', trigger: 'change' }
           ],
+          // payDate: [
+          //   { type: 'date', message: '请输入付费日期', trigger: 'change' }
+          // ],
           userCount: [
             { type: 'number', required: true, message: '请输入授权用户数', trigger: 'change' }
           ]
@@ -309,7 +328,7 @@
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            api.post(api.uri.createCompany, {
+            var postData = {
               company_name: this.ruleForm.companyName,
               contact_person: this.ruleForm.contacts,
               phone_number: this.ruleForm.phone,
@@ -321,7 +340,11 @@
               LincenceUrl: this.ruleForm.src,
               user_limit: this.ruleForm.userCount,
               expiration_date: moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
-            }).then(data => {
+            }
+            if (this.ruleForm.payDate) {
+              postData.pay_date = moment(this.ruleForm.payDate).format('YYYY-MM-DD')
+            }
+            api.post(api.uri.createCompany, postData).then(data => {
               if (data.status === 1) {
                 router.push({name: 'membershipList'})
               }

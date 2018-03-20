@@ -83,6 +83,11 @@
                 {{scope.row.expiration_date | formatExpirationDate}}
               </template>
             </el-table-column>
+            <el-table-column prop="pay_date" label="付费时间" align="center" min-width="120">
+              <template scope="scope">
+                {{scope.row.pay_date | formatPayDate}}
+              </template>
+            </el-table-column>
             <el-table-column prop="province" label="省份" align="center" min-width="100">
             </el-table-column>
             <el-table-column prop="business" label="主营行业" align="center" min-width="120">
@@ -169,6 +174,14 @@
       formatExpirationDate: function (time) {
         var date = new Date(time)
         return moment(date).format('YYYY-MM-DD')
+      },
+      formatPayDate: function (time) {
+        if (time) {
+          var date = new Date(time)
+          return moment(date).format('YYYY-MM-DD')
+        } else {
+          return ''
+        }
       }
     },
     created () {

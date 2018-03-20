@@ -204,15 +204,16 @@
         router.push({name: 'courseComment', query: {id: this.id}})
       },
       start: function (contentId, contentLink, orignalPath, type) {
+        sessionStorage.setItem('current_course_id', this.id)
         api.fetch(api.uri.startCourse, {
           courseid: this.id,
           contentid: contentId
         }).then(data => {
           if (data.status === 1) {
             if (type === 'mp4') {
-              router.push({name: 'courseVideo', query: {link: orignalPath, type: type}})
+              router.push({name: 'courseVideo', query: {link: orignalPath, type: type, id: this.id}})
             } else {
-              router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
+              router.push({name: 'courseMedia', query: {link: orignalPath, type: type, id: this.id}})
             }
 //            router.push({name: 'courseMedia', query: {link: orignalPath, type: type}})
           }

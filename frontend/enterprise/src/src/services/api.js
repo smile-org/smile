@@ -4,7 +4,7 @@ import axios from 'axios'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.withCredentials = true
 
-axios.defaults.baseURL = 'http://api.jxueyuan.com'
+axios.defaults.baseURL = 'http://api-test.jxueyuan.com'
 // axios.defaults.imageServer = 'http://192.168.1.106:4001'
 axios.defaults.imageServer = '' // 'http://123.207.154.226:4001'
 axios.defaults.fileServer = 'http://123.207.154.226:4001'
@@ -205,7 +205,10 @@ export default {
     uploadEnrollmentBanner: '/back/UploadEnrollmentPic',
 
     // *** Aliyun OSS ***
-    ossInfo: '/ossInfo'
+    ossInfo: '/ossInfo',
+
+    // 是否付费企业
+    getPaymentStatus: '/back/GetPaymentStatus'
   },
   extension: {
     course: [
@@ -213,6 +216,16 @@ export default {
       'JPG',
       'PNG',
       'MP4',
+      'MOV',
+      'DOC',
+      'DOCX',
+      'PPT',
+      'PPTX'
+    ],
+    trial: [
+      'PDF',
+      'JPG',
+      'PNG',
       'MOV',
       'DOC',
       'DOCX',

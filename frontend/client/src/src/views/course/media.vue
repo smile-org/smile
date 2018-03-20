@@ -3,9 +3,9 @@
     <common-header></common-header>
     <iframe class="aaaa" v-show="showIframe" :src="link" style="width: 100%; height: 100vh; border: none;"></iframe>
     <img v-show="showImage" :src="link" width="100%" height="100%"/>
-    <video :src="link" id="my-video" controls="controls" preload="true" type='video/mp4' webkit-playsinline="true" style="width: 100%; height: calc(100vh - 1rem);">
+    <!-- <video :src="link" id="my-video" controls="controls" preload="true" type='video/mp4' webkit-playsinline="true" style="width: 100%; height: calc(100vh - 1rem);">
       您的浏览器不支持 video 标签。
-    </video>
+    </video> -->
   </div>
 </template>
 
@@ -18,7 +18,8 @@
         showIframe: false,
         showImage: false,
         showVideo: false,
-        type: ''
+        type: '',
+        id: 0
       }
     },
     components: {
@@ -27,6 +28,7 @@
     created () {
       this.link = this.$route.query.link
       this.type = this.$route.query.type.toLowerCase()
+      this.id = this.$route.query.id
       if (this.type === 'png' || this.type === 'jpg') {
         this.showImage = true
         // this.showIframe = false

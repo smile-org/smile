@@ -28,6 +28,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="8">
                 <el-form-item label="责任人" prop="adminid">
                   <el-select class="dateTab_width" filterable v-model="form.adminid" placeholder="请选择责任人">
@@ -53,6 +54,16 @@
                 <el-input type="textarea" v-model="form.intro" placeholder="简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
+            <el-col>
+                <el-form-item label="关键字" prop="keywords">
+                  <el-tag :key="item" v-for="item in keywords" :closable="true" :close-transition="false" @close="handleClose(item)">
+                    {{item}}
+                  </el-tag>
+                  <el-input class="input-new-tag" v-if="inputVisible" v-model="keyword" ref="saveTagInput" size="mini" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm" maxlength=20 minlength=1>
+                  </el-input>
+                  <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新增关键字</el-button>
+                </el-form-item>
+              </el-col>
           </el-form>
           <hr class="hr_line">
           <table class="page_m mt30 mb30" cellspacing="0" cellpadding="0" border="0">
@@ -110,7 +121,8 @@
                   :data="contentFormData"
                   :headers="headers">
                   <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
-                  <div slot="tip" class="el-upload__tip">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
+                  <div slot="tip" class="el-upload__tip" v-if="isPaid">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
+                  <div slot="tip" class="el-upload__tip" v-else>支持类型pdf/word/ppt/png/jpg，大小不超过10M</div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
@@ -128,7 +140,7 @@
                 </el-table-column>
                 <el-table-column prop="content" align="center" label="标题">
                 </el-table-column>
-                <el-table-column prop="name" ali gn="center"label="课件">
+                <el-table-column prop="name" ali gn="center" label="课件">
                 </el-table-column>
                 <el-table-column label="操作" align="center"  class="tc" width="100">
                   <template scope="scope">
@@ -340,7 +352,13 @@ export default {
       take: 10,
       currentPage: 1,
       total: 0,
-      contentOrigianlPath: ''
+      contentOrigianlPath: '',
+      isPaid: false,
+      maxFileSize: 500,
+
+      keywords: [],
+      keyword: '',
+      inputVisible: false
     }
   },
   components: {
@@ -359,6 +377,11 @@ export default {
         this.categoryList = data.result.CategoryList
         this.adminList = data.result.AdminList
       }
+      api.fetch(api.uri.getPaymentStatus, {}).then(result => {
+        if (result.status === 1 && result.result === 1) {
+          this.isPaid = true
+        }
+      })
     })
     this.initLogoFormData()
     this.initBannerFormData()
@@ -376,6 +399,27 @@ export default {
     })
   },
   methods: {
+
+    handleClose (item) {
+      this.keywords.splice(this.keywords.indexOf(item), 1)
+    },
+
+    showInput () {
+      this.inputVisible = true
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+
+    handleInputConfirm () {
+      let keyword = this.keyword.trim()
+      if (keyword) {
+        this.keywords.push(keyword)
+      }
+      this.inputVisible = false
+      this.keyword = ''
+    },
+
     initLogoFormData () {
       this.headers = api.getUploadHeaders()
       api.fetch(api.uri.ossInfo, {businessType: 'course-icon'}).then(data => {
@@ -570,7 +614,11 @@ export default {
       if (file.name.indexOf('.') !== -1) {
         var arrLen = file.name.split('.').length - 1
         var extension = file.name.split('.')[arrLen].toUpperCase()
-        if (api.extension.course.indexOf(extension) === -1) {
+        var targetExtensionArray = api.extension.course
+        if (!this.isPaid) {
+          targetExtensionArray = api.extension.trial
+        }
+        if (targetExtensionArray.indexOf(extension) === -1) {
           this.$message({
             type: 'info',
             message: '不支持的上传文件格式'
@@ -586,10 +634,13 @@ export default {
         this.fileList = []
         return false
       }
-      if (file.size > 500 * 1024 * 1024) {
+      if (!this.isPaid) {
+        this.maxFileSize = 10
+      }
+      if (file.size > this.maxFileSize * 1024 * 1024) {
         this.$message({
           type: 'info',
-          message: '附件不能大于500M'
+          message: '附件不能大于' + this.maxFileSize + 'M'
         })
         this.fileList = []
         return false
@@ -599,11 +650,6 @@ export default {
     },
     submitCourse () {
       this.$refs['form'].validate((valid) => {
-        // console.log('----------------')
-        // console.log(this.form)
-        // console.log(this.iconSrc)
-        // console.log(this.bannerSrc)
-        // console.log('----------------')
         if (valid) {
           var submitObj = {
             cateid: this.form.cateid,
@@ -615,9 +661,19 @@ export default {
             iconPath: this.iconSrc,
             picPath: this.bannerSrc
           }
+          if (this.keywords && this.keywords.length > 0) {
+            submitObj.keywords = this.keywords.join(',')
+          }
           var contentIds = []
           for (var ci = 0; ci < this.contentList.length; ci++) {
             contentIds.push(this.contentList[ci].id)
+          }
+          if (contentIds.length === 0) {
+            this.$message({
+              type: 'info',
+              message: '请添加课程内容'
+            })
+            return
           }
           submitObj.contentids = contentIds.join(',')
           if (this.useWhiteList) {
@@ -802,5 +858,6 @@ export default {
   background-color: #00b553;
   border: 1px solid #00b553;
 }
+
 </style>
 

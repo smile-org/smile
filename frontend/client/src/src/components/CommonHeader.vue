@@ -72,6 +72,10 @@ export default {
     goBack () {
       if (this.routeName === 'getExamInfo') {
         router.push({name: 'getExamList'})
+      } else if (this.routeName === 'courseVideo' || this.routeName === 'courseMedia') {
+        var id = sessionStorage.getItem('current_course_id')
+        sessionStorage.removeItem('current_course_id')
+        router.push({name: 'courseDetails', query: {id: id}})
       } else {
         router.go(-1)
       }

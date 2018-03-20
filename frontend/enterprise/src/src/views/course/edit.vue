@@ -52,6 +52,16 @@
                 <el-input  type="textarea" v-model="currentCourse.intro" placeholder="简介" style="min-width: 545px;"></el-input>
               </el-form-item>
             </el-col>
+             <el-col>
+                <el-form-item label="关键字" prop="keywords">
+                  <el-tag :key="item" v-for="item in keywords" :closable="true" :close-transition="false" @close="handleClose(item)">
+                    {{item}}
+                  </el-tag>
+                  <el-input class="input-new-tag" v-if="inputVisible" v-model="keyword" ref="saveTagInput" size="mini" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm" maxlength=20 minlength=1>
+                  </el-input>
+                  <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新增关键字</el-button>
+                </el-form-item>
+              </el-col>
           </el-form>
           <hr class="hr_line">
           <table class="page_m mt30 mb30" cellspacing="0" cellpadding="0" border="0">
@@ -109,7 +119,8 @@
                   :data="contentFormData"
                   :headers="headers">
                   <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
-                  <div slot="tip" class="el-upload__tip">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
+                  <div slot="tip" class="el-upload__tip" v-if="isPaid">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
+                  <div slot="tip" class="el-upload__tip" v-else>支持类型pdf/word/ppt/png/jpg，大小不超过10M</div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
@@ -343,7 +354,14 @@ export default {
       id: 0,
       currentCourse: {},
 
-      contentOrigianlPath: ''
+      contentOrigianlPath: '',
+
+      isPaid: false,
+      maxFileSize: 500,
+
+      keywords: [],
+      keyword: '',
+      inputVisible: false
     }
   },
   components: {
@@ -370,7 +388,13 @@ export default {
         this.iconData = axios.defaults.imageServer + data.result.CourseTobeEdit.icon
         this.bannerSrc = axios.defaults.imageServer + data.result.CourseTobeEdit.pic
         this.bannerData = axios.defaults.imageServer + data.result.CourseTobeEdit.pic
+        this.keywords = data.result.CourseTobeEdit.keywords ? data.result.CourseTobeEdit.keywords.split(',') : []
       }
+      api.fetch(api.uri.getPaymentStatus).then(result => {
+        if (result.status === 1 && result.result === 1) {
+          this.isPaid = true
+        }
+      })
     }).catch(error => {
       this.$message(error.message)
     })
@@ -390,6 +414,26 @@ export default {
     })
   },
   methods: {
+    handleClose (item) {
+      this.keywords.splice(this.keywords.indexOf(item), 1)
+    },
+
+    showInput () {
+      this.inputVisible = true
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+
+    handleInputConfirm () {
+      let keyword = this.keyword.trim()
+      if (keyword) {
+        this.keywords.push(keyword)
+      }
+      this.inputVisible = false
+      this.keyword = ''
+    },
+
     initLogoFormData () {
       this.headers = api.getUploadHeaders()
       api.fetch(api.uri.ossInfo, {businessType: 'course-icon'}).then(data => {
@@ -604,7 +648,11 @@ export default {
       if (file.name.indexOf('.') !== -1) {
         var arrLen = file.name.split('.').length - 1
         var extension = file.name.split('.')[arrLen].toUpperCase()
-        if (api.extension.course.indexOf(extension) === -1) {
+        var targetExtensionArray = api.extension.course
+        if (!this.isPaid) {
+          targetExtensionArray = api.extension.trial
+        }
+        if (targetExtensionArray.indexOf(extension) === -1) {
           this.$message({
             type: 'info',
             message: '不支持的上传文件格式'
@@ -620,14 +668,18 @@ export default {
         this.fileList = []
         return false
       }
-      if (file.size > 500 * 1024 * 1024) {
+      if (!this.isPaid) {
+        this.maxFileSize = 10
+      }
+      if (file.size > this.maxFileSize * 1024 * 1024) {
         this.$message({
           type: 'info',
-          message: '附件不能大于500M'
+          message: '附件不能大于' + this.maxFileSize + 'M'
         })
         this.fileList = []
         return false
       }
+
       // this.contentFormData.key = this.contentFormData.key + api.guid() + '.' + api.getFileExt(file.name)
       this.contentFormData.key = this.contentOrigianlPath + api.guid() + '.' + api.getFileExt(file.name)
       console.log(this.contentFormData.key)
@@ -646,9 +698,19 @@ export default {
             iconPath: this.iconSrc,
             picPath: this.bannerSrc
           }
+          if (this.keywords && this.keywords.length > 0) {
+            submitObj.keywords = this.keywords.join(',')
+          }
           var contentIds = []
           for (var ci = 0; ci < this.contentList.length; ci++) {
             contentIds.push(this.contentList[ci].content_id)
+          }
+          if (contentIds.length === 0) {
+            this.$message({
+              type: 'info',
+              message: '请添加课程内容'
+            })
+            return
           }
           submitObj.contentids = contentIds.join(',')
           if (this.useWhiteList) {
