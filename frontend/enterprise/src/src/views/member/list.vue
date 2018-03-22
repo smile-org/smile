@@ -76,7 +76,7 @@
                 <td class=""><i class="el-icon-star-off mem_star"/>根据需求订制</td>
               </tr>
             </table>
-          <img src="../../assets/img/member_plane.png" class="member_plane">
+            <img src="../../assets/img/member_plane.png" class="member_plane">
         </div>
       </section>
     </div>
