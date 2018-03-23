@@ -29,6 +29,7 @@
       this.link = this.$route.query.link
       this.type = this.$route.query.type.toLowerCase()
       this.id = this.$route.query.id
+      sessionStorage.setItem('current_course_id', this.id)
       if (this.type === 'png' || this.type === 'jpg') {
         this.showImage = true
         // this.showIframe = false
