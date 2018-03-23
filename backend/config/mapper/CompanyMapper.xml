@@ -131,9 +131,9 @@ where company_id=#{companyid} and pic_type=#{pictype}
 p.province_name as province , b.business_name as  business ,a.agency_name as  agency,
  c.created_at as start ,c.indicator
  from company c join company_info i on c.company_id =i.company_id
-join province p on i.province_id =p.province_id
-join business b on c.business_id =b.business_id
-join  agency  a on c.agency_id =a.agency_id
+left join province p on i.province_id =p.province_id
+left join business b on c.business_id =b.business_id
+left join  agency  a on c.agency_id =a.agency_id
          where  1=1
          <if test="company_name!=null">and c.company_name like '%${company_name}%'</if>
          <if test="province_id!=0">and i.province_id =#{province_id} </if>
@@ -149,9 +149,9 @@ join  agency  a on c.agency_id =a.agency_id
     <select id="adminGetCompanyListCount"  parameterType="com.dli.entities.adminCompany"  resultType="int">
         select  count(*)
         from company c join company_info i on c.company_id =i.company_id
-        join province p on i.province_id =p.province_id
-        join business b on c.business_id =b.business_id
-        join  agency  a on c.agency_id =a.agency_id
+       left join province p on i.province_id =p.province_id
+      left  join business b on c.business_id =b.business_id
+     left   join  agency  a on c.agency_id =a.agency_id
         where  1=1
         <if test="company_name!=null">and c.company_name like '%${company_name}%'</if>
         <if test="province_id!=0">and i.province_id =#{province_id} </if>
