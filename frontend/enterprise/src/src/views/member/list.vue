@@ -62,7 +62,7 @@
               </tr>
               <tr>
                 <td class="">课件阅后即焚</td>
-                <td class="">支持</td>
+                <td class="">不支持</td>
                 <td class=""><i class="el-icon-star-off mem_star"/>支持</td>
               </tr>
               <tr>

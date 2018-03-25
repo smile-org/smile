@@ -60,8 +60,8 @@
         </el-tab-pane>
         <el-tab-pane label="课程目录" name="second">
           <ul style="overflow: hidden" class="list_border course_con a_v">
-            <li class="con_list" v-for="item in courseContent" :key="item.content_id">
-                <span v-on:click='start(item.content_id, item.content_link, item.orignal_path, item.content_type)'>
+            <li class="con_list" v-for="item in courseContent" :key="item.content_id" v-on:click='start(item.content_id, item.content_link, item.orignal_path, item.content_type)'>
+                <span>
                   <span v-bind:class="item.typeImageClass" class="media_img media_img1"></span>
                   <span class="c_list_font">{{item.sequnce_title}} {{item.content}}</span>
                 </span>
@@ -166,6 +166,8 @@
                   item.typeImageClass = 'media_img media_img4'
                 } else if (item.content_type.toUpperCase() === 'PDF') {
                   item.typeImageClass = 'media_img media_img5'
+                } else if (item.content_type.toUpperCase() === 'XLS' || item.content_type.toUpperCase() === 'XLSX') {
+                  item.typeImageClass = 'media_img media_img6'
                 }
               }
               this.courseContent = data.result

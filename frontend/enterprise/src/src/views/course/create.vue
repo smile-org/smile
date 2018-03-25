@@ -110,7 +110,7 @@
                     <el-input v-model="formInline.content" placeholder="标题" style="width: 300px;"></el-input>
                   </el-form-item>
                 </el-form>
-                <el-upload class="upload-demo" accept="video/mp4,video/mov,application/msword,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+                <el-upload class="upload-demo" accept="video/mp4,video/mov,application/msword,image/jpeg,image/png,application/vnd.ms-powerpoint,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
                   ref="uploadContent"
                   :action="uploadContentAction"
                   :on-success="onContentSuccess"
@@ -121,8 +121,8 @@
                   :data="contentFormData"
                   :headers="headers">
                   <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
-                  <div slot="tip" class="el-upload__tip" v-if="isPaid">支持类型pdf/word/ppt/mp4/png/jpg，大小不超过500M</div>
-                  <div slot="tip" class="el-upload__tip" v-else>支持类型pdf/word/ppt/png/jpg，大小不超过10M</div>
+                  <div slot="tip" class="el-upload__tip" v-if="isPaid">支持类型pdf/word/ppt/excel/mp4/png/jpg，大小不超过500M</div>
+                  <div slot="tip" class="el-upload__tip" v-else>支持类型pdf/word/ppt/excel/png/jpg，大小不超过10M</div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>

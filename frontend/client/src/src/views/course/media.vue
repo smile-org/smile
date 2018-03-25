@@ -33,7 +33,7 @@
       if (this.type === 'png' || this.type === 'jpg') {
         this.showImage = true
         // this.showIframe = false
-      } else if (this.type === 'pdf' || this.type === 'doc' || this.type === 'docx' || this.type === 'ppt' || this.type === 'pptx') {
+      } else if (this.type === 'pdf' || this.type === 'doc' || this.type === 'docx' || this.type === 'ppt' || this.type === 'pptx' || this.type === 'xls' || this.type === 'xlsx') {
         // http://ow365.cn/?i=15062&del=1&n=3&furl=http://files.jxueyuan.com/company-34/course/abcd.pdf
         this.link = this.link.replace('http://dev-env.oss-cn-beijing.aliyuncs.com/', 'http://files.jxueyuan.com/')
           .replace('http://prod-env.oss-cn-beijing.aliyuncs.com/', 'http://files.jxueyuan.com/')
