@@ -408,6 +408,11 @@
             api.post(api.uri.updateCompanyInfo, postData).then(data => {
               if (data.status === 1) {
                 router.push({name: 'membershipList'})
+              } else {
+                this.$message({
+                  type: 'info',
+                  message: data.result
+                })
               }
             })
           } else {

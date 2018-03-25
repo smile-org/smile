@@ -356,8 +356,7 @@
               agency_id: this.ruleForm.agency_id,
               address: this.ruleForm.address,
               LincenceUrl: this.ruleForm.src,
-              user_limit: this.ruleForm.userCount,
-              expiration_date: ''
+              user_limit: this.ruleForm.userCount
             }
 
             if (this.memberType) {
@@ -379,6 +378,11 @@
             api.post(api.uri.createCompany, postData).then(data => {
               if (data.status === 1) {
                 router.push({name: 'membershipList'})
+              } else {
+                this.$message({
+                  type: 'info',
+                  message: data.result
+                })
               }
             })
           } else {
