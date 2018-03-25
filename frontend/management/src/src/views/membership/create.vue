@@ -41,6 +41,8 @@
                       v-model="memberType"
                       active-color="#13ce66"
                       inactive-color="#ff4949"
+                      active-text="付费"
+                      inactive-text="免费"
                       @change="changeMemberType">
                     </el-switch>
                   </el-col>

@@ -63,7 +63,7 @@
       },
       password: {
         required,
-        minLength: minLength(6),
+        minLength: minLength(1),
         maxLength: maxLength(16)
       }
     },

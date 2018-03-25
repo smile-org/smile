@@ -41,6 +41,8 @@
                       v-model="memberType"
                       active-color="#13ce66"
                       inactive-color="#ff4949"
+                      active-text="付费"
+                      inactive-text="免费"
                       @change="changeMemberType">
                     </el-switch>
                   </el-col>
@@ -287,9 +289,9 @@
           }
           if (obj.expiration_date) {
             this.ruleForm.dateEnd = new Date(obj.expiration_date)
-            this.memberType = true
-            this.showPayDate = true
-            this.showDateEnd = true
+            // this.memberType = true
+            // this.showPayDate = true
+            // this.showDateEnd = true
           }
           if (obj.pay_date) {
             this.ruleForm.payDate = new Date(obj.payDate)
