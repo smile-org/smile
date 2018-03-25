@@ -69,6 +69,8 @@
                         </el-table-column>
                         <el-table-column prop="type_name" label="课程类型" align="center" min-width="120">
                         </el-table-column>
+                        <el-table-column prop="key_word" label="关键字" align="center" min-width="120">
+                        </el-table-column>
                         <el-table-column prop="ispublished" label="课程状态" align="center" min-width="100">
                             <template scope="scope">
                                 {{scope.row.ispublished ? "已发布" : "未发布"}}

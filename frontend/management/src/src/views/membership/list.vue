@@ -78,14 +78,21 @@
             </el-table-column>
             <el-table-column prop="user_limit" label="授权用户" align="center" min-width="100">
             </el-table-column>
+
+            <el-table-column label="会员类别" align="center" min-width="120">
+              <template scope="scope">
+                {{scope.row.last_pay_date ? "付费" : "免费"}}
+              </template>
+            </el-table-column>
+
+            <el-table-column prop="last_pay_date" label="付费时间" align="center" min-width="120">
+              <template scope="scope">
+                {{scope.row.last_pay_date | formatPayDate}}
+              </template>
+            </el-table-column>
             <el-table-column prop="expiration_date" label="服务截止" align="center" min-width="120">
               <template scope="scope">
                 {{scope.row.expiration_date | formatExpirationDate}}
-              </template>
-            </el-table-column>
-            <el-table-column prop="pay_date" label="付费时间" align="center" min-width="120">
-              <template scope="scope">
-                {{scope.row.pay_date | formatPayDate}}
               </template>
             </el-table-column>
             <el-table-column prop="province" label="省份" align="center" min-width="100">

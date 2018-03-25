@@ -35,6 +35,31 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
+                <el-form-item label="会员类别" prop="memberType">
+                  <el-col>
+                    <el-switch
+                      v-model="memberType"
+                      active-color="#13ce66"
+                      inactive-color="#ff4949"
+                      @change="changeMemberType">
+                    </el-switch>
+                  </el-col>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" v-show="showPayDate">
+                <el-form-item label="付费日期" prop="payDate">
+                  <el-col>
+                    <el-date-picker
+                      format="yyyy-MM-dd"
+                      class="dateTab_width"
+                      type="date"
+                      placeholder="选择付费日期"
+                      v-model="ruleForm.payDate"
+                      style="width: 100%;"></el-date-picker>
+                  </el-col>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" v-show="showDateEnd">
                 <el-form-item label="服务截止" prop="dateEnd">
                   <el-col>
                     <el-date-picker
@@ -48,19 +73,7 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
-                <el-form-item label="付费日期" prop="payDate">
-                  <el-col>
-                    <el-date-picker
-                      format="yyyy-MM-dd"
-                      class="dateTab_width"
-                      type="date"
-                      placeholder="选择付费日期"
-                      v-model="ruleForm.payDate"
-                      style="width: 100%;"></el-date-picker>
-                  </el-col>
-                </el-form-item>
-              </el-col>
+
             </el-row>
             <el-row>
               <el-col :span="12">
@@ -155,6 +168,9 @@
   export default {
     data: function () {
       return {
+        showDateEnd: false,
+        showPayDate: false,
+        memberType: false,
         id: '',
         fileList: [],
         // imgUrl: axios.defaults.baseURL + api.uri.uploadLicense,
@@ -227,9 +243,9 @@
           src: [
             { required: true, message: '请上传企业执照', trigger: 'trigger' }
           ],
-          dateEnd: [
-            { type: 'date', required: true, message: '请输入服务截止日期', trigger: 'change' }
-          ],
+          // dateEnd: [
+          //   { type: 'date', required: true, message: '请输入服务截止日期', trigger: 'change' }
+          // ],
           userCount: [
             { type: 'number', required: true, message: '请输入授权用户数', trigger: 'change' }
           ]
@@ -267,8 +283,19 @@
             agency_id: obj.agency_id,
             address: obj.address,
             src: obj.pic_url,
-            dateEnd: new Date(obj.expiration_date),
             userCount: obj.user_limit
+          }
+          if (obj.expiration_date) {
+            this.ruleForm.dateEnd = new Date(obj.expiration_date)
+            this.memberType = true
+            this.showPayDate = true
+            this.showDateEnd = true
+          }
+          if (obj.pay_date) {
+            this.ruleForm.payDate = new Date(obj.payDate)
+            this.memberType = true
+            this.showDateEnd = true
+            this.showPayDate = true
           }
         }
       })
@@ -358,12 +385,25 @@
               agency_id: this.ruleForm.agency_id,
               address: this.ruleForm.address,
               LincenceUrl: this.ruleForm.src,
-              user_limit: this.ruleForm.userCount,
-              expiration_date: moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
+              user_limit: this.ruleForm.userCount
+              // expiration_date: moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
             }
-            if (this.ruleForm.payDate) {
-              postData.pay_date = moment(this.ruleForm.payDate).format('YYYY-MM-DD')
+            if (this.memberType) {
+              if (!this.ruleForm.payDate || !this.ruleForm.dateEnd) {
+                this.$message({
+                  type: 'info',
+                  message: '请填写服务付费日期与截止日期'
+                })
+                return false
+              }
+              if (this.ruleForm.payDate) {
+                postData.last_pay_date = moment(this.ruleForm.payDate).format('YYYY-MM-DD')
+              }
+              if (this.ruleForm.dateEnd) {
+                postData.expiration_date = moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
+              }
             }
+
             api.post(api.uri.updateCompanyInfo, postData).then(data => {
               if (data.status === 1) {
                 router.push({name: 'membershipList'})
@@ -390,6 +430,17 @@
       },
       handleExceed (files, fileList) {
         this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+      },
+      changeMemberType () {
+        if (this.memberType) {
+          this.showPayDate = true
+          this.showDateEnd = true
+        } else {
+          this.showPayDate = false
+          this.showDateEnd = false
+          this.ruleForm.dateEnd = ''
+          this.ruleForm.payDate = ''
+        }
       }
     }
   }

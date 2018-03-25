@@ -779,10 +779,11 @@ table {
   content:'';
   background: url(../img/member_cloud.png)no-repeat;
   width: 100%;
-  height: 288px;
+  height: 295px;
   position: absolute;
   left: 0px;
   bottom: 0px;
+  background-size: cover;
 
 }
 .member_tab{

@@ -131,7 +131,7 @@
       } else if (this.module === 'membering') {
         this.navigator = {
           icon: 'aside_icon11',
-          name: '会员管理',
+          name: '会员升级',
           items: [{
             text: '会员服务介绍',
             routeName: 'memberList',

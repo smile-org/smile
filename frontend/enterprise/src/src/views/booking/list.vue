@@ -42,6 +42,7 @@
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="appointmentTitle" align="center" label="约课主题" width=""></el-table-column>
             <el-table-column prop="sponsorName" align="center" label="发起者" width=""></el-table-column>
+            <el-table-column prop="key_word" align="center" label="关键字" width=""></el-table-column>
             <el-table-column prop="sponsorDate" align="center" label="发起时间" width="">
               <template scope="scope" >
                 <span >{{scope.row.sponsorDate | formatDate}} </span>

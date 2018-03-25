@@ -71,6 +71,8 @@
               item.typeImageClass = 'media_img media_img4'
             } else if (item.content_type.toUpperCase() === 'PDF') {
               item.typeImageClass = 'media_img media_img5'
+            } else if (item.content_type.toUpperCase() === 'XLS' || item.content_type.toUpperCase() === 'XLSX') {
+              item.typeImageClass = 'media_img media_img6'
             }
           }
           this.courseContent = data.result
