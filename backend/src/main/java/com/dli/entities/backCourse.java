@@ -20,6 +20,9 @@ public class backCourse {
     private boolean ispublished;
     private String publish_date;
 
+    private   String  keywords;
+
+
     private Date start;
     private Date end;
 
@@ -150,5 +153,14 @@ public class backCourse {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }

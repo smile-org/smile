@@ -1370,11 +1370,12 @@ public class CourseController {
             rowNameList.add("课程类型");
             rowNameList.add("课程状态");
             rowNameList.add("发布日期");
+            rowNameList.add("关键词");
 
             List<Object[]> dataList = new ArrayList<>();
 
             for (backCourse u : lst) {
-                Object[] dataArray = new Object[8];
+                Object[] dataArray = new Object[9];
 
                 dataArray[0] = u.getTitle();
                 dataArray[1] = u.getCategory_name();
@@ -1385,6 +1386,8 @@ public class CourseController {
                 dataArray[5] = u.getType_name();
                 dataArray[6] = u.isIspublished() ? "已发布" : "隐藏";
                 dataArray[7] = u.getPublish_date();
+
+                dataArray[8] = u.getKeywords();
 
                 dataList.add(dataArray);
             }

@@ -409,14 +409,16 @@ public class AppointmentController {
             rowNameList.add("约课主题");
             rowNameList.add("发起者");
             rowNameList.add("发起时间");
+            rowNameList.add("关键词");
 
             List<Object[]> dataList = new ArrayList<>();
             for (BackAppointment appointment : appointmentList) {
-                Object[] dataArray = new Object[6];
+                Object[] dataArray = new Object[4];
 
                 dataArray[0] = appointment.getAppointmentTitle();
                 dataArray[1] = appointment.getSponsorName();
                 dataArray[2] = appointment.getSponsorDate();
+                dataArray[3] = appointment.getKey_word();
                 dataList.add(dataArray);
             }
             String url = Helper.Export(rowNameList, dataList, "Appointment-", fileroot, exportfolder);

@@ -22,8 +22,8 @@
         select * from (
 select  c.company_id, c.company_name ,c.expiration_date , c.user_limit, i.contact_person,i.phone_number,p.province_name,city.city_name,i.address
 from company c join company_info i on c.company_id=i.company_id
-join  city on   i.city_id = city.city_id
-join province p on i.province_id =p.province_id
+left join  city on   i.city_id = city.city_id
+left join province p on i.province_id =p.province_id
 where  c.company_id=#{companyid})result join
 (
 select pic_url as  banner from company_pic
@@ -109,7 +109,7 @@ where company_id=#{companyid} and pic_type=#{pictype}
 
     <select id="adminGetCompanyByID" parameterType="int"   resultType="com.dli.entities.adminCompany">
         select   c.company_name,  c.business_id, c.agency_id, c.user_limit,  c.last_pay_date ,c.expiration_date, i.*, p.pic_url as pic_url  from company  c  join   company_info  i on c.company_id = i. company_id
-          join  company_pic  p on  c.company_id = p. company_id and p.pic_type= 'business_licence' where c.company_id= #{companyid}
+          left    join  company_pic  p on  c.company_id = p. company_id and p.pic_type= 'business_licence' where c.company_id= #{companyid}
     </select>
 
     <update id="adminUpdateCompany"   parameterType="com.dli.entities.adminCompany">

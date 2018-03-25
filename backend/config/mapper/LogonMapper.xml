@@ -41,7 +41,7 @@
     </select>
 
     <insert id="addSMS" >
-        INSERT INTO sms  VALUES (null, #{userid}, #{cellphone},  #{vcode},#{smstype},#{now} );
+        INSERT INTO sms  VALUES (null, #{userid}, #{cellphone},  #{vcode},#{smstype},  now() );
     </insert>
 
 

@@ -150,6 +150,8 @@ where ai.appointment_id = #{appointmentId}
         <result column="appointment_title" property="appointmentTitle"/>
         <result column="sponsor_name" property="sponsorName"/>
         <result column="sponsor_date" property="sponsorDate"/>
+        <result column="key_word" property="key_word"/>
+
     </resultMap>
 
     <select id="getBackAppointmentList" resultMap="backAppointment">
@@ -157,10 +159,13 @@ where ai.appointment_id = #{appointmentId}
             a.appointment_id,
             a.appointment_title,
             u.full_name sponsor_name,
-            a.sponsor_date
+            a.sponsor_date,
+        ak.key_word
+
         FROM
             appointment a
             left JOIN user u on a.sponsor_id = u.user_id
+        left  join (select appointment_id, group_concat(word) key_word from appointment_keyword group by  appointment_id) ak on a.appointment_id = ak.appointment_id
         WHERE
             a.company_id = #{companyId}
         AND a.indicator = 1

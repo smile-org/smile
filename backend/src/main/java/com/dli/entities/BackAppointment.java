@@ -7,6 +7,7 @@ public class BackAppointment {
     private String appointmentTitle;
     private String sponsorName;
     private Date sponsorDate;
+    private   String key_word;
 
     public int getAppointmentId() {
         return appointmentId;
@@ -38,5 +39,13 @@ public class BackAppointment {
 
     public void setSponsorDate(Date sponsorDate) {
         this.sponsorDate = sponsorDate;
+    }
+
+    public String getKey_word() {
+        return key_word;
+    }
+
+    public void setKey_word(String key_word) {
+        this.key_word = key_word;
     }
 }
