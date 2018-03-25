@@ -247,9 +247,24 @@ public class CompanyController {
                 String LincenceUrl = (String) body.get("LincenceUrl");
 
                 int user_limit = (int) body.get("user_limit");
-                String expiration_date = (String) body.get("expiration_date");
 
-                Object   objPaydate =body.get("pay_date");
+               // String expiration_date = (String) body.get("expiration_date");
+                Object   obj_expiration_date =body.get("expiration_date");
+                Date expiration_date =null;
+                if( obj_expiration_date !=null) {
+                    expiration_date =  Helper.dateParse((String) obj_expiration_date);
+                }
+                else {
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime( new Date());
+                    calendar.add(Calendar.YEAR, 1);
+
+                    expiration_date =      calendar.getTime();
+                }
+
+
+                Object   objPaydate =body.get("last_pay_date");
                 String pay_date =null;
                 if( objPaydate !=null) {
                     pay_date = (String) objPaydate;
@@ -268,7 +283,7 @@ public class CompanyController {
                 c.setAddress(address);
                 //c.setLincenceUrl(LincenceUrl);
                 c.setUser_limit(user_limit);
-                c.setExpiration_date(Helper.dateParse(expiration_date));
+                c.setExpiration_date(expiration_date);
                 c.setLast_pay_date(  pay_date==null? null:  Helper.dateParse(pay_date) );
 
                 companyService.adminAddCompany(  defaultheader,c, false);
@@ -365,9 +380,23 @@ public class CompanyController {
 
 
             int user_limit = (int) body.get("user_limit");
-            String expiration_date = (String) body.get("expiration_date");
 
-            Object   objPaydate =body.get("pay_date");
+           // String expiration_date = (String) body.get("expiration_date");
+            Object   obj_expiration_date =body.get("expiration_date");
+            Date expiration_date =null;
+            if( obj_expiration_date !=null) {
+                expiration_date =  Helper.dateParse((String) obj_expiration_date);
+            }
+            else {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime( new Date());
+                calendar.add(Calendar.YEAR, 1);
+
+                expiration_date =      calendar.getTime();
+            }
+
+            Object   objPaydate =body.get("last_pay_date");
             String pay_date =null;
             if( objPaydate !=null) {
                  pay_date = (String) objPaydate;
@@ -389,7 +418,7 @@ public class CompanyController {
             //c.setLincenceUrl(LincenceUrl);
 
             c.setUser_limit(user_limit);
-            c.setExpiration_date(   Helper.dateParse(expiration_date) );
+            c.setExpiration_date(  expiration_date );
             c.setLast_pay_date(  pay_date==null? null:  Helper.dateParse(pay_date) );
 
 
