@@ -278,10 +278,10 @@
             companyName: obj.company_name,
             contacts: obj.contact_person,
             phone: obj.phone_number,
-            province: obj.province_id,
-            city: obj.city_id,
-            business_id: obj.business_id,
-            agency_id: obj.agency_id,
+            province: obj.province_id <= 0 ? '' : obj.province_id,
+            city: obj.city_id <= 0 ? '' : obj.city_id,
+            business_id: obj.business_id <= 0 ? '' : obj.business_id,
+            agency_id: obj.agency_id <= 0 ? '' : obj.agency_id,
             address: obj.address,
             src: obj.pic_url,
             userCount: obj.user_limit
@@ -292,8 +292,8 @@
             // this.showPayDate = true
             // this.showDateEnd = true
           }
-          if (obj.pay_date) {
-            this.ruleForm.payDate = new Date(obj.payDate)
+          if (obj.last_pay_date) {
+            this.ruleForm.payDate = new Date(obj.last_pay_date)
             this.memberType = true
             this.showDateEnd = true
             this.showPayDate = true
@@ -439,8 +439,8 @@
         } else {
           this.showPayDate = false
           this.showDateEnd = false
-          this.ruleForm.dateEnd = ''
-          this.ruleForm.payDate = ''
+          // this.ruleForm.dateEnd = ''
+          // this.ruleForm.payDate = ''
         }
       }
     }
