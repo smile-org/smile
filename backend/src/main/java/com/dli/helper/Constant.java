@@ -29,4 +29,8 @@ public class Constant {
 
     public static final String signName = "学啦";
 
+    public static final String newpwd_job = "新用户密码通知(官网同步)";
+    public static final String newpwd_job_param = "{\"code\":\"%s\"}";
+    public static final String newpwd_job_templatecode = "SMS_128636028";
+
 }

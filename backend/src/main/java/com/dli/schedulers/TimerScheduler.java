@@ -198,7 +198,7 @@ public class TimerScheduler {
                     c.setPhone_number(phone_number);
                     c.setUser_limit(user_limit);
                     c.setExpiration_date(expiration_date);
-                    companyService.adminAddCompany(  defaultheader,c);
+                    companyService.adminAddCompany(  defaultheader,c        ,true);
 
                     //添加 logo和banner
                     c.setPic_url(defaulthomebanner);

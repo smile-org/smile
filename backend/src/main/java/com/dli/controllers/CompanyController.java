@@ -271,7 +271,7 @@ public class CompanyController {
                 c.setExpiration_date(Helper.dateParse(expiration_date));
                 c.setLast_pay_date(  pay_date==null? null:  Helper.dateParse(pay_date) );
 
-                companyService.adminAddCompany(  defaultheader,c);
+                companyService.adminAddCompany(  defaultheader,c, false);
 
 
                 // String targetpath = String.format(homebusinesslicenceprefix.replace("%s-", ""), c.getCompany_id());

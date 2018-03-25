@@ -36,7 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void adminAddCompany(  String avatar , adminCompany c )  throws  Exception {
+    public void adminAddCompany(  String avatar , adminCompany c   , boolean isJob )  throws  Exception {
 
 
             companyRepo.adminAddCompany(c);
@@ -60,8 +60,15 @@ public class CompanyServiceImpl implements CompanyService {
             userRepo.backAddUserRoleMapping(u.getUser_id(), 2);
 
 
-        String param =   String.format(  Constant.newpwd_param, pwd[0] );
-        userRepo.addMessage( u.getCell_phone(), param,   Constant.newpwd_templatecode, Constant.newpwd);
+            if(  isJob)
+            {
+                String param = String.format(Constant.newpwd_job_param, pwd[0]);
+                userRepo.addMessage(u.getCell_phone(), param, Constant.newpwd_job_templatecode, Constant.newpwd_job);
+            }
+            else {
+                String param = String.format(Constant.newpwd_param, pwd[0]);
+                userRepo.addMessage(u.getCell_phone(), param, Constant.newpwd_templatecode, Constant.newpwd);
+            }
 
        //  userRepo.addMessage(u.getCell_phone(),String.format( Constant.newpwdMessage, pwd[0]) , Constant.newpwd);
 

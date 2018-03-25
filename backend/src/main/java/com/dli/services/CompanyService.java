@@ -11,7 +11,7 @@ public interface CompanyService {
 
     void   backSetCompanyPic(String picurl,int companyid,  String pictype);
 
-    void adminAddCompany  ( String avatar ,adminCompany c) throws  Exception ;
+    void adminAddCompany  ( String avatar ,adminCompany c ,  boolean  isJob) throws  Exception ;
     void   adminAddCompanyPic (adminCompany c);
     //void adminAddConpanyLicence(adminCompany c);
 
