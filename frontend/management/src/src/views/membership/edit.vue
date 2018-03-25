@@ -57,7 +57,7 @@
                         class="dateTab_width"
                         type="date"
                         placeholder="选择付费日期"
-                        v-model="ruleForm.payDate"
+                        v-model="valuePayDate"
                         style="width: 100%;"></el-date-picker>
                     </el-col>
                   </el-form-item>
@@ -70,8 +70,9 @@
                         class="dateTab_width"
                         type="date"
                         placeholder="选择服务截止日期"
-                        v-model="ruleForm.dateEnd"
-                        style="width: 100%;"></el-date-picker>
+                        v-model="valueDateEnd"
+                        style="width: 100%;">
+                      </el-date-picker>
                     </el-col>
                   </el-form-item>
                 </el-col>
@@ -169,6 +170,8 @@
   export default {
     data: function () {
       return {
+        valuePayDate: '',
+        valueDateEnd: '',
         showDateEnd: false,
         showPayDate: false,
         memberType: false,
@@ -273,7 +276,7 @@
           this.provinceList = data.result.ProvinceList
           this.agencyList = data.result.AgencyList
           var obj = data.result.CompanyToBeEdit
-          this.oriCity = obj.city_id
+          this.oriCity = obj.city_id <= 0 ? '' : obj.city_id
           this.ruleForm = {
             companyName: obj.company_name,
             contacts: obj.contact_person,
@@ -288,12 +291,14 @@
           }
           if (obj.expiration_date) {
             this.ruleForm.dateEnd = new Date(obj.expiration_date)
+            this.valueDateEnd = this.ruleForm.dateEnd
             // this.memberType = true
             // this.showPayDate = true
             // this.showDateEnd = true
           }
           if (obj.last_pay_date) {
             this.ruleForm.payDate = new Date(obj.last_pay_date)
+            this.valuePayDate = this.ruleForm.payDate
             this.memberType = true
             this.showDateEnd = true
             this.showPayDate = true
@@ -397,11 +402,17 @@
                 })
                 return false
               }
-              if (this.ruleForm.payDate) {
-                postData.last_pay_date = moment(this.ruleForm.payDate).format('YYYY-MM-DD')
+              // if (this.ruleForm.payDate) {
+              //   postData.last_pay_date = moment(this.ruleForm.payDate).format('YYYY-MM-DD')
+              // }
+              // if (this.ruleForm.dateEnd) {
+              //   postData.expiration_date = moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
+              // }
+              if (this.ruleForm.valuePayDate) {
+                postData.last_pay_date = moment(this.ruleForm.valuePayDate).format('YYYY-MM-DD')
               }
-              if (this.ruleForm.dateEnd) {
-                postData.expiration_date = moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
+              if (this.ruleForm.valueDateEnd) {
+                postData.expiration_date = moment(this.ruleForm.valueDateEnd).format('YYYY-MM-DD')
               }
             }
 
