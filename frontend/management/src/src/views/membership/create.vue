@@ -6,6 +6,7 @@
       <section class="con_main_r">
         <nav>
           <img src="../../assets/img/house.png" class="vm">
+
           <span class="vm">您的当前位置 : <span class="f_blue">企业会员管理</span></span>
         </nav>
         <div class="con_tab">
@@ -34,20 +35,21 @@
                   <el-input-number v-model="ruleForm.userCount" :min="1" label="授权用户"></el-input-number>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="会员类别" prop="memberType">
-                  <el-col>
+              <el-col :span="12" >
+                <el-form-item label="会员类别" >
+                  <!-- <el-col> -->
                     <el-switch
+                      on-text="付费"
+                      off-text="免费"
+                      on-color="#55b761"
                       v-model="memberType"
-                      active-color="#13ce66"
-                      inactive-color="#ff4949"
-                      active-text="付费"
-                      inactive-text="免费"
                       @change="changeMemberType">
                     </el-switch>
-                  </el-col>
+                  <!-- </el-col> -->
                 </el-form-item>
               </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="12" v-show="showPayDate">
                 <el-form-item label="付费日期" prop="payDate">
                   <el-col>

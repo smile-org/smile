@@ -39,43 +39,42 @@
                   <el-col>
                     <el-switch
                       v-model="memberType"
-                      active-color="#13ce66"
-                      inactive-color="#ff4949"
-                      active-text="付费"
-                      inactive-text="免费"
+                      on-color="#55b761"
+                      on-text="付费"
+                      off-text="免费"
                       @change="changeMemberType">
                     </el-switch>
                   </el-col>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" v-show="showPayDate">
-                <el-form-item label="付费日期" prop="payDate">
-                  <el-col>
-                    <el-date-picker
-                      format="yyyy-MM-dd"
-                      class="dateTab_width"
-                      type="date"
-                      placeholder="选择付费日期"
-                      v-model="ruleForm.payDate"
-                      style="width: 100%;"></el-date-picker>
-                  </el-col>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12" v-show="showDateEnd">
-                <el-form-item label="服务截止" prop="dateEnd">
-                  <el-col>
-                    <el-date-picker
-                      format="yyyy-MM-dd"
-                      class="dateTab_width"
-                      type="date"
-                      placeholder="选择服务截止日期"
-                      v-model="ruleForm.dateEnd"
-                      style="width: 100%;"></el-date-picker>
-                  </el-col>
-                </el-form-item>
-              </el-col>
-
-
+              </el-row>
+              <el-row>
+                <el-col :span="12" v-show="showPayDate">
+                  <el-form-item label="付费日期" prop="payDate">
+                    <el-col>
+                      <el-date-picker
+                        format="yyyy-MM-dd"
+                        class="dateTab_width"
+                        type="date"
+                        placeholder="选择付费日期"
+                        v-model="ruleForm.payDate"
+                        style="width: 100%;"></el-date-picker>
+                    </el-col>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12" v-show="showDateEnd">
+                  <el-form-item label="服务截止" prop="dateEnd">
+                    <el-col>
+                      <el-date-picker
+                        format="yyyy-MM-dd"
+                        class="dateTab_width"
+                        type="date"
+                        placeholder="选择服务截止日期"
+                        v-model="ruleForm.dateEnd"
+                        style="width: 100%;"></el-date-picker>
+                    </el-col>
+                  </el-form-item>
+                </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">

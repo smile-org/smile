@@ -122,7 +122,9 @@
                   :headers="headers">
                   <button slot="trigger"  size="small" class="inf_btn2" type="primary">点击上传</button>
                   <div slot="tip" class="el-upload__tip" v-if="isPaid">支持类型pdf/word/ppt/excel/mp4/png/jpg，大小不超过500M</div>
-                  <div slot="tip" class="el-upload__tip" v-else>支持类型pdf/word/ppt/excel/png/jpg，大小不超过10M</div>
+                  <div slot="tip" class="el-upload__tip" v-else>
+                  <p>免费用户仅支持上传类型pdf/word/ppt/excel/png/jpg，且大小不超过10M</p>
+                  <p style="#fb6e19">请升级为付费用户解锁更多功能</p></div>
                 </el-upload>
                 <div class="tc btn_margin">
                   <el-button type="success" class="inf_btn  ml20" @click="submitUploadContent">保 存</el-button>
