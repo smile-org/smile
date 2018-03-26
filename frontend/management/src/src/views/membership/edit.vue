@@ -395,7 +395,7 @@
               // expiration_date: moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
             }
             if (this.memberType) {
-              if (!this.ruleForm.payDate || !this.ruleForm.dateEnd) {
+              if (!this.valuePayDate || !this.valueDateEnd) {
                 this.$message({
                   type: 'info',
                   message: '请填写服务付费日期与截止日期'
@@ -408,11 +408,11 @@
               // if (this.ruleForm.dateEnd) {
               //   postData.expiration_date = moment(this.ruleForm.dateEnd).format('YYYY-MM-DD')
               // }
-              if (this.ruleForm.valuePayDate) {
-                postData.last_pay_date = moment(this.ruleForm.valuePayDate).format('YYYY-MM-DD')
+              if (this.valuePayDate) {
+                postData.last_pay_date = moment(this.valuePayDate).format('YYYY-MM-DD')
               }
-              if (this.ruleForm.valueDateEnd) {
-                postData.expiration_date = moment(this.ruleForm.valueDateEnd).format('YYYY-MM-DD')
+              if (this.valueDateEnd) {
+                postData.expiration_date = moment(this.valueDateEnd).format('YYYY-MM-DD')
               }
             }
 
