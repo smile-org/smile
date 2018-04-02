@@ -246,7 +246,8 @@
       updateState: function (item) {
         // 隐藏传0， 发布传1
         var _type = 0
-        if (item.indicator === true) {
+        console.log(item.indicator)
+        if (item.indicator === 1 || item.indicator === true) {
           _type = 0
         } else {
           _type = 1
@@ -257,7 +258,7 @@
         }).then(data => {
           if (data.status === 1) {
             this.$message('操作成功')
-            item.indicator = !item.indicator
+            item.indicator = (item.indicator === 1 ? 0 : 1)
           }
         })
       },
